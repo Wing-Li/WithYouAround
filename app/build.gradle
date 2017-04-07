@@ -2,8 +2,8 @@ apply plugin: 'com.android.application'
 
 //加载资源
 Properties properties = new Properties()
-InputStream inputStream = project.rootProject.file('local.properties').newDataInputStream() ;
-properties.load( inputStream )
+InputStream inputStream = project.rootProject.file('local.properties').newDataInputStream();
+properties.load(inputStream)
 
 android {
     compileSdkVersion 25
@@ -13,9 +13,9 @@ android {
     signingConfigs {
         config {
             keyAlias 'foryou'
-            keyPassword properties.getProperty( 'keyPassword' )
+            keyPassword properties.getProperty('keyPassword')
             storeFile file('../lyl.jks')
-            storePassword properties.getProperty( 'keyPassword' )
+            storePassword properties.getProperty('keyPassword')
         }
     }
 
@@ -29,17 +29,17 @@ android {
     }
 
     productFlavors {
-        foryouDev{
-            manifestPlaceholders = [GAODE_KEY: properties.getProperty( 'gaodeKey' )]
+        foryouDev {
+            manifestPlaceholders = [GAODE_KEY: properties.getProperty('gaodeKey')]
         }
 
         foryou {
-            manifestPlaceholders = [GAODE_KEY: properties.getProperty( 'gaodeKey' )]
+            manifestPlaceholders = [GAODE_KEY: properties.getProperty('gaodeKey')]
         }
     }
 
     buildTypes {
-        debug{
+        debug {
             signingConfig signingConfigs.config
         }
         release {
@@ -48,15 +48,25 @@ android {
             signingConfig signingConfigs.config
         }
     }
+
+    //为了解决部分第三方库重复打包了META-INF的问题
+    packagingOptions {
+        exclude 'META-INF/LICENSE.txt'
+        exclude 'META-INF/NOTICE.txt'
+    }
+    lintOptions {
+        abortOnError false
+    }
 }
+
+
 
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
-    androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
-        exclude group: 'com.android.support', module: 'support-annotations'
-    })
+
+    // LeanCloud 基础包
     compile 'com.android.support:appcompat-v7:25.3.1'
     compile 'com.android.support:design:25.3.1'
     compile 'com.android.support.constraint:constraint-layout:1.0.0-beta4'
-    testCompile 'junit:junit:4.12'
+    compile 'cn.leancloud.android:avoscloud-sdk:v3.+'
 }

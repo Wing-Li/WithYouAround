@@ -1,6 +1,5 @@
 package com.lyl.myallforyou.data;
 
-import com.litesuits.orm.db.annotation.Ignore;
 import com.litesuits.orm.db.annotation.NotNull;
 import com.litesuits.orm.db.annotation.PrimaryKey;
 import com.litesuits.orm.db.annotation.Table;
@@ -29,11 +28,11 @@ public class DeviceInfo {
     @NotNull
     private String family_id;
 
+    // 详细地址
+    private String my_address;
 
-    //忽略字段，将不存储到数据库
-    @Ignore
-    private String password;
-
+    // 定位来源
+    private String sddress_location_type;
 
     // 版本号
     private String version_name;
@@ -89,4 +88,7 @@ public class DeviceInfo {
     // 电量
     private String system_battery;
 
+
+    //忽略字段，将不存储到数据库
+//    @Ignore
 }

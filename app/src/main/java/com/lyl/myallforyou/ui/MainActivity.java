@@ -8,11 +8,16 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Toast;
 
 import com.amap.api.location.AMapLocation;
 import com.amap.api.location.AMapLocationListener;
-import com.lyl.myallforyou.utils.MapLocationUtil;
+import com.avos.avoscloud.AVException;
+import com.avos.avoscloud.AVObject;
+import com.avos.avoscloud.SaveCallback;
 import com.lyl.myallforyou.R;
+import com.lyl.myallforyou.utils.DeviceStatusUtils;
+import com.lyl.myallforyou.utils.MapLocationUtil;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -35,7 +40,18 @@ public class MainActivity extends BaseActivity {
             }
         });
 
-        initLoaction();
+        AVObject deviceInfo = new AVObject("DeviceInfo");
+        deviceInfo.put("device_model", DeviceStatusUtils.getModel());
+        deviceInfo.put("device_manufacturer", DeviceStatusUtils.getManufacturer());
+        deviceInfo.saveInBackground(new SaveCallback() {
+            @Override
+            public void done(AVException e) {
+                if (e == null) {
+                    Toast.makeText(MainActivity.this, "保存成功", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+//        initLoaction();
     }
 
 
