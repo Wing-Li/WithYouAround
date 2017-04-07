@@ -22,6 +22,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.media.AudioManager;
 import android.os.Build;
+import android.os.SystemClock;
 import android.provider.Settings;
 
 /**
@@ -294,5 +295,28 @@ public class DeviceStatusUtils {
             model = "";
         }
         return model;
+    }
+
+    /**
+     * 获取手机Android API等级（22、23 ...）
+     *
+     * @return
+     */
+    public static int getBuildLevel() {
+        return android.os.Build.VERSION.SDK_INT;
+    }
+
+
+    /**
+     * 获取开机时长
+     */
+    public static String getBootTime(){
+        long ut = SystemClock.elapsedRealtime() / 1000;
+        if (ut == 0) {
+            ut = 1;
+        }
+        int m = (int) ((ut / 60) % 60);
+        int h = (int) ((ut / 3600));
+        return h + "小时" + m + "分钟";
     }
 }

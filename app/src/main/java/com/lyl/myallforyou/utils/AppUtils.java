@@ -32,11 +32,16 @@ import android.net.Uri;
 import android.os.Build;
 import android.telephony.TelephonyManager;
 
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileFilter;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 import java.util.UUID;
 import java.util.regex.Pattern;
@@ -294,6 +299,28 @@ public final class AppUtils {
 
 
     /**
+     * 得到已经使用的内存
+     */
+    public static long getMakedMemory(Context context) {
+        long maked = 0;
+        try {
+            BufferedReader bufferedReader = new BufferedReader(new FileReader("/proc/meminfo"));
+            String memory = bufferedReader.readLine();
+
+            long all = Long.parseLong(memory.split("\\s+")[1]);
+            maked = all * 1024 - getDeviceUsableMemory(context);
+
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return maked;
+    }
+
+
+    /**
      * 获取系统中所有的应用
      *
      * @param context 上下文
@@ -430,4 +457,29 @@ public final class AppUtils {
         return false;
     }
 
+
+    /**
+     * 获取当前系统的时间
+     *
+     * @return st[0] (2017:1:26);
+     *          st[1] (13:26:20)
+     */
+    public static String[] getSystemTime() {
+        long time = System.currentTimeMillis();
+        Calendar mCalendar = Calendar.getInstance();
+        mCalendar.setTimeInMillis(time);
+
+        int year = mCalendar.get(Calendar.YEAR);
+        int month = mCalendar.get(Calendar.MONTH);
+        int day = mCalendar.get(Calendar.DAY_OF_MONTH);
+        int hour = mCalendar.get(Calendar.HOUR_OF_DAY);
+        int minuts = mCalendar.get(Calendar.MINUTE);
+        int second = mCalendar.get(Calendar.SECOND);
+
+        String[] systemTime = new String[2];
+        systemTime[0] = year + ":" + month + ":" + day;
+        systemTime[1] = hour + ":" + minuts + ":" + second;
+
+        return systemTime;
+    }
 }
