@@ -22,6 +22,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.media.AudioManager;
 import android.os.Build;
+import android.os.PowerManager;
 import android.os.SystemClock;
 import android.provider.Settings;
 
@@ -38,6 +39,21 @@ public class DeviceStatusUtils {
      */
     private DeviceStatusUtils() {
         throw new Error("Do not need instantiate!");
+    }
+
+
+    /**
+     * 获取当前屏幕是否亮着
+     *
+     * @return true：亮着；false：不亮
+     */
+    public static boolean getScreenStatus(Context context) {
+        PowerManager powerManager = (PowerManager) context.getSystemService(Context.POWER_SERVICE);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT_WATCH) {
+            return powerManager.isInteractive();
+        } else {
+            return powerManager.isScreenOn();
+        }
     }
 
 
@@ -270,6 +286,7 @@ public class DeviceStatusUtils {
                 .FLAG_PLAY_SOUND);
     }
 
+
     /**
      * 获取设备厂商
      * <p>如Xiaomi</p>
@@ -280,6 +297,7 @@ public class DeviceStatusUtils {
     public static String getManufacturer() {
         return Build.MANUFACTURER;
     }
+
 
     /**
      * 获取设备型号
@@ -297,6 +315,7 @@ public class DeviceStatusUtils {
         return model;
     }
 
+
     /**
      * 获取手机Android API等级（22、23 ...）
      *
@@ -310,7 +329,7 @@ public class DeviceStatusUtils {
     /**
      * 获取开机时长
      */
-    public static String getBootTime(){
+    public static String getBootTime() {
         long ut = SystemClock.elapsedRealtime() / 1000;
         if (ut == 0) {
             ut = 1;

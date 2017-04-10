@@ -1,10 +1,76 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/bg_gary"
     tools:context="com.lyl.myallforyou.ui.DeviceInfoActivity">
 
-</android.support.constraint.ConstraintLayout>
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="4dp"
+                android:layout_marginLeft="8dp"
+                android:layout_marginTop="8dp"
+                android:text="屏幕信息"
+                android:textColor="@color/colorPrimary"
+                android:textSize="16sp"/>
+
+            <LinearLayout
+                style="@style/DeviceInfoLayout"
+                android:weightSum="4">
+
+                <TextView
+                    style="@style/DeviceInfoTitle"
+                    android:text="状        态："/>
+
+                <TextView
+                    android:id="@+id/screen_status"
+                    style="@style/DeviceInfoContent"
+                    android:text="亮起"/>
+            </LinearLayout>
+
+            <LinearLayout
+                style="@style/DeviceInfoLayout"
+                android:weightSum="4">
+
+                <TextView
+                    style="@style/DeviceInfoTitle"
+                    android:text="亮        度："/>
+
+                <TextView
+                    android:id="@+id/screen_brightness"
+                    style="@style/DeviceInfoContent"
+                    android:text="98%"/>
+            </LinearLayout>
+
+            <LinearLayout
+                style="@style/DeviceInfoLayout"
+                android:weightSum="4">
+
+                <TextView
+                    style="@style/DeviceInfoTitle"
+                    android:text="休眠时间："/>
+
+                <TextView
+                    android:id="@+id/screen_dormant_time"
+                    style="@style/DeviceInfoContent"
+                    android:text="50"/>
+            </LinearLayout>
+
+        </LinearLayout>
+    </ScrollView>
+
+</LinearLayout>

@@ -21,6 +21,8 @@ import android.location.LocationManager;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.NetworkInfo.State;
+import android.net.wifi.WifiInfo;
+import android.net.wifi.WifiManager;
 import android.telephony.TelephonyManager;
 
 import java.io.UnsupportedEncodingException;
@@ -31,6 +33,8 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import static android.content.Context.WIFI_SERVICE;
 
 /**
  * 网络工具类
@@ -132,7 +136,18 @@ public final class NetUtil {
         ConnectivityManager manager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
         State wifi = manager.getNetworkInfo(ConnectivityManager.TYPE_WIFI).getState();
         return wifi == State.CONNECTED || wifi == State.CONNECTING;
+    }
 
+
+    /**
+     * 获取WIFI名称
+     *
+     * @return Wifi SSID
+     */
+    public static String getWifiName(Context context) {
+        WifiManager wifiManager = (WifiManager) context.getSystemService(WIFI_SERVICE);
+        WifiInfo wifiInfo = wifiManager.getConnectionInfo();
+        return wifiInfo.getSSID();
     }
 
 
@@ -143,8 +158,8 @@ public final class NetUtil {
      * @return 是否是IP地址
      */
     public static boolean isIP(String ip) {
-        Pattern pattern = Pattern.compile("\\b((?!\\d\\d\\d)\\d+|1\\d\\d|2[0-4]\\d|25[0-5])\\.((?!\\d\\d\\d)\\d+|1\\d\\d|2[0-4]\\d|25[0-5])\\." +
-                "((?!\\d\\d\\d)\\d+|1\\d\\d|2[0-4]\\d|25[0-5])\\.((?!\\d\\d\\d)\\d+|1\\d\\d|2[0-4]\\d|25[0-5])\\b");
+        Pattern pattern = Pattern.compile("\\b((?!\\d\\d\\d)\\d+|1\\d\\d|2[0-4]\\d|25[0-5])\\.((?!\\d\\d\\d)\\d+|1\\d\\d|2[0-4]\\d|25[0-5])\\"
+                + "." + "((?!\\d\\d\\d)\\d+|1\\d\\d|2[0-4]\\d|25[0-5])\\.((?!\\d\\d\\d)\\d+|1\\d\\d|2[0-4]\\d|25[0-5])\\b");
         Matcher matcher = pattern.matcher(ip);
         return matcher.matches();
     }
