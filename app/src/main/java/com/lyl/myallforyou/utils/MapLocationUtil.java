@@ -43,7 +43,8 @@ public class MapLocationUtil {
         // 获取最近3s内精度最高的一次定位结果：
         // 设置setOnceLocationLatest(boolean b)接口为true，启动定位时SDK会返回最近3s内精度最高的一次定位结果。
         // 如果设置其为true，setOnceLocation(boolean b)接口也会被设置为true，反之不会，默认为false。
-        mLocationOption.setOnceLocationLatest(true);
+        // mLocationOption.setOnceLocationLatest(true);
+        mLocationOption.setInterval(3 * 60 * 1000);
         //设置是否返回地址信息（默认返回地址信息）
         mLocationOption.setNeedAddress(true);
         //设置是否强制刷新WIFI，默认为true，强制刷新，相应的会多付出一些电量消耗。
@@ -79,6 +80,9 @@ public class MapLocationUtil {
      */
     public static void destroyLocation() {
         if (mLocationClient != null) {
+            if (mLocationClient.isStarted()) {
+                mLocationClient.stopLocation();
+            }
             mLocationClient.onDestroy();
             mLocationClient = null;
         }

@@ -66,6 +66,10 @@ public final class AppUtils {
     }
 
 
+    public static String getUUID(){
+        return UUID.randomUUID().toString();
+    }
+
     /**
      * 得到软件版本号
      *
@@ -470,7 +474,7 @@ public final class AppUtils {
         mCalendar.setTimeInMillis(time);
 
         int year = mCalendar.get(Calendar.YEAR);
-        int month = mCalendar.get(Calendar.MONTH);
+        int month = mCalendar.get(Calendar.MONTH) + 1;
         int day = mCalendar.get(Calendar.DAY_OF_MONTH);
         int hour = mCalendar.get(Calendar.HOUR_OF_DAY);
         int minuts = mCalendar.get(Calendar.MINUTE);

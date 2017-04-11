@@ -3,6 +3,7 @@ package com.lyl.myallforyou.data;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import com.litesuits.orm.db.annotation.Default;
 import com.litesuits.orm.db.annotation.NotNull;
 import com.litesuits.orm.db.annotation.PrimaryKey;
 import com.litesuits.orm.db.annotation.Table;
@@ -20,7 +21,6 @@ public class DeviceInfo implements Parcelable {
     private int id;
 
     // 自己的昵称
-    @NotNull
     private String my_name;
 
     // 自己的ID
@@ -28,14 +28,17 @@ public class DeviceInfo implements Parcelable {
     private String my_id;
 
     // 亲密人的ID号
-    @NotNull
     private String family_id;
+
+    // 是否上传
+    @Default("0")
+    private int isUpload;
 
     // 详细地址
     private String my_address;
 
     // 定位来源
-    private String sddress_location_type;
+    private String address_location_type;
 
     // 已经使用的内存
     private String used_memory;
@@ -44,7 +47,7 @@ public class DeviceInfo implements Parcelable {
     private String usable_memory;
 
     // 系统中所有的应用
-//    private String all_apps;
+    // private String all_apps;
 
     // 屏幕是否亮着
     private String screen_status;
@@ -85,12 +88,17 @@ public class DeviceInfo implements Parcelable {
     // Sim卡运营商名称
     private String sim_type;
 
+    // 它的日期
+    private String system_date;
+
     // 它的时间
     private String system_time;
 
     // 电量
     private String system_battery;
 
+    // 开机时长
+    private String system_runningtime;
 
     //忽略字段，将不存储到数据库
 //    @Ignore
@@ -98,6 +106,16 @@ public class DeviceInfo implements Parcelable {
 
     public int getId() {
         return id;
+    }
+
+
+    public String getSystem_runningtime() {
+        return system_runningtime;
+    }
+
+
+    public void setSystem_runningtime(String system_runningtime) {
+        this.system_runningtime = system_runningtime;
     }
 
 
@@ -146,13 +164,13 @@ public class DeviceInfo implements Parcelable {
     }
 
 
-    public String getSddress_location_type() {
-        return sddress_location_type;
+    public String getAddress_location_type() {
+        return address_location_type;
     }
 
 
-    public void setSddress_location_type(String sddress_location_type) {
-        this.sddress_location_type = sddress_location_type;
+    public void setAddress_location_type(String address_location_type) {
+        this.address_location_type = address_location_type;
     }
 
 
@@ -326,6 +344,16 @@ public class DeviceInfo implements Parcelable {
     }
 
 
+    public String getSystem_date() {
+        return system_date;
+    }
+
+
+    public void setSystem_date(String system_date) {
+        this.system_date = system_date;
+    }
+
+
     public String getSystem_battery() {
         return system_battery;
     }
@@ -333,6 +361,16 @@ public class DeviceInfo implements Parcelable {
 
     public void setSystem_battery(String system_battery) {
         this.system_battery = system_battery;
+    }
+
+
+    public int getIsUpload() {
+        return isUpload;
+    }
+
+
+    public void setIsUpload(int isUpload) {
+        this.isUpload = isUpload;
     }
 
 
@@ -349,7 +387,7 @@ public class DeviceInfo implements Parcelable {
         dest.writeString(this.my_id);
         dest.writeString(this.family_id);
         dest.writeString(this.my_address);
-        dest.writeString(this.sddress_location_type);
+        dest.writeString(this.address_location_type);
         dest.writeString(this.used_memory);
         dest.writeString(this.usable_memory);
         dest.writeString(this.screen_status);
@@ -366,8 +404,11 @@ public class DeviceInfo implements Parcelable {
         dest.writeString(this.is_3G);
         dest.writeString(this.is_4G);
         dest.writeString(this.sim_type);
+        dest.writeString(this.system_date);
         dest.writeString(this.system_time);
         dest.writeString(this.system_battery);
+        dest.writeString(this.system_runningtime);
+        dest.writeInt(isUpload);
     }
 
 
@@ -381,7 +422,7 @@ public class DeviceInfo implements Parcelable {
         this.my_id = in.readString();
         this.family_id = in.readString();
         this.my_address = in.readString();
-        this.sddress_location_type = in.readString();
+        this.address_location_type = in.readString();
         this.used_memory = in.readString();
         this.usable_memory = in.readString();
         this.screen_status = in.readString();
@@ -398,8 +439,11 @@ public class DeviceInfo implements Parcelable {
         this.is_4G = in.readString();
         this.wifi_name = in.readString();
         this.sim_type = in.readString();
+        this.system_date = in.readString();
         this.system_time = in.readString();
         this.system_battery = in.readString();
+        this.system_runningtime = in.readString();
+        this.isUpload = in.readInt();
     }
 
 

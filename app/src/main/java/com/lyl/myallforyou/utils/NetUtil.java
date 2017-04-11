@@ -132,7 +132,7 @@ public final class NetUtil {
      * @param context 上下文
      * @return 是否打开Wifi
      */
-    public static boolean isWiFi(Context context) {
+    public static boolean isWiFiStatus(Context context) {
         ConnectivityManager manager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
         State wifi = manager.getNetworkInfo(ConnectivityManager.TYPE_WIFI).getState();
         return wifi == State.CONNECTED || wifi == State.CONNECTING;
