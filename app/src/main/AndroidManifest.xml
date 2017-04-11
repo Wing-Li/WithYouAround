@@ -56,6 +56,17 @@
 
         <activity android:name=".ui.DeviceInfoActivity">
         </activity>
+
+        <service
+            android:name=".service.DeviceInfoService"
+            android:enabled="true"
+            android:exported="true">
+        </service>
+
+        <activity android:name=".ui.QrScanActivity">
+        </activity>
+        <activity android:name=".ui.QrShareActivity">
+        </activity>
     </application>
 
 </manifest>

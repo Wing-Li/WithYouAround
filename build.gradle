@@ -17,6 +17,10 @@ buildscript {
 }
 
 allprojects {
+    // 增量编译
+    tasks.withType(JavaCompile) {
+        options.incremental = true
+    }
     repositories {
         jcenter()
         //这里是 LeanCloud 的包仓库

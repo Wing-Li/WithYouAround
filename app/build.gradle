@@ -59,15 +59,18 @@ android {
     }
 }
 
-
+repositories {
+    jcenter()
+}
 
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
+    // LeanCloud 基础包
     compile 'com.android.support:appcompat-v7:25.3.1'
     compile 'com.android.support:design:25.3.1'
     compile 'com.android.support.constraint:constraint-layout:1.0.0-beta4'
     compile 'com.jakewharton:butterknife:7.0.1'
-
-    // LeanCloud 基础包
+    compile 'com.google.zxing:core:3.2.1'
+    compile 'com.journeyapps:zxing-android-embedded:3.3.0'
     compile 'cn.leancloud.android:avoscloud-sdk:v3.+'
 }
