@@ -46,15 +46,19 @@
             </intent-filter>
         </activity>
 
-        <!-- 高德地图 -->
-        <meta-data
-            android:name="com.amap.api.v2.apikey"
-            android:value="${GAODE_KEY}"/>
+        <activity
+            android:name=".ui.DeviceInfoActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar">
+        </activity>
 
-        <service android:name="com.amap.api.location.APSService">
-        </service>
-
-        <activity android:name=".ui.DeviceInfoActivity">
+        <activity
+            android:name=".ui.QrScanActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+        </activity>
+        <activity
+            android:name=".ui.QrShareActivity"
+            android:theme="@style/AppTheme.NoActionBar">
         </activity>
 
         <service
@@ -63,10 +67,14 @@
             android:exported="true">
         </service>
 
-        <activity android:name=".ui.QrScanActivity">
-        </activity>
-        <activity android:name=".ui.QrShareActivity">
-        </activity>
+
+        <!--  高德地图 -->
+        <meta-data
+            android:name="com.amap.api.v2.apikey"
+            android:value="${GAODE_KEY}"/>
+
+        <service android:name="com.amap.api.location.APSService">
+        </service>
     </application>
 
 </manifest>
