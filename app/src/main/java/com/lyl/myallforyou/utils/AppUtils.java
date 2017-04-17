@@ -66,10 +66,6 @@ public final class AppUtils {
     }
 
 
-    public static String getUUID(){
-        return UUID.randomUUID().toString();
-    }
-
     /**
      * 得到软件版本号
      *
@@ -466,7 +462,7 @@ public final class AppUtils {
      * 获取当前系统的时间
      *
      * @return st[0] (2017:1:26);
-     *          st[1] (13:26:20)
+     * st[1] (13:26:20)
      */
     public static String[] getSystemTime() {
         long time = System.currentTimeMillis();

@@ -24,5 +24,6 @@
     <string name="info_sim_type">运营商</string>
     <string name="info_system_time">TA的时间</string>
     <string name="info_system_battery">电量</string>
+    <string name="not_my_object_id">账号信息有误，重新打开应用程序</string>
 
 </resources>

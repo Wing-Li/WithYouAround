@@ -32,6 +32,7 @@ public class QrScanActivity extends BaseActivity {
         captureManager = new CaptureManager(this, dbvCustom);
         captureManager.initializeFromIntent(getIntent(), savedInstanceState);
         captureManager.decode();
+
     }
 
 

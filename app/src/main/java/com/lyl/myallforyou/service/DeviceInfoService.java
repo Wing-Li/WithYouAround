@@ -15,6 +15,7 @@ import com.avos.avoscloud.AVException;
 import com.avos.avoscloud.AVObject;
 import com.avos.avoscloud.SaveCallback;
 import com.lyl.myallforyou.MyApp;
+import com.lyl.myallforyou.constants.Constans;
 import com.lyl.myallforyou.data.DeviceInfo;
 import com.lyl.myallforyou.utils.AppUtils;
 import com.lyl.myallforyou.utils.DeviceStatusUtils;
@@ -152,7 +153,7 @@ public class DeviceInfoService extends Service {
         @Override
         public void run() {
             final DeviceInfo deviceInfo = getDeviceInfo();
-            final AVObject deviceInfoDB = new AVObject("DeviceInfo");
+            final AVObject deviceInfoDB = new AVObject(Constans.TABLE_DEVICE_INFO);
             deviceInfoDB.put("my_id", deviceInfo.getMy_id());
             deviceInfoDB.put("my_address", deviceInfo.getMy_address());
             deviceInfoDB.put("sddress_location_type", deviceInfo.getAddress_location_type());
@@ -180,8 +181,9 @@ public class DeviceInfoService extends Service {
                 @Override
                 public void done(AVException e) {
                     if (e == null) {
-                        String objectId = deviceInfoDB.getObjectId();
                         deviceInfo.setIsUpload(1);
+                        deviceInfo.setObject_id(deviceInfoDB.getObjectId());
+
                         MyApp.liteOrm.save(deviceInfo);
                     } else {
 

@@ -32,6 +32,7 @@ public class QrShareActivity extends AppCompatActivity {
         ButterKnife.bind(this);
         setSupportActionBar(toolbar);
 
+        // TODO 这里应该向服务器检查一下，自己在不在服务里里面
 
         Bitmap bitmap = encodeAsBitmap(AppUtils.getUUID(QrShareActivity.this));
         qrShareImg.setImageBitmap(bitmap);

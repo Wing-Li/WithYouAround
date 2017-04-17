@@ -7,4 +7,5 @@ package com.lyl.myallforyou.constants;
 public class ConstantIntent {
 
     public  static final String DEVICE_INFO = "DEVICE_INFO";
+
 }

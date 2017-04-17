@@ -100,8 +100,19 @@ public class DeviceInfo implements Parcelable {
     // 开机时长
     private String system_runningtime;
 
+    private String object_id;
     //忽略字段，将不存储到数据库
 //    @Ignore
+
+
+    public String getObject_id() {
+        return object_id;
+    }
+
+
+    public void setObject_id(String object_id) {
+        this.object_id = object_id;
+    }
 
 
     public int getId() {
@@ -408,6 +419,7 @@ public class DeviceInfo implements Parcelable {
         dest.writeString(this.system_time);
         dest.writeString(this.system_battery);
         dest.writeString(this.system_runningtime);
+        dest.writeString(this.object_id);
         dest.writeInt(isUpload);
     }
 
@@ -443,6 +455,7 @@ public class DeviceInfo implements Parcelable {
         this.system_time = in.readString();
         this.system_battery = in.readString();
         this.system_runningtime = in.readString();
+        this.object_id = in.readString();
         this.isUpload = in.readInt();
     }
 
