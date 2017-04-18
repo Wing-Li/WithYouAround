@@ -25,5 +25,7 @@
     <string name="info_system_time">TA的时间</string>
     <string name="info_system_battery">电量</string>
     <string name="not_my_object_id">账号信息有误，重新打开应用程序</string>
+    <string name="update_error">上传出错</string>
+    <string name="update_success">信息上传成功</string>
 
 </resources>

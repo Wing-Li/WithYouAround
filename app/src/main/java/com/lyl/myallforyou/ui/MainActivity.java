@@ -8,6 +8,7 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.view.Menu;
@@ -18,9 +19,7 @@ import android.widget.Toast;
 import com.avos.avoscloud.AVException;
 import com.avos.avoscloud.AVObject;
 import com.avos.avoscloud.AVQuery;
-import com.avos.avoscloud.CountCallback;
 import com.avos.avoscloud.GetCallback;
-import com.avos.avoscloud.SaveCallback;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
 import com.lyl.myallforyou.R;
@@ -41,73 +40,32 @@ public class MainActivity extends BaseActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        initMainContent();
+
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setColorFilter(Color.WHITE);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                customScan();
+                // 初始化扫描
+                new IntentIntegrator(MainActivity.this)//
+                        .setOrientationLocked(false)//
+                        // 设置自定义的activity是CustomActivity
+                        .setCaptureActivity(QrScanActivity.class) //
+                        .initiateScan();//
             }
         });
 
         Intent intent = new Intent(this, DeviceInfoService.class);
         bindService(intent, connection, Context.BIND_AUTO_CREATE);
-
-        initUserInfo();
     }
 
 
-    /**
-     * 初始化我的信息
-     */
-    private void initUserInfo() {
-        AVQuery<AVObject> query = new AVQuery<>(Constans.TABLE_USER_INFO);
-        query.whereContains(USER_MYID, uuid);
-        query.countInBackground(new CountCallback() {
-            @Override
-            public void done(int i, AVException e) {
-                if (e == null && i <= 0) {
-                    final AVObject userInfo = new AVObject(Constans.TABLE_USER_INFO);
-                    userInfo.put(USER_MYID, uuid);
-                    userInfo.saveInBackground(new SaveCallback() {
-                        @Override
-                        public void done(AVException e) {
-                            if (e != null) {
-                                Toast.makeText(MainActivity.this, "上传出错", Toast.LENGTH_SHORT).show();
-                            } else {
-                                Toast.makeText(MainActivity.this, "信息上传成功", Toast.LENGTH_SHORT).show();
-                                String objectId = userInfo.getObjectId();
-                                SPUtil.put(mContext, Constans.SP_USER_OBJECT_ID, objectId);
-                            }
-                        }
-                    });
-                }
-            }
-        });
-
-        AVQuery<AVObject> userInfo = new AVQuery<>(Constans.TABLE_USER_INFO);
-        userInfo.getInBackground(objId, new GetCallback<AVObject>() {
-            @Override
-            public void done(AVObject avObject, AVException e) {
-                if (e != null && avObject != null) {
-                    String family = avObject.getString(Constans.USER_FAMILYID);
-                    if (!TextUtils.isEmpty(family)) {
-                        SPUtil.put(mContext, Constans.SP_FAMILY_ID, family);
-                    }
-                }
-            }
-        });
-    }
-
-
-    /**
-     * 初始化扫描
-     */
-    public void customScan() {
-        new IntentIntegrator(this)//
-                .setOrientationLocked(false)//
-                .setCaptureActivity(QrScanActivity.class) // 设置自定义的activity是CustomActivity
-                .initiateScan();//
+    private void initMainContent() {
+        MainFragment mainFragment = MainFragment.newInstance(1);
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        transaction.add(R.id.fragment, mainFragment);
+        transaction.commit();
     }
 
 
@@ -206,9 +164,6 @@ public class MainActivity extends BaseActivity {
         if (id == R.id.action_my_qr) {
             Intent intent = new Intent(MainActivity.this, QrShareActivity.class);
             startActivity(intent);
-        } else if (id == R.id.action_settings) {
-
-            return true;
         }
         return super.onOptionsItemSelected(item);
     }
@@ -217,7 +172,6 @@ public class MainActivity extends BaseActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-
         unbindService(connection);
     }
 }

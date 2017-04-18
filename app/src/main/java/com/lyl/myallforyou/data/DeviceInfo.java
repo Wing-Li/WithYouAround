@@ -10,18 +10,15 @@ import com.litesuits.orm.db.annotation.Table;
 import com.litesuits.orm.db.enums.AssignType;
 
 /**
+ * 创建数据库表
  * Created by lyl on 2017/4/6.
  */
-
 @Table("device_info")
 public class DeviceInfo implements Parcelable {
 
     // 指定自增，每个对象需要有一个主键
     @PrimaryKey(AssignType.AUTO_INCREMENT)
     private int id;
-
-    // 自己的昵称
-    private String my_name;
 
     // 自己的ID
     @NotNull
@@ -132,16 +129,6 @@ public class DeviceInfo implements Parcelable {
 
     public void setId(int id) {
         this.id = id;
-    }
-
-
-    public String getMy_name() {
-        return my_name;
-    }
-
-
-    public void setMy_name(String my_name) {
-        this.my_name = my_name;
     }
 
 
@@ -394,7 +381,6 @@ public class DeviceInfo implements Parcelable {
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeInt(this.id);
-        dest.writeString(this.my_name);
         dest.writeString(this.my_id);
         dest.writeString(this.family_id);
         dest.writeString(this.my_address);
@@ -430,7 +416,6 @@ public class DeviceInfo implements Parcelable {
 
     protected DeviceInfo(Parcel in) {
         this.id = in.readInt();
-        this.my_name = in.readString();
         this.my_id = in.readString();
         this.family_id = in.readString();
         this.my_address = in.readString();
