@@ -88,6 +88,7 @@ public class MainFragment extends BaseFragment {
         // 先添加自己
         UserInfo info = new UserInfo();
         info.setUuid(uuid);
+        info.setName(getString(R.string.myself));
         mUserInfos.add(info);
 
         AVQuery<AVObject> query = new AVQuery<>(Constans.TABLE_USER_INFO);
@@ -95,7 +96,7 @@ public class MainFragment extends BaseFragment {
         query.findInBackground(new FindCallback<AVObject>() {
             @Override
             public void done(List<AVObject> list, AVException e) {
-                if (e != null && list.size() > 0) {
+                if (e == null && list.size() > 0) {
                     UserInfo info;
                     for (AVObject data : list) {
                         info = new UserInfo();
@@ -103,7 +104,7 @@ public class MainFragment extends BaseFragment {
 
                         mUserInfos.add(info);
                     }
-                    mMyAapter.setData(mUserInfos);
+                    mMyAapter.notifyDataSetChanged();
                 }
             }
         });

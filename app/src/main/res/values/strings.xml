@@ -30,5 +30,6 @@
     <string name="ON">开</string>
     <string name="OFF">关</string>
     <string name="not_sim">无SIM卡</string>
+    <string name="myself">自己</string>
 
 </resources>
