@@ -8,6 +8,7 @@ import android.content.IntentFilter;
 import android.os.BatteryManager;
 import android.os.Handler;
 import android.os.IBinder;
+import android.text.TextUtils;
 
 import com.amap.api.location.AMapLocation;
 import com.amap.api.location.AMapLocationListener;
@@ -22,6 +23,7 @@ import com.lyl.myallforyou.utils.DeviceStatusUtils;
 import com.lyl.myallforyou.utils.LogUtils;
 import com.lyl.myallforyou.utils.MapLocationUtil;
 import com.lyl.myallforyou.utils.NetUtil;
+import com.lyl.myallforyou.utils.SPUtil;
 
 import java.text.DecimalFormat;
 
@@ -197,7 +199,10 @@ public class DeviceInfoService extends Service {
     private DeviceInfo getDeviceInfo() {
         DeviceInfo deviceInfo = new DeviceInfo();
 
-        String uuid = AppUtils.getUUID(mContext);
+        String uuid = (String) SPUtil.get(mContext, Constans.SP_UUID, "");
+        if (TextUtils.isEmpty(uuid)) {
+            uuid = AppUtils.getUUID(mContext);
+        }
         deviceInfo.setMy_id(uuid);
 
         // 地理位置

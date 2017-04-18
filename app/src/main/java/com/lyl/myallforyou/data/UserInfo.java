@@ -1,112 +1,113 @@
 package com.lyl.myallforyou.data;
 
-import com.litesuits.orm.db.annotation.NotNull;
-import com.litesuits.orm.db.annotation.PrimaryKey;
-import com.litesuits.orm.db.annotation.Table;
-import com.litesuits.orm.db.enums.AssignType;
+import android.os.Parcel;
+import android.os.Parcelable;
 
 /**
  * Created by lyl on 2017/4/18.
  */
-@Table("user_info")
-public class UserInfo {
+public class UserInfo implements Parcelable {
 
-    // 指定自增，每个对象需要有一个主键
-    @PrimaryKey(AssignType.AUTO_INCREMENT)
-    private int id;
+    private String objid;
 
-    private String object_id;
+    private String uuid;
 
-    @NotNull
-    private String my_id;
+    private String name;
 
-    private String family_id;
+    private String sign;
 
-    private String family_name;
-
-    private String family_sign;
-
-    private String my_name;
-
-    private String my_icon;
+    private String icon;
 
 
-    public String getFamily_name() {
-        return family_name;
+    public String getObjid() {
+        return objid;
     }
 
 
-    public void setFamily_name(String family_name) {
-        this.family_name = family_name;
+    public void setObjid(String objid) {
+        this.objid = objid;
     }
 
 
-    public int getId() {
-        return id;
+    public String getUuid() {
+        return uuid;
     }
 
 
-    public void setId(int id) {
-        this.id = id;
+    public void setUuid(String uuid) {
+        this.uuid = uuid;
     }
 
 
-    public String getFamily_sign() {
-        return family_sign;
+    public String getName() {
+        return name;
     }
 
 
-    public void setFamily_sign(String family_sign) {
-        this.family_sign = family_sign;
+    public void setName(String name) {
+        this.name = name;
     }
 
 
-    public String getMy_name() {
-        return my_name;
+    public String getSign() {
+        return sign;
     }
 
 
-    public void setMy_name(String my_name) {
-        this.my_name = my_name;
+    public void setSign(String sign) {
+        this.sign = sign;
     }
 
 
-    public String getMy_icon() {
-        return my_icon;
+    public String getIcon() {
+        return icon;
     }
 
 
-    public void setMy_icon(String my_icon) {
-        this.my_icon = my_icon;
+    public void setIcon(String icon) {
+        this.icon = icon;
     }
 
 
-    public String getMy_id() {
-        return my_id;
+    @Override
+    public int describeContents() {
+        return 0;
     }
 
 
-    public void setMy_id(String my_id) {
-        this.my_id = my_id;
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(this.objid);
+        dest.writeString(this.uuid);
+        dest.writeString(this.name);
+        dest.writeString(this.sign);
+        dest.writeString(this.icon);
     }
 
 
-    public String getFamily_id() {
-        return family_id;
+    public UserInfo() {
     }
 
 
-    public void setFamily_id(String family_id) {
-        this.family_id = family_id;
+    protected UserInfo(Parcel in) {
+        this.objid = in.readString();
+        this.uuid = in.readString();
+        this.name = in.readString();
+        this.sign = in.readString();
+        this.icon = in.readString();
     }
 
 
-    public String getObject_id() {
-        return object_id;
-    }
+    public static final Parcelable.Creator<UserInfo> CREATOR = new Parcelable.Creator<UserInfo>() {
+        @Override
+        public UserInfo createFromParcel(Parcel source) {
+            return new UserInfo(source);
+        }
 
 
-    public void setObject_id(String object_id) {
-        this.object_id = object_id;
-    }
+        @Override
+        public UserInfo[] newArray(int size) {
+            return new UserInfo[size];
+        }
+    };
 }

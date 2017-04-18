@@ -2,7 +2,6 @@ package com.lyl.myallforyou.ui;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.widget.TextView;
 
@@ -13,7 +12,7 @@ import com.lyl.myallforyou.data.DeviceInfo;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
-public class DeviceInfoActivity extends AppCompatActivity {
+public class DeviceInfoActivity extends BaseActivity {
 
     @Bind(R.id.toolbar)
     Toolbar toolbar;
@@ -51,6 +50,8 @@ public class DeviceInfoActivity extends AppCompatActivity {
     TextView allMemory;
     @Bind(R.id.usable_memory)
     TextView usableMemory;
+
+    private String mTargetUuid;
     private DeviceInfo mDeviceInfo;
 
 
@@ -60,12 +61,13 @@ public class DeviceInfoActivity extends AppCompatActivity {
         setContentView(R.layout.activity_device_info);
         ButterKnife.bind(this);
         setSupportActionBar(toolbar);
+        getParameters();
     }
 
 
     private void getParameters() {
         Intent intent = getIntent();
-        mDeviceInfo = intent.getParcelableExtra(ConstantIntent.DEVICE_INFO);
+        mTargetUuid = intent.getStringExtra(ConstantIntent.USER_INFO);
     }
 
 

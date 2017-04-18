@@ -15,13 +15,20 @@ import java.util.List;
 
 public class MainFragmentAdapter extends RecyclerView.Adapter<MainFragmentAdapter.ViewHolder> {
 
-    private final List<UserInfo> mValues;
+    private List<UserInfo> mValues;
     private final OnListFragmentInteractionListener mListener;
 
 
     public MainFragmentAdapter(List<UserInfo> items, OnListFragmentInteractionListener listener) {
         mValues = items;
         mListener = listener;
+    }
+
+
+    public void setData(List<UserInfo> data) {
+        mValues.clear();
+        mValues = data;
+        notifyDataSetChanged();
     }
 
 
@@ -38,8 +45,8 @@ public class MainFragmentAdapter extends RecyclerView.Adapter<MainFragmentAdapte
 
         // TODO 加载图片
         holder.icon.setImageResource(R.mipmap.icon);
-        holder.name.setText(userInfo.getFamily_name());
-        holder.content.setText(userInfo.getFamily_sign());
+        holder.name.setText(userInfo.getName());
+        holder.content.setText(userInfo.getSign());
 
         holder.mView.setOnClickListener(new View.OnClickListener() {
             @Override

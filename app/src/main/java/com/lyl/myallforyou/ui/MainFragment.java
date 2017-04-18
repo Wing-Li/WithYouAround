@@ -1,8 +1,8 @@
 package com.lyl.myallforyou.ui;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -10,24 +10,28 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.avos.avoscloud.AVException;
+import com.avos.avoscloud.AVObject;
+import com.avos.avoscloud.AVQuery;
+import com.avos.avoscloud.FindCallback;
 import com.lyl.myallforyou.R;
+import com.lyl.myallforyou.constants.Constans;
+import com.lyl.myallforyou.constants.ConstantIntent;
 import com.lyl.myallforyou.data.UserInfo;
 import com.lyl.myallforyou.ui.adapter.MainFragmentAdapter;
 
 import java.util.ArrayList;
+import java.util.List;
 
-public class MainFragment extends Fragment {
+import static com.lyl.myallforyou.constants.Constans.USER_FAMILYID;
+
+public class MainFragment extends BaseFragment {
 
     private static final String ARG_COLUMN_COUNT = "column-count";
     private int mColumnCount = 1;
-    private OnListFragmentInteractionListener mListener;
 
     private ArrayList<UserInfo> mUserInfos;
     private MainFragmentAdapter mMyAapter;
-
-
-    public MainFragment() {
-    }
 
 
     public static MainFragment newInstance(int columnCount) {
@@ -69,19 +73,41 @@ public class MainFragment extends Fragment {
     }
 
 
-    private void initData() {
-
-    }
-
-
-    @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-        if (context instanceof OnListFragmentInteractionListener) {
-            mListener = (OnListFragmentInteractionListener) context;
-        } else {
-            throw new RuntimeException(context.toString() + " must implement OnListFragmentInteractionListener");
+    private OnListFragmentInteractionListener mListener = new OnListFragmentInteractionListener() {
+        @Override
+        public void onListFragmentInteraction(UserInfo info) {
+            Intent intent = new Intent(mContext, DeviceInfoActivity.class);
+            intent.putExtra(ConstantIntent.USER_INFO, info.getUuid());
+            startActivity(intent);
         }
+    };
+
+
+    private void initData() {
+        mUserInfos = new ArrayList<UserInfo>();
+
+        // 先添加自己
+        UserInfo info = new UserInfo();
+        info.setUuid(uuid);
+        mUserInfos.add(info);
+
+        AVQuery<AVObject> query = new AVQuery<>(Constans.TABLE_USER_INFO);
+        query.whereContains(USER_FAMILYID, uuid);
+        query.findInBackground(new FindCallback<AVObject>() {
+            @Override
+            public void done(List<AVObject> list, AVException e) {
+                if (e != null && list.size() > 0) {
+                    UserInfo info;
+                    for (AVObject data : list) {
+                        info = new UserInfo();
+                        info.setUuid(data.getString(Constans.USER_MYID));
+
+                        mUserInfos.add(info);
+                    }
+                    mMyAapter.setData(mUserInfos);
+                }
+            }
+        });
     }
 
 
@@ -93,6 +119,6 @@ public class MainFragment extends Fragment {
 
 
     public interface OnListFragmentInteractionListener {
-        void onListFragmentInteraction(UserInfo item);
+        void onListFragmentInteraction(UserInfo info);
     }
 }
