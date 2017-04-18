@@ -2,7 +2,15 @@ package com.lyl.myallforyou.ui;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.text.TextUtils;
+import android.view.animation.AlphaAnimation;
+import android.view.animation.Animation;
+import android.view.animation.AnimationSet;
+import android.view.animation.TranslateAnimation;
+import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.avos.avoscloud.AVException;
@@ -19,11 +27,22 @@ import static com.lyl.myallforyou.constants.Constans.USER_MYID;
 
 public class SplashActivity extends BaseActivity {
 
+    /**
+     * 页面等待时间
+     */
+    private final static long WAIT_TIME = 1000;
+
+    private long mStartTime;
+    private int what;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        mStartTime = System.currentTimeMillis();
         setContentView(R.layout.activity_splash);
 
+        setAnimation();
         initUserInfo();
     }
 
@@ -50,9 +69,11 @@ public class SplashActivity extends BaseActivity {
                                 String objectId = userInfo.getObjectId();
                                 SPUtil.put(mContext, Constans.SP_USER_OBJECT_ID, objectId);
                             }
+
                         }
                     });
                 }
+                handler.sendEmptyMessage(what += 1);
             }
         });
 
@@ -65,15 +86,52 @@ public class SplashActivity extends BaseActivity {
                     if (!TextUtils.isEmpty(family)) {
                         SPUtil.put(mContext, Constans.SP_FAMILY_ID, family);
                     }
-                    initMain();
                 }
+                handler.sendEmptyMessage(what += 1);
             }
         });
     }
 
 
+    private Handler handler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            if (msg.what >= 2) {
+                // 如果加载时间不到2秒就等一会，超过两秒就直接跳
+                long ringTime = System.currentTimeMillis() - mStartTime;
+                if (ringTime < WAIT_TIME) {
+                    try {
+                        Thread.sleep(WAIT_TIME - ringTime);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
+                initMain();
+            }
+        }
+    };
+
+
     private void initMain() {
         Intent intent = new Intent(SplashActivity.this, MainActivity.class);
         startActivity(intent);
+        finish();
+    }
+
+
+    private void setAnimation() {
+        ImageView appIcon = (ImageView) findViewById(R.id.app_icon);
+        TextView appName = (TextView) findViewById(R.id.app_name);
+        TranslateAnimation translate = new TranslateAnimation(Animation.RELATIVE_TO_SELF, 0, Animation.RELATIVE_TO_SELF, 0, Animation
+                .RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0);
+        AlphaAnimation alpha = new AlphaAnimation(0, 1);
+        alpha.setDuration(WAIT_TIME);
+        translate.setDuration(WAIT_TIME);
+        AnimationSet animationSet = new AnimationSet(true);
+        animationSet.addAnimation(translate);
+        animationSet.addAnimation(alpha);
+        appIcon.setAnimation(translate);
+        appName.setAnimation(translate);
     }
 }

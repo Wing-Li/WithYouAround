@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/bg_gary"
+    android:orientation="vertical"
     tools:context="com.lyl.myallforyou.ui.DeviceInfoActivity">
 
     <include layout="@layout/app_bar_main"/>
@@ -114,7 +114,7 @@
 
                 <TextView
                     style="@style/DeviceInfoContentTitle"
-                    android:text="GPS："/>
+                    android:text="G    P    S："/>
 
                 <TextView
                     android:id="@+id/gps_status"
@@ -152,7 +152,7 @@
                 <TextView
                     android:id="@+id/address"
                     style="@style/DeviceInfoContent"
-                    android:text="陕西省西安市雁塔区西斜七路8号长安国际"/>
+                    android:text="陕西省西安市雁塔区西斜七路8号长安国际德克士"/>
             </LinearLayout>
 
 
@@ -166,7 +166,7 @@
 
                 <TextView
                     style="@style/DeviceInfoContentTitle"
-                    android:text="手机卡类型："/>
+                    android:text="SIM类型："/>
 
                 <TextView
                     android:id="@+id/sim_type"

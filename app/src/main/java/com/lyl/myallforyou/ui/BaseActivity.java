@@ -92,4 +92,19 @@ public class BaseActivity extends AppCompatActivity {
             super.onBackPressed();
         }
     }
+
+
+    /**
+     * 防止 String 为 null
+     *
+     * @param s
+     * @return
+     */
+    public String FS(String s) {
+        if (TextUtils.isEmpty(s)) {
+            return "";
+        } else {
+            return s;
+        }
+    }
 }

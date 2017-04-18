@@ -64,6 +64,7 @@ public class MainFragment extends BaseFragment {
             } else {
                 recyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
             }
+            mUserInfos = new ArrayList<UserInfo>();
             mMyAapter = new MainFragmentAdapter(mUserInfos, mListener);
             recyclerView.setAdapter(mMyAapter);
         }
@@ -84,8 +85,6 @@ public class MainFragment extends BaseFragment {
 
 
     private void initData() {
-        mUserInfos = new ArrayList<UserInfo>();
-
         // 先添加自己
         UserInfo info = new UserInfo();
         info.setUuid(uuid);

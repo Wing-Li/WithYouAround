@@ -27,6 +27,30 @@ import com.lyl.myallforyou.utils.SPUtil;
 
 import java.text.DecimalFormat;
 
+import static com.lyl.myallforyou.constants.Constans.DEVICE_API_LEVEL;
+import static com.lyl.myallforyou.constants.Constans.DEVICE_BLUETOOTH_OPEN;
+import static com.lyl.myallforyou.constants.Constans.DEVICE_DEVICE_MANUFACTURER;
+import static com.lyl.myallforyou.constants.Constans.DEVICE_DEVICE_MODEL;
+import static com.lyl.myallforyou.constants.Constans.DEVICE_GPS_STATUS;
+import static com.lyl.myallforyou.constants.Constans.DEVICE_IS_3G;
+import static com.lyl.myallforyou.constants.Constans.DEVICE_IS_4G;
+import static com.lyl.myallforyou.constants.Constans.DEVICE_MY_ADDRESS;
+import static com.lyl.myallforyou.constants.Constans.DEVICE_MY_ID;
+import static com.lyl.myallforyou.constants.Constans.DEVICE_RING_VOLUME;
+import static com.lyl.myallforyou.constants.Constans.DEVICE_SCREEN_BRIGHTNESS;
+import static com.lyl.myallforyou.constants.Constans.DEVICE_SCREEN_DORMANT_TIME;
+import static com.lyl.myallforyou.constants.Constans.DEVICE_SCREEN_STATUS;
+import static com.lyl.myallforyou.constants.Constans.DEVICE_ADDRESS_LOCATION_TYPE;
+import static com.lyl.myallforyou.constants.Constans.DEVICE_SIM_TYPE;
+import static com.lyl.myallforyou.constants.Constans.DEVICE_SYSTEM_BATTERY;
+import static com.lyl.myallforyou.constants.Constans.DEVICE_SYSTEM_DATE;
+import static com.lyl.myallforyou.constants.Constans.DEVICE_SYSTEM_RUNNINGTIME;
+import static com.lyl.myallforyou.constants.Constans.DEVICE_SYSTEM_TIME;
+import static com.lyl.myallforyou.constants.Constans.DEVICE_USABLE_MEMORY;
+import static com.lyl.myallforyou.constants.Constans.DEVICE_USED_MEMORY;
+import static com.lyl.myallforyou.constants.Constans.DEVICE_WIFI_NAME;
+import static com.lyl.myallforyou.constants.Constans.DEVICE_WIFI_STATUS;
+
 public class DeviceInfoService extends Service {
 
     private Context mContext;
@@ -156,29 +180,29 @@ public class DeviceInfoService extends Service {
         public void run() {
             final DeviceInfo deviceInfo = getDeviceInfo();
             final AVObject deviceInfoDB = new AVObject(Constans.TABLE_DEVICE_INFO);
-            deviceInfoDB.put("my_id", deviceInfo.getMy_id());
-            deviceInfoDB.put("my_address", deviceInfo.getMy_address());
-            deviceInfoDB.put("sddress_location_type", deviceInfo.getAddress_location_type());
-            deviceInfoDB.put("used_memory", deviceInfo.getUsed_memory());
-            deviceInfoDB.put("usable_memory", deviceInfo.getUsable_memory());
-            deviceInfoDB.put("screen_status", deviceInfo.getScreen_status());
-            deviceInfoDB.put("screen_brightness", deviceInfo.getScreen_brightness());
-            deviceInfoDB.put("screen_dormant_time", deviceInfo.getScreen_dormant_time());
-            deviceInfoDB.put("ring_volume", deviceInfo.getRing_volume());
-            deviceInfoDB.put("bluetooth_open", deviceInfo.getBluetooth_open());
-            deviceInfoDB.put("device_manufacturer", deviceInfo.getDevice_manufacturer());
-            deviceInfoDB.put("device_model", deviceInfo.getDevice_model());
-            deviceInfoDB.put("api_level", deviceInfo.getApi_level());
-            deviceInfoDB.put("gps_status", deviceInfo.getGps_status());
-            deviceInfoDB.put("wifi_status", deviceInfo.getWifi_status());
-            deviceInfoDB.put("is_3G", deviceInfo.getIs_3G());
-            deviceInfoDB.put("is_4G", deviceInfo.getIs_4G());
-            deviceInfoDB.put("wifi_name", deviceInfo.getWifi_name());
-            deviceInfoDB.put("sim_type", deviceInfo.getSim_type());
-            deviceInfoDB.put("system_date", deviceInfo.getSystem_date());
-            deviceInfoDB.put("system_time", deviceInfo.getSystem_time());
-            deviceInfoDB.put("system_battery", deviceInfo.getSystem_battery());
-            deviceInfoDB.put("system_runningtime", deviceInfo.getSystem_runningtime());
+            deviceInfoDB.put(DEVICE_MY_ID, deviceInfo.getMy_id());
+            deviceInfoDB.put(DEVICE_MY_ADDRESS, deviceInfo.getMy_address());
+            deviceInfoDB.put(DEVICE_ADDRESS_LOCATION_TYPE, deviceInfo.getAddress_location_type());
+            deviceInfoDB.put(DEVICE_USED_MEMORY, deviceInfo.getUsed_memory());
+            deviceInfoDB.put(DEVICE_USABLE_MEMORY, deviceInfo.getUsable_memory());
+            deviceInfoDB.put(DEVICE_SCREEN_STATUS, deviceInfo.getScreen_status());
+            deviceInfoDB.put(DEVICE_SCREEN_BRIGHTNESS, deviceInfo.getScreen_brightness());
+            deviceInfoDB.put(DEVICE_SCREEN_DORMANT_TIME, deviceInfo.getScreen_dormant_time());
+            deviceInfoDB.put(DEVICE_RING_VOLUME, deviceInfo.getRing_volume());
+            deviceInfoDB.put(DEVICE_BLUETOOTH_OPEN, deviceInfo.getBluetooth_open());
+            deviceInfoDB.put(DEVICE_DEVICE_MANUFACTURER, deviceInfo.getDevice_manufacturer());
+            deviceInfoDB.put(DEVICE_DEVICE_MODEL, deviceInfo.getDevice_model());
+            deviceInfoDB.put(DEVICE_API_LEVEL, deviceInfo.getApi_level());
+            deviceInfoDB.put(DEVICE_GPS_STATUS, deviceInfo.getGps_status());
+            deviceInfoDB.put(DEVICE_WIFI_STATUS, deviceInfo.getWifi_status());
+            deviceInfoDB.put(DEVICE_IS_3G, deviceInfo.getIs_3G());
+            deviceInfoDB.put(DEVICE_IS_4G, deviceInfo.getIs_4G());
+            deviceInfoDB.put(DEVICE_WIFI_NAME, deviceInfo.getWifi_name());
+            deviceInfoDB.put(DEVICE_SIM_TYPE, deviceInfo.getSim_type());
+            deviceInfoDB.put(DEVICE_SYSTEM_DATE, deviceInfo.getSystem_date());
+            deviceInfoDB.put(DEVICE_SYSTEM_TIME, deviceInfo.getSystem_time());
+            deviceInfoDB.put(DEVICE_SYSTEM_BATTERY, deviceInfo.getSystem_battery());
+            deviceInfoDB.put(DEVICE_SYSTEM_RUNNINGTIME, deviceInfo.getSystem_runningtime());
             deviceInfoDB.saveInBackground(new SaveCallback() {
                 @Override
                 public void done(AVException e) {
