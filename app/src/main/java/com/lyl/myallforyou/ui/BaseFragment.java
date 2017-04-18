@@ -37,6 +37,6 @@ public class BaseFragment extends Fragment {
             SPUtil.put(mContext, Constans.SP_UUID, uuid);
         }
 
-        objId = (String) SPUtil.get(mContext, Constans.SP_USER_OBJECT_ID, "");
+        objId = (String) SPUtil.get(mContext, Constans.SP_OBJ_ID, "");
     }
 }

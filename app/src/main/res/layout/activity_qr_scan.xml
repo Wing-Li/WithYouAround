@@ -8,7 +8,6 @@
 
     <include layout="@layout/app_bar_main"/>
 
-    <!-- 我这里只是在大局下修改了一些样式，不过其实 扫描框中的 各种激光条，边框都可以改变，有兴趣的同学可以自己去搜一下 -->
     <!-- 这个控件就是扫描的窗口了 -->
     <com.journeyapps.barcodescanner.DecoratedBarcodeView
         android:id="@+id/dbv_custom"

@@ -9,8 +9,7 @@ import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
 import android.view.animation.AnimationSet;
 import android.view.animation.TranslateAnimation;
-import android.widget.ImageView;
-import android.widget.TextView;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.avos.avoscloud.AVException;
@@ -67,7 +66,7 @@ public class SplashActivity extends BaseActivity {
                             } else {
                                 Toast.makeText(mContext, R.string.update_success, Toast.LENGTH_SHORT).show();
                                 String objectId = userInfo.getObjectId();
-                                SPUtil.put(mContext, Constans.SP_USER_OBJECT_ID, objectId);
+                                SPUtil.put(mContext, Constans.SP_OBJ_ID, objectId);
                             }
 
                         }
@@ -121,8 +120,7 @@ public class SplashActivity extends BaseActivity {
 
 
     private void setAnimation() {
-        ImageView appIcon = (ImageView) findViewById(R.id.app_icon);
-        TextView appName = (TextView) findViewById(R.id.app_name);
+        LinearLayout layout = (LinearLayout) findViewById(R.id.layout);
         TranslateAnimation translate = new TranslateAnimation(Animation.RELATIVE_TO_SELF, 0, Animation.RELATIVE_TO_SELF, 0, Animation
                 .RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0);
         AlphaAnimation alpha = new AlphaAnimation(0, 1);
@@ -131,7 +129,6 @@ public class SplashActivity extends BaseActivity {
         AnimationSet animationSet = new AnimationSet(true);
         animationSet.addAnimation(translate);
         animationSet.addAnimation(alpha);
-        appIcon.setAnimation(translate);
-        appName.setAnimation(translate);
+        layout.setAnimation(translate);
     }
 }

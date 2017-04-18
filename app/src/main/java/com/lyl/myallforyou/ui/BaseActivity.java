@@ -2,17 +2,13 @@ package com.lyl.myallforyou.ui;
 
 import android.content.Context;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
-import android.view.MenuItem;
+import android.widget.Toast;
 
-import com.lyl.myallforyou.R;
 import com.lyl.myallforyou.constants.Constans;
 import com.lyl.myallforyou.utils.AppUtils;
 import com.lyl.myallforyou.utils.SPUtil;
@@ -45,42 +41,7 @@ public class BaseActivity extends AppCompatActivity {
             SPUtil.put(mContext, Constans.SP_UUID, uuid);
         }
 
-        objId = (String) SPUtil.get(mContext, Constans.SP_USER_OBJECT_ID, "");
-    }
-
-
-    public void initDrawerLayout() {
-        mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, mDrawerLayout, R.string.navigation_drawer_open, R.string
-                .navigation_drawer_close);
-        mDrawerLayout.setDrawerListener(toggle);
-        toggle.syncState();
-
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
-        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                int id = item.getItemId();
-
-                if (id == R.id.nav_camera) {
-
-                } else if (id == R.id.nav_gallery) {
-
-                } else if (id == R.id.nav_slideshow) {
-
-                } else if (id == R.id.nav_manage) {
-
-                } else if (id == R.id.nav_share) {
-
-                } else if (id == R.id.nav_send) {
-
-                }
-
-                DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-                drawer.closeDrawer(GravityCompat.START);
-                return true;
-            }
-        });
+        objId = (String) SPUtil.get(mContext, Constans.SP_OBJ_ID, "");
     }
 
 
@@ -91,6 +52,16 @@ public class BaseActivity extends AppCompatActivity {
         } else {
             super.onBackPressed();
         }
+    }
+
+
+    public void showT(String s) {
+        Toast.makeText(mContext, s, Toast.LENGTH_SHORT).show();
+    }
+
+
+    public void showT(int r) {
+        Toast.makeText(mContext, r, Toast.LENGTH_SHORT).show();
     }
 
 
