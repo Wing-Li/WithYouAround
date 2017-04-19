@@ -35,6 +35,8 @@ import static com.lyl.myallforyou.constants.Constans.DEVICE_GPS_STATUS;
 import static com.lyl.myallforyou.constants.Constans.DEVICE_IS_3G;
 import static com.lyl.myallforyou.constants.Constans.DEVICE_IS_4G;
 import static com.lyl.myallforyou.constants.Constans.DEVICE_MY_ADDRESS;
+import static com.lyl.myallforyou.constants.Constans.DEVICE_MY_ADDRESS_LATITUDE;
+import static com.lyl.myallforyou.constants.Constans.DEVICE_MY_ADDRESS_LONGITUDE;
 import static com.lyl.myallforyou.constants.Constans.DEVICE_MY_ID;
 import static com.lyl.myallforyou.constants.Constans.DEVICE_RING_VOLUME;
 import static com.lyl.myallforyou.constants.Constans.DEVICE_SCREEN_BRIGHTNESS;
@@ -59,6 +61,8 @@ public class DeviceInfoService extends Service {
 
     private String mBatteyStatus;
     private String mAddress;
+    private double mLongitude;
+    private double mLatitude;
     private String mLocationType;
 
 
@@ -124,6 +128,8 @@ public class DeviceInfoService extends Service {
                     if (amapLocation.getErrorCode() == 0) {
                         // 陕西省西安市雁塔区锦业路靠近都市之门-会议中心
                         String address = amapLocation.getAddress();//地址，如果option中设置isNeedAddress为false，则没有此结果，网络定位结果中会有地址信息，GPS定位不返回地址信息。
+                        double longitude = amapLocation.getLongitude();
+                        double latitude = amapLocation.getLatitude();
                         // 5
                         String locationType = "";
                         int lt = amapLocation.getLocationType();//定位来源
@@ -148,6 +154,8 @@ public class DeviceInfoService extends Service {
                                 break;
                         }
                         mAddress = address;
+                        mLongitude = longitude;
+                        mLatitude = latitude;
                         mLocationType = locationType;
                     } else {
                         //定位失败时，可通过ErrCode（错误码）信息来确定失败的原因，errInfo是错误信息，详见错误码表。
@@ -182,6 +190,8 @@ public class DeviceInfoService extends Service {
             final AVObject deviceInfoDB = new AVObject(Constans.TABLE_DEVICE_INFO);
             deviceInfoDB.put(DEVICE_MY_ID, deviceInfo.getMy_id());
             deviceInfoDB.put(DEVICE_MY_ADDRESS, deviceInfo.getMy_address());
+            deviceInfoDB.put(DEVICE_MY_ADDRESS_LONGITUDE, deviceInfo.getAddress_longitude());
+            deviceInfoDB.put(DEVICE_MY_ADDRESS_LATITUDE, deviceInfo.getAddress_latitude());
             deviceInfoDB.put(DEVICE_ADDRESS_LOCATION_TYPE, deviceInfo.getAddress_location_type());
             deviceInfoDB.put(DEVICE_USED_MEMORY, deviceInfo.getUsed_memory());
             deviceInfoDB.put(DEVICE_USABLE_MEMORY, deviceInfo.getUsable_memory());
@@ -231,6 +241,8 @@ public class DeviceInfoService extends Service {
 
         // 地理位置
         deviceInfo.setMy_address(mAddress);
+        deviceInfo.setAddress_longitude(String.valueOf(mLongitude));
+        deviceInfo.setAddress_latitude(String.valueOf(mLatitude));
         deviceInfo.setAddress_location_type(mLocationType);
 
         DecimalFormat decimalFormat = new DecimalFormat("#.0");

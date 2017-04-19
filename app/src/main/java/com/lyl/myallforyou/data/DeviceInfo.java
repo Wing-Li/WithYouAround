@@ -36,6 +36,12 @@ public class DeviceInfo implements Parcelable {
     // 详细地址
     private String my_address;
 
+    // 经度
+    private String address_longitude;
+
+    // 纬度
+    private String address_latitude;
+
     // 定位来源
     private String address_location_type;
 
@@ -103,6 +109,26 @@ public class DeviceInfo implements Parcelable {
     private String object_id;
     //忽略字段，将不存储到数据库
 //    @Ignore
+
+
+    public String getAddress_longitude() {
+        return address_longitude;
+    }
+
+
+    public void setAddress_longitude(String address_longitude) {
+        this.address_longitude = address_longitude;
+    }
+
+
+    public String getAddress_latitude() {
+        return address_latitude;
+    }
+
+
+    public void setAddress_latitude(String address_latitude) {
+        this.address_latitude = address_latitude;
+    }
 
 
     public String getObject_id() {
@@ -387,6 +413,8 @@ public class DeviceInfo implements Parcelable {
         dest.writeString(this.my_id);
         dest.writeString(this.family_id);
         dest.writeString(this.my_address);
+        dest.writeString(this.address_longitude);
+        dest.writeString(this.address_latitude);
         dest.writeString(this.address_location_type);
         dest.writeString(this.used_memory);
         dest.writeString(this.usable_memory);
@@ -422,6 +450,8 @@ public class DeviceInfo implements Parcelable {
         this.my_id = in.readString();
         this.family_id = in.readString();
         this.my_address = in.readString();
+        this.address_longitude = in.readString();
+        this.address_latitude = in.readString();
         this.address_location_type = in.readString();
         this.used_memory = in.readString();
         this.usable_memory = in.readString();

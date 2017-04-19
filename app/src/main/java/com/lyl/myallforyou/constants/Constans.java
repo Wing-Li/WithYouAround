@@ -11,6 +11,8 @@ public class Constans {
     public static String TABLE_DEVICE_INFO = "DeviceInfo";
     public static String DEVICE_MY_ID = "my_id";
     public static String DEVICE_MY_ADDRESS = "my_address";
+    public static String DEVICE_MY_ADDRESS_LONGITUDE = "address_longitude";
+    public static String DEVICE_MY_ADDRESS_LATITUDE = "address_latitude";
     public static String DEVICE_ADDRESS_LOCATION_TYPE = "address_location_type";
     public static String DEVICE_USED_MEMORY = "used_memory";
     public static String DEVICE_USABLE_MEMORY = "usable_memory";
