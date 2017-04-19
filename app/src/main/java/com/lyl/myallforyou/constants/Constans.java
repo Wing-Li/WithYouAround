@@ -38,12 +38,24 @@ public class Constans {
     public static String TABLE_USER_INFO = "MyFamily";
     public static String USER_MYID = "myId";
     public static String USER_MYNAME = "myName";
+    public static String USER_MYSGIN = "mySgin";
     public static String USER_FAMILYID = "familyId";
 
     // ======================  ↑ 服务端数据表 ↑  ======================
 
+    // ======================  ↓ SD端数据表 ↓  ======================
+    public static String SD_USER_INFO = "user_info";
+    public static String SD_USER_OBJID = "objid";
+    public static String SD_USER_UUID = "uuid";
+    public static String SD_USER_NAME = "name";
+    public static String SD_USER_NAMENOTE = "nameNote";
+    public static String SD_USER_SIGN = "sign";
+    public static String SD_USER_ICON = "icon";
+
+    // ======================  ↑ SD端数据表 ↑  ======================
     public static String SP_UUID = "uuid";
     public static String SP_OBJ_ID = "sp_user_object_id";
     public static String SP_MY_NAME = "sp_my_name";
+    public static String SP_MY_SGIN = "sp_my_sgin";
     public static String SP_FAMILY_ID = "sp_family_id";
 }

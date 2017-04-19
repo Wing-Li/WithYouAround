@@ -32,12 +32,17 @@
     <string name="not_sim">无SIM卡</string>
     <string name="myself">自己</string>
     <string name="user_name">昵称</string>
+    <string name="name_default">点击修改昵称</string>
+    <string name="sgin_default">点击修改签名</string>
     <string name="cancel">取消</string>
     <string name="ok">确定</string>
-    <string name="name_not_empty">昵称不能为空</string>
-    <string name="name_length_error">昵称不能超过6位</string>
-    <string name="name_style_error">昵称由中文、英文、数字、下划线组成</string>
+    <string name="not_empty">请输入内容</string>
+    <string name="length_error">不能超过 %1$d 个字符</string>
+    <string name="style_error">只能输入由中文、英文、数字、下划线</string>
     <string name="save_fail">保存失败，请重试</string>
     <string name="save_success">保存成功</string>
+    <string name="user_sign">签名</string>
+    <string name="dialog_namenote_title">给对方设置个备注吧</string>
+    <string name="net_error">网络异常，请稍后再试</string>
 
 </resources>

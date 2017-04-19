@@ -1,22 +1,53 @@
 package com.lyl.myallforyou.data;
 
-import android.os.Parcel;
-import android.os.Parcelable;
+import com.litesuits.orm.db.annotation.PrimaryKey;
+import com.litesuits.orm.db.annotation.Table;
+import com.litesuits.orm.db.annotation.Unique;
+import com.litesuits.orm.db.enums.AssignType;
 
 /**
  * Created by lyl on 2017/4/18.
  */
-public class UserInfo implements Parcelable {
+@Table("user_info")
+public class UserInfo {
 
+    // 指定自增，每个对象需要有一个主键
+    @PrimaryKey(AssignType.AUTO_INCREMENT)
+    private int id;
+
+    @Unique
     private String objid;
 
+    @Unique
     private String uuid;
 
     private String name;
 
+    private String nameNote;
+
     private String sign;
 
     private String icon;
+
+
+    public int getId() {
+        return id;
+    }
+
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+
+    public String getNameNote() {
+        return nameNote;
+    }
+
+
+    public void setNameNote(String nameNote) {
+        this.nameNote = nameNote;
+    }
 
 
     public String getObjid() {
@@ -68,46 +99,4 @@ public class UserInfo implements Parcelable {
         this.icon = icon;
     }
 
-
-    @Override
-    public int describeContents() {
-        return 0;
-    }
-
-
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(this.objid);
-        dest.writeString(this.uuid);
-        dest.writeString(this.name);
-        dest.writeString(this.sign);
-        dest.writeString(this.icon);
-    }
-
-
-    public UserInfo() {
-    }
-
-
-    protected UserInfo(Parcel in) {
-        this.objid = in.readString();
-        this.uuid = in.readString();
-        this.name = in.readString();
-        this.sign = in.readString();
-        this.icon = in.readString();
-    }
-
-
-    public static final Parcelable.Creator<UserInfo> CREATOR = new Parcelable.Creator<UserInfo>() {
-        @Override
-        public UserInfo createFromParcel(Parcel source) {
-            return new UserInfo(source);
-        }
-
-
-        @Override
-        public UserInfo[] newArray(int size) {
-            return new UserInfo[size];
-        }
-    };
 }

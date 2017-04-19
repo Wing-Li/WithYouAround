@@ -26,7 +26,7 @@
 
     <!-- 获取系统屏幕亮度模式的状态 -->
     <uses-permission android:name="android.permission.WRITE_SETTINGS"/>
-
+    <uses-permission android:name="android.permission.READ_LOGS" />
     <application
         android:name=".MyApp"
         android:allowBackup="true"

@@ -34,24 +34,36 @@ import com.avos.avoscloud.GetCallback;
 import com.avos.avoscloud.SaveCallback;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
+import com.litesuits.orm.db.model.ConflictAlgorithm;
+import com.litesuits.orm.log.OrmLog;
+import com.lyl.myallforyou.MyApp;
 import com.lyl.myallforyou.R;
 import com.lyl.myallforyou.constants.Constans;
+import com.lyl.myallforyou.data.UserInfo;
+import com.lyl.myallforyou.data.event.MainEvent;
 import com.lyl.myallforyou.service.DeviceInfoService;
 import com.lyl.myallforyou.utils.SPUtil;
 
+import org.greenrobot.eventbus.EventBus;
+
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import static com.lyl.myallforyou.constants.Constans.SP_MY_NAME;
+import static com.lyl.myallforyou.constants.Constans.SP_MY_SGIN;
 import static com.lyl.myallforyou.constants.Constans.USER_FAMILYID;
 import static com.lyl.myallforyou.constants.Constans.USER_MYID;
 import static com.lyl.myallforyou.constants.Constans.USER_MYNAME;
+import static com.lyl.myallforyou.constants.Constans.USER_MYSGIN;
 
 public class MainActivity extends BaseActivity {
 
+    public static final String TAG = "MainActivity";
+
     private ImageView mIcon;
     private TextView mName;
-    private TextView mContent;
+    private TextView mSgin;
 
 
     @Override
@@ -80,6 +92,10 @@ public class MainActivity extends BaseActivity {
 
         Intent intent = new Intent(this, DeviceInfoService.class);
         bindService(intent, connection, Context.BIND_AUTO_CREATE);
+
+        List<UserInfo> querySD = MyApp.liteOrm.query(UserInfo.class);
+        OrmLog.i(TAG, querySD);
+        querySD.size();
     }
 
 
@@ -101,7 +117,7 @@ public class MainActivity extends BaseActivity {
                 Toast.makeText(this, "扫描成功", Toast.LENGTH_LONG).show();
                 // ScanResult 为 获取到的字符串
                 String scanResult = intentResult.getContents();
-                bindUser(scanResult);
+                setNameNote(scanResult);
             }
         } else {
             super.onActivityResult(requestCode, resultCode, data);
@@ -110,11 +126,43 @@ public class MainActivity extends BaseActivity {
 
 
     /**
+     * 扫描完之后，先设置备注
+     */
+    private void setNameNote(final String familyUuid) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
+        View view = LayoutInflater.from(mContext).inflate(R.layout.dialog_edit, null);
+        final EditText edt = (EditText) view.findViewById(R.id.dialog_edt);
+        builder.setTitle(R.string.dialog_namenote_title);
+        builder.setView(view);
+        builder.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                dialogInterface.dismiss();
+            }
+        });
+        builder.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                String edtStr = edt.getText().toString().trim();
+                final String str = checkStr(edtStr, 6, false);
+                if (TextUtils.isEmpty(str)) return;
+
+                bindUser(familyUuid, str);
+
+                dialogInterface.dismiss();
+            }
+        });
+        builder.create().show();
+    }
+
+
+    /**
      * 绑定扫描到的数据
      *
      * @param familyUuid 对方的UUID
      */
-    private void bindUser(final String familyUuid) {
+    private void bindUser(final String familyUuid, final String nameNote) {
+        // 查询对方的数据
         AVQuery<AVObject> query = new AVQuery<>(Constans.TABLE_USER_INFO);
         query.whereContains(USER_MYID, familyUuid);
         query.getFirstInBackground(new GetCallback<AVObject>() {
@@ -129,8 +177,26 @@ public class MainActivity extends BaseActivity {
                     String familyObjId = avObject.getObjectId();
                     String familyId = (String) avObject.get(Constans.USER_FAMILYID);
                     addFamilyToMy(familyObjId, uuid, familyId);
+
+                    // 查询本地的用户
+                    UserInfo userInfo = null;
+                    try {
+                        userInfo = new UserInfo();
+                        userInfo.setObjid(familyObjId);
+                        userInfo.setUuid(familyUuid);
+                        userInfo.setName(avObject.getString(Constans.USER_MYNAME));
+                        userInfo.setNameNote(nameNote);
+                        userInfo.setSign(avObject.getString(Constans.USER_MYSGIN));
+                        MyApp.liteOrm.insert(userInfo, ConflictAlgorithm.Abort);
+                    } catch (Exception ex) {
+                        MyApp.liteOrm.update(userInfo);
+                    }
+
+                    EventBus.getDefault().post(new MainEvent());
+
+                    showT(R.string.save_success);
                 } else {
-                    Toast.makeText(mContext, R.string.not_my_object_id, Toast.LENGTH_SHORT).show();
+                    showT(R.string.not_my_object_id);
                     finish();
                 }
             }
@@ -173,16 +239,27 @@ public class MainActivity extends BaseActivity {
 
         mIcon = (ImageView) view.findViewById(R.id.nav_header_icon);
         mName = (TextView) view.findViewById(R.id.nav_header_name);
-        mContent = (TextView) view.findViewById(R.id.nav_header_content);
+        mSgin = (TextView) view.findViewById(R.id.nav_header_content);
 
         String spName = (String) SPUtil.get(mContext, Constans.SP_MY_NAME, "");
         if (!TextUtils.isEmpty(spName)) {
             mName.setText(spName);
         }
+        String spSgin = (String) SPUtil.get(mContext, Constans.SP_MY_SGIN, "");
+        if (!TextUtils.isEmpty(spSgin)) {
+            mSgin.setText(spSgin);
+        }
+
         mName.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 setName();
+            }
+        });
+        mSgin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                setContent();
             }
         });
 
@@ -231,29 +308,16 @@ public class MainActivity extends BaseActivity {
         builder.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
-                final String str = edt.getText().toString().trim();
-                if (TextUtils.isEmpty(str)) {
-                    Toast.makeText(mContext, R.string.name_not_empty, Toast.LENGTH_SHORT).show();
-                    return;
-                }
-                if (str.length() > 6) {
-                    Toast.makeText(mContext, R.string.name_length_error, Toast.LENGTH_SHORT).show();
-                    return;
-                }
-                String zhengze = "^[\\u4E00-\\u9FA5A-Za-z0-9_]+$";
-                Pattern pattern = Pattern.compile(zhengze);
-                Matcher matcher = pattern.matcher(str);
-                if (!matcher.matches()) {
-                    Toast.makeText(mContext, R.string.name_style_error, Toast.LENGTH_SHORT).show();
-                    return;
-                }
+                String edtStr = edt.getText().toString().trim();
+                final String str = checkStr(edtStr, 6, false);
+                if (TextUtils.isEmpty(str)) return;
 
                 AVObject todo = AVObject.createWithoutData(Constans.TABLE_USER_INFO, objId);
                 todo.put(USER_MYNAME, str);
                 todo.saveInBackground(new SaveCallback() {
                     @Override
                     public void done(AVException e) {
-                        if (e != null) {
+                        if (e == null) {
                             showT(R.string.save_success);
                             SPUtil.put(mContext, SP_MY_NAME, str);
                             mName.setText(str);
@@ -268,7 +332,82 @@ public class MainActivity extends BaseActivity {
         });
         builder.create().show();
     }
+
+
+    /**
+     * 保存签名到服务器
+     */
+    private void setContent() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
+        View view = LayoutInflater.from(mContext).inflate(R.layout.dialog_edit, null);
+        final EditText edt = (EditText) view.findViewById(R.id.dialog_edt);
+        builder.setTitle(R.string.user_sign);
+        builder.setView(view);
+        builder.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                dialogInterface.dismiss();
+            }
+        });
+        builder.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                String edtStr = edt.getText().toString().trim();
+                final String str = checkStr(edtStr, 20, true);
+                if (TextUtils.isEmpty(str)) return;
+
+                AVObject todo = AVObject.createWithoutData(Constans.TABLE_USER_INFO, objId);
+                todo.put(USER_MYSGIN, str);
+                todo.saveInBackground(new SaveCallback() {
+                    @Override
+                    public void done(AVException e) {
+                        if (e == null) {
+                            showT(R.string.save_success);
+                            SPUtil.put(mContext, SP_MY_SGIN, str);
+                            mSgin.setText(str);
+                        } else {
+                            showT(R.string.save_fail);
+                        }
+                    }
+                });
+
+                dialogInterface.dismiss();
+            }
+        });
+        builder.create().show();
+    }
     // ============================================== ↑侧边栏↑ ==============================================
+
+
+    /**
+     * 检查输入的字符串
+     *
+     * @param str           被检查的内容
+     * @param length        要求的长度
+     * @param isSpecialChar 是否可以输入特殊字符
+     * @return 符合要求则返回原字符串；否则，返回 空字符串
+     */
+    private String checkStr(String str, int length, boolean isSpecialChar) {
+        if (TextUtils.isEmpty(str)) {
+            Toast.makeText(mContext, R.string.not_empty, Toast.LENGTH_SHORT).show();
+            return "";
+        }
+        if (str.length() > length) {
+            Toast.makeText(mContext, getString(R.string.length_error, length), Toast.LENGTH_SHORT).show();
+            return "";
+        }
+        if (!isSpecialChar) {
+            String zhengze = "^[\\u4E00-\\u9FA5A-Za-z0-9_]+$";
+            Pattern pattern = Pattern.compile(zhengze);
+            Matcher matcher = pattern.matcher(str);
+            if (!matcher.matches()) {
+                Toast.makeText(mContext, R.string.style_error, Toast.LENGTH_SHORT).show();
+                return "";
+            }
+        }
+        return str;
+    }
+
 
     private ServiceConnection connection = new ServiceConnection() {
         @Override

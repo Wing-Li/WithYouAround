@@ -4,6 +4,7 @@ import android.app.Application;
 
 import com.avos.avoscloud.AVOSCloud;
 import com.litesuits.orm.LiteOrm;
+import com.litesuits.orm.db.DataBaseConfig;
 
 /**
  * Created by lyl on 2017/4/6.
@@ -34,7 +35,10 @@ public class MyApp extends Application {
 
     private void initSQL() {
         if (liteOrm == null) {
-            liteOrm = LiteOrm.newSingleInstance(this, "foryou.db");
+            DataBaseConfig config = new DataBaseConfig(this, "foryou.db");
+            config.dbVersion = 1;
+            config.onUpdateListener = null;
+            liteOrm = LiteOrm.newSingleInstance(config);
         }
         liteOrm.setDebugged(true);
     }

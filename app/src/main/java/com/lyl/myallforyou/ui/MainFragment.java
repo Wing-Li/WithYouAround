@@ -14,11 +14,19 @@ import com.avos.avoscloud.AVException;
 import com.avos.avoscloud.AVObject;
 import com.avos.avoscloud.AVQuery;
 import com.avos.avoscloud.FindCallback;
+import com.litesuits.orm.db.assit.QueryBuilder;
+import com.lyl.myallforyou.MyApp;
 import com.lyl.myallforyou.R;
 import com.lyl.myallforyou.constants.Constans;
 import com.lyl.myallforyou.constants.ConstantIntent;
 import com.lyl.myallforyou.data.UserInfo;
+import com.lyl.myallforyou.data.event.MainEvent;
 import com.lyl.myallforyou.ui.adapter.MainFragmentAdapter;
+import com.lyl.myallforyou.utils.SPUtil;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -68,9 +76,24 @@ public class MainFragment extends BaseFragment {
             mMyAapter = new MainFragmentAdapter(mUserInfos, mListener);
             recyclerView.setAdapter(mMyAapter);
         }
-        initData();
 
         return view;
+    }
+
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        EventBus.getDefault().register(this);
+
+        initData(new MainEvent());
+    }
+
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        EventBus.getDefault().unregister(this);
     }
 
 
@@ -84,16 +107,21 @@ public class MainFragment extends BaseFragment {
     };
 
 
-    private void initData() {
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void initData(MainEvent event) {
+        mUserInfos.clear();
         // 先添加自己
         UserInfo info = new UserInfo();
+        info.setObjid(objId);
         info.setUuid(uuid);
-        info.setName(getString(R.string.myself));
+        info.setName((String) SPUtil.get(mContext, Constans.SP_MY_NAME, ""));
+        info.setNameNote(getString(R.string.myself));
+        info.setSign((String) SPUtil.get(mContext, Constans.SP_MY_SGIN, ""));
         mUserInfos.add(info);
 
-        AVQuery<AVObject> query = new AVQuery<>(Constans.TABLE_USER_INFO);
-        query.whereContains(USER_FAMILYID, uuid);
-        query.findInBackground(new FindCallback<AVObject>() {
+        AVQuery<AVObject> serverQuery = new AVQuery<>(Constans.TABLE_USER_INFO);
+        serverQuery.whereContains(USER_FAMILYID, uuid);
+        serverQuery.findInBackground(new FindCallback<AVObject>() {
             @Override
             public void done(List<AVObject> list, AVException e) {
                 if (e == null && list.size() > 0) {
@@ -101,7 +129,21 @@ public class MainFragment extends BaseFragment {
                     for (AVObject data : list) {
                         info = new UserInfo();
                         info.setUuid(data.getString(Constans.USER_MYID));
+                        info.setName(data.getString(Constans.USER_MYNAME));
+                        info.setSign(data.getString(Constans.USER_MYSGIN));
+                        info.setObjid(data.getObjectId());
 
+                        // 查询本地的用户
+                        ArrayList<UserInfo> querySD = MyApp.liteOrm.query(new QueryBuilder<UserInfo>(UserInfo.class).whereEquals(Constans
+                                .SD_USER_OBJID, data.getObjectId()));
+                        if (querySD.size() > 0) {
+                            int id = querySD.get(0).getId();
+                            info.setId(id);
+                            info.setNameNote(querySD.get(0).getNameNote());
+                            MyApp.liteOrm.update(info);
+                        } else {
+                            MyApp.liteOrm.save(info);
+                        }
                         mUserInfos.add(info);
                     }
                     mMyAapter.notifyDataSetChanged();

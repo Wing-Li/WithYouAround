@@ -7,6 +7,7 @@ import com.litesuits.orm.db.annotation.Default;
 import com.litesuits.orm.db.annotation.NotNull;
 import com.litesuits.orm.db.annotation.PrimaryKey;
 import com.litesuits.orm.db.annotation.Table;
+import com.litesuits.orm.db.annotation.Unique;
 import com.litesuits.orm.db.enums.AssignType;
 
 /**
@@ -22,6 +23,7 @@ public class DeviceInfo implements Parcelable {
 
     // 自己的ID
     @NotNull
+    @Unique
     private String my_id;
 
     // 亲密人的ID号
@@ -97,6 +99,7 @@ public class DeviceInfo implements Parcelable {
     // 开机时长
     private String system_runningtime;
 
+    @Unique
     private String object_id;
     //忽略字段，将不存储到数据库
 //    @Ignore

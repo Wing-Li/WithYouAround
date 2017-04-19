@@ -1,6 +1,7 @@
 package com.lyl.myallforyou.ui.adapter;
 
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -45,7 +46,18 @@ public class MainFragmentAdapter extends RecyclerView.Adapter<MainFragmentAdapte
 
         // TODO 加载图片
         holder.icon.setImageResource(R.mipmap.icon);
-        holder.name.setText(userInfo.getName());
+
+        String name = userInfo.getName();
+        String nameNote = userInfo.getNameNote();
+        if (TextUtils.isEmpty(name)) {
+            name = userInfo.getNameNote();
+        } else {
+            if (!TextUtils.isEmpty(nameNote)) {
+                name = name + " (" + userInfo.getNameNote() + ")";
+            }
+        }
+        holder.name.setText(name);
+
         holder.content.setText(userInfo.getSign());
 
         holder.mView.setOnClickListener(new View.OnClickListener() {

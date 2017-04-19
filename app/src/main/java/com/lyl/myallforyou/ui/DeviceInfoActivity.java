@@ -111,7 +111,11 @@ public class DeviceInfoActivity extends BaseActivity {
         avQuery.getFirstInBackground(new GetCallback<AVObject>() {
             @Override
             public void done(AVObject avObject, AVException e) {
-                saveDeviceInfo(avObject);
+                if (e == null && avObject != null) {
+                    saveDeviceInfo(avObject);
+                }else {
+                    showT(getString(R.string.net_error));
+                }
             }
         });
     }
