@@ -35,7 +35,6 @@ import com.avos.avoscloud.SaveCallback;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
 import com.litesuits.orm.db.model.ConflictAlgorithm;
-import com.litesuits.orm.log.OrmLog;
 import com.lyl.myallforyou.MyApp;
 import com.lyl.myallforyou.R;
 import com.lyl.myallforyou.constants.Constans;
@@ -46,7 +45,6 @@ import com.lyl.myallforyou.utils.SPUtil;
 
 import org.greenrobot.eventbus.EventBus;
 
-import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -93,9 +91,7 @@ public class MainActivity extends BaseActivity {
         Intent intent = new Intent(this, DeviceInfoService.class);
         bindService(intent, connection, Context.BIND_AUTO_CREATE);
 
-        List<UserInfo> querySD = MyApp.liteOrm.query(UserInfo.class);
-        OrmLog.i(TAG, querySD);
-        querySD.size();
+        setName();
     }
 
 
@@ -171,12 +167,12 @@ public class MainActivity extends BaseActivity {
                 if (e == null && avObject != null) {
                     // 把对方加入我的表里
                     String myFamily = (String) SPUtil.get(mContext, Constans.SP_FAMILY_ID, "");
-                    addFamilyToMy(objId, familyUuid, myFamily);
+                    addFamilyToMy(objId, familyUuid, myFamily, true);
 
                     // 把我加到对方的表里
                     String familyObjId = avObject.getObjectId();
                     String familyId = (String) avObject.get(Constans.USER_FAMILYID);
-                    addFamilyToMy(familyObjId, uuid, familyId);
+                    addFamilyToMy(familyObjId, uuid, familyId, false);
 
                     // 查询本地的用户
                     UserInfo userInfo = null;
@@ -210,16 +206,27 @@ public class MainActivity extends BaseActivity {
      * @param my         我的 objectId
      * @param family     对方 uuid
      * @param myFamilyId 与我绑定的人id
+     * @param isSaveData 把对方加入我自己的亲人列表时，要更新 SP
      */
-    private void addFamilyToMy(String my, String family, String myFamilyId) {
+    private void addFamilyToMy(String my, String family, String myFamilyId, final boolean isSaveData) {
         AVObject userInfo = AVObject.createWithoutData(Constans.TABLE_USER_INFO, my);
+        String saveFamilyid = "";
         if (TextUtils.isEmpty(myFamilyId) || !myFamilyId.contains(family)) {
             if (TextUtils.isEmpty(myFamilyId)) {
-                userInfo.put(USER_FAMILYID, family);
+                saveFamilyid = family;
             } else {
-                userInfo.put(USER_FAMILYID, myFamilyId + "," + family);
+                saveFamilyid = myFamilyId + "," + family;
             }
-            userInfo.saveInBackground();
+            userInfo.put(USER_FAMILYID, saveFamilyid);
+            final String finalSaveFamilyid = saveFamilyid;
+            userInfo.saveInBackground(new SaveCallback() {
+                @Override
+                public void done(AVException e) {
+                    if (e == null && isSaveData) {
+                        SPUtil.put(mContext, Constans.SP_FAMILY_ID, finalSaveFamilyid);
+                    }
+                }
+            });
         }
         userInfo = null;
     }

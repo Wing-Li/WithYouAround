@@ -31,7 +31,7 @@
     <string name="OFF">关</string>
     <string name="not_sim">无SIM卡</string>
     <string name="myself">自己</string>
-    <string name="user_name">昵称</string>
+    <string name="user_name">设定昵称</string>
     <string name="name_default">点击修改昵称</string>
     <string name="sgin_default">点击修改签名</string>
     <string name="cancel">取消</string>
