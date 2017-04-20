@@ -19,6 +19,8 @@ import com.lyl.myallforyou.utils.SPUtil;
 
 public class BaseActivity extends AppCompatActivity {
 
+    public final String TAG = this.getClass().getName();
+
     protected Context mContext;
     protected DrawerLayout mDrawerLayout;
 
@@ -34,11 +36,10 @@ public class BaseActivity extends AppCompatActivity {
     }
 
 
-
     private void initData() {
         uuid = (String) SPUtil.get(mContext, Constans.SP_UUID, "");
         if (TextUtils.isEmpty(uuid)) {
-            uuid = AppUtils.getUUID(mContext);
+            uuid = AppUtils.getUUID();
             SPUtil.put(mContext, Constans.SP_UUID, uuid);
         }
 

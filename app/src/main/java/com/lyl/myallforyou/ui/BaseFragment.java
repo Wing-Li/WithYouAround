@@ -35,7 +35,7 @@ public class BaseFragment extends Fragment {
     private void initData() {
         uuid = (String) SPUtil.get(mContext, Constans.SP_UUID, "");
         if (TextUtils.isEmpty(uuid)) {
-            uuid = AppUtils.getUUID(mContext);
+            uuid = AppUtils.getUUID();
             SPUtil.put(mContext, Constans.SP_UUID, uuid);
         }
 

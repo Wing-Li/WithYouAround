@@ -418,6 +418,10 @@ public final class AppUtils {
     private final static X500Principal DEBUG_DN = new X500Principal("CN=Android Debug,O=Android,C=US");
 
 
+    public static String getUUID(){
+        return UUID.randomUUID().toString();
+    }
+
     /**
      * 获取设备唯一标识
      *

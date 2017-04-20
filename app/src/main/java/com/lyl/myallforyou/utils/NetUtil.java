@@ -26,8 +26,6 @@ import android.net.wifi.WifiManager;
 import android.telephony.TelephonyManager;
 
 import java.io.UnsupportedEncodingException;
-import java.net.MalformedURLException;
-import java.net.URL;
 import java.net.URLDecoder;
 import java.util.HashMap;
 import java.util.Map;
@@ -186,7 +184,7 @@ public final class NetUtil {
      * 枚举网络状态 NET_NO：没有网络 NET_2G:2g网络 NET_3G：3g网络 NET_4G：4g网络 NET_WIFI：wifi
      * NET_UNKNOWN：未知网络
      */
-    public enum NetState {
+    private enum NetState {
         NET_NO, NET_2G, NET_3G, NET_4G, NET_WIFI, NET_UNKNOWN
     }
 
@@ -269,9 +267,6 @@ public final class NetUtil {
 
     /**
      * 获取URL中参数 并返回Map
-     *
-     * @param url
-     * @return
      */
     public static Map<String, String> getUrlParams(String url) {
         Map<String, String> params = null;
@@ -295,22 +290,4 @@ public final class NetUtil {
         }
         return params;
     }
-
-
-    /**
-     * 是否是网络链接
-     *
-     * @param url
-     * @return
-     */
-    public static boolean isUrl(String url) {
-        try {
-            URL url1 = new URL(url);
-            return true;
-        } catch (MalformedURLException e) {
-            e.printStackTrace();
-            return false;
-        }
-    }
-
 }

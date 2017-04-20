@@ -1,4 +1,4 @@
-package com.lyl.myallforyou.ui;
+package com.lyl.myallforyou.ui.qrbind;
 
 import android.os.Bundle;
 import android.os.PersistableBundle;
@@ -8,6 +8,7 @@ import android.view.KeyEvent;
 import com.journeyapps.barcodescanner.CaptureManager;
 import com.journeyapps.barcodescanner.DecoratedBarcodeView;
 import com.lyl.myallforyou.R;
+import com.lyl.myallforyou.ui.BaseActivity;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;

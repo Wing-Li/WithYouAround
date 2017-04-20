@@ -45,20 +45,20 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".ui.MainActivity"
+            android:name=".ui.main.MainActivity"
             android:theme="@style/AppTheme.NoActionBar">
         </activity>
         <activity
-            android:name=".ui.DeviceInfoActivity"
+            android:name=".ui.deviceinfo.DeviceInfoActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar">
         </activity>
         <activity
-            android:name=".ui.QrScanActivity"
+            android:name=".ui.qrbind.QrScanActivity"
             android:theme="@style/AppTheme.NoActionBar">
         </activity>
         <activity
-            android:name=".ui.QrShareActivity"
+            android:name=".ui.qrbind.QrShareActivity"
             android:theme="@style/AppTheme.NoActionBar">
         </activity>
 
@@ -76,6 +76,21 @@
         <service android:name="com.amap.api.location.APSService">
         </service>
 
+        <!-- Bugly 应用升级-->
+        <activity
+            android:name="com.tencent.bugly.beta.ui.BetaActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize|locale"
+            android:theme="@android:style/Theme.Translucent" />
+
+        <provider
+            android:name="android.support.v4.content.FileProvider"
+            android:authorities="com.lyl.myallforyou.fileProvider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/provider_paths"/>
+        </provider>
     </application>
 
 </manifest>

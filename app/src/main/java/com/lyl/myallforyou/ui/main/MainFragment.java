@@ -1,4 +1,4 @@
-package com.lyl.myallforyou.ui;
+package com.lyl.myallforyou.ui.main;
 
 import android.content.Context;
 import android.content.Intent;
@@ -21,7 +21,8 @@ import com.lyl.myallforyou.constants.Constans;
 import com.lyl.myallforyou.constants.ConstantIntent;
 import com.lyl.myallforyou.data.UserInfo;
 import com.lyl.myallforyou.data.event.MainEvent;
-import com.lyl.myallforyou.ui.adapter.MainFragmentAdapter;
+import com.lyl.myallforyou.ui.BaseFragment;
+import com.lyl.myallforyou.ui.deviceinfo.DeviceInfoActivity;
 import com.lyl.myallforyou.utils.SPUtil;
 
 import org.greenrobot.eventbus.EventBus;

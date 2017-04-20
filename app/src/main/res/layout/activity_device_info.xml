@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="@color/bg_gary"
     android:orientation="vertical"
-    tools:context="com.lyl.myallforyou.ui.DeviceInfoActivity">
+    tools:context="com.lyl.myallforyou.ui.deviceinfo.DeviceInfoActivity">
 
     <include layout="@layout/app_bar_main"/>
 

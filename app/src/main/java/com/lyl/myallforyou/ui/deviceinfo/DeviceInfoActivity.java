@@ -1,4 +1,4 @@
-package com.lyl.myallforyou.ui;
+package com.lyl.myallforyou.ui.deviceinfo;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -14,6 +14,8 @@ import com.lyl.myallforyou.R;
 import com.lyl.myallforyou.constants.Constans;
 import com.lyl.myallforyou.constants.ConstantIntent;
 import com.lyl.myallforyou.data.DeviceInfo;
+import com.lyl.myallforyou.ui.BaseActivity;
+import com.lyl.myallforyou.utils.LogUtils;
 
 import java.text.DecimalFormat;
 
@@ -113,8 +115,9 @@ public class DeviceInfoActivity extends BaseActivity {
             public void done(AVObject avObject, AVException e) {
                 if (e == null && avObject != null) {
                     saveDeviceInfo(avObject);
-                }else {
+                } else {
                     showT(getString(R.string.net_error));
+                    LogUtils.d(TAG, "mTargetUuid:" + mTargetUuid + " ; Except:" + e);
                 }
             }
         });
@@ -154,7 +157,7 @@ public class DeviceInfoActivity extends BaseActivity {
 
     private void setView() {
         String model = FS(mDeviceInfo.getDevice_model());
-        String mf = "";
+        String mf;
         if (TextUtils.isEmpty(model)) {
             mf = FS(mDeviceInfo.getDevice_manufacturer());
         } else {

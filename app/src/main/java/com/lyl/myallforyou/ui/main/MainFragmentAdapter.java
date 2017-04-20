@@ -1,4 +1,4 @@
-package com.lyl.myallforyou.ui.adapter;
+package com.lyl.myallforyou.ui.main;
 
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
@@ -10,7 +10,7 @@ import android.widget.TextView;
 
 import com.lyl.myallforyou.R;
 import com.lyl.myallforyou.data.UserInfo;
-import com.lyl.myallforyou.ui.MainFragment.OnListFragmentInteractionListener;
+import com.lyl.myallforyou.ui.main.MainFragment.OnListFragmentInteractionListener;
 
 import java.util.List;
 

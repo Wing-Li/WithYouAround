@@ -5,12 +5,15 @@ import android.app.Application;
 import com.avos.avoscloud.AVOSCloud;
 import com.litesuits.orm.LiteOrm;
 import com.litesuits.orm.db.DataBaseConfig;
+import com.tencent.bugly.Bugly;
 
 /**
  * Created by lyl on 2017/4/6.
  */
 
 public class MyApp extends Application {
+
+    public static int SPACE_TIME = 5 * 60 * 1000 + 2000;
 
     public static LiteOrm liteOrm;
 
@@ -22,6 +25,13 @@ public class MyApp extends Application {
         initLeancloud();
 
         initSQL();
+
+        initBugly();
+    }
+
+
+    private void initBugly() {
+        Bugly.init(getApplicationContext(), "9cbcfc1af7", true);
     }
 
 

@@ -1,4 +1,4 @@
-package com.lyl.myallforyou.ui;
+package com.lyl.myallforyou.ui.main;
 
 import android.content.ComponentName;
 import android.content.Context;
@@ -41,6 +41,9 @@ import com.lyl.myallforyou.constants.Constans;
 import com.lyl.myallforyou.data.UserInfo;
 import com.lyl.myallforyou.data.event.MainEvent;
 import com.lyl.myallforyou.service.DeviceInfoService;
+import com.lyl.myallforyou.ui.BaseActivity;
+import com.lyl.myallforyou.ui.qrbind.QrScanActivity;
+import com.lyl.myallforyou.ui.qrbind.QrShareActivity;
 import com.lyl.myallforyou.utils.SPUtil;
 
 import org.greenrobot.eventbus.EventBus;
@@ -213,7 +216,7 @@ public class MainActivity extends BaseActivity {
      */
     private void addFamilyToMy(String my, String family, String myFamilyId, final boolean isSaveData) {
         AVObject userInfo = AVObject.createWithoutData(Constans.TABLE_USER_INFO, my);
-        String saveFamilyid = "";
+        String saveFamilyid;
         if (TextUtils.isEmpty(myFamilyId) || !myFamilyId.contains(family)) {
             if (TextUtils.isEmpty(myFamilyId)) {
                 saveFamilyid = family;
@@ -231,7 +234,6 @@ public class MainActivity extends BaseActivity {
                 }
             });
         }
-        userInfo = null;
     }
 
     // ============================================== ↓侧边栏↓ ==============================================

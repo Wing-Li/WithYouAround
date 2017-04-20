@@ -20,6 +20,7 @@ import com.avos.avoscloud.GetCallback;
 import com.avos.avoscloud.SaveCallback;
 import com.lyl.myallforyou.R;
 import com.lyl.myallforyou.constants.Constans;
+import com.lyl.myallforyou.ui.main.MainActivity;
 import com.lyl.myallforyou.utils.SPUtil;
 
 import static com.lyl.myallforyou.constants.Constans.USER_MYID;

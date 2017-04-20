@@ -1,4 +1,4 @@
-package com.lyl.myallforyou.ui;
+package com.lyl.myallforyou.ui.qrbind;
 
 import android.graphics.Bitmap;
 import android.os.Bundle;
@@ -34,7 +34,7 @@ public class QrShareActivity extends AppCompatActivity {
 
         // TODO 这里应该向服务器检查一下，自己在不在服务里里面
 
-        Bitmap bitmap = encodeAsBitmap(AppUtils.getUUID(QrShareActivity.this));
+        Bitmap bitmap = encodeAsBitmap(AppUtils.getUUID());
         qrShareImg.setImageBitmap(bitmap);
     }
 
