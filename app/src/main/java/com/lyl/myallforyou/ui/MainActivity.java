@@ -91,7 +91,10 @@ public class MainActivity extends BaseActivity {
         Intent intent = new Intent(this, DeviceInfoService.class);
         bindService(intent, connection, Context.BIND_AUTO_CREATE);
 
-        setName();
+        String myName = (String) SPUtil.get(mContext, SP_MY_NAME, "");
+        if (TextUtils.isEmpty(myName)) {
+            setName();
+        }
     }
 
 
