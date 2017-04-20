@@ -307,7 +307,9 @@ public class MainActivity extends BaseActivity {
                 } else if (id == R.id.nav_about) {
                     intent = new Intent(mContext, AboutActivity.class);
                 }
-                startActivity(intent);
+                if (intent != null) {
+                    startActivity(intent);
+                }
 
                 DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
                 drawer.closeDrawer(GravityCompat.START);
