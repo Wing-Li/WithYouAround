@@ -42,6 +42,7 @@ import com.lyl.myallforyou.data.UserInfo;
 import com.lyl.myallforyou.data.event.MainEvent;
 import com.lyl.myallforyou.service.DeviceInfoService;
 import com.lyl.myallforyou.ui.BaseActivity;
+import com.lyl.myallforyou.ui.about.AboutActivity;
 import com.lyl.myallforyou.ui.qrbind.QrScanActivity;
 import com.lyl.myallforyou.ui.qrbind.QrShareActivity;
 import com.lyl.myallforyou.utils.SPUtil;
@@ -72,11 +73,33 @@ public class MainActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         initDrawerLayout();
+        initToolbar();
+        initFloating();
+        initMainContent();
+
+        Intent intent = new Intent(this, DeviceInfoService.class);
+        bindService(intent, connection, Context.BIND_AUTO_CREATE);
+
+        String myName = (String) SPUtil.get(mContext, SP_MY_NAME, "");
+        if (TextUtils.isEmpty(myName)) {
+            setName();
+        }
+    }
+
+
+    private void initToolbar() {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        initMainContent();
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer, toolbar, R.string.navigation_drawer_open, R.string
+                .navigation_drawer_close);
+        drawer.addDrawerListener(toggle);
+        toggle.syncState();
+    }
 
+
+    private void initFloating() {
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setColorFilter(Color.WHITE);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -90,14 +113,6 @@ public class MainActivity extends BaseActivity {
                         .initiateScan();//
             }
         });
-
-        Intent intent = new Intent(this, DeviceInfoService.class);
-        bindService(intent, connection, Context.BIND_AUTO_CREATE);
-
-        String myName = (String) SPUtil.get(mContext, SP_MY_NAME, "");
-        if (TextUtils.isEmpty(myName)) {
-            setName();
-        }
     }
 
 
@@ -107,6 +122,9 @@ public class MainActivity extends BaseActivity {
         transaction.add(R.id.fragment, mainFragment);
         transaction.commit();
     }
+
+
+    // ============================================== ↓扫描二维码绑定用户↓ ==============================================
 
 
     @Override
@@ -236,6 +254,8 @@ public class MainActivity extends BaseActivity {
         }
     }
 
+    // ============================================== ↑扫描二维码绑定用户↑ ==============================================
+
     // ============================================== ↓侧边栏↓ ==============================================
 
 
@@ -279,20 +299,15 @@ public class MainActivity extends BaseActivity {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 int id = item.getItemId();
+                Intent intent = null;
+                if (id == R.id.nav_setting) {
 
-                if (id == R.id.nav_camera) {
+                } else if (id == R.id.nav_feedback) {
 
-                } else if (id == R.id.nav_gallery) {
-
-                } else if (id == R.id.nav_slideshow) {
-
-                } else if (id == R.id.nav_manage) {
-
-                } else if (id == R.id.nav_share) {
-
-                } else if (id == R.id.nav_send) {
-
+                } else if (id == R.id.nav_about) {
+                    intent = new Intent(mContext, AboutActivity.class);
                 }
+                startActivity(intent);
 
                 DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
                 drawer.closeDrawer(GravityCompat.START);

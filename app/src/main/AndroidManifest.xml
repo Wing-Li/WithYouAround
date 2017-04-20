@@ -26,7 +26,8 @@
 
     <!-- 获取系统屏幕亮度模式的状态 -->
     <uses-permission android:name="android.permission.WRITE_SETTINGS"/>
-    <uses-permission android:name="android.permission.READ_LOGS" />
+    <uses-permission android:name="android.permission.READ_LOGS"/>
+
     <application
         android:name=".MyApp"
         android:allowBackup="true"
@@ -61,6 +62,10 @@
             android:name=".ui.qrbind.QrShareActivity"
             android:theme="@style/AppTheme.NoActionBar">
         </activity>
+        <activity
+            android:name=".ui.about.AboutActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+        </activity>
 
         <service
             android:name=".service.DeviceInfoService"
@@ -76,11 +81,11 @@
         <service android:name="com.amap.api.location.APSService">
         </service>
 
-        <!-- Bugly 应用升级-->
+        <!-- Bugly 应用升级 -->
         <activity
             android:name="com.tencent.bugly.beta.ui.BetaActivity"
             android:configChanges="keyboardHidden|orientation|screenSize|locale"
-            android:theme="@android:style/Theme.Translucent" />
+            android:theme="@android:style/Theme.Translucent"/>
 
         <provider
             android:name="android.support.v4.content.FileProvider"
@@ -91,6 +96,7 @@
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/provider_paths"/>
         </provider>
+
     </application>
 
 </manifest>

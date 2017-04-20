@@ -44,5 +44,9 @@
     <string name="user_sign">签名</string>
     <string name="dialog_namenote_title">给对方设置个备注吧</string>
     <string name="net_error">网络异常，请稍后再试</string>
+    <string name="capy_email">邮箱已复制到粘贴板</string>
+    <string name="about">关于</string>
+    <string name="bind">绑定</string>
+    <string name="my_device">我的设备</string>
 
 </resources>

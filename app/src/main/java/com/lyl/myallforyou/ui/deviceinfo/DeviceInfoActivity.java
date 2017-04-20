@@ -86,6 +86,7 @@ public class DeviceInfoActivity extends BaseActivity {
     TextView usableMemory;
 
     private String mTargetUuid;
+    private String mTargetName;
     private DeviceInfo mDeviceInfo;
 
 
@@ -94,8 +95,13 @@ public class DeviceInfoActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_device_info);
         ButterKnife.bind(this);
-        setSupportActionBar(toolbar);
+
         getParameters();
+
+        toolbar.setTitle(mTargetName);
+        setSupportActionBar(toolbar);
+        setBackUI(toolbar);
+
         getDeviceInfo();
     }
 
@@ -103,6 +109,7 @@ public class DeviceInfoActivity extends BaseActivity {
     private void getParameters() {
         Intent intent = getIntent();
         mTargetUuid = intent.getStringExtra(ConstantIntent.USER_INFO);
+        mTargetName = intent.getStringExtra(ConstantIntent.USER_NAME);
     }
 
 

@@ -27,13 +27,14 @@ public class QrScanActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_qr_scan);
         ButterKnife.bind(this);
+        toolbar.setTitle(R.string.bind);
         setSupportActionBar(toolbar);
+        setBackUI(toolbar);
 
         //重要代码，初始化捕获
         captureManager = new CaptureManager(this, dbvCustom);
         captureManager.initializeFromIntent(getIntent(), savedInstanceState);
         captureManager.decode();
-
     }
 
 

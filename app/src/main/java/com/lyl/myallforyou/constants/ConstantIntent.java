@@ -9,6 +9,7 @@ public class ConstantIntent {
     public static final String DEVICE_INFO = "DEVICE_INFO";
 
     public static final String USER_INFO = "USER_INFO";
+    public static final String USER_NAME = "USER_NAME";
 
 
 }

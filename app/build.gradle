@@ -71,6 +71,8 @@ repositories {
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
 
+
+
     compile 'com.android.support:appcompat-v7:25.3.1'
     compile 'com.android.support:design:25.3.1'
     compile 'com.android.support:support-v4:25.3.1'
@@ -80,9 +82,7 @@ dependencies {
     compile 'org.greenrobot:eventbus:3.0.0'
     compile 'com.google.zxing:core:3.2.1'
     compile 'com.journeyapps:zxing-android-embedded:3.3.0'
-
     compile 'cn.leancloud.android:avoscloud-sdk:v3.+'
-
     compile 'com.tencent.bugly:crashreport_upgrade:1.2.5'
     compile 'com.tencent.bugly:nativecrashreport:3.1.2'
 }

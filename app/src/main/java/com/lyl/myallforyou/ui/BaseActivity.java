@@ -6,9 +6,12 @@ import android.support.annotation.Nullable;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
+import android.view.View;
 import android.widget.Toast;
 
+import com.lyl.myallforyou.R;
 import com.lyl.myallforyou.constants.Constans;
 import com.lyl.myallforyou.utils.AppUtils;
 import com.lyl.myallforyou.utils.SPUtil;
@@ -44,6 +47,17 @@ public class BaseActivity extends AppCompatActivity {
         }
 
         objId = (String) SPUtil.get(mContext, Constans.SP_OBJ_ID, "");
+    }
+
+
+    protected void setBackUI(Toolbar toolbar) {
+        toolbar.setNavigationIcon(R.drawable.ic_arrow_back_white_24dp);
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
     }
 
 

@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -100,9 +101,21 @@ public class MainFragment extends BaseFragment {
 
     private OnListFragmentInteractionListener mListener = new OnListFragmentInteractionListener() {
         @Override
-        public void onListFragmentInteraction(UserInfo info) {
+        public void onListFragmentInteraction(UserInfo userInfo) {
             Intent intent = new Intent(mContext, DeviceInfoActivity.class);
-            intent.putExtra(ConstantIntent.USER_INFO, info.getUuid());
+            intent.putExtra(ConstantIntent.USER_INFO, userInfo.getUuid());
+
+            String name = userInfo.getName();
+            String nameNote = userInfo.getNameNote();
+            if (TextUtils.isEmpty(name)) {
+                name = userInfo.getNameNote();
+            } else {
+                if (!TextUtils.isEmpty(nameNote)) {
+                    name = name + " (" + userInfo.getNameNote() + ")";
+                }
+            }
+            intent.putExtra(ConstantIntent.USER_NAME, name);
+
             startActivity(intent);
         }
     };
