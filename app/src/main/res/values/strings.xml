@@ -25,8 +25,8 @@
     <string name="info_system_time">TA的时间</string>
     <string name="info_system_battery">电量</string>
     <string name="not_my_object_id">账号信息有误，重新打开应用程序</string>
-    <string name="update_error">上传出错</string>
-    <string name="update_success">信息上传成功</string>
+    <string name="upload_error">上传出错</string>
+    <string name="upload_success">信息上传成功</string>
     <string name="ON">开</string>
     <string name="OFF">关</string>
     <string name="not_sim">无SIM卡</string>
@@ -48,5 +48,9 @@
     <string name="about">关于</string>
     <string name="bind">绑定</string>
     <string name="my_device">我的设备</string>
+    <string name="feedback_hint">感谢您的反馈，我们一定好好改善</string>
+    <string name="feedback">意见反馈</string>
+    <string name="hint">提示</string>
+    <string name="put_ask">确认提交？</string>
 
 </resources>

@@ -63,9 +63,9 @@ public class SplashActivity extends BaseActivity {
                         @Override
                         public void done(AVException e) {
                             if (e != null) {
-                                Toast.makeText(mContext, R.string.update_error, Toast.LENGTH_SHORT).show();
+                                Toast.makeText(mContext, R.string.upload_error, Toast.LENGTH_SHORT).show();
                             } else {
-                                Toast.makeText(mContext, R.string.update_success, Toast.LENGTH_SHORT).show();
+                                Toast.makeText(mContext, R.string.upload_success, Toast.LENGTH_SHORT).show();
                                 String objectId = userInfo.getObjectId();
                                 SPUtil.put(mContext, Constans.SP_OBJ_ID, objectId);
                             }

@@ -43,6 +43,7 @@ import com.lyl.myallforyou.data.event.MainEvent;
 import com.lyl.myallforyou.service.DeviceInfoService;
 import com.lyl.myallforyou.ui.BaseActivity;
 import com.lyl.myallforyou.ui.about.AboutActivity;
+import com.lyl.myallforyou.ui.feedback.FeedbackActivity;
 import com.lyl.myallforyou.ui.qrbind.QrScanActivity;
 import com.lyl.myallforyou.ui.qrbind.QrShareActivity;
 import com.lyl.myallforyou.utils.SPUtil;
@@ -303,7 +304,7 @@ public class MainActivity extends BaseActivity {
                 if (id == R.id.nav_setting) {
 
                 } else if (id == R.id.nav_feedback) {
-
+                    intent = new Intent(mContext, FeedbackActivity.class);
                 } else if (id == R.id.nav_about) {
                     intent = new Intent(mContext, AboutActivity.class);
                 }

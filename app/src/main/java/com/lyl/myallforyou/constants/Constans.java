@@ -43,6 +43,12 @@ public class Constans {
     public static String USER_MYSGIN = "mySgin";
     public static String USER_FAMILYID = "familyId";
 
+
+    //  意见反馈
+    public static String TABLE_FEEDBACK = "Feedback";
+    public static String FEEDBACK_SUG = "suggestion";
+    public static String FEEDBACK_UUID = "uuid";
+
     // ======================  ↑ 服务端数据表 ↑  ======================
 
     // ======================  ↓ SD端数据表 ↓  ======================
