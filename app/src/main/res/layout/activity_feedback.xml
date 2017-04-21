@@ -8,14 +8,19 @@
     tools:context="com.lyl.myallforyou.ui.feedback.FeedbackActivity">
 
     <include
+        android:id="@+id/app_bar"
         layout="@layout/app_bar_main"/>
 
     <EditText
         android:id="@+id/feedback_edt"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_below="@+id/app_bar"
+        android:background="@color/transparent"
         android:gravity="left|top"
-        android:hint="@string/feedback_hint"/>
+        android:hint="@string/feedback_hint"
+        android:maxLength="200"
+        android:padding="16dp"/>
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/fab"

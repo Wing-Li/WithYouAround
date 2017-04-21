@@ -46,6 +46,7 @@ import com.lyl.myallforyou.ui.about.AboutActivity;
 import com.lyl.myallforyou.ui.feedback.FeedbackActivity;
 import com.lyl.myallforyou.ui.qrbind.QrScanActivity;
 import com.lyl.myallforyou.ui.qrbind.QrShareActivity;
+import com.lyl.myallforyou.ui.setting.SettingActivity;
 import com.lyl.myallforyou.utils.SPUtil;
 
 import org.greenrobot.eventbus.EventBus;
@@ -302,7 +303,7 @@ public class MainActivity extends BaseActivity {
                 int id = item.getItemId();
                 Intent intent = null;
                 if (id == R.id.nav_setting) {
-
+                    intent = new Intent(mContext, SettingActivity.class);
                 } else if (id == R.id.nav_feedback) {
                     intent = new Intent(mContext, FeedbackActivity.class);
                 } else if (id == R.id.nav_about) {

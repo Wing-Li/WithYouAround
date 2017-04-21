@@ -56,8 +56,8 @@ public class FeedbackActivity extends BaseActivity {
         new AlertDialog.Builder(this)//
                 .setTitle(R.string.hint)//
                 .setMessage(R.string.put_ask)//
-                .setPositiveButton(R.string.cancel, null)//
-                .setNegativeButton(R.string.ok, new DialogInterface.OnClickListener() {
+                .setNegativeButton(R.string.cancel, null)//
+                .setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         String str = feedbackEdt.getText().toString().trim();
@@ -67,7 +67,7 @@ public class FeedbackActivity extends BaseActivity {
                         todoFolder.saveInBackground(new SaveCallback() {
                             @Override
                             public void done(AVException e) {
-                                if (e != null) {
+                                if (e == null) {
                                     showT(R.string.upload_success);
                                     finish();
                                 }else {
