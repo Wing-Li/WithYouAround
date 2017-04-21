@@ -23,7 +23,6 @@ import com.lyl.myallforyou.constants.Constans;
 import com.lyl.myallforyou.ui.main.MainActivity;
 import com.lyl.myallforyou.utils.SPUtil;
 
-import static com.lyl.myallforyou.constants.Constans.USER_MYID;
 
 public class SplashActivity extends BaseActivity {
 
@@ -52,13 +51,13 @@ public class SplashActivity extends BaseActivity {
      */
     private void initUserInfo() {
         AVQuery<AVObject> query = new AVQuery<>(Constans.TABLE_USER_INFO);
-        query.whereContains(USER_MYID, uuid);
+        query.whereContains(Constans.USER_MYID, uuid);
         query.countInBackground(new CountCallback() {
             @Override
             public void done(int i, AVException e) {
                 if (e == null && i <= 0) {
                     final AVObject userInfo = new AVObject(Constans.TABLE_USER_INFO);
-                    userInfo.put(USER_MYID, uuid);
+                    userInfo.put(Constans.USER_MYID, uuid);
                     userInfo.saveInBackground(new SaveCallback() {
                         @Override
                         public void done(AVException e) {

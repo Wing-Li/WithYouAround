@@ -1,9 +1,11 @@
 package com.lyl.myallforyou.ui.deviceinfo;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
+import android.view.View;
 import android.widget.TextView;
 
 import com.avos.avoscloud.AVException;
@@ -16,6 +18,7 @@ import com.lyl.myallforyou.constants.ConstantIntent;
 import com.lyl.myallforyou.data.DeviceInfo;
 import com.lyl.myallforyou.ui.BaseActivity;
 import com.lyl.myallforyou.utils.LogUtils;
+import com.lyl.myallforyou.utils.OpenLocalMapUtil;
 
 import java.text.DecimalFormat;
 
@@ -103,6 +106,13 @@ public class DeviceInfoActivity extends BaseActivity {
         setBackUI(toolbar);
 
         getDeviceInfo();
+
+        address.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                openMap();
+            }
+        });
     }
 
 
@@ -236,6 +246,41 @@ public class DeviceInfoActivity extends BaseActivity {
 
         String usable = decimalFormat.format(Math.round(Double.valueOf(mDeviceInfo.getUsable_memory()) / 1000));
         usableMemory.setText(usable + " G");
+    }
+
+
+    private void openMap() {
+        if (OpenLocalMapUtil.isGdMapInstalled()) {
+            gaode(mDeviceInfo.getAddress_latitude(), mDeviceInfo.getAddress_longitude());
+        } else if (OpenLocalMapUtil.isGdMapInstalled()) {
+            double[] doubles = OpenLocalMapUtil.gaoDeToBaidu(Double.parseDouble(mDeviceInfo.getAddress_longitude()), Double.parseDouble
+                    (mDeviceInfo.getAddress_latitude()));
+            String lo = String.valueOf(doubles[0]);
+            String lat = String.valueOf(doubles[1]);
+            baidu(lat, lo);
+        }
+    }
+
+
+    private void gaode(String lat, String lo) {
+        Intent i = new Intent();
+        i.setAction("android.intent.action.VIEW");
+        i.addCategory("android.intent.category.DEFAULT");
+        i.setPackage("com.autonavi.minimap");
+        i.setData(Uri.parse("androidamap://viewMap?sourceApplication=" + getString(R.string.app_name) + "&poiname=abc&lat=" + lat + "&lon=" +
+                lo + "&dev=0")); //
+        startActivity(i);
+    }
+
+
+    private void baidu(String lat, String lo) {
+        Intent i = new Intent();
+        i.setAction("android.intent.action.VIEW");
+        i.setPackage("com.baidu.BaiduMap");
+        // location: at,lng (先纬度，后经度) ; title: 打点标题; content	打点内容; traffic	是否开启路况，目前仅查看地图和打点支持，on表示开启，off表示关闭。
+        i.setData(Uri.parse("baidumap://map/marker?location=" + lat + "," + lo + "&title=" + mTargetName + "&content=" + "TA的位置" +
+                "&traffic=off"));
+        startActivity(i);
     }
 
 }
