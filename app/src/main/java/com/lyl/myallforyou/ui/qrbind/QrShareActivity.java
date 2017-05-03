@@ -1,10 +1,16 @@
 package com.lyl.myallforyou.ui.qrbind;
 
+import android.content.ClipData;
+import android.content.ClipboardManager;
+import android.content.Context;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.util.DisplayMetrics;
+import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.MultiFormatWriter;
@@ -23,6 +29,10 @@ public class QrShareActivity extends BaseActivity {
     ImageView qrShareImg;
     @Bind(R.id.toolbar)
     Toolbar toolbar;
+    @Bind(R.id.qr_share_uuid)
+    TextView qrShareUuid;
+    @Bind(R.id.qr_share_uuid_layout)
+    LinearLayout qrShareUuidLayout;
 
 
     @Override
@@ -36,6 +46,16 @@ public class QrShareActivity extends BaseActivity {
         setBackUI(toolbar);
 
         // TODO 这里应该向服务器检查一下，自己在不在服务里里面
+
+        qrShareUuid.setText(uuid);
+        qrShareUuidLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ClipboardManager clipboardManager = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
+                clipboardManager.setPrimaryClip(ClipData.newPlainText("uuid",uuid));
+                showT(getString(R.string.copy_success));
+            }
+        });
 
         Bitmap bitmap = encodeAsBitmap(uuid);
         qrShareImg.setImageBitmap(bitmap);

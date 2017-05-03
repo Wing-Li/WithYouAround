@@ -54,5 +54,6 @@
     <string name="put_ask">确认提交？</string>
     <string name="default_str">-</string>
     <string name="address_error">经纬度信息有误</string>
+    <string name="copy_success">文本已复制</string>
 
 </resources>
