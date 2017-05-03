@@ -35,7 +35,7 @@
                 <TextView
                     android:id="@+id/device_manufacturer"
                     style="@style/DeviceInfoContent"
-                    android:text="OPPO"/>
+                    android:text="@string/default_str"/>
             </LinearLayout>
 
             <LinearLayout
@@ -49,7 +49,7 @@
                 <TextView
                     android:id="@+id/api_level"
                     style="@style/DeviceInfoContent"
-                    android:text="23"/>
+                    android:text="@string/default_str"/>
             </LinearLayout>
 
             <LinearLayout
@@ -63,7 +63,7 @@
                 <TextView
                     android:id="@+id/system_time"
                     style="@style/DeviceInfoContent"
-                    android:text="2016年8月26日"/>
+                    android:text="@string/default_str"/>
             </LinearLayout>
 
             <LinearLayout
@@ -77,7 +77,7 @@
                 <TextView
                     android:id="@+id/system_battery"
                     style="@style/DeviceInfoContent"
-                    android:text="89"/>
+                    android:text="@string/default_str"/>
             </LinearLayout>
 
             <LinearLayout
@@ -91,7 +91,7 @@
                 <TextView
                     android:id="@+id/ring_volume"
                     style="@style/DeviceInfoContent"
-                    android:text="89"/>
+                    android:text="@string/default_str"/>
             </LinearLayout>
 
             <LinearLayout
@@ -105,7 +105,7 @@
                 <TextView
                     android:id="@+id/bluetooth_open"
                     style="@style/DeviceInfoContent"
-                    android:text="开"/>
+                    android:text="@string/default_str"/>
             </LinearLayout>
 
             <LinearLayout
@@ -119,7 +119,7 @@
                 <TextView
                     android:id="@+id/gps_status"
                     style="@style/DeviceInfoContent"
-                    android:text="开"/>
+                    android:text="@string/default_str"/>
             </LinearLayout>
 
 
@@ -138,7 +138,7 @@
                 <TextView
                     android:id="@+id/address_location_type"
                     style="@style/DeviceInfoContent"
-                    android:text="GPS"/>
+                    android:text="@string/default_str"/>
             </LinearLayout>
 
             <LinearLayout
@@ -152,7 +152,7 @@
                 <TextView
                     android:id="@+id/address"
                     style="@style/DeviceInfoContent"
-                    android:text="陕西省西安市雁塔区西斜七路8号长安国际德克士"/>
+                    android:text="@string/default_str"/>
             </LinearLayout>
 
 
@@ -171,7 +171,7 @@
                 <TextView
                     android:id="@+id/sim_type"
                     style="@style/DeviceInfoContent"
-                    android:text="中国联通"/>
+                    android:text="@string/default_str"/>
             </LinearLayout>
 
             <LinearLayout
@@ -185,7 +185,7 @@
                 <TextView
                     android:id="@+id/net_type"
                     style="@style/DeviceInfoContent"
-                    android:text="3G"/>
+                    android:text="@string/default_str"/>
             </LinearLayout>
 
             <LinearLayout
@@ -199,7 +199,7 @@
                 <TextView
                     android:id="@+id/wifi_status"
                     style="@style/DeviceInfoContent"
-                    android:text="开"/>
+                    android:text="@string/default_str"/>
             </LinearLayout>
 
 
@@ -218,7 +218,7 @@
                 <TextView
                     android:id="@+id/screen_status"
                     style="@style/DeviceInfoContent"
-                    android:text="亮起"/>
+                    android:text="@string/default_str"/>
             </LinearLayout>
 
             <LinearLayout
@@ -232,7 +232,7 @@
                 <TextView
                     android:id="@+id/screen_brightness"
                     style="@style/DeviceInfoContent"
-                    android:text="98%"/>
+                    android:text="@string/default_str"/>
             </LinearLayout>
 
             <LinearLayout
@@ -246,7 +246,7 @@
                 <TextView
                     android:id="@+id/screen_dormant_time"
                     style="@style/DeviceInfoContent"
-                    android:text="50"/>
+                    android:text="@string/default_str"/>
             </LinearLayout>
 
 
@@ -265,7 +265,7 @@
                 <TextView
                     android:id="@+id/all_memory"
                     style="@style/DeviceInfoContent"
-                    android:text="50"/>
+                    android:text="@string/default_str"/>
             </LinearLayout>
 
             <LinearLayout
@@ -279,7 +279,7 @@
                 <TextView
                     android:id="@+id/usable_memory"
                     style="@style/DeviceInfoContent"
-                    android:text="50"/>
+                    android:text="@string/default_str"/>
             </LinearLayout>
 
         </LinearLayout>

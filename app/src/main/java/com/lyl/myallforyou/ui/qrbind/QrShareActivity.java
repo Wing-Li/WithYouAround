@@ -13,7 +13,6 @@ import com.google.zxing.common.BitMatrix;
 import com.journeyapps.barcodescanner.BarcodeEncoder;
 import com.lyl.myallforyou.R;
 import com.lyl.myallforyou.ui.BaseActivity;
-import com.lyl.myallforyou.utils.AppUtils;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -38,7 +37,7 @@ public class QrShareActivity extends BaseActivity {
 
         // TODO 这里应该向服务器检查一下，自己在不在服务里里面
 
-        Bitmap bitmap = encodeAsBitmap(AppUtils.getUUID());
+        Bitmap bitmap = encodeAsBitmap(uuid);
         qrShareImg.setImageBitmap(bitmap);
     }
 

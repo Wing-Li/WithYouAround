@@ -34,6 +34,8 @@ import static com.lyl.myallforyou.constants.Constans.DEVICE_GPS_STATUS;
 import static com.lyl.myallforyou.constants.Constans.DEVICE_IS_3G;
 import static com.lyl.myallforyou.constants.Constans.DEVICE_IS_4G;
 import static com.lyl.myallforyou.constants.Constans.DEVICE_MY_ADDRESS;
+import static com.lyl.myallforyou.constants.Constans.DEVICE_MY_ADDRESS_LATITUDE;
+import static com.lyl.myallforyou.constants.Constans.DEVICE_MY_ADDRESS_LONGITUDE;
 import static com.lyl.myallforyou.constants.Constans.DEVICE_MY_ID;
 import static com.lyl.myallforyou.constants.Constans.DEVICE_RING_VOLUME;
 import static com.lyl.myallforyou.constants.Constans.DEVICE_SCREEN_BRIGHTNESS;
@@ -110,7 +112,11 @@ public class DeviceInfoActivity extends BaseActivity {
         address.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                openMap();
+                if ("0.0".equals(mDeviceInfo.getAddress_longitude()) || "0.0".equals(mDeviceInfo.getAddress_longitude())) {
+                    showT(getString(R.string.address_error));
+                } else {
+                    openMap();
+                }
             }
         });
     }
@@ -127,6 +133,7 @@ public class DeviceInfoActivity extends BaseActivity {
         AVQuery<AVObject> avQuery = new AVQuery<AVObject>(Constans.TABLE_DEVICE_INFO);
         avQuery.whereStartsWith(DEVICE_MY_ID, mTargetUuid);
         avQuery.whereContains(DEVICE_MY_ID, mTargetUuid);
+        avQuery.orderByDescending("createdAt");
         avQuery.getFirstInBackground(new GetCallback<AVObject>() {
             @Override
             public void done(AVObject avObject, AVException e) {
@@ -147,6 +154,8 @@ public class DeviceInfoActivity extends BaseActivity {
         mDeviceInfo.setMy_id(infoDB.getString(DEVICE_MY_ID));
         mDeviceInfo.setMy_address(infoDB.getString(DEVICE_MY_ADDRESS));
         mDeviceInfo.setAddress_location_type(infoDB.getString(DEVICE_ADDRESS_LOCATION_TYPE));
+        mDeviceInfo.setAddress_longitude(infoDB.getString(DEVICE_MY_ADDRESS_LONGITUDE));
+        mDeviceInfo.setAddress_latitude(infoDB.getString(DEVICE_MY_ADDRESS_LATITUDE));
         mDeviceInfo.setUsed_memory(infoDB.getString(DEVICE_USED_MEMORY));
         mDeviceInfo.setUsable_memory(infoDB.getString(DEVICE_USABLE_MEMORY));
         mDeviceInfo.setScreen_status(infoDB.getString(DEVICE_SCREEN_STATUS));
@@ -250,9 +259,9 @@ public class DeviceInfoActivity extends BaseActivity {
 
 
     private void openMap() {
-        if (OpenLocalMapUtil.isGdMapInstalled()) {
+        if (OpenLocalMapUtil.isGdMapInstalled(mContext)) {
             gaode(mDeviceInfo.getAddress_latitude(), mDeviceInfo.getAddress_longitude());
-        } else if (OpenLocalMapUtil.isGdMapInstalled()) {
+        } else if (OpenLocalMapUtil.isBaiduMapInstalled(mContext)) {
             double[] doubles = OpenLocalMapUtil.gaoDeToBaidu(Double.parseDouble(mDeviceInfo.getAddress_longitude()), Double.parseDouble
                     (mDeviceInfo.getAddress_latitude()));
             String lo = String.valueOf(doubles[0]);

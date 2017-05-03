@@ -5,6 +5,7 @@ import android.content.Context;
 import com.amap.api.location.AMapLocationClient;
 import com.amap.api.location.AMapLocationClientOption;
 import com.amap.api.location.AMapLocationListener;
+import com.lyl.myallforyou.MyApp;
 
 /**
  * Created by lyl on 2017/4/6.
@@ -44,7 +45,7 @@ public class MapLocationUtil {
         // 设置setOnceLocationLatest(boolean b)接口为true，启动定位时SDK会返回最近3s内精度最高的一次定位结果。
         // 如果设置其为true，setOnceLocation(boolean b)接口也会被设置为true，反之不会，默认为false。
         // mLocationOption.setOnceLocationLatest(true);
-        mLocationOption.setInterval(3 * 60 * 1000);
+        mLocationOption.setInterval(MyApp.MAP_SPACE_TIME);
         //设置是否返回地址信息（默认返回地址信息）
         mLocationOption.setNeedAddress(true);
         //设置是否强制刷新WIFI，默认为true，强制刷新，相应的会多付出一些电量消耗。

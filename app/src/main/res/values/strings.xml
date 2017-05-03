@@ -52,5 +52,7 @@
     <string name="feedback">意见反馈</string>
     <string name="hint">提示</string>
     <string name="put_ask">确认提交？</string>
+    <string name="default_str">-</string>
+    <string name="address_error">经纬度信息有误</string>
 
 </resources>

@@ -163,7 +163,7 @@ public class DeviceInfoService extends Service {
 
     private void initData() {
         Timer timer = new Timer();
-        timer.schedule(timerTask, 0, MyApp.SPACE_TIME);
+        timer.schedule(timerTask, 0, MyApp.UPLOAD_SPACE_TIME);
     }
 
 

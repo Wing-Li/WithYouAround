@@ -13,7 +13,15 @@ import com.tencent.bugly.Bugly;
 
 public class MyApp extends Application {
 
-    public static int SPACE_TIME = 5 * 60 * 1000 + 2000;
+    /**
+     * 位置获取的间隔时间
+     */
+    public static int MAP_SPACE_TIME = 5 * 60 * 1000;
+    /**
+     * 信息上传的间隔时间
+     */
+    public static int UPLOAD_SPACE_TIME = 5 * 60 * 1000 + 2000;
+
 
     public static LiteOrm liteOrm;
 
@@ -31,13 +39,13 @@ public class MyApp extends Application {
 
 
     private void initBugly() {
-        Bugly.init(getApplicationContext(), "9cbcfc1af7", true);
+        Bugly.init(getApplicationContext(), BuildConfig.BuglyAppId, true);
     }
 
 
     private void initLeancloud() {
         // 初始化参数依次为 this, AppId, AppKey
-        AVOSCloud.initialize(this,"zvD19ojtYQcAW7KijUr0onbD-gzGzoHsz","B1JhfQQCfYrH8f3e1RuhbrXc");
+        AVOSCloud.initialize(this, BuildConfig.AVOSCloudAppId, BuildConfig.AVOSCloudAppKey);
         // 放在 SDK 初始化语句 AVOSCloud.initialize() 后面，只需要调用一次即可
         AVOSCloud.setDebugLogEnabled(true);
     }

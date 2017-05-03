@@ -1,6 +1,11 @@
 package com.lyl.myallforyou.utils;
 
-import java.io.File;
+import android.content.Context;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by lyl on 2017/4/21.
@@ -10,18 +15,39 @@ public class OpenLocalMapUtil {
     /**
      * 地图应用是否安装 * @return
      */
-    public static boolean isGdMapInstalled() {
-        return isInstallPackage("com.autonavi.minimap");
+    public static boolean isGdMapInstalled(Context context) {
+        return isAvilible(context, "com.autonavi.minimap");
     }
 
 
-    public static boolean isBaiduMapInstalled() {
-        return isInstallPackage("com.baidu.BaiduMap");
+    public static boolean isBaiduMapInstalled(Context context) {
+        return isAvilible(context, "com.baidu.BaiduMap");
     }
 
 
-    private static boolean isInstallPackage(String packageName) {
-        return new File("/data/data/" + packageName).exists();
+    /**
+     * 检查手机上是否安装了指定的软件
+     *
+     * @param context
+     * @param packageName：应用包名
+     * @return
+     */
+    private static boolean isAvilible(Context context, String packageName) {
+        //获取packagemanager
+        final PackageManager packageManager = context.getPackageManager();
+        //获取所有已安装程序的包信息
+        List<PackageInfo> packageInfos = packageManager.getInstalledPackages(0);
+        //用于存储所有已安装程序的包名
+        List<String> packageNames = new ArrayList<String>();
+        //从pinfo中将包名字逐一取出，压入pName list中
+        if (packageInfos != null) {
+            for (int i = 0; i < packageInfos.size(); i++) {
+                String packName = packageInfos.get(i).packageName;
+                packageNames.add(packName);
+            }
+        }
+        //判断packageNames中是否有目标程序的包名，有TRUE，没有FALSE
+        return packageNames.contains(packageName);
     }
 
 
@@ -49,6 +75,7 @@ public class OpenLocalMapUtil {
 
     /**
      * 网页版百度地图 有经纬度 * @param originLat * @param originLon * @param originName ->注：必填 * @param desLat * @param desLon * @param destination *
+     *
      * @param region : 当给定region时，认为起点和终点都在同一城市，除非单独给定起点或终点的城市。-->注：必填，不填不会显示导航路线 * @param appName * @return
      */
     public static String getWebBaiduMapUri(String originLat, String originLon, String originName, String desLat, String desLon, String
