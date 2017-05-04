@@ -51,6 +51,7 @@ import com.lyl.myallforyou.utils.SPUtil;
 
 import org.greenrobot.eventbus.EventBus;
 
+import java.util.ArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -133,10 +134,10 @@ public class MainActivity extends BaseActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         IntentResult intentResult = IntentIntegrator.parseActivityResult(requestCode, resultCode, data);
         if (intentResult != null) {
-            if (intentResult.getContents() == null) {
-                Toast.makeText(this, "内容为空", Toast.LENGTH_LONG).show();
+            if (TextUtils.isEmpty(intentResult.getContents())) {
+                Toast.makeText(this, R.string.scan_error, Toast.LENGTH_LONG).show();
             } else {
-                Toast.makeText(this, "扫描成功", Toast.LENGTH_LONG).show();
+                Toast.makeText(this, R.string.scan_success, Toast.LENGTH_LONG).show();
                 // ScanResult 为 获取到的字符串
                 String scanResult = intentResult.getContents();
                 setNameNote(scanResult);
@@ -174,7 +175,9 @@ public class MainActivity extends BaseActivity {
                 dialogInterface.dismiss();
             }
         });
-        builder.create().show();
+        AlertDialog alertDialog = builder.create();
+        alertDialog.setCancelable(false);
+        alertDialog.show();
     }
 
 
@@ -182,6 +185,7 @@ public class MainActivity extends BaseActivity {
      * 绑定扫描到的数据
      *
      * @param familyUuid 对方的UUID
+     * @param nameNote   给对方的备注
      */
     private void bindUser(final String familyUuid, final String nameNote) {
         // 查询对方的数据
@@ -189,34 +193,45 @@ public class MainActivity extends BaseActivity {
         query.whereContains(USER_MYID, familyUuid);
         query.getFirstInBackground(new GetCallback<AVObject>() {
             @Override
-            public void done(AVObject avObject, AVException e) {
+            public void done(final AVObject avObject, AVException e) {
                 if (e == null && avObject != null) {
+                    ArrayList<AVObject> todos = new ArrayList<AVObject>();
+
                     // 把对方加入我的表里
                     String myFamily = (String) SPUtil.get(mContext, Constans.SP_FAMILY_ID, "");
-                    addFamilyToMy(objId, familyUuid, myFamily, true);
+                    AVObject my = addFamilyToMy(objId, familyUuid, myFamily, true);
+                    todos.add(my);
 
                     // 把我加到对方的表里
-                    String familyObjId = avObject.getObjectId();
+                    final String familyObjId = avObject.getObjectId();
                     String familyId = (String) avObject.get(Constans.USER_FAMILYID);
-                    addFamilyToMy(familyObjId, uuid, familyId, false);
+                    AVObject family = addFamilyToMy(familyObjId, uuid, familyId, false);
+                    todos.add(family);
 
-                    // 查询本地的用户
-                    UserInfo userInfo = null;
-                    try {
-                        userInfo = new UserInfo();
-                        userInfo.setObjid(familyObjId);
-                        userInfo.setUuid(familyUuid);
-                        userInfo.setName(avObject.getString(Constans.USER_MYNAME));
-                        userInfo.setNameNote(nameNote);
-                        userInfo.setSign(avObject.getString(Constans.USER_MYSGIN));
-                        MyApp.liteOrm.insert(userInfo, ConflictAlgorithm.Abort);
-                    } catch (Exception ex) {
-                        MyApp.liteOrm.update(userInfo);
-                    }
+                    AVObject.saveAllInBackground(todos, new SaveCallback() {
+                        @Override
+                        public void done(AVException e) {
+                            if (e == null) {
+                                showT(R.string.save_success);
 
-                    EventBus.getDefault().post(new MainEvent());
+                                // 查询本地的用户
+                                UserInfo userInfo = null;
+                                try {
+                                    userInfo = new UserInfo();
+                                    userInfo.setObjid(familyObjId);
+                                    userInfo.setUuid(familyUuid);
+                                    userInfo.setName(avObject.getString(Constans.USER_MYNAME));
+                                    userInfo.setNameNote(nameNote);
+                                    userInfo.setSign(avObject.getString(Constans.USER_MYSGIN));
+                                    MyApp.liteOrm.insert(userInfo, ConflictAlgorithm.Abort);
+                                } catch (Exception ex) {
+                                    MyApp.liteOrm.update(userInfo);
+                                }
 
-                    showT(R.string.save_success);
+                                EventBus.getDefault().post(new MainEvent());
+                            }
+                        }
+                    });
                 } else {
                     showT(R.string.not_my_object_id);
                     finish();
@@ -234,7 +249,7 @@ public class MainActivity extends BaseActivity {
      * @param myFamilyId 与我绑定的人id
      * @param isSaveData 把对方加入我自己的亲人列表时，要更新 SP
      */
-    private void addFamilyToMy(String my, String family, String myFamilyId, final boolean isSaveData) {
+    private AVObject addFamilyToMy(String my, String family, String myFamilyId, final boolean isSaveData) {
         AVObject userInfo = AVObject.createWithoutData(Constans.TABLE_USER_INFO, my);
         String saveFamilyid;
         if (TextUtils.isEmpty(myFamilyId) || !myFamilyId.contains(family)) {
@@ -244,16 +259,11 @@ public class MainActivity extends BaseActivity {
                 saveFamilyid = myFamilyId + "," + family;
             }
             userInfo.put(USER_FAMILYID, saveFamilyid);
-            final String finalSaveFamilyid = saveFamilyid;
-            userInfo.saveInBackground(new SaveCallback() {
-                @Override
-                public void done(AVException e) {
-                    if (e == null && isSaveData) {
-                        SPUtil.put(mContext, Constans.SP_FAMILY_ID, finalSaveFamilyid);
-                    }
-                }
-            });
+            if (isSaveData) {
+                SPUtil.put(mContext, Constans.SP_FAMILY_ID, FS(saveFamilyid));
+            }
         }
+        return userInfo;
     }
 
     // ============================================== ↑扫描二维码绑定用户↑ ==============================================
