@@ -59,7 +59,6 @@ import static com.lyl.myallforyou.constants.Constans.SP_MY_NAME;
 import static com.lyl.myallforyou.constants.Constans.SP_MY_SGIN;
 import static com.lyl.myallforyou.constants.Constans.USER_FAMILYID;
 import static com.lyl.myallforyou.constants.Constans.USER_MYID;
-import static com.lyl.myallforyou.constants.Constans.USER_MYNAME;
 import static com.lyl.myallforyou.constants.Constans.USER_MYSGIN;
 
 public class MainActivity extends BaseActivity {
@@ -189,49 +188,58 @@ public class MainActivity extends BaseActivity {
      */
     private void bindUser(final String familyUuid, final String nameNote) {
         // 查询对方的数据
-        AVQuery<AVObject> query = new AVQuery<>(Constans.TABLE_USER_INFO);
-        query.whereContains(USER_MYID, familyUuid);
-        query.getFirstInBackground(new GetCallback<AVObject>() {
+        AVQuery<AVObject> familyQuery = new AVQuery<>(Constans.TABLE_USER_INFO);
+        familyQuery.whereContains(USER_MYID, familyUuid);
+        familyQuery.getFirstInBackground(new GetCallback<AVObject>() {
             @Override
-            public void done(final AVObject avObject, AVException e) {
-                if (e == null && avObject != null) {
-                    ArrayList<AVObject> todos = new ArrayList<AVObject>();
-
-                    // 把对方加入我的表里
-                    String myFamily = (String) SPUtil.get(mContext, Constans.SP_FAMILY_ID, "");
-                    AVObject my = addFamilyToMy(objId, familyUuid, myFamily, true);
-                    todos.add(my);
-
-                    // 把我加到对方的表里
-                    final String familyObjId = avObject.getObjectId();
-                    String familyId = (String) avObject.get(Constans.USER_FAMILYID);
-                    AVObject family = addFamilyToMy(familyObjId, uuid, familyId, false);
-                    todos.add(family);
-
-                    AVObject.saveAllInBackground(todos, new SaveCallback() {
+            public void done(final AVObject familyObject, AVException e) {
+                if (e == null && familyObject != null) {
+                    // 查询自己的数据
+                    AVQuery<AVObject> myQuery = new AVQuery<>(Constans.TABLE_USER_INFO);
+                    myQuery.whereContains(USER_MYID, uuid);
+                    myQuery.getFirstInBackground(new GetCallback<AVObject>() {
                         @Override
-                        public void done(AVException e) {
-                            if (e == null) {
-                                showT(R.string.save_success);
+                        public void done(AVObject myObject, AVException e) {
+                            if (e == null && myObject != null) {
+                                ArrayList<AVObject> todos = new ArrayList<AVObject>();
 
-                                // 查询本地的用户
-                                UserInfo userInfo = null;
-                                try {
-                                    userInfo = new UserInfo();
-                                    userInfo.setObjid(familyObjId);
-                                    userInfo.setUuid(familyUuid);
-                                    userInfo.setName(avObject.getString(Constans.USER_MYNAME));
-                                    userInfo.setNameNote(nameNote);
-                                    userInfo.setSign(avObject.getString(Constans.USER_MYSGIN));
-                                    MyApp.liteOrm.insert(userInfo, ConflictAlgorithm.Abort);
-                                } catch (Exception ex) {
-                                    MyApp.liteOrm.update(userInfo);
-                                }
+                                // 把对方加入我的表里
+                                String myFamily = myObject.getString(Constans.USER_FAMILYID);
+                                AVObject my = addFamilyToMy(objId, familyUuid, myFamily, true);
+                                todos.add(my);
 
-                                EventBus.getDefault().post(new MainEvent());
+                                // 把我加到对方的表里
+                                final String familyObjId = familyObject.getObjectId();
+                                String familyId = (String) familyObject.get(Constans.USER_FAMILYID);
+                                AVObject family = addFamilyToMy(familyObjId, uuid, familyId, false);
+                                todos.add(family);
+
+                                AVObject.saveAllInBackground(todos, new SaveCallback() {
+                                    @Override
+                                    public void done(AVException e) {
+                                        if (e == null) {
+                                            // 查询本地的用户
+                                            UserInfo userInfo = null;
+                                            try {
+                                                userInfo = new UserInfo();
+                                                userInfo.setObjid(familyObjId);
+                                                userInfo.setUuid(familyUuid);
+                                                userInfo.setName(familyObject.getString(Constans.USER_MYNAME));
+                                                userInfo.setNameNote(nameNote);
+                                                userInfo.setSign(familyObject.getString(Constans.USER_MYSGIN));
+                                                MyApp.liteOrm.insert(userInfo, ConflictAlgorithm.Abort);
+                                            } catch (Exception ex) {
+                                                MyApp.liteOrm.update(userInfo);
+                                            }
+
+                                            EventBus.getDefault().post(new MainEvent());
+                                        }
+                                    }
+                                });
                             }
                         }
                     });
+
                 } else {
                     showT(R.string.not_my_object_id);
                     finish();
@@ -354,7 +362,7 @@ public class MainActivity extends BaseActivity {
                 if (TextUtils.isEmpty(str)) return;
 
                 AVObject todo = AVObject.createWithoutData(Constans.TABLE_USER_INFO, objId);
-                todo.put(USER_MYNAME, str);
+                todo.put(Constans.USER_MYNAME, str);
                 todo.saveInBackground(new SaveCallback() {
                     @Override
                     public void done(AVException e) {
