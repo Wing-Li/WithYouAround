@@ -39,7 +39,7 @@ public class MyApp extends Application {
 
 
     private void initBugly() {
-        Bugly.init(getApplicationContext(), BuildConfig.BuglyAppId, true);
+        Bugly.init(getApplicationContext(), BuildConfig.BuglyAppId, false);
     }
 
 
