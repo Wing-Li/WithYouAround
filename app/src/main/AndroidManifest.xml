@@ -105,7 +105,8 @@
                 android:resource="@xml/provider_paths"/>
         </provider>
 
-
+        <activity android:name=".ui.essay.NhEassayActivity">
+        </activity>
     </application>
 
 </manifest>
