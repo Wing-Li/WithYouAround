@@ -162,7 +162,7 @@ public class NhEassayActivity extends BaseActivity {
                 Thread thread = Thread.currentThread();
                 String name = thread.getName();
                 Toast.makeText(mContext, R.string.net_error, Toast.LENGTH_SHORT).show();
-                LogUtils.e(t.getMessage());
+                LogUtils.e("Error : ", t.getLocalizedMessage());
             }
         });
     }

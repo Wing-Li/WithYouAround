@@ -4,17 +4,16 @@
     <group android:checkableBehavior="single">
         <item
             android:id="@+id/nav_nheassay"
-            android:icon="@drawable/ic_settings_black_24dp"
+            android:icon="@drawable/ic_text_fields_black_24dp"
             android:title="内涵段子"/>
         <item
             android:id="@+id/nav_nhimage"
-            android:icon="@drawable/ic_settings_black_24dp"
+            android:icon="@drawable/ic_image_black_24dp"
             android:title="内涵图片"/>
         <item
             android:id="@+id/nav_nhvideo"
-            android:icon="@drawable/ic_settings_black_24dp"
+            android:icon="@drawable/ic_switch_video_black_24dp"
             android:title="内涵视频"/>
-
     </group>
 
     <item android:title="More">
