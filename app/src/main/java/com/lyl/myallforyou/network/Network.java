@@ -1,13 +1,14 @@
 package com.lyl.myallforyou.network;
 
 
+import com.lyl.myallforyou.BuildConfig;
 import com.lyl.myallforyou.network.api.NeihanApi;
 
 import java.util.concurrent.TimeUnit;
 
 import okhttp3.OkHttpClient;
+import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
-import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 /**
@@ -15,7 +16,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
  */
 public class Network {
 
-    private static String URL_NEIHAN = "http://is.snssdk.com/neihan/stream/mix/v1/";
+    private static String URL_NEIHAN = "http://is.snssdk.com/";
 
     private static final int DEFAULT_TIMEOUT = 30;
 
@@ -25,6 +26,12 @@ public class Network {
     private static void initOkHttp() {
         httpClientBuilder = new OkHttpClient.Builder();
         httpClientBuilder.connectTimeout(DEFAULT_TIMEOUT, TimeUnit.SECONDS);
+
+        if ("dev".equals(BuildConfig.Environment)) {
+            HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
+            logging.setLevel(HttpLoggingInterceptor.Level.BODY);
+            httpClientBuilder.addInterceptor(logging);
+        }
     }
 
     private static Retrofit getRetrofit(String url) {
@@ -36,7 +43,6 @@ public class Network {
                 .client(httpClientBuilder.build())//
                 .baseUrl(url)//
                 .addConverterFactory(GsonConverterFactory.create())//
-                .addCallAdapterFactory(RxJavaCallAdapterFactory.create())//
                 .build();
     }
 

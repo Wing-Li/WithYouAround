@@ -104,6 +104,7 @@ public class DeviceInfoService extends Service {
                     if (amapLocation.getErrorCode() == 0) {
                         // 陕西省西安市雁塔区锦业路靠近都市之门-会议中心
                         String address = amapLocation.getAddress();//地址，如果option中设置isNeedAddress为false，则没有此结果，网络定位结果中会有地址信息，GPS定位不返回地址信息。
+                        String city = amapLocation.getCity();
                         double longitude = amapLocation.getLongitude();
                         double latitude = amapLocation.getLatitude();
                         // 5
@@ -133,6 +134,11 @@ public class DeviceInfoService extends Service {
                         mLongitude = longitude;
                         mLatitude = latitude;
                         mLocationType = locationType;
+
+                        // 将每次次取的数据保存起来
+                        SPUtil.put(mContext, Constans.SP_CITY, city);
+                        SPUtil.put(mContext, Constans.SP_LATITUDE, String.valueOf(latitude));
+                        SPUtil.put(mContext, Constans.SP_LONGITUDE, String.valueOf(longitude));
                     } else {
                         //定位失败时，可通过ErrCode（错误码）信息来确定失败的原因，errInfo是错误信息，详见错误码表。
                         LogUtils.e("AmapError", "location Error, ErrCode:" + amapLocation.getErrorCode() + ", errInfo:" + amapLocation

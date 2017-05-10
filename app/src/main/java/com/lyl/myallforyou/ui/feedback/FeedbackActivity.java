@@ -18,6 +18,9 @@ import com.lyl.myallforyou.ui.BaseActivity;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
+/**
+ * 意见反馈
+ */
 public class FeedbackActivity extends BaseActivity {
 
     @Bind(R.id.toolbar)

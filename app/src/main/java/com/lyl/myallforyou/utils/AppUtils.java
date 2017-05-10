@@ -354,6 +354,16 @@ public final class AppUtils {
 
 
     /**
+     * 获取手机系统版本号
+     *
+     * @return 如 2.3.4
+     */
+    public static String getSDKVersionName() {
+        return android.os.Build.VERSION.RELEASE;
+    }
+
+
+    /**
      * 是否Dalvik模式
      *
      * @return 结果

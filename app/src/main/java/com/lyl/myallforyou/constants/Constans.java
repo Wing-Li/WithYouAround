@@ -66,4 +66,11 @@ public class Constans {
     public static String SP_MY_NAME = "sp_my_name";
     public static String SP_MY_SGIN = "sp_my_sgin";
     public static String SP_FAMILY_ID = "sp_family_id";
+    public static String SP_CITY = "sp_city";
+    public static String SP_LONGITUDE = "sp_longitude";
+    public static String SP_LATITUDE = "sp_latitude";
+    public static String SP_IID = "sp_iid";
+    public static String SP_DEVICE_ID = "sp_device_id";
+    public static String SP_UUID_EASSAY = "sp_uuid_eassay";
+
 }

@@ -35,11 +35,11 @@ public class BaseActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mContext = this;
-        initData();
+        initAppData();
     }
 
 
-    private void initData() {
+    private void initAppData() {
         uuid = (String) SPUtil.get(mContext, Constans.SP_UUID, "");
         if (TextUtils.isEmpty(uuid)) {
             uuid = AppUtils.getUUID();

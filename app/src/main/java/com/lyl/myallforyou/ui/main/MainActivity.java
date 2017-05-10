@@ -43,10 +43,10 @@ import com.lyl.myallforyou.data.event.MainEvent;
 import com.lyl.myallforyou.service.DeviceInfoService;
 import com.lyl.myallforyou.ui.BaseActivity;
 import com.lyl.myallforyou.ui.about.AboutActivity;
+import com.lyl.myallforyou.ui.essay.NhEassayActivity;
 import com.lyl.myallforyou.ui.feedback.FeedbackActivity;
 import com.lyl.myallforyou.ui.qrbind.QrScanActivity;
 import com.lyl.myallforyou.ui.qrbind.QrShareActivity;
-import com.lyl.myallforyou.ui.setting.SettingActivity;
 import com.lyl.myallforyou.utils.SPUtil;
 
 import org.greenrobot.eventbus.EventBus;
@@ -320,8 +320,13 @@ public class MainActivity extends BaseActivity {
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 int id = item.getItemId();
                 Intent intent = null;
-                if (id == R.id.nav_setting) {
-                    intent = new Intent(mContext, SettingActivity.class);
+                if (id == R.id.nav_nheassay) {
+                    intent = new Intent(mContext, NhEassayActivity.class);
+                    intent.putExtra(NhEassayActivity.CONTENT_TYPE, NhEassayActivity.CONTENT_TYPE_ESSAY);
+                } else if (id == R.id.nav_nhimage) {
+
+                } else if (id == R.id.nav_nhvideo) {
+
                 } else if (id == R.id.nav_feedback) {
                     intent = new Intent(mContext, FeedbackActivity.class);
                 } else if (id == R.id.nav_about) {

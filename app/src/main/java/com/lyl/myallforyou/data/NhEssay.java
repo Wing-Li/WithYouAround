@@ -359,8 +359,8 @@ public class NhEssay {
         private boolean has_more;
         private String tip;
         private boolean has_new_message;
-        private int max_time;
-        private int min_time;
+        private String max_time;
+        private String min_time;
         private List<DataBean> data;
 
         public boolean isHas_more() {
@@ -387,19 +387,19 @@ public class NhEssay {
             this.has_new_message = has_new_message;
         }
 
-        public int getMax_time() {
+        public String getMax_time() {
             return max_time;
         }
 
-        public void setMax_time(int max_time) {
+        public void setMax_time(String max_time) {
             this.max_time = max_time;
         }
 
-        public int getMin_time() {
+        public String getMin_time() {
             return min_time;
         }
 
-        public void setMin_time(int min_time) {
+        public void setMin_time(String min_time) {
             this.min_time = min_time;
         }
 
@@ -497,7 +497,7 @@ public class NhEssay {
              */
 
             private GroupBean group;
-            private int type;
+            private String type;
             private double display_time;
             private double online_time;
             private AdBean ad;
@@ -511,11 +511,11 @@ public class NhEssay {
                 this.group = group;
             }
 
-            public int getType() {
+            public String getType() {
                 return type;
             }
 
-            public void setType(int type) {
+            public void setType(String type) {
                 this.type = type;
             }
 
@@ -663,47 +663,47 @@ public class NhEssay {
 
                 private String text;
                 private String neihan_hot_start_time;
-                private int create_time;
+                private String create_time;
                 private long id;
-                private int favorite_count;
-                private int go_detail_count;
-                private int user_favorite;
-                private int share_type;
+                private String favorite_count;
+                private String go_detail_count;
+                private String user_favorite;
+                private String share_type;
                 private UserBean user;
-                private int is_can_share;
-                private int category_type;
+                private String is_can_share;
+                private String category_type;
                 private String share_url;
-                private int label;
+                private String label;
                 private String content;
-                private int comment_count;
+                private String comment_count;
                 private String id_str;
-                private int media_type;
-                private int share_count;
-                private int type;
-                private int status;
-                private int has_comments;
-                private int user_bury;
+                private String media_type;
+                private String share_count;
+                private String type;
+                private String status;
+                private String has_comments;
+                private String user_bury;
                 private ActivityBean activity;
                 private String status_desc;
                 private boolean quick_comment;
-                private int display_type;
+                private String display_type;
                 private String neihan_hot_end_time;
-                private int user_digg;
-                private int online_time;
+                private String user_digg;
+                private String online_time;
                 private String category_name;
                 private boolean category_visible;
-                private int bury_count;
+                private String bury_count;
                 private boolean is_anonymous;
-                private int repin_count;
+                private String repin_count;
                 private boolean is_neihan_hot;
-                private int digg_count;
-                private int has_hot_comments;
+                private String digg_count;
+                private String has_hot_comments;
                 private boolean allow_dislike;
-                private int user_repin;
+                private String user_repin;
                 private NeihanHotLinkBean neihan_hot_link;
-                private int is_multi_image;
+                private String is_multi_image;
                 private long group_id;
-                private int category_id;
+                private String category_id;
                 private List<LargeImageListBean> large_image_list;
                 private List<DislikeReasonBean> dislike_reason;
                 private List<ThumbImageListBean> thumb_image_list;
@@ -724,11 +724,11 @@ public class NhEssay {
                     this.neihan_hot_start_time = neihan_hot_start_time;
                 }
 
-                public int getCreate_time() {
+                public String getCreate_time() {
                     return create_time;
                 }
 
-                public void setCreate_time(int create_time) {
+                public void setCreate_time(String create_time) {
                     this.create_time = create_time;
                 }
 
@@ -740,35 +740,35 @@ public class NhEssay {
                     this.id = id;
                 }
 
-                public int getFavorite_count() {
+                public String getFavorite_count() {
                     return favorite_count;
                 }
 
-                public void setFavorite_count(int favorite_count) {
+                public void setFavorite_count(String favorite_count) {
                     this.favorite_count = favorite_count;
                 }
 
-                public int getGo_detail_count() {
+                public String getGo_detail_count() {
                     return go_detail_count;
                 }
 
-                public void setGo_detail_count(int go_detail_count) {
+                public void setGo_detail_count(String go_detail_count) {
                     this.go_detail_count = go_detail_count;
                 }
 
-                public int getUser_favorite() {
+                public String getUser_favorite() {
                     return user_favorite;
                 }
 
-                public void setUser_favorite(int user_favorite) {
+                public void setUser_favorite(String user_favorite) {
                     this.user_favorite = user_favorite;
                 }
 
-                public int getShare_type() {
+                public String getShare_type() {
                     return share_type;
                 }
 
-                public void setShare_type(int share_type) {
+                public void setShare_type(String share_type) {
                     this.share_type = share_type;
                 }
 
@@ -780,19 +780,19 @@ public class NhEssay {
                     this.user = user;
                 }
 
-                public int getIs_can_share() {
+                public String getIs_can_share() {
                     return is_can_share;
                 }
 
-                public void setIs_can_share(int is_can_share) {
+                public void setIs_can_share(String is_can_share) {
                     this.is_can_share = is_can_share;
                 }
 
-                public int getCategory_type() {
+                public String getCategory_type() {
                     return category_type;
                 }
 
-                public void setCategory_type(int category_type) {
+                public void setCategory_type(String category_type) {
                     this.category_type = category_type;
                 }
 
@@ -804,11 +804,11 @@ public class NhEssay {
                     this.share_url = share_url;
                 }
 
-                public int getLabel() {
+                public String getLabel() {
                     return label;
                 }
 
-                public void setLabel(int label) {
+                public void setLabel(String label) {
                     this.label = label;
                 }
 
@@ -820,11 +820,11 @@ public class NhEssay {
                     this.content = content;
                 }
 
-                public int getComment_count() {
+                public String getComment_count() {
                     return comment_count;
                 }
 
-                public void setComment_count(int comment_count) {
+                public void setComment_count(String comment_count) {
                     this.comment_count = comment_count;
                 }
 
@@ -836,51 +836,51 @@ public class NhEssay {
                     this.id_str = id_str;
                 }
 
-                public int getMedia_type() {
+                public String getMedia_type() {
                     return media_type;
                 }
 
-                public void setMedia_type(int media_type) {
+                public void setMedia_type(String media_type) {
                     this.media_type = media_type;
                 }
 
-                public int getShare_count() {
+                public String getShare_count() {
                     return share_count;
                 }
 
-                public void setShare_count(int share_count) {
+                public void setShare_count(String share_count) {
                     this.share_count = share_count;
                 }
 
-                public int getType() {
+                public String getType() {
                     return type;
                 }
 
-                public void setType(int type) {
+                public void setType(String type) {
                     this.type = type;
                 }
 
-                public int getStatus() {
+                public String getStatus() {
                     return status;
                 }
 
-                public void setStatus(int status) {
+                public void setStatus(String status) {
                     this.status = status;
                 }
 
-                public int getHas_comments() {
+                public String getHas_comments() {
                     return has_comments;
                 }
 
-                public void setHas_comments(int has_comments) {
+                public void setHas_comments(String has_comments) {
                     this.has_comments = has_comments;
                 }
 
-                public int getUser_bury() {
+                public String getUser_bury() {
                     return user_bury;
                 }
 
-                public void setUser_bury(int user_bury) {
+                public void setUser_bury(String user_bury) {
                     this.user_bury = user_bury;
                 }
 
@@ -908,11 +908,11 @@ public class NhEssay {
                     this.quick_comment = quick_comment;
                 }
 
-                public int getDisplay_type() {
+                public String getDisplay_type() {
                     return display_type;
                 }
 
-                public void setDisplay_type(int display_type) {
+                public void setDisplay_type(String display_type) {
                     this.display_type = display_type;
                 }
 
@@ -924,19 +924,19 @@ public class NhEssay {
                     this.neihan_hot_end_time = neihan_hot_end_time;
                 }
 
-                public int getUser_digg() {
+                public String getUser_digg() {
                     return user_digg;
                 }
 
-                public void setUser_digg(int user_digg) {
+                public void setUser_digg(String user_digg) {
                     this.user_digg = user_digg;
                 }
 
-                public int getOnline_time() {
+                public String getOnline_time() {
                     return online_time;
                 }
 
-                public void setOnline_time(int online_time) {
+                public void setOnline_time(String online_time) {
                     this.online_time = online_time;
                 }
 
@@ -956,11 +956,11 @@ public class NhEssay {
                     this.category_visible = category_visible;
                 }
 
-                public int getBury_count() {
+                public String getBury_count() {
                     return bury_count;
                 }
 
-                public void setBury_count(int bury_count) {
+                public void setBury_count(String bury_count) {
                     this.bury_count = bury_count;
                 }
 
@@ -972,11 +972,11 @@ public class NhEssay {
                     this.is_anonymous = is_anonymous;
                 }
 
-                public int getRepin_count() {
+                public String getRepin_count() {
                     return repin_count;
                 }
 
-                public void setRepin_count(int repin_count) {
+                public void setRepin_count(String repin_count) {
                     this.repin_count = repin_count;
                 }
 
@@ -988,19 +988,19 @@ public class NhEssay {
                     this.is_neihan_hot = is_neihan_hot;
                 }
 
-                public int getDigg_count() {
+                public String getDigg_count() {
                     return digg_count;
                 }
 
-                public void setDigg_count(int digg_count) {
+                public void setDigg_count(String digg_count) {
                     this.digg_count = digg_count;
                 }
 
-                public int getHas_hot_comments() {
+                public String getHas_hot_comments() {
                     return has_hot_comments;
                 }
 
-                public void setHas_hot_comments(int has_hot_comments) {
+                public void setHas_hot_comments(String has_hot_comments) {
                     this.has_hot_comments = has_hot_comments;
                 }
 
@@ -1012,11 +1012,11 @@ public class NhEssay {
                     this.allow_dislike = allow_dislike;
                 }
 
-                public int getUser_repin() {
+                public String getUser_repin() {
                     return user_repin;
                 }
 
-                public void setUser_repin(int user_repin) {
+                public void setUser_repin(String user_repin) {
                     this.user_repin = user_repin;
                 }
 
@@ -1028,11 +1028,11 @@ public class NhEssay {
                     this.neihan_hot_link = neihan_hot_link;
                 }
 
-                public int getIs_multi_image() {
+                public String getIs_multi_image() {
                     return is_multi_image;
                 }
 
-                public void setIs_multi_image(int is_multi_image) {
+                public void setIs_multi_image(String is_multi_image) {
                     this.is_multi_image = is_multi_image;
                 }
 
@@ -1044,11 +1044,11 @@ public class NhEssay {
                     this.group_id = group_id;
                 }
 
-                public int getCategory_id() {
+                public String getCategory_id() {
                     return category_id;
                 }
 
-                public void setCategory_id(int category_id) {
+                public void setCategory_id(String category_id) {
                     this.category_id = category_id;
                 }
 
@@ -1098,8 +1098,8 @@ public class NhEssay {
 
                     private String url;
                     private String uri;
-                    private int height;
-                    private int width;
+                    private String height;
+                    private String width;
                     private boolean is_gif;
                     private List<UrlListBean> url_list;
 
@@ -1119,19 +1119,19 @@ public class NhEssay {
                         this.uri = uri;
                     }
 
-                    public int getHeight() {
+                    public String getHeight() {
                         return height;
                     }
 
-                    public void setHeight(int height) {
+                    public void setHeight(String height) {
                         this.height = height;
                     }
 
-                    public int getWidth() {
+                    public String getWidth() {
                         return width;
                     }
 
-                    public void setWidth(int width) {
+                    public void setWidth(String width) {
                         this.width = width;
                     }
 
@@ -1175,23 +1175,23 @@ public class NhEssay {
                      * title : 吧:奇葩买卖家
                      */
 
-                    private int type;
-                    private int id;
+                    private String type;
+                    private String id;
                     private String title;
 
-                    public int getType() {
+                    public String getType() {
                         return type;
                     }
 
-                    public void setType(int type) {
+                    public void setType(String type) {
                         this.type = type;
                     }
 
-                    public int getId() {
+                    public String getId() {
                         return id;
                     }
 
-                    public void setId(int id) {
+                    public void setId(String id) {
                         this.id = id;
                     }
 
@@ -1216,8 +1216,8 @@ public class NhEssay {
 
                     private String url;
                     private String uri;
-                    private int height;
-                    private int width;
+                    private String height;
+                    private String width;
                     private boolean is_gif;
                     private List<UrlListBeanX> url_list;
 
@@ -1237,19 +1237,19 @@ public class NhEssay {
                         this.uri = uri;
                     }
 
-                    public int getHeight() {
+                    public String getHeight() {
                         return height;
                     }
 
-                    public void setHeight(int height) {
+                    public void setHeight(String height) {
                         this.height = height;
                     }
 
-                    public int getWidth() {
+                    public String getWidth() {
                         return width;
                     }
 
-                    public void setWidth(int width) {
+                    public void setWidth(String width) {
                         this.width = width;
                     }
 
@@ -1322,21 +1322,21 @@ public class NhEssay {
                 private String web_url;
                 private String avatar_name;
                 private long id;
-                private int display_image_height;
-                private int display_image_width;
+                private String display_image_height;
+                private String display_image_width;
                 private String title;
                 private String label;
                 private String display_image;
                 private String type;
-                private int is_ad;
+                private String is_ad;
                 private String gif_url;
                 private long ad_id;
                 private String button_text;
-                private int display_type;
-                private int click_delay;
-                private int ab_show_style;
+                private String display_type;
+                private String click_delay;
+                private String ab_show_style;
                 private String avatar_url;
-                private int end_time;
+                private String end_time;
                 private List<?> track_url_list;
                 private List<FilterWordsBean> filter_words;
 
@@ -1396,19 +1396,19 @@ public class NhEssay {
                     this.id = id;
                 }
 
-                public int getDisplay_image_height() {
+                public String getDisplay_image_height() {
                     return display_image_height;
                 }
 
-                public void setDisplay_image_height(int display_image_height) {
+                public void setDisplay_image_height(String display_image_height) {
                     this.display_image_height = display_image_height;
                 }
 
-                public int getDisplay_image_width() {
+                public String getDisplay_image_width() {
                     return display_image_width;
                 }
 
-                public void setDisplay_image_width(int display_image_width) {
+                public void setDisplay_image_width(String display_image_width) {
                     this.display_image_width = display_image_width;
                 }
 
@@ -1444,11 +1444,11 @@ public class NhEssay {
                     this.type = type;
                 }
 
-                public int getIs_ad() {
+                public String getIs_ad() {
                     return is_ad;
                 }
 
-                public void setIs_ad(int is_ad) {
+                public void setIs_ad(String is_ad) {
                     this.is_ad = is_ad;
                 }
 
@@ -1476,27 +1476,27 @@ public class NhEssay {
                     this.button_text = button_text;
                 }
 
-                public int getDisplay_type() {
+                public String getDisplay_type() {
                     return display_type;
                 }
 
-                public void setDisplay_type(int display_type) {
+                public void setDisplay_type(String display_type) {
                     this.display_type = display_type;
                 }
 
-                public int getClick_delay() {
+                public String getClick_delay() {
                     return click_delay;
                 }
 
-                public void setClick_delay(int click_delay) {
+                public void setClick_delay(String click_delay) {
                     this.click_delay = click_delay;
                 }
 
-                public int getAb_show_style() {
+                public String getAb_show_style() {
                     return ab_show_style;
                 }
 
-                public void setAb_show_style(int ab_show_style) {
+                public void setAb_show_style(String ab_show_style) {
                     this.ab_show_style = ab_show_style;
                 }
 
@@ -1508,11 +1508,11 @@ public class NhEssay {
                     this.avatar_url = avatar_url;
                 }
 
-                public int getEnd_time() {
+                public String getEnd_time() {
                     return end_time;
                 }
 
-                public void setEnd_time(int end_time) {
+                public void setEnd_time(String end_time) {
                     this.end_time = end_time;
                 }
 
@@ -1540,16 +1540,16 @@ public class NhEssay {
                      * convert_id : 0
                      */
 
-                    private int rit;
+                    private String rit;
                     private String ad_price;
                     private String req_id;
-                    private int convert_id;
+                    private String convert_id;
 
-                    public int getRit() {
+                    public String getRit() {
                         return rit;
                     }
 
-                    public void setRit(int rit) {
+                    public void setRit(String rit) {
                         this.rit = rit;
                     }
 
@@ -1569,11 +1569,11 @@ public class NhEssay {
                         this.req_id = req_id;
                     }
 
-                    public int getConvert_id() {
+                    public String getConvert_id() {
                         return convert_id;
                     }
 
-                    public void setConvert_id(int convert_id) {
+                    public void setConvert_id(String convert_id) {
                         this.convert_id = convert_id;
                     }
                 }

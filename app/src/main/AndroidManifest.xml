@@ -74,6 +74,10 @@
             android:name=".ui.setting.SettingActivity"
             android:theme="@style/AppTheme.NoActionBar">
         </activity>
+        <activity
+            android:name=".ui.essay.NhEassayActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+        </activity>
 
         <service
             android:name=".service.DeviceInfoService"
@@ -105,8 +109,6 @@
                 android:resource="@xml/provider_paths"/>
         </provider>
 
-        <activity android:name=".ui.essay.NhEassayActivity">
-        </activity>
     </application>
 
 </manifest>
