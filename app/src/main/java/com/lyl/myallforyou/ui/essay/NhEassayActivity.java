@@ -17,6 +17,7 @@ import com.lyl.myallforyou.network.Network;
 import com.lyl.myallforyou.ui.BaseActivity;
 import com.lyl.myallforyou.utils.AppUtils;
 import com.lyl.myallforyou.utils.DeviceStatusUtils;
+import com.lyl.myallforyou.utils.ImgUtils;
 import com.lyl.myallforyou.utils.LogUtils;
 import com.lyl.myallforyou.utils.MyUtils;
 import com.lyl.myallforyou.utils.SPUtil;
@@ -50,7 +51,11 @@ public class NhEassayActivity extends BaseActivity {
     @Bind(R.id.swipeRefresh)
     SwipeRefreshLayout swipeRefresh;
 
+    private Call<NhEssay> essayCall;
+
     private NhEassayAdapter mAdapter;
+    private boolean mHasMore = true;
+    private String mTip;
 
     private ArrayList<NhEssay.DataBeanX.DataBean> mDataBeen;
     private String mContentType;
@@ -77,9 +82,9 @@ public class NhEassayActivity extends BaseActivity {
         ButterKnife.bind(this);
 
         getParameter();
-        initView();
         initData();
         getData();
+        initView();
     }
 
     private void initData() {
@@ -97,7 +102,6 @@ public class NhEassayActivity extends BaseActivity {
             mIid = MyUtils.getRandomNumber(10);
             SPUtil.put(mContext, Constans.SP_IID, mIid);
         }
-
 
         if (TextUtils.isEmpty(mDeviceId = (String) SPUtil.get(mContext, Constans.SP_DEVICE_ID, ""))) {
             mDeviceId = MyUtils.getRandomNumber(11);
@@ -121,7 +125,8 @@ public class NhEassayActivity extends BaseActivity {
     }
 
     private void getData() {
-        Call<NhEssay> essayCall = Network.getNeihanApi().getNhEssay(mContentType,// 图片的是-103，段子的是-102
+        swipeRefresh.setRefreshing(true);
+       essayCall = Network.getNeihanApi().getNhEssay(mContentType,// 图片的是-103，段子的是-102
                 mCity,// 城市
                 mLongitude,//
                 mLatitude,//
@@ -147,11 +152,17 @@ public class NhEassayActivity extends BaseActivity {
         clone.enqueue(new Callback<NhEssay>() {
             @Override
             public void onResponse(Call<NhEssay> call, Response<NhEssay> response) {
-                Thread thread = Thread.currentThread();
-                String name = thread.getName();
+                swipeRefresh.setRefreshing(false);
                 if (response.isSuccessful()) {
                     NhEssay body = response.body();
-                    LogUtils.d(body.toString());
+                    if ("success".equals(body.getMessage())) {
+                        mHasMore = body.getData().isHas_more();
+                        mTip = body.getData().getTip();
+
+                        ArrayList<NhEssay.DataBeanX.DataBean> data = (ArrayList<NhEssay.DataBeanX.DataBean>) body.getData().getData();
+
+                        mAdapter.addData(data);
+                    }
                 } else {
                     LogUtils.e(response.errorBody());
                 }
@@ -159,8 +170,7 @@ public class NhEassayActivity extends BaseActivity {
 
             @Override
             public void onFailure(Call<NhEssay> call, Throwable t) {
-                Thread thread = Thread.currentThread();
-                String name = thread.getName();
+                swipeRefresh.setRefreshing(false);
                 Toast.makeText(mContext, R.string.net_error, Toast.LENGTH_SHORT).show();
                 LogUtils.e("Error : ", t.getLocalizedMessage());
             }
@@ -172,20 +182,24 @@ public class NhEassayActivity extends BaseActivity {
         setSupportActionBar(toolbar);
         setBackUI(toolbar);
 
-        mAdapter = new NhEassayAdapter();
+        mAdapter = new NhEassayAdapter(mContext, mDataBeen, mContentType, mScreenWidth);
         recyclerView.setLayoutManager(new LinearLayoutManager(mContext));
         recyclerView.setAdapter(mAdapter);
         recyclerView.addOnScrollListener(new OnRecycleViewScrollListener() {
             @Override
             public void onLoadMore() {
-                getData();
+                if (mHasMore) {
+                    getData();
+                } else {
+                    showT(getString(R.string.not_more));
+                }
             }
         });
 
         swipeRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                mDataBeen.clear();
+                mAdapter.clear();
                 getData();
             }
         });
@@ -194,5 +208,14 @@ public class NhEassayActivity extends BaseActivity {
     public void getParameter() {
         Intent intent = getIntent();
         mContentType = intent.getStringExtra(CONTENT_TYPE);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (essayCall!=null && !essayCall.isCanceled()){
+            essayCall.cancel();
+        }
+        ImgUtils.cleanAll(mContext);
     }
 }

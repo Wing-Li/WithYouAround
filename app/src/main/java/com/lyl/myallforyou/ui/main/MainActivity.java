@@ -324,7 +324,8 @@ public class MainActivity extends BaseActivity {
                     intent = new Intent(mContext, NhEassayActivity.class);
                     intent.putExtra(NhEassayActivity.CONTENT_TYPE, NhEassayActivity.CONTENT_TYPE_ESSAY);
                 } else if (id == R.id.nav_nhimage) {
-
+                    intent = new Intent(mContext, NhEassayActivity.class);
+                    intent.putExtra(NhEassayActivity.CONTENT_TYPE, NhEassayActivity.CONTENT_TYPE_IMAGE);
                 } else if (id == R.id.nav_nhvideo) {
 
                 } else if (id == R.id.nav_feedback) {

@@ -1,5 +1,7 @@
 package com.lyl.myallforyou.data;
 
+import com.google.gson.annotations.SerializedName;
+
 import java.util.List;
 
 /**
@@ -7,168 +9,6 @@ import java.util.List;
  */
 
 public class NhEssay {
-
-    /**
-     * message : success
-     * data : {"has_more":true,"tip":"4条新内容","has_new_message":false,"max_time":1494225898,"min_time":1494225901,
-     * "data":[{"group":{"large_image_list":[{"url":"http://p1.pstatp.com/large/1e120002134b41111c57.webp",
-     * "url_list":[{"url":"http://p1.pstatp.com/large/1e120002134b41111c57.webp"},{"url":"http://pb3.pstatp
-     * .com/large/1e120002134b41111c57.webp"},{"url":"http://pb3.pstatp.com/large/1e120002134b41111c57.webp"}],
-     * "uri":"large/1e120002134b41111c57","height":560,"width":417,"is_gif":false},{"url":"http://p9.pstatp
-     * .com/large/1cd40003bb2247517630.webp","url_list":[{"url":"http://p9.pstatp.com/large/1cd40003bb2247517630.webp"},
-     * {"url":"http://pb1.pstatp.com/large/1cd40003bb2247517630.webp"},{"url":"http://pb3.pstatp.com/large/1cd40003bb2247517630.webp"}],
-     * "uri":"large/1cd40003bb2247517630","height":1660,"width":417,"is_gif":false},{"url":"http://p3.pstatp
-     * .com/large/1cd30004f2d514946444.webp","url_list":[{"url":"http://p3.pstatp.com/large/1cd30004f2d514946444.webp"},
-     * {"url":"http://pb9.pstatp.com/large/1cd30004f2d514946444.webp"},{"url":"http://pb3.pstatp.com/large/1cd30004f2d514946444.webp"}],
-     * "uri":"large/1cd30004f2d514946444","height":560,"width":417,"is_gif":false},{"url":"http://p1.pstatp
-     * .com/large/1cd20004f36b22e256a6.webp","url_list":[{"url":"http://p1.pstatp.com/large/1cd20004f36b22e256a6.webp"},
-     * {"url":"http://pb3.pstatp.com/large/1cd20004f36b22e256a6.webp"},{"url":"http://pb3.pstatp.com/large/1cd20004f36b22e256a6.webp"}],
-     * "uri":"large/1cd20004f36b22e256a6","height":560,"width":417,"is_gif":false},{"url":"http://p1.pstatp.com/large/1cd30004f2d6b3f5d39b
-     * .webp","url_list":[{"url":"http://p1.pstatp.com/large/1cd30004f2d6b3f5d39b.webp"},{"url":"http://pb3.pstatp
-     * .com/large/1cd30004f2d6b3f5d39b.webp"},{"url":"http://pb3.pstatp.com/large/1cd30004f2d6b3f5d39b.webp"}],
-     * "uri":"large/1cd30004f2d6b3f5d39b","height":1250,"width":417,"is_gif":false},{"url":"http://p3.pstatp.com/large/1cd30004f2d898bf70bd
-     * .webp","url_list":[{"url":"http://p3.pstatp.com/large/1cd30004f2d898bf70bd.webp"},{"url":"http://pb9.pstatp
-     * .com/large/1cd30004f2d898bf70bd.webp"},{"url":"http://pb3.pstatp.com/large/1cd30004f2d898bf70bd.webp"}],
-     * "uri":"large/1cd30004f2d898bf70bd","height":1150,"width":417,"is_gif":false},{"url":"http://p3.pstatp.com/large/1cd40003bb23050cd74e
-     * .webp","url_list":[{"url":"http://p3.pstatp.com/large/1cd40003bb23050cd74e.webp"},{"url":"http://pb9.pstatp
-     * .com/large/1cd40003bb23050cd74e.webp"},{"url":"http://pb3.pstatp.com/large/1cd40003bb23050cd74e.webp"}],
-     * "uri":"large/1cd40003bb23050cd74e","height":600,"width":417,"is_gif":false},{"url":"http://p1.pstatp
-     * .com/large/1cd20004f36eb7fd1451.webp","url_list":[{"url":"http://p1.pstatp.com/large/1cd20004f36eb7fd1451.webp"},
-     * {"url":"http://pb3.pstatp.com/large/1cd20004f36eb7fd1451.webp"},{"url":"http://pb3.pstatp.com/large/1cd20004f36eb7fd1451.webp"}],
-     * "uri":"large/1cd20004f36eb7fd1451","height":1550,"width":417,"is_gif":false},{"url":"http://p3.pstatp
-     * .com/large/1cd40003bb25ba3b2f28.webp","url_list":[{"url":"http://p3.pstatp.com/large/1cd40003bb25ba3b2f28.webp"},
-     * {"url":"http://pb9.pstatp.com/large/1cd40003bb25ba3b2f28.webp"},{"url":"http://pb3.pstatp.com/large/1cd40003bb25ba3b2f28.webp"}],
-     * "uri":"large/1cd40003bb25ba3b2f28","height":850,"width":417,"is_gif":false}],"text":"","neihan_hot_start_time":"00-00-00",
-     * "dislike_reason":[{"type":2,"id":81,"title":"吧:奇葩买卖家"},{"type":4,"id":0,"title":"内容重复"},{"type":3,"id":3935903081,"title":"作者:肛板日穿"}],
-     * "create_time":1493626241,"id":59651298808,"favorite_count":28,"go_detail_count":894,"user_favorite":0,"share_type":1,
-     * "user":{"user_id":3935903081,"name":"肛板日穿","followings":0,"user_verified":false,"ugc_count":108,"avatar_url":"http://p1.pstatp
-     * .com/medium/18a30005b5e2f4d6bfe1","followers":53,"is_following":false,"is_pro_user":false},"is_can_share":1,"category_type":1,
-     * "share_url":"http://m.neihanshequ.com/share/group/59651298808/?iid=3216590132&app=joke_essay","label":1,"content":"","comment_count":7,
-     * "id_str":"59651298808","media_type":4,"share_count":262,"type":5,"status":112,"has_comments":0,"user_bury":0,"activity":{},
-     * "status_desc":"热门投稿","quick_comment":false,"display_type":0,"neihan_hot_end_time":"00-00-00","user_digg":0,"online_time":1493626241,
-     * "category_name":"奇葩买卖家","category_visible":true,"bury_count":20,"is_anonymous":false,"repin_count":28,"is_neihan_hot":false,
-     * "digg_count":232,"has_hot_comments":0,"allow_dislike":true,"user_repin":0,"neihan_hot_link":{},"is_multi_image":1,
-     * "group_id":59651298808,"thumb_image_list":[{"url":"http://p1.pstatp.com/list/s362/1e120002134b41111c57.webp",
-     * "url_list":[{"url":"http://p1.pstatp.com/list/s362/1e120002134b41111c57.webp"},{"url":"http://pb3.pstatp
-     * .com/list/s362/1e120002134b41111c57.webp"},{"url":"http://pb3.pstatp.com/list/s362/1e120002134b41111c57.webp"}],
-     * "uri":"list/s362/1e120002134b41111c57","height":362,"width":362,"is_gif":false},{"url":"http://p9.pstatp
-     * .com/list/s362/1cd40003bb2247517630.webp","url_list":[{"url":"http://p9.pstatp.com/list/s362/1cd40003bb2247517630.webp"},
-     * {"url":"http://pb1.pstatp.com/list/s362/1cd40003bb2247517630.webp"},{"url":"http://pb3.pstatp
-     * .com/list/s362/1cd40003bb2247517630.webp"}],"uri":"list/s362/1cd40003bb2247517630","height":362,"width":362,"is_gif":false},
-     * {"url":"http://p3.pstatp.com/list/s362/1cd30004f2d514946444.webp","url_list":[{"url":"http://p3.pstatp
-     * .com/list/s362/1cd30004f2d514946444.webp"},{"url":"http://pb9.pstatp.com/list/s362/1cd30004f2d514946444.webp"},
-     * {"url":"http://pb3.pstatp.com/list/s362/1cd30004f2d514946444.webp"}],"uri":"list/s362/1cd30004f2d514946444","height":362,"width":362,
-     * "is_gif":false},{"url":"http://p1.pstatp.com/list/s362/1cd20004f36b22e256a6.webp","url_list":[{"url":"http://p1.pstatp
-     * .com/list/s362/1cd20004f36b22e256a6.webp"},{"url":"http://pb3.pstatp.com/list/s362/1cd20004f36b22e256a6.webp"},
-     * {"url":"http://pb3.pstatp.com/list/s362/1cd20004f36b22e256a6.webp"}],"uri":"list/s362/1cd20004f36b22e256a6","height":362,"width":362,
-     * "is_gif":false},{"url":"http://p1.pstatp.com/list/s362/1cd30004f2d6b3f5d39b.webp","url_list":[{"url":"http://p1.pstatp
-     * .com/list/s362/1cd30004f2d6b3f5d39b.webp"},{"url":"http://pb3.pstatp.com/list/s362/1cd30004f2d6b3f5d39b.webp"},
-     * {"url":"http://pb3.pstatp.com/list/s362/1cd30004f2d6b3f5d39b.webp"}],"uri":"list/s362/1cd30004f2d6b3f5d39b","height":362,"width":362,
-     * "is_gif":false},{"url":"http://p3.pstatp.com/list/s362/1cd30004f2d898bf70bd.webp","url_list":[{"url":"http://p3.pstatp
-     * .com/list/s362/1cd30004f2d898bf70bd.webp"},{"url":"http://pb9.pstatp.com/list/s362/1cd30004f2d898bf70bd.webp"},
-     * {"url":"http://pb3.pstatp.com/list/s362/1cd30004f2d898bf70bd.webp"}],"uri":"list/s362/1cd30004f2d898bf70bd","height":362,"width":362,
-     * "is_gif":false},{"url":"http://p3.pstatp.com/list/s362/1cd40003bb23050cd74e.webp","url_list":[{"url":"http://p3.pstatp
-     * .com/list/s362/1cd40003bb23050cd74e.webp"},{"url":"http://pb9.pstatp.com/list/s362/1cd40003bb23050cd74e.webp"},
-     * {"url":"http://pb3.pstatp.com/list/s362/1cd40003bb23050cd74e.webp"}],"uri":"list/s362/1cd40003bb23050cd74e","height":362,"width":362,
-     * "is_gif":false},{"url":"http://p1.pstatp.com/list/s362/1cd20004f36eb7fd1451.webp","url_list":[{"url":"http://p1.pstatp
-     * .com/list/s362/1cd20004f36eb7fd1451.webp"},{"url":"http://pb3.pstatp.com/list/s362/1cd20004f36eb7fd1451.webp"},
-     * {"url":"http://pb3.pstatp.com/list/s362/1cd20004f36eb7fd1451.webp"}],"uri":"list/s362/1cd20004f36eb7fd1451","height":362,"width":362,
-     * "is_gif":false},{"url":"http://p3.pstatp.com/list/s362/1cd40003bb25ba3b2f28.webp","url_list":[{"url":"http://p3.pstatp
-     * .com/list/s362/1cd40003bb25ba3b2f28.webp"},{"url":"http://pb9.pstatp.com/list/s362/1cd40003bb25ba3b2f28.webp"},
-     * {"url":"http://pb3.pstatp.com/list/s362/1cd40003bb25ba3b2f28.webp"}],"uri":"list/s362/1cd40003bb25ba3b2f28","height":362,"width":362,
-     * "is_gif":false}],"category_id":81},"comments":[],"type":1,"display_time":1.49422590099E9,"online_time":1.49422590099E9},
-     * {"group":{"user":{"user_id":3496738521,"name":"磨炼成钢","followings":0,"user_verified":false,"ugc_count":1383,
-     * "avatar_url":"http://p3.pstatp.com/medium/d290003c07108f712fa","followers":2768,"is_following":false,"is_pro_user":false},
-     * "text":"这个怎么说？","neihan_hot_start_time":"00-00-00","dislike_reason":[{"type":1,"id":319,"title":"恶搞"},{"type":1,"id":314,
-     * "title":"亮点图"},{"type":2,"id":2,"title":"吧:搞笑囧图"},{"type":4,"id":0,"title":"内容重复"},{"type":3,"id":3496738521,"title":"作者:磨炼成钢"}],
-     * "create_time":1494069271,"id":59874375240,"favorite_count":3,"go_detail_count":4346,"user_favorite":0,"share_type":1,
-     * "max_screen_width_percent":0.6,"is_can_share":1,"category_type":1,"share_url":"http://m.neihanshequ
-     * .com/share/group/59874375240/?iid=3216590132&app=joke_essay","label":4,"content":"这个怎么说？","comment_count":204,"id_str":"59874375240",
-     * "media_type":1,"share_count":286,"type":3,"status":102,"has_comments":0,"large_image":{"width":429,"r_height":500,"r_width":429,
-     * "url_list":[{"url":"http://p3.pstatp.com/w429/1fd50000eb67069faf2f.webp"},{"url":"http://pb9.pstatp.com/w429/1fd50000eb67069faf2f
-     * .webp"},{"url":"http://pb1.pstatp.com/w429/1fd50000eb67069faf2f.webp"}],"uri":"w429/1fd50000eb67069faf2f","height":500},"user_bury":0,
-     * "activity":{},"status_desc":"已发表，粉丝第一时间可见","quick_comment":false,"display_type":0,"neihan_hot_end_time":"00-00-00","user_digg":0,
-     * "online_time":1494069271,"category_name":"搞笑囧图","category_visible":true,"bury_count":11,"is_anonymous":false,"repin_count":3,
-     * "min_screen_width_percent":0.167,"is_neihan_hot":false,"digg_count":263,"has_hot_comments":0,"allow_dislike":true,"image_status":1,
-     * "user_repin":0,"neihan_hot_link":{},"group_id":59874375240,"middle_image":{"width":429,"r_height":500,"r_width":429,
-     * "url_list":[{"url":"http://p3.pstatp.com/w429/1fd50000eb67069faf2f.webp"},{"url":"http://pb9.pstatp.com/w429/1fd50000eb67069faf2f
-     * .webp"},{"url":"http://pb1.pstatp.com/w429/1fd50000eb67069faf2f.webp"}],"uri":"w429/1fd50000eb67069faf2f","height":500},
-     * "category_id":2},"comments":[],"type":1,"display_time":1.49422590098E9,"online_time":1.49422590098E9},{"online_time":1.494225900975E9,
-     * "display_time":1.494225900975E9,"type":5,"ad":{"log_extra":{"rit":11,"ad_price":"WQ_ozgAGDM1ZD-jOAAYMzV-P-jtJEHE3yq1RlQ",
-     * "req_id":"201705081445010100030472005661E1","convert_id":0},"open_url":"","track_url":"","display_info":"朋友月薪3000，却在用大牌手机，原来是分期付款买的！",
-     * "web_url":"https://lp.yyfq.com/?md=1&tsid=210013&taid=%E5%85%A8%E5%9B%BD%E5%8A%A8%E6%80%81%E5%9B%BE_3","avatar_name":"有用分期",
-     * "id":59823574008,"display_image_height":388,"display_image_width":690,"title":"朋友月薪3000，却在用大牌手机，原来是分期付款买的！","label":"广告",
-     * "track_url_list":[],"display_image":"http://p3.pstatp.com/origin/1dd200206598f3aa3d68","filter_words":[{"id":"1:9","name":"IT数码",
-     * "is_selected":false},{"id":"1:67","name":"手机","is_selected":false},{"id":"2:0","name":"来源:有用分期","is_selected":false},{"id":"4:2",
-     * "name":"看过了","is_selected":false}],"type":"web","is_ad":1,"gif_url":"http://p3.pstatp.com/origin/1dd200206598f3aa3d68",
-     * "ad_id":59823574008,"button_text":"查看详情","display_type":3,"click_delay":0,"ab_show_style":2,"avatar_url":"http://p1.pstatp
-     * .com/origin/9197/1375840585","end_time":1809509009}},{"group":{"large_image_list":[{"url":"http://p3.pstatp
-     * .com/large/1cd300036c4f35830a5e.webp","url_list":[{"url":"http://p3.pstatp.com/large/1cd300036c4f35830a5e.webp"},
-     * {"url":"http://pb9.pstatp.com/large/1cd300036c4f35830a5e.webp"},{"url":"http://pb3.pstatp.com/large/1cd300036c4f35830a5e.webp"}],
-     * "uri":"large/1cd300036c4f35830a5e","height":440,"width":480,"is_gif":false},{"url":"http://p3.pstatp
-     * .com/large/1e1100008e70dfd226e5.webp","url_list":[{"url":"http://p3.pstatp.com/large/1e1100008e70dfd226e5.webp"},
-     * {"url":"http://pb9.pstatp.com/large/1e1100008e70dfd226e5.webp"},{"url":"http://pb3.pstatp.com/large/1e1100008e70dfd226e5.webp"}],
-     * "uri":"large/1e1100008e70dfd226e5","height":260,"width":500,"is_gif":false},{"url":"http://p3.pstatp
-     * .com/large/1cd00004360b22a37934.webp","url_list":[{"url":"http://p3.pstatp.com/large/1cd00004360b22a37934.webp"},
-     * {"url":"http://pb9.pstatp.com/large/1cd00004360b22a37934.webp"},{"url":"http://pb3.pstatp.com/large/1cd00004360b22a37934.webp"}],
-     * "uri":"large/1cd00004360b22a37934","height":560,"width":500,"is_gif":false},{"url":"http://p3.pstatp
-     * .com/large/1cd100042b2e5b588399.webp","url_list":[{"url":"http://p3.pstatp.com/large/1cd100042b2e5b588399.webp"},
-     * {"url":"http://pb9.pstatp.com/large/1cd100042b2e5b588399.webp"},{"url":"http://pb3.pstatp.com/large/1cd100042b2e5b588399.webp"}],
-     * "uri":"large/1cd100042b2e5b588399","height":520,"width":490,"is_gif":false},{"url":"http://p3.pstatp
-     * .com/large/1e1100008e71886435e1.webp","url_list":[{"url":"http://p3.pstatp.com/large/1e1100008e71886435e1.webp"},
-     * {"url":"http://pb9.pstatp.com/large/1e1100008e71886435e1.webp"},{"url":"http://pb3.pstatp.com/large/1e1100008e71886435e1.webp"}],
-     * "uri":"large/1e1100008e71886435e1","height":293,"width":640,"is_gif":false},{"url":"http://p3.pstatp
-     * .com/large/1cd100042b2f088bee46.webp","url_list":[{"url":"http://p3.pstatp.com/large/1cd100042b2f088bee46.webp"},
-     * {"url":"http://pb9.pstatp.com/large/1cd100042b2f088bee46.webp"},{"url":"http://pb3.pstatp.com/large/1cd100042b2f088bee46.webp"}],
-     * "uri":"large/1cd100042b2f088bee46","height":395,"width":640,"is_gif":false},{"url":"http://p1.pstatp.com/large/1e1100008e72e023047d
-     * .webp","url_list":[{"url":"http://p1.pstatp.com/large/1e1100008e72e023047d.webp"},{"url":"http://pb3.pstatp
-     * .com/large/1e1100008e72e023047d.webp"},{"url":"http://pb3.pstatp.com/large/1e1100008e72e023047d.webp"}],
-     * "uri":"large/1e1100008e72e023047d","height":392,"width":640,"is_gif":false},{"url":"http://p1.pstatp
-     * .com/large/1cd100042b3074221af6.webp","url_list":[{"url":"http://p1.pstatp.com/large/1cd100042b3074221af6.webp"},
-     * {"url":"http://pb3.pstatp.com/large/1cd100042b3074221af6.webp"},{"url":"http://pb3.pstatp.com/large/1cd100042b3074221af6.webp"}],
-     * "uri":"large/1cd100042b3074221af6","height":460,"width":460,"is_gif":false},{"url":"http://p1.pstatp
-     * .com/large/1e1100008e764e4ccab2.webp","url_list":[{"url":"http://p1.pstatp.com/large/1e1100008e764e4ccab2.webp"},
-     * {"url":"http://pb3.pstatp.com/large/1e1100008e764e4ccab2.webp"},{"url":"http://pb3.pstatp.com/large/1e1100008e764e4ccab2.webp"}],
-     * "uri":"large/1e1100008e764e4ccab2","height":310,"width":500,"is_gif":false}],"text":"厉害了","neihan_hot_start_time":"00-00-00",
-     * "dislike_reason":[{"type":2,"id":81,"title":"吧:奇葩买卖家"},{"type":4,"id":0,"title":"内容重复"},{"type":3,"id":5872714914,
-     * "title":"作者:超萌小萝莉--蔡文姬"}],"create_time":1493301024,"id":59514000474,"favorite_count":1,"go_detail_count":72,"user_favorite":0,
-     * "share_type":1,"user":{"user_id":5872714914,"name":"超萌小萝莉--蔡文姬","followings":0,"user_verified":false,"ugc_count":121,
-     * "avatar_url":"http://p1.pstatp.com/medium/1bf700078641d1f37c0c","followers":347,"is_following":false,"is_pro_user":false},
-     * "is_can_share":1,"category_type":1,"share_url":"http://m.neihanshequ.com/share/group/59514000474/?iid=3216590132&app=joke_essay",
-     * "label":4,"content":"厉害了","comment_count":0,"id_str":"59514000474","media_type":4,"share_count":6,"type":5,"status":102,
-     * "has_comments":0,"user_bury":0,"activity":{},"status_desc":"已发表，粉丝第一时间可见","quick_comment":false,"display_type":0,
-     * "neihan_hot_end_time":"00-00-00","user_digg":0,"online_time":1493301024,"category_name":"奇葩买卖家","category_visible":true,
-     * "bury_count":20,"is_anonymous":false,"repin_count":1,"is_neihan_hot":false,"digg_count":82,"has_hot_comments":0,"allow_dislike":true,
-     * "user_repin":0,"neihan_hot_link":{},"is_multi_image":1,"group_id":59514000474,"thumb_image_list":[{"url":"http://p3.pstatp
-     * .com/list/s362/1cd300036c4f35830a5e.webp","url_list":[{"url":"http://p3.pstatp.com/list/s362/1cd300036c4f35830a5e.webp"},
-     * {"url":"http://pb9.pstatp.com/list/s362/1cd300036c4f35830a5e.webp"},{"url":"http://pb3.pstatp.com/list/s362/1cd300036c4f35830a5e
-     * .webp"}],"uri":"list/s362/1cd300036c4f35830a5e","height":362,"width":362,"is_gif":false},{"url":"http://p3.pstatp
-     * .com/list/s362/1e1100008e70dfd226e5.webp","url_list":[{"url":"http://p3.pstatp.com/list/s362/1e1100008e70dfd226e5.webp"},
-     * {"url":"http://pb9.pstatp.com/list/s362/1e1100008e70dfd226e5.webp"},{"url":"http://pb3.pstatp
-     * .com/list/s362/1e1100008e70dfd226e5.webp"}],"uri":"list/s362/1e1100008e70dfd226e5","height":362,"width":362,"is_gif":false},
-     * {"url":"http://p3.pstatp.com/list/s362/1cd00004360b22a37934.webp","url_list":[{"url":"http://p3.pstatp
-     * .com/list/s362/1cd00004360b22a37934.webp"},{"url":"http://pb9.pstatp.com/list/s362/1cd00004360b22a37934.webp"},
-     * {"url":"http://pb3.pstatp.com/list/s362/1cd00004360b22a37934.webp"}],"uri":"list/s362/1cd00004360b22a37934","height":362,"width":362,
-     * "is_gif":false},{"url":"http://p3.pstatp.com/list/s362/1cd100042b2e5b588399.webp","url_list":[{"url":"http://p3.pstatp
-     * .com/list/s362/1cd100042b2e5b588399.webp"},{"url":"http://pb9.pstatp.com/list/s362/1cd100042b2e5b588399.webp"},
-     * {"url":"http://pb3.pstatp.com/list/s362/1cd100042b2e5b588399.webp"}],"uri":"list/s362/1cd100042b2e5b588399","height":362,"width":362,
-     * "is_gif":false},{"url":"http://p3.pstatp.com/list/s362/1e1100008e71886435e1.webp","url_list":[{"url":"http://p3.pstatp
-     * .com/list/s362/1e1100008e71886435e1.webp"},{"url":"http://pb9.pstatp.com/list/s362/1e1100008e71886435e1.webp"},
-     * {"url":"http://pb3.pstatp.com/list/s362/1e1100008e71886435e1.webp"}],"uri":"list/s362/1e1100008e71886435e1","height":362,"width":362,
-     * "is_gif":false},{"url":"http://p3.pstatp.com/list/s362/1cd100042b2f088bee46.webp","url_list":[{"url":"http://p3.pstatp
-     * .com/list/s362/1cd100042b2f088bee46.webp"},{"url":"http://pb9.pstatp.com/list/s362/1cd100042b2f088bee46.webp"},
-     * {"url":"http://pb3.pstatp.com/list/s362/1cd100042b2f088bee46.webp"}],"uri":"list/s362/1cd100042b2f088bee46","height":362,"width":362,
-     * "is_gif":false},{"url":"http://p1.pstatp.com/list/s362/1e1100008e72e023047d.webp","url_list":[{"url":"http://p1.pstatp
-     * .com/list/s362/1e1100008e72e023047d.webp"},{"url":"http://pb3.pstatp.com/list/s362/1e1100008e72e023047d.webp"},
-     * {"url":"http://pb3.pstatp.com/list/s362/1e1100008e72e023047d.webp"}],"uri":"list/s362/1e1100008e72e023047d","height":362,"width":362,
-     * "is_gif":false},{"url":"http://p1.pstatp.com/list/s362/1cd100042b3074221af6.webp","url_list":[{"url":"http://p1.pstatp
-     * .com/list/s362/1cd100042b3074221af6.webp"},{"url":"http://pb3.pstatp.com/list/s362/1cd100042b3074221af6.webp"},
-     * {"url":"http://pb3.pstatp.com/list/s362/1cd100042b3074221af6.webp"}],"uri":"list/s362/1cd100042b3074221af6","height":362,"width":362,
-     * "is_gif":false},{"url":"http://p1.pstatp.com/list/s362/1e1100008e764e4ccab2.webp","url_list":[{"url":"http://p1.pstatp
-     * .com/list/s362/1e1100008e764e4ccab2.webp"},{"url":"http://pb3.pstatp.com/list/s362/1e1100008e764e4ccab2.webp"},
-     * {"url":"http://pb3.pstatp.com/list/s362/1e1100008e764e4ccab2.webp"}],"uri":"list/s362/1e1100008e764e4ccab2","height":362,"width":362,
-     * "is_gif":false}],"category_id":81},"comments":[],"type":1,"display_time":1.49422590097E9,"online_time":1.49422590097E9}]}
-     */
 
     private String message;
     private DataBeanX data;
@@ -190,172 +30,6 @@ public class NhEssay {
     }
 
     public static class DataBeanX {
-        /**
-         * has_more : true
-         * tip : 4条新内容
-         * has_new_message : false
-         * max_time : 1494225898
-         * min_time : 1494225901
-         * data : [{"group":{"large_image_list":[{"url":"http://p1.pstatp.com/large/1e120002134b41111c57.webp",
-         * "url_list":[{"url":"http://p1.pstatp.com/large/1e120002134b41111c57.webp"},{"url":"http://pb3.pstatp
-         * .com/large/1e120002134b41111c57.webp"},{"url":"http://pb3.pstatp.com/large/1e120002134b41111c57.webp"}],
-         * "uri":"large/1e120002134b41111c57","height":560,"width":417,"is_gif":false},{"url":"http://p9.pstatp
-         * .com/large/1cd40003bb2247517630.webp","url_list":[{"url":"http://p9.pstatp.com/large/1cd40003bb2247517630.webp"},
-         * {"url":"http://pb1.pstatp.com/large/1cd40003bb2247517630.webp"},{"url":"http://pb3.pstatp.com/large/1cd40003bb2247517630.webp"}],
-         * "uri":"large/1cd40003bb2247517630","height":1660,"width":417,"is_gif":false},{"url":"http://p3.pstatp
-         * .com/large/1cd30004f2d514946444.webp","url_list":[{"url":"http://p3.pstatp.com/large/1cd30004f2d514946444.webp"},
-         * {"url":"http://pb9.pstatp.com/large/1cd30004f2d514946444.webp"},{"url":"http://pb3.pstatp.com/large/1cd30004f2d514946444.webp"}],
-         * "uri":"large/1cd30004f2d514946444","height":560,"width":417,"is_gif":false},{"url":"http://p1.pstatp
-         * .com/large/1cd20004f36b22e256a6.webp","url_list":[{"url":"http://p1.pstatp.com/large/1cd20004f36b22e256a6.webp"},
-         * {"url":"http://pb3.pstatp.com/large/1cd20004f36b22e256a6.webp"},{"url":"http://pb3.pstatp.com/large/1cd20004f36b22e256a6.webp"}],
-         * "uri":"large/1cd20004f36b22e256a6","height":560,"width":417,"is_gif":false},{"url":"http://p1.pstatp.com/large/1cd30004f2d6b3f5d39b
-         * .webp","url_list":[{"url":"http://p1.pstatp.com/large/1cd30004f2d6b3f5d39b.webp"},{"url":"http://pb3.pstatp
-         * .com/large/1cd30004f2d6b3f5d39b.webp"},{"url":"http://pb3.pstatp.com/large/1cd30004f2d6b3f5d39b.webp"}],
-         * "uri":"large/1cd30004f2d6b3f5d39b","height":1250,"width":417,"is_gif":false},{"url":"http://p3.pstatp
-         * .com/large/1cd30004f2d898bf70bd.webp","url_list":[{"url":"http://p3.pstatp.com/large/1cd30004f2d898bf70bd.webp"},
-         * {"url":"http://pb9.pstatp.com/large/1cd30004f2d898bf70bd.webp"},{"url":"http://pb3.pstatp.com/large/1cd30004f2d898bf70bd.webp"}],
-         * "uri":"large/1cd30004f2d898bf70bd","height":1150,"width":417,"is_gif":false},{"url":"http://p3.pstatp
-         * .com/large/1cd40003bb23050cd74e.webp","url_list":[{"url":"http://p3.pstatp.com/large/1cd40003bb23050cd74e.webp"},
-         * {"url":"http://pb9.pstatp.com/large/1cd40003bb23050cd74e.webp"},{"url":"http://pb3.pstatp.com/large/1cd40003bb23050cd74e.webp"}],
-         * "uri":"large/1cd40003bb23050cd74e","height":600,"width":417,"is_gif":false},{"url":"http://p1.pstatp
-         * .com/large/1cd20004f36eb7fd1451.webp","url_list":[{"url":"http://p1.pstatp.com/large/1cd20004f36eb7fd1451.webp"},
-         * {"url":"http://pb3.pstatp.com/large/1cd20004f36eb7fd1451.webp"},{"url":"http://pb3.pstatp.com/large/1cd20004f36eb7fd1451.webp"}],
-         * "uri":"large/1cd20004f36eb7fd1451","height":1550,"width":417,"is_gif":false},{"url":"http://p3.pstatp
-         * .com/large/1cd40003bb25ba3b2f28.webp","url_list":[{"url":"http://p3.pstatp.com/large/1cd40003bb25ba3b2f28.webp"},
-         * {"url":"http://pb9.pstatp.com/large/1cd40003bb25ba3b2f28.webp"},{"url":"http://pb3.pstatp.com/large/1cd40003bb25ba3b2f28.webp"}],
-         * "uri":"large/1cd40003bb25ba3b2f28","height":850,"width":417,"is_gif":false}],"text":"","neihan_hot_start_time":"00-00-00",
-         * "dislike_reason":[{"type":2,"id":81,"title":"吧:奇葩买卖家"},{"type":4,"id":0,"title":"内容重复"},{"type":3,"id":3935903081,
-         * "title":"作者:肛板日穿"}],"create_time":1493626241,"id":59651298808,"favorite_count":28,"go_detail_count":894,"user_favorite":0,
-         * "share_type":1,"user":{"user_id":3935903081,"name":"肛板日穿","followings":0,"user_verified":false,"ugc_count":108,
-         * "avatar_url":"http://p1.pstatp.com/medium/18a30005b5e2f4d6bfe1","followers":53,"is_following":false,"is_pro_user":false},
-         * "is_can_share":1,"category_type":1,"share_url":"http://m.neihanshequ.com/share/group/59651298808/?iid=3216590132&app=joke_essay",
-         * "label":1,"content":"","comment_count":7,"id_str":"59651298808","media_type":4,"share_count":262,"type":5,"status":112,
-         * "has_comments":0,"user_bury":0,"activity":{},"status_desc":"热门投稿","quick_comment":false,"display_type":0,
-         * "neihan_hot_end_time":"00-00-00","user_digg":0,"online_time":1493626241,"category_name":"奇葩买卖家","category_visible":true,
-         * "bury_count":20,"is_anonymous":false,"repin_count":28,"is_neihan_hot":false,"digg_count":232,"has_hot_comments":0,
-         * "allow_dislike":true,"user_repin":0,"neihan_hot_link":{},"is_multi_image":1,"group_id":59651298808,
-         * "thumb_image_list":[{"url":"http://p1.pstatp.com/list/s362/1e120002134b41111c57.webp","url_list":[{"url":"http://p1.pstatp
-         * .com/list/s362/1e120002134b41111c57.webp"},{"url":"http://pb3.pstatp.com/list/s362/1e120002134b41111c57.webp"},
-         * {"url":"http://pb3.pstatp.com/list/s362/1e120002134b41111c57.webp"}],"uri":"list/s362/1e120002134b41111c57","height":362,
-         * "width":362,"is_gif":false},{"url":"http://p9.pstatp.com/list/s362/1cd40003bb2247517630.webp","url_list":[{"url":"http://p9.pstatp
-         * .com/list/s362/1cd40003bb2247517630.webp"},{"url":"http://pb1.pstatp.com/list/s362/1cd40003bb2247517630.webp"},
-         * {"url":"http://pb3.pstatp.com/list/s362/1cd40003bb2247517630.webp"}],"uri":"list/s362/1cd40003bb2247517630","height":362,
-         * "width":362,"is_gif":false},{"url":"http://p3.pstatp.com/list/s362/1cd30004f2d514946444.webp","url_list":[{"url":"http://p3.pstatp
-         * .com/list/s362/1cd30004f2d514946444.webp"},{"url":"http://pb9.pstatp.com/list/s362/1cd30004f2d514946444.webp"},
-         * {"url":"http://pb3.pstatp.com/list/s362/1cd30004f2d514946444.webp"}],"uri":"list/s362/1cd30004f2d514946444","height":362,
-         * "width":362,"is_gif":false},{"url":"http://p1.pstatp.com/list/s362/1cd20004f36b22e256a6.webp","url_list":[{"url":"http://p1.pstatp
-         * .com/list/s362/1cd20004f36b22e256a6.webp"},{"url":"http://pb3.pstatp.com/list/s362/1cd20004f36b22e256a6.webp"},
-         * {"url":"http://pb3.pstatp.com/list/s362/1cd20004f36b22e256a6.webp"}],"uri":"list/s362/1cd20004f36b22e256a6","height":362,
-         * "width":362,"is_gif":false},{"url":"http://p1.pstatp.com/list/s362/1cd30004f2d6b3f5d39b.webp","url_list":[{"url":"http://p1.pstatp
-         * .com/list/s362/1cd30004f2d6b3f5d39b.webp"},{"url":"http://pb3.pstatp.com/list/s362/1cd30004f2d6b3f5d39b.webp"},
-         * {"url":"http://pb3.pstatp.com/list/s362/1cd30004f2d6b3f5d39b.webp"}],"uri":"list/s362/1cd30004f2d6b3f5d39b","height":362,
-         * "width":362,"is_gif":false},{"url":"http://p3.pstatp.com/list/s362/1cd30004f2d898bf70bd.webp","url_list":[{"url":"http://p3.pstatp
-         * .com/list/s362/1cd30004f2d898bf70bd.webp"},{"url":"http://pb9.pstatp.com/list/s362/1cd30004f2d898bf70bd.webp"},
-         * {"url":"http://pb3.pstatp.com/list/s362/1cd30004f2d898bf70bd.webp"}],"uri":"list/s362/1cd30004f2d898bf70bd","height":362,
-         * "width":362,"is_gif":false},{"url":"http://p3.pstatp.com/list/s362/1cd40003bb23050cd74e.webp","url_list":[{"url":"http://p3.pstatp
-         * .com/list/s362/1cd40003bb23050cd74e.webp"},{"url":"http://pb9.pstatp.com/list/s362/1cd40003bb23050cd74e.webp"},
-         * {"url":"http://pb3.pstatp.com/list/s362/1cd40003bb23050cd74e.webp"}],"uri":"list/s362/1cd40003bb23050cd74e","height":362,
-         * "width":362,"is_gif":false},{"url":"http://p1.pstatp.com/list/s362/1cd20004f36eb7fd1451.webp","url_list":[{"url":"http://p1.pstatp
-         * .com/list/s362/1cd20004f36eb7fd1451.webp"},{"url":"http://pb3.pstatp.com/list/s362/1cd20004f36eb7fd1451.webp"},
-         * {"url":"http://pb3.pstatp.com/list/s362/1cd20004f36eb7fd1451.webp"}],"uri":"list/s362/1cd20004f36eb7fd1451","height":362,
-         * "width":362,"is_gif":false},{"url":"http://p3.pstatp.com/list/s362/1cd40003bb25ba3b2f28.webp","url_list":[{"url":"http://p3.pstatp
-         * .com/list/s362/1cd40003bb25ba3b2f28.webp"},{"url":"http://pb9.pstatp.com/list/s362/1cd40003bb25ba3b2f28.webp"},
-         * {"url":"http://pb3.pstatp.com/list/s362/1cd40003bb25ba3b2f28.webp"}],"uri":"list/s362/1cd40003bb25ba3b2f28","height":362,
-         * "width":362,"is_gif":false}],"category_id":81},"comments":[],"type":1,"display_time":1.49422590099E9,
-         * "online_time":1.49422590099E9},{"group":{"user":{"user_id":3496738521,"name":"磨炼成钢","followings":0,"user_verified":false,
-         * "ugc_count":1383,"avatar_url":"http://p3.pstatp.com/medium/d290003c07108f712fa","followers":2768,"is_following":false,
-         * "is_pro_user":false},"text":"这个怎么说？","neihan_hot_start_time":"00-00-00","dislike_reason":[{"type":1,"id":319,"title":"恶搞"},
-         * {"type":1,"id":314,"title":"亮点图"},{"type":2,"id":2,"title":"吧:搞笑囧图"},{"type":4,"id":0,"title":"内容重复"},{"type":3,"id":3496738521,
-         * "title":"作者:磨炼成钢"}],"create_time":1494069271,"id":59874375240,"favorite_count":3,"go_detail_count":4346,"user_favorite":0,
-         * "share_type":1,"max_screen_width_percent":0.6,"is_can_share":1,"category_type":1,"share_url":"http://m.neihanshequ
-         * .com/share/group/59874375240/?iid=3216590132&app=joke_essay","label":4,"content":"这个怎么说？","comment_count":204,
-         * "id_str":"59874375240","media_type":1,"share_count":286,"type":3,"status":102,"has_comments":0,"large_image":{"width":429,
-         * "r_height":500,"r_width":429,"url_list":[{"url":"http://p3.pstatp.com/w429/1fd50000eb67069faf2f.webp"},{"url":"http://pb9.pstatp
-         * .com/w429/1fd50000eb67069faf2f.webp"},{"url":"http://pb1.pstatp.com/w429/1fd50000eb67069faf2f.webp"}],
-         * "uri":"w429/1fd50000eb67069faf2f","height":500},"user_bury":0,"activity":{},"status_desc":"已发表，粉丝第一时间可见","quick_comment":false,
-         * "display_type":0,"neihan_hot_end_time":"00-00-00","user_digg":0,"online_time":1494069271,"category_name":"搞笑囧图",
-         * "category_visible":true,"bury_count":11,"is_anonymous":false,"repin_count":3,"min_screen_width_percent":0.167,
-         * "is_neihan_hot":false,"digg_count":263,"has_hot_comments":0,"allow_dislike":true,"image_status":1,"user_repin":0,
-         * "neihan_hot_link":{},"group_id":59874375240,"middle_image":{"width":429,"r_height":500,"r_width":429,
-         * "url_list":[{"url":"http://p3.pstatp.com/w429/1fd50000eb67069faf2f.webp"},{"url":"http://pb9.pstatp.com/w429/1fd50000eb67069faf2f
-         * .webp"},{"url":"http://pb1.pstatp.com/w429/1fd50000eb67069faf2f.webp"}],"uri":"w429/1fd50000eb67069faf2f","height":500},
-         * "category_id":2},"comments":[],"type":1,"display_time":1.49422590098E9,"online_time":1.49422590098E9},
-         * {"online_time":1.494225900975E9,"display_time":1.494225900975E9,"type":5,"ad":{"log_extra":{"rit":11,
-         * "ad_price":"WQ_ozgAGDM1ZD-jOAAYMzV-P-jtJEHE3yq1RlQ","req_id":"201705081445010100030472005661E1","convert_id":0},"open_url":"",
-         * "track_url":"","display_info":"朋友月薪3000，却在用大牌手机，原来是分期付款买的！","web_url":"https://lp.yyfq
-         * .com/?md=1&tsid=210013&taid=%E5%85%A8%E5%9B%BD%E5%8A%A8%E6%80%81%E5%9B%BE_3","avatar_name":"有用分期","id":59823574008,
-         * "display_image_height":388,"display_image_width":690,"title":"朋友月薪3000，却在用大牌手机，原来是分期付款买的！","label":"广告","track_url_list":[],
-         * "display_image":"http://p3.pstatp.com/origin/1dd200206598f3aa3d68","filter_words":[{"id":"1:9","name":"IT数码","is_selected":false},
-         * {"id":"1:67","name":"手机","is_selected":false},{"id":"2:0","name":"来源:有用分期","is_selected":false},{"id":"4:2","name":"看过了",
-         * "is_selected":false}],"type":"web","is_ad":1,"gif_url":"http://p3.pstatp.com/origin/1dd200206598f3aa3d68","ad_id":59823574008,
-         * "button_text":"查看详情","display_type":3,"click_delay":0,"ab_show_style":2,"avatar_url":"http://p1.pstatp.com/origin/9197/1375840585",
-         * "end_time":1809509009}},{"group":{"large_image_list":[{"url":"http://p3.pstatp.com/large/1cd300036c4f35830a5e.webp",
-         * "url_list":[{"url":"http://p3.pstatp.com/large/1cd300036c4f35830a5e.webp"},{"url":"http://pb9.pstatp.com/large/1cd300036c4f35830a5e
-         * .webp"},{"url":"http://pb3.pstatp.com/large/1cd300036c4f35830a5e.webp"}],"uri":"large/1cd300036c4f35830a5e","height":440,
-         * "width":480,"is_gif":false},{"url":"http://p3.pstatp.com/large/1e1100008e70dfd226e5.webp","url_list":[{"url":"http://p3.pstatp
-         * .com/large/1e1100008e70dfd226e5.webp"},{"url":"http://pb9.pstatp.com/large/1e1100008e70dfd226e5.webp"},{"url":"http://pb3.pstatp
-         * .com/large/1e1100008e70dfd226e5.webp"}],"uri":"large/1e1100008e70dfd226e5","height":260,"width":500,"is_gif":false},
-         * {"url":"http://p3.pstatp.com/large/1cd00004360b22a37934.webp","url_list":[{"url":"http://p3.pstatp
-         * .com/large/1cd00004360b22a37934.webp"},{"url":"http://pb9.pstatp.com/large/1cd00004360b22a37934.webp"},{"url":"http://pb3.pstatp
-         * .com/large/1cd00004360b22a37934.webp"}],"uri":"large/1cd00004360b22a37934","height":560,"width":500,"is_gif":false},
-         * {"url":"http://p3.pstatp.com/large/1cd100042b2e5b588399.webp","url_list":[{"url":"http://p3.pstatp
-         * .com/large/1cd100042b2e5b588399.webp"},{"url":"http://pb9.pstatp.com/large/1cd100042b2e5b588399.webp"},{"url":"http://pb3.pstatp
-         * .com/large/1cd100042b2e5b588399.webp"}],"uri":"large/1cd100042b2e5b588399","height":520,"width":490,"is_gif":false},
-         * {"url":"http://p3.pstatp.com/large/1e1100008e71886435e1.webp","url_list":[{"url":"http://p3.pstatp
-         * .com/large/1e1100008e71886435e1.webp"},{"url":"http://pb9.pstatp.com/large/1e1100008e71886435e1.webp"},{"url":"http://pb3.pstatp
-         * .com/large/1e1100008e71886435e1.webp"}],"uri":"large/1e1100008e71886435e1","height":293,"width":640,"is_gif":false},
-         * {"url":"http://p3.pstatp.com/large/1cd100042b2f088bee46.webp","url_list":[{"url":"http://p3.pstatp
-         * .com/large/1cd100042b2f088bee46.webp"},{"url":"http://pb9.pstatp.com/large/1cd100042b2f088bee46.webp"},{"url":"http://pb3.pstatp
-         * .com/large/1cd100042b2f088bee46.webp"}],"uri":"large/1cd100042b2f088bee46","height":395,"width":640,"is_gif":false},
-         * {"url":"http://p1.pstatp.com/large/1e1100008e72e023047d.webp","url_list":[{"url":"http://p1.pstatp.com/large/1e1100008e72e023047d
-         * .webp"},{"url":"http://pb3.pstatp.com/large/1e1100008e72e023047d.webp"},{"url":"http://pb3.pstatp.com/large/1e1100008e72e023047d
-         * .webp"}],"uri":"large/1e1100008e72e023047d","height":392,"width":640,"is_gif":false},{"url":"http://p1.pstatp
-         * .com/large/1cd100042b3074221af6.webp","url_list":[{"url":"http://p1.pstatp.com/large/1cd100042b3074221af6.webp"},
-         * {"url":"http://pb3.pstatp.com/large/1cd100042b3074221af6.webp"},{"url":"http://pb3.pstatp.com/large/1cd100042b3074221af6.webp"}],
-         * "uri":"large/1cd100042b3074221af6","height":460,"width":460,"is_gif":false},{"url":"http://p1.pstatp
-         * .com/large/1e1100008e764e4ccab2.webp","url_list":[{"url":"http://p1.pstatp.com/large/1e1100008e764e4ccab2.webp"},
-         * {"url":"http://pb3.pstatp.com/large/1e1100008e764e4ccab2.webp"},{"url":"http://pb3.pstatp.com/large/1e1100008e764e4ccab2.webp"}],
-         * "uri":"large/1e1100008e764e4ccab2","height":310,"width":500,"is_gif":false}],"text":"厉害了","neihan_hot_start_time":"00-00-00",
-         * "dislike_reason":[{"type":2,"id":81,"title":"吧:奇葩买卖家"},{"type":4,"id":0,"title":"内容重复"},{"type":3,"id":5872714914,
-         * "title":"作者:超萌小萝莉--蔡文姬"}],"create_time":1493301024,"id":59514000474,"favorite_count":1,"go_detail_count":72,"user_favorite":0,
-         * "share_type":1,"user":{"user_id":5872714914,"name":"超萌小萝莉--蔡文姬","followings":0,"user_verified":false,"ugc_count":121,
-         * "avatar_url":"http://p1.pstatp.com/medium/1bf700078641d1f37c0c","followers":347,"is_following":false,"is_pro_user":false},
-         * "is_can_share":1,"category_type":1,"share_url":"http://m.neihanshequ.com/share/group/59514000474/?iid=3216590132&app=joke_essay",
-         * "label":4,"content":"厉害了","comment_count":0,"id_str":"59514000474","media_type":4,"share_count":6,"type":5,"status":102,
-         * "has_comments":0,"user_bury":0,"activity":{},"status_desc":"已发表，粉丝第一时间可见","quick_comment":false,"display_type":0,
-         * "neihan_hot_end_time":"00-00-00","user_digg":0,"online_time":1493301024,"category_name":"奇葩买卖家","category_visible":true,
-         * "bury_count":20,"is_anonymous":false,"repin_count":1,"is_neihan_hot":false,"digg_count":82,"has_hot_comments":0,
-         * "allow_dislike":true,"user_repin":0,"neihan_hot_link":{},"is_multi_image":1,"group_id":59514000474,
-         * "thumb_image_list":[{"url":"http://p3.pstatp.com/list/s362/1cd300036c4f35830a5e.webp","url_list":[{"url":"http://p3.pstatp
-         * .com/list/s362/1cd300036c4f35830a5e.webp"},{"url":"http://pb9.pstatp.com/list/s362/1cd300036c4f35830a5e.webp"},
-         * {"url":"http://pb3.pstatp.com/list/s362/1cd300036c4f35830a5e.webp"}],"uri":"list/s362/1cd300036c4f35830a5e","height":362,
-         * "width":362,"is_gif":false},{"url":"http://p3.pstatp.com/list/s362/1e1100008e70dfd226e5.webp","url_list":[{"url":"http://p3.pstatp
-         * .com/list/s362/1e1100008e70dfd226e5.webp"},{"url":"http://pb9.pstatp.com/list/s362/1e1100008e70dfd226e5.webp"},
-         * {"url":"http://pb3.pstatp.com/list/s362/1e1100008e70dfd226e5.webp"}],"uri":"list/s362/1e1100008e70dfd226e5","height":362,
-         * "width":362,"is_gif":false},{"url":"http://p3.pstatp.com/list/s362/1cd00004360b22a37934.webp","url_list":[{"url":"http://p3.pstatp
-         * .com/list/s362/1cd00004360b22a37934.webp"},{"url":"http://pb9.pstatp.com/list/s362/1cd00004360b22a37934.webp"},
-         * {"url":"http://pb3.pstatp.com/list/s362/1cd00004360b22a37934.webp"}],"uri":"list/s362/1cd00004360b22a37934","height":362,
-         * "width":362,"is_gif":false},{"url":"http://p3.pstatp.com/list/s362/1cd100042b2e5b588399.webp","url_list":[{"url":"http://p3.pstatp
-         * .com/list/s362/1cd100042b2e5b588399.webp"},{"url":"http://pb9.pstatp.com/list/s362/1cd100042b2e5b588399.webp"},
-         * {"url":"http://pb3.pstatp.com/list/s362/1cd100042b2e5b588399.webp"}],"uri":"list/s362/1cd100042b2e5b588399","height":362,
-         * "width":362,"is_gif":false},{"url":"http://p3.pstatp.com/list/s362/1e1100008e71886435e1.webp","url_list":[{"url":"http://p3.pstatp
-         * .com/list/s362/1e1100008e71886435e1.webp"},{"url":"http://pb9.pstatp.com/list/s362/1e1100008e71886435e1.webp"},
-         * {"url":"http://pb3.pstatp.com/list/s362/1e1100008e71886435e1.webp"}],"uri":"list/s362/1e1100008e71886435e1","height":362,
-         * "width":362,"is_gif":false},{"url":"http://p3.pstatp.com/list/s362/1cd100042b2f088bee46.webp","url_list":[{"url":"http://p3.pstatp
-         * .com/list/s362/1cd100042b2f088bee46.webp"},{"url":"http://pb9.pstatp.com/list/s362/1cd100042b2f088bee46.webp"},
-         * {"url":"http://pb3.pstatp.com/list/s362/1cd100042b2f088bee46.webp"}],"uri":"list/s362/1cd100042b2f088bee46","height":362,
-         * "width":362,"is_gif":false},{"url":"http://p1.pstatp.com/list/s362/1e1100008e72e023047d.webp","url_list":[{"url":"http://p1.pstatp
-         * .com/list/s362/1e1100008e72e023047d.webp"},{"url":"http://pb3.pstatp.com/list/s362/1e1100008e72e023047d.webp"},
-         * {"url":"http://pb3.pstatp.com/list/s362/1e1100008e72e023047d.webp"}],"uri":"list/s362/1e1100008e72e023047d","height":362,
-         * "width":362,"is_gif":false},{"url":"http://p1.pstatp.com/list/s362/1cd100042b3074221af6.webp","url_list":[{"url":"http://p1.pstatp
-         * .com/list/s362/1cd100042b3074221af6.webp"},{"url":"http://pb3.pstatp.com/list/s362/1cd100042b3074221af6.webp"},
-         * {"url":"http://pb3.pstatp.com/list/s362/1cd100042b3074221af6.webp"}],"uri":"list/s362/1cd100042b3074221af6","height":362,
-         * "width":362,"is_gif":false},{"url":"http://p1.pstatp.com/list/s362/1e1100008e764e4ccab2.webp","url_list":[{"url":"http://p1.pstatp
-         * .com/list/s362/1e1100008e764e4ccab2.webp"},{"url":"http://pb3.pstatp.com/list/s362/1e1100008e764e4ccab2.webp"},
-         * {"url":"http://pb3.pstatp.com/list/s362/1e1100008e764e4ccab2.webp"}],"uri":"list/s362/1e1100008e764e4ccab2","height":362,
-         * "width":362,"is_gif":false}],"category_id":81},"comments":[],"type":1,"display_time":1.49422590097E9,"online_time":1.49422590097E9}]
-         */
-
         private boolean has_more;
         private String tip;
         private boolean has_new_message;
@@ -412,96 +86,12 @@ public class NhEssay {
         }
 
         public static class DataBean {
-            /**
-             * group : {"large_image_list":[{"url":"http://p1.pstatp.com/large/1e120002134b41111c57.webp","url_list":[{"url":"http://p1.pstatp
-             * .com/large/1e120002134b41111c57.webp"},{"url":"http://pb3.pstatp.com/large/1e120002134b41111c57.webp"},
-             * {"url":"http://pb3.pstatp.com/large/1e120002134b41111c57.webp"}],"uri":"large/1e120002134b41111c57","height":560,"width":417,
-             * "is_gif":false},{"url":"http://p9.pstatp.com/large/1cd40003bb2247517630.webp","url_list":[{"url":"http://p9.pstatp
-             * .com/large/1cd40003bb2247517630.webp"},{"url":"http://pb1.pstatp.com/large/1cd40003bb2247517630.webp"},
-             * {"url":"http://pb3.pstatp.com/large/1cd40003bb2247517630.webp"}],"uri":"large/1cd40003bb2247517630","height":1660,"width":417,
-             * "is_gif":false},{"url":"http://p3.pstatp.com/large/1cd30004f2d514946444.webp","url_list":[{"url":"http://p3.pstatp
-             * .com/large/1cd30004f2d514946444.webp"},{"url":"http://pb9.pstatp.com/large/1cd30004f2d514946444.webp"},
-             * {"url":"http://pb3.pstatp.com/large/1cd30004f2d514946444.webp"}],"uri":"large/1cd30004f2d514946444","height":560,"width":417,
-             * "is_gif":false},{"url":"http://p1.pstatp.com/large/1cd20004f36b22e256a6.webp","url_list":[{"url":"http://p1.pstatp
-             * .com/large/1cd20004f36b22e256a6.webp"},{"url":"http://pb3.pstatp.com/large/1cd20004f36b22e256a6.webp"},
-             * {"url":"http://pb3.pstatp.com/large/1cd20004f36b22e256a6.webp"}],"uri":"large/1cd20004f36b22e256a6","height":560,"width":417,
-             * "is_gif":false},{"url":"http://p1.pstatp.com/large/1cd30004f2d6b3f5d39b.webp","url_list":[{"url":"http://p1.pstatp
-             * .com/large/1cd30004f2d6b3f5d39b.webp"},{"url":"http://pb3.pstatp.com/large/1cd30004f2d6b3f5d39b.webp"},
-             * {"url":"http://pb3.pstatp.com/large/1cd30004f2d6b3f5d39b.webp"}],"uri":"large/1cd30004f2d6b3f5d39b","height":1250,"width":417,
-             * "is_gif":false},{"url":"http://p3.pstatp.com/large/1cd30004f2d898bf70bd.webp","url_list":[{"url":"http://p3.pstatp
-             * .com/large/1cd30004f2d898bf70bd.webp"},{"url":"http://pb9.pstatp.com/large/1cd30004f2d898bf70bd.webp"},
-             * {"url":"http://pb3.pstatp.com/large/1cd30004f2d898bf70bd.webp"}],"uri":"large/1cd30004f2d898bf70bd","height":1150,"width":417,
-             * "is_gif":false},{"url":"http://p3.pstatp.com/large/1cd40003bb23050cd74e.webp","url_list":[{"url":"http://p3.pstatp
-             * .com/large/1cd40003bb23050cd74e.webp"},{"url":"http://pb9.pstatp.com/large/1cd40003bb23050cd74e.webp"},
-             * {"url":"http://pb3.pstatp.com/large/1cd40003bb23050cd74e.webp"}],"uri":"large/1cd40003bb23050cd74e","height":600,"width":417,
-             * "is_gif":false},{"url":"http://p1.pstatp.com/large/1cd20004f36eb7fd1451.webp","url_list":[{"url":"http://p1.pstatp
-             * .com/large/1cd20004f36eb7fd1451.webp"},{"url":"http://pb3.pstatp.com/large/1cd20004f36eb7fd1451.webp"},
-             * {"url":"http://pb3.pstatp.com/large/1cd20004f36eb7fd1451.webp"}],"uri":"large/1cd20004f36eb7fd1451","height":1550,"width":417,
-             * "is_gif":false},{"url":"http://p3.pstatp.com/large/1cd40003bb25ba3b2f28.webp","url_list":[{"url":"http://p3.pstatp
-             * .com/large/1cd40003bb25ba3b2f28.webp"},{"url":"http://pb9.pstatp.com/large/1cd40003bb25ba3b2f28.webp"},
-             * {"url":"http://pb3.pstatp.com/large/1cd40003bb25ba3b2f28.webp"}],"uri":"large/1cd40003bb25ba3b2f28","height":850,"width":417,
-             * "is_gif":false}],"text":"","neihan_hot_start_time":"00-00-00","dislike_reason":[{"type":2,"id":81,"title":"吧:奇葩买卖家"},{"type":4,
-             * "id":0,"title":"内容重复"},{"type":3,"id":3935903081,"title":"作者:肛板日穿"}],"create_time":1493626241,"id":59651298808,
-             * "favorite_count":28,"go_detail_count":894,"user_favorite":0,"share_type":1,"user":{"user_id":3935903081,"name":"肛板日穿",
-             * "followings":0,"user_verified":false,"ugc_count":108,"avatar_url":"http://p1.pstatp.com/medium/18a30005b5e2f4d6bfe1",
-             * "followers":53,"is_following":false,"is_pro_user":false},"is_can_share":1,"category_type":1,"share_url":"http://m.neihanshequ
-             * .com/share/group/59651298808/?iid=3216590132&app=joke_essay","label":1,"content":"","comment_count":7,"id_str":"59651298808",
-             * "media_type":4,"share_count":262,"type":5,"status":112,"has_comments":0,"user_bury":0,"activity":{},"status_desc":"热门投稿",
-             * "quick_comment":false,"display_type":0,"neihan_hot_end_time":"00-00-00","user_digg":0,"online_time":1493626241,
-             * "category_name":"奇葩买卖家","category_visible":true,"bury_count":20,"is_anonymous":false,"repin_count":28,"is_neihan_hot":false,
-             * "digg_count":232,"has_hot_comments":0,"allow_dislike":true,"user_repin":0,"neihan_hot_link":{},"is_multi_image":1,
-             * "group_id":59651298808,"thumb_image_list":[{"url":"http://p1.pstatp.com/list/s362/1e120002134b41111c57.webp",
-             * "url_list":[{"url":"http://p1.pstatp.com/list/s362/1e120002134b41111c57.webp"},{"url":"http://pb3.pstatp
-             * .com/list/s362/1e120002134b41111c57.webp"},{"url":"http://pb3.pstatp.com/list/s362/1e120002134b41111c57.webp"}],
-             * "uri":"list/s362/1e120002134b41111c57","height":362,"width":362,"is_gif":false},{"url":"http://p9.pstatp
-             * .com/list/s362/1cd40003bb2247517630.webp","url_list":[{"url":"http://p9.pstatp.com/list/s362/1cd40003bb2247517630.webp"},
-             * {"url":"http://pb1.pstatp.com/list/s362/1cd40003bb2247517630.webp"},{"url":"http://pb3.pstatp
-             * .com/list/s362/1cd40003bb2247517630.webp"}],"uri":"list/s362/1cd40003bb2247517630","height":362,"width":362,"is_gif":false},
-             * {"url":"http://p3.pstatp.com/list/s362/1cd30004f2d514946444.webp","url_list":[{"url":"http://p3.pstatp
-             * .com/list/s362/1cd30004f2d514946444.webp"},{"url":"http://pb9.pstatp.com/list/s362/1cd30004f2d514946444.webp"},
-             * {"url":"http://pb3.pstatp.com/list/s362/1cd30004f2d514946444.webp"}],"uri":"list/s362/1cd30004f2d514946444","height":362,
-             * "width":362,"is_gif":false},{"url":"http://p1.pstatp.com/list/s362/1cd20004f36b22e256a6.webp",
-             * "url_list":[{"url":"http://p1.pstatp.com/list/s362/1cd20004f36b22e256a6.webp"},{"url":"http://pb3.pstatp
-             * .com/list/s362/1cd20004f36b22e256a6.webp"},{"url":"http://pb3.pstatp.com/list/s362/1cd20004f36b22e256a6.webp"}],
-             * "uri":"list/s362/1cd20004f36b22e256a6","height":362,"width":362,"is_gif":false},{"url":"http://p1.pstatp
-             * .com/list/s362/1cd30004f2d6b3f5d39b.webp","url_list":[{"url":"http://p1.pstatp.com/list/s362/1cd30004f2d6b3f5d39b.webp"},
-             * {"url":"http://pb3.pstatp.com/list/s362/1cd30004f2d6b3f5d39b.webp"},{"url":"http://pb3.pstatp
-             * .com/list/s362/1cd30004f2d6b3f5d39b.webp"}],"uri":"list/s362/1cd30004f2d6b3f5d39b","height":362,"width":362,"is_gif":false},
-             * {"url":"http://p3.pstatp.com/list/s362/1cd30004f2d898bf70bd.webp","url_list":[{"url":"http://p3.pstatp
-             * .com/list/s362/1cd30004f2d898bf70bd.webp"},{"url":"http://pb9.pstatp.com/list/s362/1cd30004f2d898bf70bd.webp"},
-             * {"url":"http://pb3.pstatp.com/list/s362/1cd30004f2d898bf70bd.webp"}],"uri":"list/s362/1cd30004f2d898bf70bd","height":362,
-             * "width":362,"is_gif":false},{"url":"http://p3.pstatp.com/list/s362/1cd40003bb23050cd74e.webp",
-             * "url_list":[{"url":"http://p3.pstatp.com/list/s362/1cd40003bb23050cd74e.webp"},{"url":"http://pb9.pstatp
-             * .com/list/s362/1cd40003bb23050cd74e.webp"},{"url":"http://pb3.pstatp.com/list/s362/1cd40003bb23050cd74e.webp"}],
-             * "uri":"list/s362/1cd40003bb23050cd74e","height":362,"width":362,"is_gif":false},{"url":"http://p1.pstatp
-             * .com/list/s362/1cd20004f36eb7fd1451.webp","url_list":[{"url":"http://p1.pstatp.com/list/s362/1cd20004f36eb7fd1451.webp"},
-             * {"url":"http://pb3.pstatp.com/list/s362/1cd20004f36eb7fd1451.webp"},{"url":"http://pb3.pstatp
-             * .com/list/s362/1cd20004f36eb7fd1451.webp"}],"uri":"list/s362/1cd20004f36eb7fd1451","height":362,"width":362,"is_gif":false},
-             * {"url":"http://p3.pstatp.com/list/s362/1cd40003bb25ba3b2f28.webp","url_list":[{"url":"http://p3.pstatp
-             * .com/list/s362/1cd40003bb25ba3b2f28.webp"},{"url":"http://pb9.pstatp.com/list/s362/1cd40003bb25ba3b2f28.webp"},
-             * {"url":"http://pb3.pstatp.com/list/s362/1cd40003bb25ba3b2f28.webp"}],"uri":"list/s362/1cd40003bb25ba3b2f28","height":362,
-             * "width":362,"is_gif":false}],"category_id":81}
-             * comments : []
-             * type : 1
-             * display_time : 1.49422590099E9
-             * online_time : 1.49422590099E9
-             * ad : {"log_extra":{"rit":11,"ad_price":"WQ_ozgAGDM1ZD-jOAAYMzV-P-jtJEHE3yq1RlQ","req_id":"201705081445010100030472005661E1",
-             * "convert_id":0},"open_url":"","track_url":"","display_info":"朋友月薪3000，却在用大牌手机，原来是分期付款买的！","web_url":"https://lp.yyfq
-             * .com/?md=1&tsid=210013&taid=%E5%85%A8%E5%9B%BD%E5%8A%A8%E6%80%81%E5%9B%BE_3","avatar_name":"有用分期","id":59823574008,
-             * "display_image_height":388,"display_image_width":690,"title":"朋友月薪3000，却在用大牌手机，原来是分期付款买的！","label":"广告","track_url_list":[],
-             * "display_image":"http://p3.pstatp.com/origin/1dd200206598f3aa3d68","filter_words":[{"id":"1:9","name":"IT数码",
-             * "is_selected":false},{"id":"1:67","name":"手机","is_selected":false},{"id":"2:0","name":"来源:有用分期","is_selected":false},
-             * {"id":"4:2","name":"看过了","is_selected":false}],"type":"web","is_ad":1,"gif_url":"http://p3.pstatp
-             * .com/origin/1dd200206598f3aa3d68","ad_id":59823574008,"button_text":"查看详情","display_type":3,"click_delay":0,"ab_show_style":2,
-             * "avatar_url":"http://p1.pstatp.com/origin/9197/1375840585","end_time":1809509009}
-             */
-
             private GroupBean group;
             private String type;
-            private double display_time;
-            private double online_time;
+            private String display_time;
+            private String online_time;
             private AdBean ad;
-            private List<?> comments;
+            private List<CommentsBean> comments;
 
             public GroupBean getGroup() {
                 return group;
@@ -519,19 +109,19 @@ public class NhEssay {
                 this.type = type;
             }
 
-            public double getDisplay_time() {
+            public String getDisplay_time() {
                 return display_time;
             }
 
-            public void setDisplay_time(double display_time) {
+            public void setDisplay_time(String display_time) {
                 this.display_time = display_time;
             }
 
-            public double getOnline_time() {
+            public String getOnline_time() {
                 return online_time;
             }
 
-            public void setOnline_time(double online_time) {
+            public void setOnline_time(String online_time) {
                 this.online_time = online_time;
             }
 
@@ -543,151 +133,45 @@ public class NhEssay {
                 this.ad = ad;
             }
 
-            public List<?> getComments() {
+            public List<CommentsBean> getComments() {
                 return comments;
             }
 
-            public void setComments(List<?> comments) {
+            public void setComments(List<CommentsBean> comments) {
                 this.comments = comments;
             }
 
             public static class GroupBean {
-                /**
-                 * large_image_list : [{"url":"http://p1.pstatp.com/large/1e120002134b41111c57.webp","url_list":[{"url":"http://p1.pstatp
-                 * .com/large/1e120002134b41111c57.webp"},{"url":"http://pb3.pstatp.com/large/1e120002134b41111c57.webp"},
-                 * {"url":"http://pb3.pstatp.com/large/1e120002134b41111c57.webp"}],"uri":"large/1e120002134b41111c57","height":560,
-                 * "width":417,"is_gif":false},{"url":"http://p9.pstatp.com/large/1cd40003bb2247517630.webp",
-                 * "url_list":[{"url":"http://p9.pstatp.com/large/1cd40003bb2247517630.webp"},{"url":"http://pb1.pstatp
-                 * .com/large/1cd40003bb2247517630.webp"},{"url":"http://pb3.pstatp.com/large/1cd40003bb2247517630.webp"}],
-                 * "uri":"large/1cd40003bb2247517630","height":1660,"width":417,"is_gif":false},{"url":"http://p3.pstatp
-                 * .com/large/1cd30004f2d514946444.webp","url_list":[{"url":"http://p3.pstatp.com/large/1cd30004f2d514946444.webp"},
-                 * {"url":"http://pb9.pstatp.com/large/1cd30004f2d514946444.webp"},{"url":"http://pb3.pstatp
-                 * .com/large/1cd30004f2d514946444.webp"}],"uri":"large/1cd30004f2d514946444","height":560,"width":417,"is_gif":false},
-                 * {"url":"http://p1.pstatp.com/large/1cd20004f36b22e256a6.webp","url_list":[{"url":"http://p1.pstatp
-                 * .com/large/1cd20004f36b22e256a6.webp"},{"url":"http://pb3.pstatp.com/large/1cd20004f36b22e256a6.webp"},
-                 * {"url":"http://pb3.pstatp.com/large/1cd20004f36b22e256a6.webp"}],"uri":"large/1cd20004f36b22e256a6","height":560,
-                 * "width":417,"is_gif":false},{"url":"http://p1.pstatp.com/large/1cd30004f2d6b3f5d39b.webp",
-                 * "url_list":[{"url":"http://p1.pstatp.com/large/1cd30004f2d6b3f5d39b.webp"},{"url":"http://pb3.pstatp
-                 * .com/large/1cd30004f2d6b3f5d39b.webp"},{"url":"http://pb3.pstatp.com/large/1cd30004f2d6b3f5d39b.webp"}],
-                 * "uri":"large/1cd30004f2d6b3f5d39b","height":1250,"width":417,"is_gif":false},{"url":"http://p3.pstatp
-                 * .com/large/1cd30004f2d898bf70bd.webp","url_list":[{"url":"http://p3.pstatp.com/large/1cd30004f2d898bf70bd.webp"},
-                 * {"url":"http://pb9.pstatp.com/large/1cd30004f2d898bf70bd.webp"},{"url":"http://pb3.pstatp.com/large/1cd30004f2d898bf70bd
-                 * .webp"}],"uri":"large/1cd30004f2d898bf70bd","height":1150,"width":417,"is_gif":false},{"url":"http://p3.pstatp
-                 * .com/large/1cd40003bb23050cd74e.webp","url_list":[{"url":"http://p3.pstatp.com/large/1cd40003bb23050cd74e.webp"},
-                 * {"url":"http://pb9.pstatp.com/large/1cd40003bb23050cd74e.webp"},{"url":"http://pb3.pstatp.com/large/1cd40003bb23050cd74e
-                 * .webp"}],"uri":"large/1cd40003bb23050cd74e","height":600,"width":417,"is_gif":false},{"url":"http://p1.pstatp
-                 * .com/large/1cd20004f36eb7fd1451.webp","url_list":[{"url":"http://p1.pstatp.com/large/1cd20004f36eb7fd1451.webp"},
-                 * {"url":"http://pb3.pstatp.com/large/1cd20004f36eb7fd1451.webp"},{"url":"http://pb3.pstatp
-                 * .com/large/1cd20004f36eb7fd1451.webp"}],"uri":"large/1cd20004f36eb7fd1451","height":1550,"width":417,"is_gif":false},
-                 * {"url":"http://p3.pstatp.com/large/1cd40003bb25ba3b2f28.webp","url_list":[{"url":"http://p3.pstatp
-                 * .com/large/1cd40003bb25ba3b2f28.webp"},{"url":"http://pb9.pstatp.com/large/1cd40003bb25ba3b2f28.webp"},
-                 * {"url":"http://pb3.pstatp.com/large/1cd40003bb25ba3b2f28.webp"}],"uri":"large/1cd40003bb25ba3b2f28","height":850,
-                 * "width":417,"is_gif":false}]
-                 * text :
-                 * neihan_hot_start_time : 00-00-00
-                 * dislike_reason : [{"type":2,"id":81,"title":"吧:奇葩买卖家"},{"type":4,"id":0,"title":"内容重复"},{"type":3,"id":3935903081,
-                 * "title":"作者:肛板日穿"}]
-                 * create_time : 1493626241
-                 * id : 59651298808
-                 * favorite_count : 28
-                 * go_detail_count : 894
-                 * user_favorite : 0
-                 * share_type : 1
-                 * user : {"user_id":3935903081,"name":"肛板日穿","followings":0,"user_verified":false,"ugc_count":108,
-                 * "avatar_url":"http://p1.pstatp.com/medium/18a30005b5e2f4d6bfe1","followers":53,"is_following":false,"is_pro_user":false}
-                 * is_can_share : 1
-                 * category_type : 1
-                 * share_url : http://m.neihanshequ.com/share/group/59651298808/?iid=3216590132&app=joke_essay
-                 * label : 1
-                 * content :
-                 * comment_count : 7
-                 * id_str : 59651298808
-                 * media_type : 4
-                 * share_count : 262
-                 * type : 5
-                 * status : 112
-                 * has_comments : 0
-                 * user_bury : 0
-                 * activity : {}
-                 * status_desc : 热门投稿
-                 * quick_comment : false
-                 * display_type : 0
-                 * neihan_hot_end_time : 00-00-00
-                 * user_digg : 0
-                 * online_time : 1493626241
-                 * category_name : 奇葩买卖家
-                 * category_visible : true
-                 * bury_count : 20
-                 * is_anonymous : false
-                 * repin_count : 28
-                 * is_neihan_hot : false
-                 * digg_count : 232
-                 * has_hot_comments : 0
-                 * allow_dislike : true
-                 * user_repin : 0
-                 * neihan_hot_link : {}
-                 * is_multi_image : 1
-                 * group_id : 59651298808
-                 * thumb_image_list : [{"url":"http://p1.pstatp.com/list/s362/1e120002134b41111c57.webp","url_list":[{"url":"http://p1.pstatp
-                 * .com/list/s362/1e120002134b41111c57.webp"},{"url":"http://pb3.pstatp.com/list/s362/1e120002134b41111c57.webp"},
-                 * {"url":"http://pb3.pstatp.com/list/s362/1e120002134b41111c57.webp"}],"uri":"list/s362/1e120002134b41111c57","height":362,
-                 * "width":362,"is_gif":false},{"url":"http://p9.pstatp.com/list/s362/1cd40003bb2247517630.webp",
-                 * "url_list":[{"url":"http://p9.pstatp.com/list/s362/1cd40003bb2247517630.webp"},{"url":"http://pb1.pstatp
-                 * .com/list/s362/1cd40003bb2247517630.webp"},{"url":"http://pb3.pstatp.com/list/s362/1cd40003bb2247517630.webp"}],
-                 * "uri":"list/s362/1cd40003bb2247517630","height":362,"width":362,"is_gif":false},{"url":"http://p3.pstatp
-                 * .com/list/s362/1cd30004f2d514946444.webp","url_list":[{"url":"http://p3.pstatp.com/list/s362/1cd30004f2d514946444.webp"},
-                 * {"url":"http://pb9.pstatp.com/list/s362/1cd30004f2d514946444.webp"},{"url":"http://pb3.pstatp
-                 * .com/list/s362/1cd30004f2d514946444.webp"}],"uri":"list/s362/1cd30004f2d514946444","height":362,"width":362,
-                 * "is_gif":false},{"url":"http://p1.pstatp.com/list/s362/1cd20004f36b22e256a6.webp","url_list":[{"url":"http://p1.pstatp
-                 * .com/list/s362/1cd20004f36b22e256a6.webp"},{"url":"http://pb3.pstatp.com/list/s362/1cd20004f36b22e256a6.webp"},
-                 * {"url":"http://pb3.pstatp.com/list/s362/1cd20004f36b22e256a6.webp"}],"uri":"list/s362/1cd20004f36b22e256a6","height":362,
-                 * "width":362,"is_gif":false},{"url":"http://p1.pstatp.com/list/s362/1cd30004f2d6b3f5d39b.webp",
-                 * "url_list":[{"url":"http://p1.pstatp.com/list/s362/1cd30004f2d6b3f5d39b.webp"},{"url":"http://pb3.pstatp
-                 * .com/list/s362/1cd30004f2d6b3f5d39b.webp"},{"url":"http://pb3.pstatp.com/list/s362/1cd30004f2d6b3f5d39b.webp"}],
-                 * "uri":"list/s362/1cd30004f2d6b3f5d39b","height":362,"width":362,"is_gif":false},{"url":"http://p3.pstatp
-                 * .com/list/s362/1cd30004f2d898bf70bd.webp","url_list":[{"url":"http://p3.pstatp.com/list/s362/1cd30004f2d898bf70bd.webp"},
-                 * {"url":"http://pb9.pstatp.com/list/s362/1cd30004f2d898bf70bd.webp"},{"url":"http://pb3.pstatp
-                 * .com/list/s362/1cd30004f2d898bf70bd.webp"}],"uri":"list/s362/1cd30004f2d898bf70bd","height":362,"width":362,
-                 * "is_gif":false},{"url":"http://p3.pstatp.com/list/s362/1cd40003bb23050cd74e.webp","url_list":[{"url":"http://p3.pstatp
-                 * .com/list/s362/1cd40003bb23050cd74e.webp"},{"url":"http://pb9.pstatp.com/list/s362/1cd40003bb23050cd74e.webp"},
-                 * {"url":"http://pb3.pstatp.com/list/s362/1cd40003bb23050cd74e.webp"}],"uri":"list/s362/1cd40003bb23050cd74e","height":362,
-                 * "width":362,"is_gif":false},{"url":"http://p1.pstatp.com/list/s362/1cd20004f36eb7fd1451.webp",
-                 * "url_list":[{"url":"http://p1.pstatp.com/list/s362/1cd20004f36eb7fd1451.webp"},{"url":"http://pb3.pstatp
-                 * .com/list/s362/1cd20004f36eb7fd1451.webp"},{"url":"http://pb3.pstatp.com/list/s362/1cd20004f36eb7fd1451.webp"}],
-                 * "uri":"list/s362/1cd20004f36eb7fd1451","height":362,"width":362,"is_gif":false},{"url":"http://p3.pstatp
-                 * .com/list/s362/1cd40003bb25ba3b2f28.webp","url_list":[{"url":"http://p3.pstatp.com/list/s362/1cd40003bb25ba3b2f28.webp"},
-                 * {"url":"http://pb9.pstatp.com/list/s362/1cd40003bb25ba3b2f28.webp"},{"url":"http://pb3.pstatp
-                 * .com/list/s362/1cd40003bb25ba3b2f28.webp"}],"uri":"list/s362/1cd40003bb25ba3b2f28","height":362,"width":362,"is_gif":false}]
-                 * category_id : 81
-                 */
-
+                private UserBean user;
                 private String text;
                 private String neihan_hot_start_time;
-                private String create_time;
+                private long create_time;
                 private long id;
                 private String favorite_count;
                 private String go_detail_count;
                 private String user_favorite;
                 private String share_type;
-                private UserBean user;
+                private double max_screen_width_percent;
                 private String is_can_share;
-                private String category_type;
+                private String comment_count;
                 private String share_url;
                 private String label;
                 private String content;
-                private String comment_count;
+                private String category_type;
                 private String id_str;
                 private String media_type;
                 private String share_count;
                 private String type;
                 private String status;
                 private String has_comments;
+                private LargeImageBean large_image;
                 private String user_bury;
                 private ActivityBean activity;
                 private String status_desc;
                 private boolean quick_comment;
                 private String display_type;
                 private String neihan_hot_end_time;
+                private int is_gif;
                 private String user_digg;
                 private String online_time;
                 private String category_name;
@@ -695,18 +179,29 @@ public class NhEssay {
                 private String bury_count;
                 private boolean is_anonymous;
                 private String repin_count;
+                private double min_screen_width_percent;
                 private boolean is_neihan_hot;
                 private String digg_count;
+                private GifvideoBean gifvideo;
                 private String has_hot_comments;
                 private boolean allow_dislike;
+                private String image_status;
                 private String user_repin;
                 private NeihanHotLinkBean neihan_hot_link;
-                private String is_multi_image;
                 private long group_id;
+                private MiddleImageBean middle_image;
                 private String category_id;
                 private List<LargeImageListBean> large_image_list;
                 private List<DislikeReasonBean> dislike_reason;
                 private List<ThumbImageListBean> thumb_image_list;
+
+                public UserBean getUser() {
+                    return user;
+                }
+
+                public void setUser(UserBean user) {
+                    this.user = user;
+                }
 
                 public String getText() {
                     return text;
@@ -724,11 +219,11 @@ public class NhEssay {
                     this.neihan_hot_start_time = neihan_hot_start_time;
                 }
 
-                public String getCreate_time() {
+                public long getCreate_time() {
                     return create_time;
                 }
 
-                public void setCreate_time(String create_time) {
+                public void setCreate_time(long create_time) {
                     this.create_time = create_time;
                 }
 
@@ -772,12 +267,12 @@ public class NhEssay {
                     this.share_type = share_type;
                 }
 
-                public UserBean getUser() {
-                    return user;
+                public double getMax_screen_width_percent() {
+                    return max_screen_width_percent;
                 }
 
-                public void setUser(UserBean user) {
-                    this.user = user;
+                public void setMax_screen_width_percent(double max_screen_width_percent) {
+                    this.max_screen_width_percent = max_screen_width_percent;
                 }
 
                 public String getIs_can_share() {
@@ -788,12 +283,12 @@ public class NhEssay {
                     this.is_can_share = is_can_share;
                 }
 
-                public String getCategory_type() {
-                    return category_type;
+                public String getComment_count() {
+                    return comment_count;
                 }
 
-                public void setCategory_type(String category_type) {
-                    this.category_type = category_type;
+                public void setComment_count(String comment_count) {
+                    this.comment_count = comment_count;
                 }
 
                 public String getShare_url() {
@@ -820,12 +315,12 @@ public class NhEssay {
                     this.content = content;
                 }
 
-                public String getComment_count() {
-                    return comment_count;
+                public String getCategory_type() {
+                    return category_type;
                 }
 
-                public void setComment_count(String comment_count) {
-                    this.comment_count = comment_count;
+                public void setCategory_type(String category_type) {
+                    this.category_type = category_type;
                 }
 
                 public String getId_str() {
@@ -876,6 +371,14 @@ public class NhEssay {
                     this.has_comments = has_comments;
                 }
 
+                public LargeImageBean getLarge_image() {
+                    return large_image;
+                }
+
+                public void setLarge_image(LargeImageBean large_image) {
+                    this.large_image = large_image;
+                }
+
                 public String getUser_bury() {
                     return user_bury;
                 }
@@ -922,6 +425,14 @@ public class NhEssay {
 
                 public void setNeihan_hot_end_time(String neihan_hot_end_time) {
                     this.neihan_hot_end_time = neihan_hot_end_time;
+                }
+
+                public int getIs_gif() {
+                    return is_gif;
+                }
+
+                public void setIs_gif(int is_gif) {
+                    this.is_gif = is_gif;
                 }
 
                 public String getUser_digg() {
@@ -980,6 +491,14 @@ public class NhEssay {
                     this.repin_count = repin_count;
                 }
 
+                public double getMin_screen_width_percent() {
+                    return min_screen_width_percent;
+                }
+
+                public void setMin_screen_width_percent(double min_screen_width_percent) {
+                    this.min_screen_width_percent = min_screen_width_percent;
+                }
+
                 public boolean isIs_neihan_hot() {
                     return is_neihan_hot;
                 }
@@ -994,6 +513,14 @@ public class NhEssay {
 
                 public void setDigg_count(String digg_count) {
                     this.digg_count = digg_count;
+                }
+
+                public GifvideoBean getGifvideo() {
+                    return gifvideo;
+                }
+
+                public void setGifvideo(GifvideoBean gifvideo) {
+                    this.gifvideo = gifvideo;
                 }
 
                 public String getHas_hot_comments() {
@@ -1012,6 +539,14 @@ public class NhEssay {
                     this.allow_dislike = allow_dislike;
                 }
 
+                public String getImage_status() {
+                    return image_status;
+                }
+
+                public void setImage_status(String image_status) {
+                    this.image_status = image_status;
+                }
+
                 public String getUser_repin() {
                     return user_repin;
                 }
@@ -1028,20 +563,20 @@ public class NhEssay {
                     this.neihan_hot_link = neihan_hot_link;
                 }
 
-                public String getIs_multi_image() {
-                    return is_multi_image;
-                }
-
-                public void setIs_multi_image(String is_multi_image) {
-                    this.is_multi_image = is_multi_image;
-                }
-
                 public long getGroup_id() {
                     return group_id;
                 }
 
                 public void setGroup_id(long group_id) {
                     this.group_id = group_id;
+                }
+
+                public MiddleImageBean getMiddle_image() {
+                    return middle_image;
+                }
+
+                public void setMiddle_image(MiddleImageBean middle_image) {
+                    this.middle_image = middle_image;
                 }
 
                 public String getCategory_id() {
@@ -1060,14 +595,6 @@ public class NhEssay {
                     this.large_image_list = large_image_list;
                 }
 
-                public List<DislikeReasonBean> getDislike_reason() {
-                    return dislike_reason;
-                }
-
-                public void setDislike_reason(List<DislikeReasonBean> dislike_reason) {
-                    this.dislike_reason = dislike_reason;
-                }
-
                 public List<ThumbImageListBean> getThumb_image_list() {
                     return thumb_image_list;
                 }
@@ -1076,13 +603,540 @@ public class NhEssay {
                     this.thumb_image_list = thumb_image_list;
                 }
 
+                public List<DislikeReasonBean> getDislike_reason() {
+                    return dislike_reason;
+                }
+
+                public void setDislike_reason(List<DislikeReasonBean> dislike_reason) {
+                    this.dislike_reason = dislike_reason;
+                }
+
                 public static class UserBean {
+                    private long user_id;
+                    private String name;
+                    private String followings;
+                    private boolean user_verified;
+                    private String ugc_count;
+                    private String avatar_url;
+                    private String followers;
+                    private boolean is_following;
+                    private boolean is_pro_user;
+
+                    public long getUser_id() {
+                        return user_id;
+                    }
+
+                    public void setUser_id(long user_id) {
+                        this.user_id = user_id;
+                    }
+
+                    public String getName() {
+                        return name;
+                    }
+
+                    public void setName(String name) {
+                        this.name = name;
+                    }
+
+                    public String getFollowings() {
+                        return followings;
+                    }
+
+                    public void setFollowings(String followings) {
+                        this.followings = followings;
+                    }
+
+                    public boolean isUser_verified() {
+                        return user_verified;
+                    }
+
+                    public void setUser_verified(boolean user_verified) {
+                        this.user_verified = user_verified;
+                    }
+
+                    public String getUgc_count() {
+                        return ugc_count;
+                    }
+
+                    public void setUgc_count(String ugc_count) {
+                        this.ugc_count = ugc_count;
+                    }
+
+                    public String getAvatar_url() {
+                        return avatar_url;
+                    }
+
+                    public void setAvatar_url(String avatar_url) {
+                        this.avatar_url = avatar_url;
+                    }
+
+                    public String getFollowers() {
+                        return followers;
+                    }
+
+                    public void setFollowers(String followers) {
+                        this.followers = followers;
+                    }
+
+                    public boolean isIs_following() {
+                        return is_following;
+                    }
+
+                    public void setIs_following(boolean is_following) {
+                        this.is_following = is_following;
+                    }
+
+                    public boolean isIs_pro_user() {
+                        return is_pro_user;
+                    }
+
+                    public void setIs_pro_user(boolean is_pro_user) {
+                        this.is_pro_user = is_pro_user;
+                    }
+                }
+
+                public static class LargeImageBean {
+                    private String width;
+                    private String r_height;
+                    private String r_width;
+                    private String uri;
+                    private String height;
+                    private List<UrlListBean> url_list;
+
+                    public String getWidth() {
+                        return width;
+                    }
+
+                    public void setWidth(String width) {
+                        this.width = width;
+                    }
+
+                    public String getR_height() {
+                        return r_height;
+                    }
+
+                    public void setR_height(String r_height) {
+                        this.r_height = r_height;
+                    }
+
+                    public String getR_width() {
+                        return r_width;
+                    }
+
+                    public void setR_width(String r_width) {
+                        this.r_width = r_width;
+                    }
+
+                    public String getUri() {
+                        return uri;
+                    }
+
+                    public void setUri(String uri) {
+                        this.uri = uri;
+                    }
+
+                    public String getHeight() {
+                        return height;
+                    }
+
+                    public void setHeight(String height) {
+                        this.height = height;
+                    }
+
+                    public List<UrlListBean> getUrl_list() {
+                        return url_list;
+                    }
+
+                    public void setUrl_list(List<UrlListBean> url_list) {
+                        this.url_list = url_list;
+                    }
+
+                    public static class UrlListBean {
+                        private String url;
+
+                        public String getUrl() {
+                            return url;
+                        }
+
+                        public void setUrl(String url) {
+                            this.url = url;
+                        }
+                    }
                 }
 
                 public static class ActivityBean {
                 }
 
+                public static class GifvideoBean {
+                    @SerializedName("360p_video")
+                    private _$360pVideoBean _$360p_video;
+                    private OriginVideoBean origin_video;
+                    private String video_id;
+                    @SerializedName("720p_video")
+                    private _$720pVideoBean _$720p_video;
+                    private String mp4_url;
+                    private String video_height;
+                    @SerializedName("480p_video")
+                    private _$480pVideoBean _$480p_video;
+                    private String cover_image_uri;
+                    private double duration;
+                    private String video_width;
+
+                    public _$360pVideoBean get_$360p_video() {
+                        return _$360p_video;
+                    }
+
+                    public void set_$360p_video(_$360pVideoBean _$360p_video) {
+                        this._$360p_video = _$360p_video;
+                    }
+
+                    public OriginVideoBean getOrigin_video() {
+                        return origin_video;
+                    }
+
+                    public void setOrigin_video(OriginVideoBean origin_video) {
+                        this.origin_video = origin_video;
+                    }
+
+                    public String getVideo_id() {
+                        return video_id;
+                    }
+
+                    public void setVideo_id(String video_id) {
+                        this.video_id = video_id;
+                    }
+
+                    public _$720pVideoBean get_$720p_video() {
+                        return _$720p_video;
+                    }
+
+                    public void set_$720p_video(_$720pVideoBean _$720p_video) {
+                        this._$720p_video = _$720p_video;
+                    }
+
+                    public String getMp4_url() {
+                        return mp4_url;
+                    }
+
+                    public void setMp4_url(String mp4_url) {
+                        this.mp4_url = mp4_url;
+                    }
+
+                    public String getVideo_height() {
+                        return video_height;
+                    }
+
+                    public void setVideo_height(String video_height) {
+                        this.video_height = video_height;
+                    }
+
+                    public _$480pVideoBean get_$480p_video() {
+                        return _$480p_video;
+                    }
+
+                    public void set_$480p_video(_$480pVideoBean _$480p_video) {
+                        this._$480p_video = _$480p_video;
+                    }
+
+                    public String getCover_image_uri() {
+                        return cover_image_uri;
+                    }
+
+                    public void setCover_image_uri(String cover_image_uri) {
+                        this.cover_image_uri = cover_image_uri;
+                    }
+
+                    public double getDuration() {
+                        return duration;
+                    }
+
+                    public void setDuration(double duration) {
+                        this.duration = duration;
+                    }
+
+                    public String getVideo_width() {
+                        return video_width;
+                    }
+
+                    public void setVideo_width(String video_width) {
+                        this.video_width = video_width;
+                    }
+
+                    public static class _$360pVideoBean {
+                        private String width;
+                        private String uri;
+                        private String height;
+                        private List<UrlListBeanX> url_list;
+
+                        public String getWidth() {
+                            return width;
+                        }
+
+                        public void setWidth(String width) {
+                            this.width = width;
+                        }
+
+                        public String getUri() {
+                            return uri;
+                        }
+
+                        public void setUri(String uri) {
+                            this.uri = uri;
+                        }
+
+                        public String getHeight() {
+                            return height;
+                        }
+
+                        public void setHeight(String height) {
+                            this.height = height;
+                        }
+
+                        public List<UrlListBeanX> getUrl_list() {
+                            return url_list;
+                        }
+
+                        public void setUrl_list(List<UrlListBeanX> url_list) {
+                            this.url_list = url_list;
+                        }
+
+                        public static class UrlListBeanX {
+                            private String url;
+
+                            public String getUrl() {
+                                return url;
+                            }
+
+                            public void setUrl(String url) {
+                                this.url = url;
+                            }
+                        }
+                    }
+
+                    public static class OriginVideoBean {
+                        private String width;
+                        private String uri;
+                        private String height;
+                        private List<UrlListBeanXX> url_list;
+
+                        public String getWidth() {
+                            return width;
+                        }
+
+                        public void setWidth(String width) {
+                            this.width = width;
+                        }
+
+                        public String getUri() {
+                            return uri;
+                        }
+
+                        public void setUri(String uri) {
+                            this.uri = uri;
+                        }
+
+                        public String getHeight() {
+                            return height;
+                        }
+
+                        public void setHeight(String height) {
+                            this.height = height;
+                        }
+
+                        public List<UrlListBeanXX> getUrl_list() {
+                            return url_list;
+                        }
+
+                        public void setUrl_list(List<UrlListBeanXX> url_list) {
+                            this.url_list = url_list;
+                        }
+
+                        public static class UrlListBeanXX {
+                            private String url;
+
+                            public String getUrl() {
+                                return url;
+                            }
+
+                            public void setUrl(String url) {
+                                this.url = url;
+                            }
+                        }
+                    }
+
+                    public static class _$720pVideoBean {
+                        private String width;
+                        private String uri;
+                        private String height;
+                        private List<UrlListBeanXXX> url_list;
+
+                        public String getWidth() {
+                            return width;
+                        }
+
+                        public void setWidth(String width) {
+                            this.width = width;
+                        }
+
+                        public String getUri() {
+                            return uri;
+                        }
+
+                        public void setUri(String uri) {
+                            this.uri = uri;
+                        }
+
+                        public String getHeight() {
+                            return height;
+                        }
+
+                        public void setHeight(String height) {
+                            this.height = height;
+                        }
+
+                        public List<UrlListBeanXXX> getUrl_list() {
+                            return url_list;
+                        }
+
+                        public void setUrl_list(List<UrlListBeanXXX> url_list) {
+                            this.url_list = url_list;
+                        }
+
+                        public static class UrlListBeanXXX {
+                            private String url;
+
+                            public String getUrl() {
+                                return url;
+                            }
+
+                            public void setUrl(String url) {
+                                this.url = url;
+                            }
+                        }
+                    }
+
+                    public static class _$480pVideoBean {
+                        private String width;
+                        private String uri;
+                        private String height;
+                        private List<UrlListBeanXXXX> url_list;
+
+                        public String getWidth() {
+                            return width;
+                        }
+
+                        public void setWidth(String width) {
+                            this.width = width;
+                        }
+
+                        public String getUri() {
+                            return uri;
+                        }
+
+                        public void setUri(String uri) {
+                            this.uri = uri;
+                        }
+
+                        public String getHeight() {
+                            return height;
+                        }
+
+                        public void setHeight(String height) {
+                            this.height = height;
+                        }
+
+                        public List<UrlListBeanXXXX> getUrl_list() {
+                            return url_list;
+                        }
+
+                        public void setUrl_list(List<UrlListBeanXXXX> url_list) {
+                            this.url_list = url_list;
+                        }
+
+                        public static class UrlListBeanXXXX {
+                            private String url;
+
+                            public String getUrl() {
+                                return url;
+                            }
+
+                            public void setUrl(String url) {
+                                this.url = url;
+                            }
+                        }
+                    }
+                }
+
                 public static class NeihanHotLinkBean {
+                }
+
+                public static class MiddleImageBean {
+                    private String width;
+                    private String r_height;
+                    private String r_width;
+                    private String uri;
+                    private String height;
+                    private List<UrlListBeanXXXXX> url_list;
+
+                    public String getWidth() {
+                        return width;
+                    }
+
+                    public void setWidth(String width) {
+                        this.width = width;
+                    }
+
+                    public String getR_height() {
+                        return r_height;
+                    }
+
+                    public void setR_height(String r_height) {
+                        this.r_height = r_height;
+                    }
+
+                    public String getR_width() {
+                        return r_width;
+                    }
+
+                    public void setR_width(String r_width) {
+                        this.r_width = r_width;
+                    }
+
+                    public String getUri() {
+                        return uri;
+                    }
+
+                    public void setUri(String uri) {
+                        this.uri = uri;
+                    }
+
+                    public String getHeight() {
+                        return height;
+                    }
+
+                    public void setHeight(String height) {
+                        this.height = height;
+                    }
+
+                    public List<UrlListBeanXXXXX> getUrl_list() {
+                        return url_list;
+                    }
+
+                    public void setUrl_list(List<UrlListBeanXXXXX> url_list) {
+                        this.url_list = url_list;
+                    }
+
+                    public static class UrlListBeanXXXXX {
+                        private String url;
+
+                        public String getUrl() {
+                            return url;
+                        }
+
+                        public void setUrl(String url) {
+                            this.url = url;
+                        }
+                    }
                 }
 
                 public static class LargeImageListBean {
@@ -1169,12 +1223,6 @@ public class NhEssay {
                 }
 
                 public static class DislikeReasonBean {
-                    /**
-                     * type : 2
-                     * id : 81
-                     * title : 吧:奇葩买卖家
-                     */
-
                     private String type;
                     private String id;
                     private String title;
@@ -1207,7 +1255,8 @@ public class NhEssay {
                 public static class ThumbImageListBean {
                     /**
                      * url : http://p1.pstatp.com/list/s362/1e120002134b41111c57.webp
-                     * url_list : [{"url":"http://p1.pstatp.com/list/s362/1e120002134b41111c57.webp"},{"url":"http://pb3.pstatp.com/list/s362/1e120002134b41111c57.webp"},{"url":"http://pb3.pstatp.com/list/s362/1e120002134b41111c57.webp"}]
+                     * url_list : [{"url":"http://p1.pstatp.com/list/s362/1e120002134b41111c57.webp"},{"url":"http://pb3.pstatp
+                     * .com/list/s362/1e120002134b41111c57.webp"},{"url":"http://pb3.pstatp.com/list/s362/1e120002134b41111c57.webp"}]
                      * uri : list/s362/1e120002134b41111c57
                      * height : 362
                      * width : 362
@@ -1288,33 +1337,6 @@ public class NhEssay {
             }
 
             public static class AdBean {
-                /**
-                 * log_extra : {"rit":11,"ad_price":"WQ_ozgAGDM1ZD-jOAAYMzV-P-jtJEHE3yq1RlQ","req_id":"201705081445010100030472005661E1","convert_id":0}
-                 * open_url :
-                 * track_url :
-                 * display_info : 朋友月薪3000，却在用大牌手机，原来是分期付款买的！
-                 * web_url : https://lp.yyfq.com/?md=1&tsid=210013&taid=%E5%85%A8%E5%9B%BD%E5%8A%A8%E6%80%81%E5%9B%BE_3
-                 * avatar_name : 有用分期
-                 * id : 59823574008
-                 * display_image_height : 388
-                 * display_image_width : 690
-                 * title : 朋友月薪3000，却在用大牌手机，原来是分期付款买的！
-                 * label : 广告
-                 * track_url_list : []
-                 * display_image : http://p3.pstatp.com/origin/1dd200206598f3aa3d68
-                 * filter_words : [{"id":"1:9","name":"IT数码","is_selected":false},{"id":"1:67","name":"手机","is_selected":false},{"id":"2:0","name":"来源:有用分期","is_selected":false},{"id":"4:2","name":"看过了","is_selected":false}]
-                 * type : web
-                 * is_ad : 1
-                 * gif_url : http://p3.pstatp.com/origin/1dd200206598f3aa3d68
-                 * ad_id : 59823574008
-                 * button_text : 查看详情
-                 * display_type : 3
-                 * click_delay : 0
-                 * ab_show_style : 2
-                 * avatar_url : http://p1.pstatp.com/origin/9197/1375840585
-                 * end_time : 1809509009
-                 */
-
                 private LogExtraBean log_extra;
                 private String open_url;
                 private String track_url;
@@ -1533,13 +1555,6 @@ public class NhEssay {
                 }
 
                 public static class LogExtraBean {
-                    /**
-                     * rit : 11
-                     * ad_price : WQ_ozgAGDM1ZD-jOAAYMzV-P-jtJEHE3yq1RlQ
-                     * req_id : 201705081445010100030472005661E1
-                     * convert_id : 0
-                     */
-
                     private String rit;
                     private String ad_price;
                     private String req_id;
@@ -1579,12 +1594,6 @@ public class NhEssay {
                 }
 
                 public static class FilterWordsBean {
-                    /**
-                     * id : 1:9
-                     * name : IT数码
-                     * is_selected : false
-                     */
-
                     private String id;
                     private String name;
                     private boolean is_selected;
@@ -1612,6 +1621,207 @@ public class NhEssay {
                     public void setIs_selected(boolean is_selected) {
                         this.is_selected = is_selected;
                     }
+                }
+            }
+
+            public static class CommentsBean {
+                private String text;
+                private String create_time;
+                private boolean user_verified;
+                private String user_bury;
+                private long user_id;
+                private String bury_count;
+                private String share_url;
+                private long id;
+                private String platform;
+                private String is_digg;
+                private String user_name;
+                private String user_profile_image_url;
+                private String status;
+                private String description;
+                private String user_digg;
+                private String user_profile_url;
+                private String share_type;
+                private String digg_count;
+                private boolean is_pro_user;
+                private String platform_id;
+                private String avatar_url;
+                private long group_id;
+
+                public String getText() {
+                    return text;
+                }
+
+                public void setText(String text) {
+                    this.text = text;
+                }
+
+                public String getCreate_time() {
+                    return create_time;
+                }
+
+                public void setCreate_time(String create_time) {
+                    this.create_time = create_time;
+                }
+
+                public boolean isUser_verified() {
+                    return user_verified;
+                }
+
+                public void setUser_verified(boolean user_verified) {
+                    this.user_verified = user_verified;
+                }
+
+                public String getUser_bury() {
+                    return user_bury;
+                }
+
+                public void setUser_bury(String user_bury) {
+                    this.user_bury = user_bury;
+                }
+
+                public long getUser_id() {
+                    return user_id;
+                }
+
+                public void setUser_id(long user_id) {
+                    this.user_id = user_id;
+                }
+
+                public String getBury_count() {
+                    return bury_count;
+                }
+
+                public void setBury_count(String bury_count) {
+                    this.bury_count = bury_count;
+                }
+
+                public String getShare_url() {
+                    return share_url;
+                }
+
+                public void setShare_url(String share_url) {
+                    this.share_url = share_url;
+                }
+
+                public long getId() {
+                    return id;
+                }
+
+                public void setId(long id) {
+                    this.id = id;
+                }
+
+                public String getPlatform() {
+                    return platform;
+                }
+
+                public void setPlatform(String platform) {
+                    this.platform = platform;
+                }
+
+                public String getIs_digg() {
+                    return is_digg;
+                }
+
+                public void setIs_digg(String is_digg) {
+                    this.is_digg = is_digg;
+                }
+
+                public String getUser_name() {
+                    return user_name;
+                }
+
+                public void setUser_name(String user_name) {
+                    this.user_name = user_name;
+                }
+
+                public String getUser_profile_image_url() {
+                    return user_profile_image_url;
+                }
+
+                public void setUser_profile_image_url(String user_profile_image_url) {
+                    this.user_profile_image_url = user_profile_image_url;
+                }
+
+                public String getStatus() {
+                    return status;
+                }
+
+                public void setStatus(String status) {
+                    this.status = status;
+                }
+
+                public String getDescription() {
+                    return description;
+                }
+
+                public void setDescription(String description) {
+                    this.description = description;
+                }
+
+                public String getUser_digg() {
+                    return user_digg;
+                }
+
+                public void setUser_digg(String user_digg) {
+                    this.user_digg = user_digg;
+                }
+
+                public String getUser_profile_url() {
+                    return user_profile_url;
+                }
+
+                public void setUser_profile_url(String user_profile_url) {
+                    this.user_profile_url = user_profile_url;
+                }
+
+                public String getShare_type() {
+                    return share_type;
+                }
+
+                public void setShare_type(String share_type) {
+                    this.share_type = share_type;
+                }
+
+                public String getDigg_count() {
+                    return digg_count;
+                }
+
+                public void setDigg_count(String digg_count) {
+                    this.digg_count = digg_count;
+                }
+
+                public boolean isIs_pro_user() {
+                    return is_pro_user;
+                }
+
+                public void setIs_pro_user(boolean is_pro_user) {
+                    this.is_pro_user = is_pro_user;
+                }
+
+                public String getPlatform_id() {
+                    return platform_id;
+                }
+
+                public void setPlatform_id(String platform_id) {
+                    this.platform_id = platform_id;
+                }
+
+                public String getAvatar_url() {
+                    return avatar_url;
+                }
+
+                public void setAvatar_url(String avatar_url) {
+                    this.avatar_url = avatar_url;
+                }
+
+                public long getGroup_id() {
+                    return group_id;
+                }
+
+                public void setGroup_id(long group_id) {
+                    this.group_id = group_id;
                 }
             }
         }
