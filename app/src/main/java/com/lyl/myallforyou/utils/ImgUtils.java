@@ -73,7 +73,7 @@ public class ImgUtils {
     }
 
     public static void loadGif(Context context, String url, ImageView imageView) {
-        load(context, url, imageView, 0.2f, TYPE_GIF, DiskCacheStrategy.RESULT);
+        load(context, url, imageView, 0.2f, TYPE_GIF, DiskCacheStrategy.NONE);
     }
 
     public static void getBitmap(Context context, String url, Target simpleTarget) {
@@ -116,7 +116,7 @@ public class ImgUtils {
     /**
      * 清除所有缓存
      */
-    public static void cleanAll(Context context) {
+    public static void clearAll(Context context) {
         clearDiskCache(context);
         clearMemory(context);
     }

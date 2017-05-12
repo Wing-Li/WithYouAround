@@ -6,10 +6,16 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/black"
-    tools:context="com.lyl.myallforyou.ui.image.LongImageActivity">
+    tools:context="com.lyl.myallforyou.ui.image.SpecialImageActivity">
 
     <com.davemorrissey.labs.subscaleview.SubsamplingScaleImageView
         android:id="@+id/long_image"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
+
+    <com.github.chrisbanes.photoview.PhotoView
+        android:id="@+id/gif_image"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone"/>
 </RelativeLayout>

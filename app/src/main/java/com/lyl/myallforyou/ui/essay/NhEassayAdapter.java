@@ -17,7 +17,7 @@ import com.lyl.myallforyou.R;
 import com.lyl.myallforyou.constants.ConstantIntent;
 import com.lyl.myallforyou.data.NhEssay;
 import com.lyl.myallforyou.ui.image.ImageActivity;
-import com.lyl.myallforyou.ui.image.LongImageActivity;
+import com.lyl.myallforyou.ui.image.SpecialImageActivity;
 import com.lyl.myallforyou.utils.ImgUtils;
 
 import java.util.ArrayList;
@@ -142,16 +142,34 @@ public class NhEassayAdapter extends RecyclerView.Adapter<NhEassayAdapter.BaseVi
                     final List<NhEssay.DataBeanX.DataBean.GroupBean.LargeImageBean.UrlListBean> url_list = group.getLarge_image().getUrl_list();
                     final String imgUrl = url_list.get(url_list.size() - 1).getUrl();
                     if (1 == group.getIs_gif()) {// 是gif
-                        ImgUtils.loadGif(mContext, imgUrl, imageHolder.imageContent);
+                        imageHolder.longImageTxt.setText(R.string.show_gif_image);
+                        imageHolder.longImageTxt.setVisibility(View.VISIBLE);
+
+                        String tmUrl = group.getMiddle_image().getUrl_list().get(0).getUrl();
+                        ImgUtils.loadC(mContext, tmUrl, imageHolder.imageContent);
+
+                        // 跳转到 GIF 页面
+                        imageHolder.imageContent.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                Intent intent = new Intent(mContext, SpecialImageActivity.class);
+                                intent.putExtra(ConstantIntent.SPECIAL_IMAGE_URL, imgUrl);
+                                intent.putExtra(ConstantIntent.SPECIAL_IMAGE_TYPE, ConstantIntent.SPECIAL_IMAGE_GIF);
+                                mContext.startActivity(intent);
+                            }
+                        });
                     } else {
                         if (isLongImage) {
+                            imageHolder.longImageTxt.setText(R.string.show_long_image);
                             imageHolder.longImageTxt.setVisibility(View.VISIBLE);
+
                             // 跳转到长图页面
                             imageHolder.singleImg.setOnClickListener(new View.OnClickListener() {
                                 @Override
                                 public void onClick(View view) {
-                                    Intent intent = new Intent(mContext, LongImageActivity.class);
-                                    intent.putExtra(ConstantIntent.LONG_IMAGE_URL, imgUrl);
+                                    Intent intent = new Intent(mContext, SpecialImageActivity.class);
+                                    intent.putExtra(ConstantIntent.SPECIAL_IMAGE_URL, imgUrl);
+                                    intent.putExtra(ConstantIntent.SPECIAL_IMAGE_TYPE, ConstantIntent.SPECIAL_IMAGE_LONG);
                                     mContext.startActivity(intent);
                                 }
                             });

@@ -79,7 +79,7 @@
             android:theme="@style/AppTheme.NoActionBar">
         </activity>
         <activity
-            android:name=".ui.image.LongImageActivity"
+            android:name=".ui.image.SpecialImageActivity"
             android:theme="@style/AppTheme.NoActionBar">
         </activity>
         <activity
