@@ -48,7 +48,7 @@ public class ImgUtils {
                     (diskCacheStrategy).centerCrop().into(imageView);
         } else if (scaleType == TYPE_GIF) {
             Glide.with(context).load(url).asGif().placeholder(placeholderRes).error(errorRes).thumbnail(thumbnail).diskCacheStrategy
-                    (diskCacheStrategy).fitCenter().into(imageView);
+                    (diskCacheStrategy).into(imageView);
         }
     }
 

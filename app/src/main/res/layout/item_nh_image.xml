@@ -4,6 +4,7 @@
               android:layout_height="wrap_content"
               android:layout_marginBottom="4dp"
               android:background="@color/white"
+              android:translationZ="2dp"
               android:elevation="2dp"
               android:orientation="vertical"
               android:paddingBottom="16dp"
@@ -52,12 +53,32 @@
         android:textIsSelectable="true"
         android:textSize="16sp"/>
 
-    <ImageView
-        android:id="@+id/item_image_content"
+    <RelativeLayout
+        android:id="@+id/item_single_image_layout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:background="@color/bg_gary"/>
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/item_image_content"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:background="@color/bg_gary"/>
+
+        <TextView
+            android:id="@+id/item_long_image_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:background="#11000000"
+            android:gravity="center"
+            android:paddingBottom="4dp"
+            android:paddingTop="8dp"
+            android:visibility="gone"
+            android:text="点击查看长图"
+            android:textSize="14sp"/>
+    </RelativeLayout>
+
 
     <GridView
         android:id="@+id/item_image_list"

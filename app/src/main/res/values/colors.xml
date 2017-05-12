@@ -5,6 +5,7 @@
     <color name="colorAccent">#00BF9A</color>
 
     <color name="bg_gary">#F2F2F2</color>
+    <color name="bg_gary_fleet">#33FDFDFD</color>
     <color name="white">#FFFFFF</color>
     <color name="black">#000000</color>
     <color name="tr_black">#99000000</color>
