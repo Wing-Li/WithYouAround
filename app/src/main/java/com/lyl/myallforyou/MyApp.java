@@ -1,11 +1,15 @@
 package com.lyl.myallforyou;
 
 import android.app.Application;
+import android.os.Environment;
+import android.text.TextUtils;
 
 import com.avos.avoscloud.AVOSCloud;
 import com.litesuits.orm.LiteOrm;
 import com.litesuits.orm.db.DataBaseConfig;
 import com.tencent.bugly.Bugly;
+
+import java.io.File;
 
 /**
  * Created by lyl on 2017/4/6.
@@ -25,6 +29,7 @@ public class MyApp extends Application {
 
     public static LiteOrm liteOrm;
 
+    private static String appPath;
 
     @Override
     public void onCreate() {
@@ -35,6 +40,18 @@ public class MyApp extends Application {
         initSQL();
 
         initBugly();
+    }
+
+    public static String getAppPath() {
+        if (!TextUtils.isEmpty(appPath)) {
+            return appPath;
+        }
+        File sdFile = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES).getAbsoluteFile();
+        File my = new File(sdFile, "neihan");
+        if (!my.exists()) {
+            my.mkdirs();
+        }
+        return my.getAbsolutePath();
     }
 
 

@@ -2,9 +2,11 @@ package com.lyl.myallforyou.network.api;
 
 import com.lyl.myallforyou.data.NhEssay;
 
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.http.GET;
 import retrofit2.http.Query;
+import retrofit2.http.Url;
 
 /**
  * Created by lyl on 2017/5/9.
@@ -62,4 +64,7 @@ public interface NeihanApi {
                              @Query("resolution") String resolution,
                              @Query("dpi") int dpi,
                              @Query("update_version_code") String update_version_code);
+
+    @GET
+    Call<ResponseBody> downloadFileWithDynamicUrlSync(@Url String filrUrl);
 }

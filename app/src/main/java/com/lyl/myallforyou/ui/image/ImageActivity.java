@@ -2,12 +2,14 @@ package com.lyl.myallforyou.ui.image;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.view.ViewPager;
+import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.Button;
 
 import com.lyl.myallforyou.R;
 import com.lyl.myallforyou.constants.ConstantIntent;
-import com.lyl.myallforyou.ui.BaseActivity;
 import com.lyl.myallforyou.view.HackyViewPager;
 
 import java.util.ArrayList;
@@ -15,10 +17,12 @@ import java.util.ArrayList;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
-public class ImageActivity extends BaseActivity {
+public class ImageActivity extends BaseImageActivity {
 
     @Bind(R.id.image_viewPager)
     HackyViewPager imageViewPager;
+    @Bind(R.id.image_btn)
+    Button imageBtn;
 
     private ImageAdapter mImageAdapter;
 
@@ -49,5 +53,29 @@ public class ImageActivity extends BaseActivity {
         imageViewPager.setAdapter(mImageAdapter);
         imageViewPager.setOffscreenPageLimit(2);
         imageViewPager.setCurrentItem(mPostion);
+
+        imageViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                mPostion = position;
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
+
+        imageBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                download(mUrlList.get(mPostion), false);
+            }
+        });
     }
 }

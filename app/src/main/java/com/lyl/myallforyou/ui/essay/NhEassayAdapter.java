@@ -316,7 +316,7 @@ public class NhEassayAdapter extends RecyclerView.Adapter<NhEassayAdapter.BaseVi
             imageView.setBackgroundResource(R.color.bg_gary);
             imageView.setScaleType(ImageView.ScaleType.FIT_XY);
 
-            ImgUtils.loadC(mContext, getItem(i).getUrl_list().get(0).getUrl(), imageView);
+            ImgUtils.load(mContext, getItem(i).getUrl_list().get(0).getUrl(), imageView);
 
             return imageView;
         }

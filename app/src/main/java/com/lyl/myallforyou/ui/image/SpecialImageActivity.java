@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.Button;
 
 import com.bumptech.glide.request.animation.GlideAnimation;
 import com.bumptech.glide.request.target.SimpleTarget;
@@ -14,19 +15,20 @@ import com.davemorrissey.labs.subscaleview.SubsamplingScaleImageView;
 import com.github.chrisbanes.photoview.PhotoView;
 import com.lyl.myallforyou.R;
 import com.lyl.myallforyou.constants.ConstantIntent;
-import com.lyl.myallforyou.ui.BaseActivity;
 import com.lyl.myallforyou.utils.ImgUtils;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
-public class SpecialImageActivity extends BaseActivity {
+public class SpecialImageActivity extends BaseImageActivity {
 
 
     @Bind(R.id.long_image)
     SubsamplingScaleImageView longImage;
     @Bind(R.id.gif_image)
     PhotoView gifImage;
+    @Bind(R.id.image_btn)
+    Button imageBtn;
 
     private String mUrl;
     private String mType;
@@ -61,6 +63,17 @@ public class SpecialImageActivity extends BaseActivity {
                 }
             });
         }
+
+        imageBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (mType.equals(ConstantIntent.SPECIAL_IMAGE_GIF)) {
+                    download(mUrl, true);
+                } else {
+                    download(mUrl, false);
+                }
+            }
+        });
     }
 
     private void getPrameter() {

@@ -62,5 +62,7 @@
     <string name="not_more">没有更多了</string>
     <string name="show_long_image">点击显示长图</string>
     <string name="show_gif_image">点击显示 GIF 图</string>
+    <string name="save">保存</string>
+    <string name="download_error">下载失败</string>
 
 </resources>
