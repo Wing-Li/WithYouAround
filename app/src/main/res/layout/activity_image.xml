@@ -23,6 +23,8 @@
         android:layout_marginRight="16dp"
         android:background="@drawable/btn_transparent_bg"
         android:gravity="center"
-        android:text="@string/save"/>
+        android:text="@string/save"
+        android:textColor="@color/white"
+        android:textStyle="bold"/>
 
 </RelativeLayout>
