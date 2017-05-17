@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.view.View;
 import android.widget.Toast;
 
 import com.lyl.myallforyou.MyApp;
@@ -33,7 +34,10 @@ public class BaseImageActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
     }
 
-    protected void download(String fileUrl, final boolean isGif) {
+    protected void download(final View view, String fileUrl, final boolean isGif) {
+        Toast.makeText(mContext, R.string.download_running, Toast.LENGTH_SHORT).show();
+        view.setVisibility(View.GONE);
+
         Call<ResponseBody> responseBodyCall = Network.getNeihanApi().downloadFileWithDynamicUrlSync(fileUrl);
         Call<ResponseBody> clone = responseBodyCall.clone();
         clone.enqueue(new Callback<ResponseBody>() {
@@ -61,6 +65,7 @@ public class BaseImageActivity extends BaseActivity {
             @Override
             public void onFailure(Call<ResponseBody> call, Throwable t) {
                 Toast.makeText(getApplicationContext(), R.string.save_fail, Toast.LENGTH_SHORT).show();
+                view.setVisibility(View.VISIBLE);
             }
         });
     }

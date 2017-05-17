@@ -11,13 +11,16 @@
     <com.davemorrissey.labs.subscaleview.SubsamplingScaleImageView
         android:id="@+id/long_image"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"/>
 
     <com.github.chrisbanes.photoview.PhotoView
         android:id="@+id/gif_image"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:visibility="gone"/>
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:visibility="gone"
+        android:adjustViewBounds="true"/>
 
     <Button
         android:id="@+id/image_btn"

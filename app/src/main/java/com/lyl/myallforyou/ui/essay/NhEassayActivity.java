@@ -17,6 +17,7 @@ import com.lyl.myallforyou.network.Network;
 import com.lyl.myallforyou.ui.BaseActivity;
 import com.lyl.myallforyou.utils.AppUtils;
 import com.lyl.myallforyou.utils.DeviceStatusUtils;
+import com.lyl.myallforyou.utils.ImgUtils;
 import com.lyl.myallforyou.utils.LogUtils;
 import com.lyl.myallforyou.utils.MyUtils;
 import com.lyl.myallforyou.utils.SPUtil;
@@ -215,5 +216,7 @@ public class NhEassayActivity extends BaseActivity {
         if (essayCall!=null && !essayCall.isCanceled()){
             essayCall.cancel();
         }
+        ImgUtils.cancelAllTasks(getApplicationContext());
+        ImgUtils.clearMemory(getApplicationContext());
     }
 }

@@ -10,9 +10,10 @@ import android.widget.Button;
 
 import com.lyl.myallforyou.R;
 import com.lyl.myallforyou.constants.ConstantIntent;
+import com.lyl.myallforyou.data.NhEssay;
 import com.lyl.myallforyou.view.HackyViewPager;
 
-import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -26,7 +27,7 @@ public class ImageActivity extends BaseImageActivity {
 
     private ImageAdapter mImageAdapter;
 
-    private ArrayList<String> mUrlList;
+    private List<NhEssay.DataBeanX.DataBean.GroupBean.LargeImageListBean> mImageListBeanList;
     private int mPostion;
 
     @Override
@@ -44,12 +45,13 @@ public class ImageActivity extends BaseImageActivity {
 
     private void getParameter() {
         Intent intent = getIntent();
-        mUrlList = intent.getStringArrayListExtra(ConstantIntent.IMAGE_LIST_URL);
         mPostion = intent.getIntExtra(ConstantIntent.IMAGE_LIST_POSTION, 0);
+        mImageListBeanList = (List<NhEssay.DataBeanX.DataBean.GroupBean.LargeImageListBean>) intent.getSerializableExtra(ConstantIntent
+                .IMAGE_LIST);
     }
 
     private void initView() {
-        mImageAdapter = new ImageAdapter(mContext, mUrlList);
+        mImageAdapter = new ImageAdapter(mContext, mImageListBeanList);
         imageViewPager.setAdapter(mImageAdapter);
         imageViewPager.setOffscreenPageLimit(2);
         imageViewPager.setCurrentItem(mPostion);
@@ -74,8 +76,13 @@ public class ImageActivity extends BaseImageActivity {
         imageBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                download(mUrlList.get(mPostion), false);
+                download(imageBtn, mImageListBeanList.get(mPostion).getUrl(), false);
             }
         });
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
     }
 }

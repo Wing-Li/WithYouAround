@@ -2,6 +2,7 @@ package com.lyl.myallforyou.data;
 
 import com.google.gson.annotations.SerializedName;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
@@ -1139,7 +1140,7 @@ public class NhEssay {
                     }
                 }
 
-                public static class LargeImageListBean {
+                public static class LargeImageListBean implements Serializable {
                     /**
                      * url : http://p1.pstatp.com/large/1e120002134b41111c57.webp
                      * url_list : [{"url":"http://p1.pstatp.com/large/1e120002134b41111c57.webp"},{"url":"http://pb3.pstatp
@@ -1205,7 +1206,7 @@ public class NhEssay {
                         this.url_list = url_list;
                     }
 
-                    public static class UrlListBean {
+                    public static class UrlListBean implements Serializable {
                         /**
                          * url : http://p1.pstatp.com/large/1e120002134b41111c57.webp
                          */

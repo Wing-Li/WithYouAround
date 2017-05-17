@@ -6,9 +6,11 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.github.chrisbanes.photoview.PhotoView;
+import com.lyl.myallforyou.data.NhEssay;
 import com.lyl.myallforyou.utils.ImgUtils;
+import com.lyl.myallforyou.utils.LogUtils;
 
-import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by lyl on 2017/5/12.
@@ -17,9 +19,9 @@ import java.util.ArrayList;
 public class ImageAdapter extends PagerAdapter {
 
     private Context mContext;
-    private ArrayList<String> mData;
+    private List<NhEssay.DataBeanX.DataBean.GroupBean.LargeImageListBean> mData;
 
-    public ImageAdapter(Context context, ArrayList<String> data) {
+    public ImageAdapter(Context context, List<NhEssay.DataBeanX.DataBean.GroupBean.LargeImageListBean> data) {
         mContext = context;
         mData = data;
     }
@@ -50,9 +52,18 @@ public class ImageAdapter extends PagerAdapter {
      */
     @Override
     public Object instantiateItem(ViewGroup container, int position) {
+        NhEssay.DataBeanX.DataBean.GroupBean.LargeImageListBean bean = mData.get(position);
         PhotoView photoView = new PhotoView(mContext);
+        photoView.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
         photoView.setAdjustViewBounds(true);
-        ImgUtils.load(mContext, mData.get(position), photoView);
+
+        if (bean.isIs_gif()) {
+            ImgUtils.loadGif(mContext, bean.getUrl(), photoView);
+        } else {
+            ImgUtils.load(mContext, bean.getUrl(), photoView);
+        }
+
+        LogUtils.d("多图显示", "pos:" + position + " gif:" + bean.isIs_gif() + " ; " + bean.getUrl());
 
         container.addView(photoView);
         return photoView;

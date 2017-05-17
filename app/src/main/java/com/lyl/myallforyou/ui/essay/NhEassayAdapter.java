@@ -19,7 +19,9 @@ import com.lyl.myallforyou.data.NhEssay;
 import com.lyl.myallforyou.ui.image.ImageActivity;
 import com.lyl.myallforyou.ui.image.SpecialImageActivity;
 import com.lyl.myallforyou.utils.ImgUtils;
+import com.lyl.myallforyou.utils.LogUtils;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -93,7 +95,7 @@ public class NhEassayAdapter extends RecyclerView.Adapter<NhEassayAdapter.BaseVi
         if ("5".equals(dataBean.getType())) { // 广告
             return;
         }
-        NhEssay.DataBeanX.DataBean.GroupBean group = dataBean.getGroup();
+        final NhEssay.DataBeanX.DataBean.GroupBean group = dataBean.getGroup();
         if (group == null) return;
         NhEssay.DataBeanX.DataBean.GroupBean.UserBean user = group.getUser();
         if (user != null) {
@@ -117,6 +119,7 @@ public class NhEassayAdapter extends RecyclerView.Adapter<NhEassayAdapter.BaseVi
                 break;
             case CONTENT_TYPE_IMAGE:// 图片
                 MyImageViewHolder imageHolder = (MyImageViewHolder) holder;
+                imageHolder.imageContent.setImageBitmap(null);
                 if (group.getLarge_image_list() == null) {// 一张图片
                     imageHolder.singleImg.setVisibility(View.VISIBLE);
                     imageHolder.imageGrid.setVisibility(View.GONE);
@@ -140,16 +143,16 @@ public class NhEassayAdapter extends RecyclerView.Adapter<NhEassayAdapter.BaseVi
 
                     // 加载图片
                     final List<NhEssay.DataBeanX.DataBean.GroupBean.LargeImageBean.UrlListBean> url_list = group.getLarge_image().getUrl_list();
-                    final String imgUrl = url_list.get(url_list.size() - 1).getUrl();
+                    final String imgUrl = url_list.get(0).getUrl();
                     if (1 == group.getIs_gif()) {// 是gif
                         imageHolder.longImageTxt.setText(R.string.show_gif_image);
                         imageHolder.longImageTxt.setVisibility(View.VISIBLE);
 
                         String tmUrl = group.getMiddle_image().getUrl_list().get(0).getUrl();
                         ImgUtils.loadC(mContext, tmUrl, imageHolder.imageContent);
-
+                        LogUtils.d("GIF显示的Url:",tmUrl);
                         // 跳转到 GIF 页面
-                        imageHolder.imageContent.setOnClickListener(new View.OnClickListener() {
+                        imageHolder.singleImg.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View view) {
                                 Intent intent = new Intent(mContext, SpecialImageActivity.class);
@@ -179,10 +182,9 @@ public class NhEassayAdapter extends RecyclerView.Adapter<NhEassayAdapter.BaseVi
                             imageHolder.singleImg.setOnClickListener(new View.OnClickListener() {
                                 @Override
                                 public void onClick(View view) {
-                                    ArrayList<String> urlList = new ArrayList<String>();
-                                    urlList.add(imgUrl);
-                                    Intent intent = new Intent(mContext, ImageActivity.class);
-                                    intent.putStringArrayListExtra(ConstantIntent.IMAGE_LIST_URL, urlList);
+                                    Intent intent = new Intent(mContext, SpecialImageActivity.class);
+                                    intent.putExtra(ConstantIntent.SPECIAL_IMAGE_URL, imgUrl);
+                                    intent.putExtra(ConstantIntent.SPECIAL_IMAGE_TYPE, ConstantIntent.SPECIAL_IMAGE_NORMAL);
                                     mContext.startActivity(intent);
                                 }
                             });
@@ -221,13 +223,9 @@ public class NhEassayAdapter extends RecyclerView.Adapter<NhEassayAdapter.BaseVi
                     imageHolder.imageGrid.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                         @Override
                         public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                            ArrayList<String> urlList = new ArrayList<String>();
-                            for (NhEssay.DataBeanX.DataBean.GroupBean.ThumbImageListBean bean : thumb_image_list) {
-                                urlList.add(bean.getUrl_list().get(0).getUrl());
-                            }
 
                             Intent intent = new Intent(mContext, ImageActivity.class);
-                            intent.putStringArrayListExtra(ConstantIntent.IMAGE_LIST_URL, urlList);
+                            intent.putExtra(ConstantIntent.IMAGE_LIST, (Serializable) group.getLarge_image_list());
                             intent.putExtra(ConstantIntent.IMAGE_LIST_POSTION, i);
                             mContext.startActivity(intent);
                         }
@@ -311,14 +309,23 @@ public class NhEassayAdapter extends RecyclerView.Adapter<NhEassayAdapter.BaseVi
 
         @Override
         public View getView(int i, View view, ViewGroup viewGroup) {
-            ImageView imageView = new ImageView(mContext);
-            imageView.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
-            imageView.setBackgroundResource(R.color.bg_gary);
-            imageView.setScaleType(ImageView.ScaleType.FIT_XY);
+            GridViewHolder holder;
+            if (view == null) {
+                holder = new GridViewHolder();
+                view = LayoutInflater.from(mContext).inflate(R.layout.item_grid_square, viewGroup, false);
+                holder.imgageView = (ImageView) view.findViewById(R.id.item_square);
+                view.setTag(holder);
+            } else {
+                holder = (GridViewHolder) view.getTag();
+            }
 
-            ImgUtils.load(mContext, getItem(i).getUrl_list().get(0).getUrl(), imageView);
+            ImgUtils.load(mContext, getItem(i).getUrl_list().get(0).getUrl(), holder.imgageView);
 
-            return imageView;
+            return view;
+        }
+
+        class GridViewHolder {
+            ImageView imgageView;
         }
     }
 }

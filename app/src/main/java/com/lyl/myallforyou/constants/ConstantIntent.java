@@ -15,7 +15,9 @@ public class ConstantIntent {
     public static final String SPECIAL_IMAGE_TYPE = "SPECIAL_IMAGE_TYPE";
     public static final String SPECIAL_IMAGE_LONG = "SPECIAL_IMAGE_LONG";
     public static final String SPECIAL_IMAGE_GIF = "SPECIAL_IMAGE_GIF";
+    public static final String SPECIAL_IMAGE_NORMAL = "SPECIAL_IMAGE_NORMAL";
 
     public static final String IMAGE_LIST_URL = "IMAGE_LIST_URL";
+    public static final String IMAGE_LIST = "IMAGE_LIST";
     public static final String IMAGE_LIST_POSTION = "IMAGE_LIST_POSTION";
 }

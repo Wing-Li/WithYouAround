@@ -18,29 +18,27 @@ public class Network {
 
     private static String URL_NEIHAN = "http://is.snssdk.com/";
 
-    private static final int DEFAULT_TIMEOUT = 30;
+    private static final int DEFAULT_TIMEOUT = 15;
 
-    private static OkHttpClient.Builder httpClientBuilder;
+    public static OkHttpClient httpClient;
     private static NeihanApi neihanApi;
 
-    private static void initOkHttp() {
-        httpClientBuilder = new OkHttpClient.Builder();
+    static {
+        OkHttpClient.Builder httpClientBuilder = new OkHttpClient.Builder();
         httpClientBuilder.connectTimeout(DEFAULT_TIMEOUT, TimeUnit.SECONDS);
+        httpClientBuilder.readTimeout(DEFAULT_TIMEOUT, TimeUnit.SECONDS);
 
         if ("dev".equals(BuildConfig.Environment)) {
             HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
             logging.setLevel(HttpLoggingInterceptor.Level.BODY);
             httpClientBuilder.addInterceptor(logging);
         }
+        httpClient = httpClientBuilder.build();
     }
 
     private static Retrofit getRetrofit(String url) {
-        if (httpClientBuilder == null) {
-            initOkHttp();
-        }
-
         return new Retrofit.Builder()//
-                .client(httpClientBuilder.build())//
+                .client(httpClient)//
                 .baseUrl(url)//
                 .addConverterFactory(GsonConverterFactory.create())//
                 .build();

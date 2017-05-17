@@ -16,6 +16,7 @@ import com.github.chrisbanes.photoview.PhotoView;
 import com.lyl.myallforyou.R;
 import com.lyl.myallforyou.constants.ConstantIntent;
 import com.lyl.myallforyou.utils.ImgUtils;
+import com.lyl.myallforyou.utils.LogUtils;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -52,6 +53,11 @@ public class SpecialImageActivity extends BaseImageActivity {
             gifImage.setVisibility(View.VISIBLE);
 
             ImgUtils.loadGif(mContext, mUrl, gifImage);
+        } else if (mType.equals(ConstantIntent.SPECIAL_IMAGE_NORMAL)) {
+            longImage.setVisibility(View.GONE);
+            gifImage.setVisibility(View.VISIBLE);
+
+            ImgUtils.load(mContext, mUrl, gifImage);
         } else if (mType.equals(ConstantIntent.SPECIAL_IMAGE_LONG)) {
             longImage.setVisibility(View.VISIBLE);
             gifImage.setVisibility(View.GONE);
@@ -68,9 +74,9 @@ public class SpecialImageActivity extends BaseImageActivity {
             @Override
             public void onClick(View view) {
                 if (mType.equals(ConstantIntent.SPECIAL_IMAGE_GIF)) {
-                    download(mUrl, true);
+                    download(imageBtn, mUrl, true);
                 } else {
-                    download(mUrl, false);
+                    download(imageBtn, mUrl, false);
                 }
             }
         });
@@ -80,10 +86,15 @@ public class SpecialImageActivity extends BaseImageActivity {
         Intent intent = getIntent();
         mUrl = intent.getStringExtra(ConstantIntent.SPECIAL_IMAGE_URL);
         mType = intent.getStringExtra(ConstantIntent.SPECIAL_IMAGE_TYPE);
+        LogUtils.d("显示单张图片：", mType + " : " + mUrl);
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        mUrl = null;
+        longImage = null;
+        gifImage.setImageBitmap(null);
+        gifImage = null;
     }
 }
