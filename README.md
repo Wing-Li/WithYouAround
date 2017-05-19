@@ -2,6 +2,8 @@
 与亲密的人分享你的手机信息。——《伴你左右》
 
 
+### APP下载：[点击下载](https://fir.im/ve1w)
+
 ## License
 
     MIT License
