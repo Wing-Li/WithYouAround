@@ -17,6 +17,8 @@ package com.lyl.myallforyou.utils;
 
 import android.util.Log;
 
+import com.lyl.myallforyou.BuildConfig;
+
 /**
  * This class can replace android.util.Log.
  *
@@ -42,8 +44,16 @@ public final class LogUtils {
      * 'System.out' switch.When it is true, you can see the 'System.out' log.
      * Otherwise, you cannot.
      */
-    public static final boolean DEBUG_SYSOUT = true;
+    public static boolean DEBUG_SYSOUT = true;
 
+
+    static {
+        if ("dev".equals(BuildConfig.Environment)){
+            DEBUG_SYSOUT = true;
+        }else {
+            DEBUG_SYSOUT = false;
+        }
+    }
 
     /**
      * Send a {@link android.util.Log#VERBOSE} log message.

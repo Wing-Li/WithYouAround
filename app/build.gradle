@@ -24,7 +24,7 @@ android {
         minSdkVersion 19
         targetSdkVersion 22
         versionCode 1
-        versionName "1.0"
+        versionName "1.0.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
 
         ndk {
@@ -41,7 +41,6 @@ android {
             buildConfigField "String", "AVOSCloudAppKey", properties.getProperty('AVOSCloudAppKey')
             manifestPlaceholders = [GAODE_KEY: properties.getProperty('gaodeKey')]
         }
-
 //        foryou {
 //            buildConfigField "String", "Environment", '"prod"'
 //            buildConfigField "String", "BuglyAppId", properties.getProperty('BuglyAppId')

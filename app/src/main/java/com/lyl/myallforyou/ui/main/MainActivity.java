@@ -18,6 +18,7 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -47,6 +48,7 @@ import com.lyl.myallforyou.ui.essay.NhEassayActivity;
 import com.lyl.myallforyou.ui.feedback.FeedbackActivity;
 import com.lyl.myallforyou.ui.qrbind.QrScanActivity;
 import com.lyl.myallforyou.ui.qrbind.QrShareActivity;
+import com.lyl.myallforyou.utils.NetUtil;
 import com.lyl.myallforyou.utils.SPUtil;
 
 import org.greenrobot.eventbus.EventBus;
@@ -316,17 +318,32 @@ public class MainActivity extends BaseActivity {
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 int id = item.getItemId();
                 Intent intent = null;
-                if (id == R.id.nav_nheassay) {
+                if (id == R.id.nav_nheassay) { // 内涵段子
                     intent = new Intent(mContext, NhEassayActivity.class);
                     intent.putExtra(NhEassayActivity.CONTENT_TYPE, NhEassayActivity.CONTENT_TYPE_ESSAY);
-                } else if (id == R.id.nav_nhimage) {
-                    intent = new Intent(mContext, NhEassayActivity.class);
-                    intent.putExtra(NhEassayActivity.CONTENT_TYPE, NhEassayActivity.CONTENT_TYPE_IMAGE);
+                } else if (id == R.id.nav_nhimage) { // 内涵图片
+                    if (NetUtil.isWifi(getApplicationContext())) {
+                        openNhEassayImage();
+                    } else {
+                        AlertDialog alertDialog = new AlertDialog.Builder(mContext)//
+                                .setTitle(R.string.hint)//
+                                .setMessage("内涵图片会消耗您大量的流量，您确定要用流量浏览吗？")//
+                                .setPositiveButton(R.string.cancel, null)//
+                                .setNegativeButton(R.string.ok, new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialogInterface, int i) {
+                                        openNhEassayImage();
+                                        dialogInterface.dismiss();
+                                    }
+                                }).create();
+                        alertDialog.setCancelable(false);
+                        alertDialog.show();
+                    }
                 } else if (id == R.id.nav_nhvideo) {
 
-                } else if (id == R.id.nav_feedback) {
+                } else if (id == R.id.nav_feedback) { // 意见反馈
                     intent = new Intent(mContext, FeedbackActivity.class);
-                } else if (id == R.id.nav_about) {
+                } else if (id == R.id.nav_about) { // 关于
                     intent = new Intent(mContext, AboutActivity.class);
                 }
                 if (intent != null) {
@@ -338,6 +355,12 @@ public class MainActivity extends BaseActivity {
                 return true;
             }
         });
+    }
+
+    private void openNhEassayImage() {
+        Intent intent = new Intent(mContext, NhEassayActivity.class);
+        intent.putExtra(NhEassayActivity.CONTENT_TYPE, NhEassayActivity.CONTENT_TYPE_IMAGE);
+        startActivity(intent);
     }
 
 
@@ -495,6 +518,21 @@ public class MainActivity extends BaseActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    private long statTime;
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+            if (System.currentTimeMillis() - statTime > 2000) {
+                Toast.makeText(getApplicationContext(), "再次点击关闭程序", Toast.LENGTH_SHORT).show();
+            } else {
+                finish();
+            }
+            statTime = System.currentTimeMillis();
+            return true;
+        }
+        return super.onKeyDown(keyCode, event);
+    }
 
     @Override
     protected void onDestroy() {
