@@ -2,9 +2,6 @@ package com.lyl.myallforyou.ui;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
-import android.text.TextUtils;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
 import android.view.animation.AnimationSet;
@@ -16,7 +13,6 @@ import com.avos.avoscloud.AVException;
 import com.avos.avoscloud.AVObject;
 import com.avos.avoscloud.AVQuery;
 import com.avos.avoscloud.CountCallback;
-import com.avos.avoscloud.GetCallback;
 import com.avos.avoscloud.SaveCallback;
 import com.lyl.myallforyou.R;
 import com.lyl.myallforyou.constants.Constans;
@@ -68,51 +64,26 @@ public class SplashActivity extends BaseActivity {
                                 String objectId = userInfo.getObjectId();
                                 SPUtil.put(mContext, Constans.SP_OBJ_ID, objectId);
                             }
-
                         }
                     });
                 }
-                handler.sendEmptyMessage(what += 1);
-            }
-        });
-
-        AVQuery<AVObject> userInfo = new AVQuery<>(Constans.TABLE_USER_INFO);
-        userInfo.getInBackground(objId, new GetCallback<AVObject>() {
-            @Override
-            public void done(AVObject avObject, AVException e) {
-                if (e != null && avObject != null) {
-                    String family = avObject.getString(Constans.USER_FAMILYID);
-                    if (!TextUtils.isEmpty(family)) {
-                        SPUtil.put(mContext, Constans.SP_FAMILY_ID, family);
-                    }
-                }
-                handler.sendEmptyMessage(what += 1);
+                initMain();
             }
         });
     }
 
 
-    private Handler handler = new Handler() {
-        @Override
-        public void handleMessage(Message msg) {
-            super.handleMessage(msg);
-            if (msg.what >= 2) {
-                // 如果加载时间不到2秒就等一会，超过两秒就直接跳
-                long ringTime = System.currentTimeMillis() - mStartTime;
-                if (ringTime < WAIT_TIME) {
-                    try {
-                        Thread.sleep(WAIT_TIME - ringTime);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
-                }
-                initMain();
+    private void initMain() {
+        // 如果加载时间不到2秒就等一会，超过两秒就直接跳
+        long ringTime = System.currentTimeMillis() - mStartTime;
+        if (ringTime < WAIT_TIME) {
+            try {
+                Thread.sleep(WAIT_TIME - ringTime);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
             }
         }
-    };
 
-
-    private void initMain() {
         Intent intent = new Intent(SplashActivity.this, MainActivity.class);
         startActivity(intent);
         finish();

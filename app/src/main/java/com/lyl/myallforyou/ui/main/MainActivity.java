@@ -205,13 +205,13 @@ public class MainActivity extends BaseActivity {
 
                                 // 把对方加入我的表里
                                 String myFamily = myObject.getString(Constans.USER_FAMILYID);
-                                AVObject my = addFamilyToMy(objId, familyUuid, myFamily, true);
+                                AVObject my = addFamilyToMy(objId, familyUuid, myFamily);
                                 todos.add(my);
 
                                 // 把我加到对方的表里
                                 final String familyObjId = familyObject.getObjectId();
                                 String familyId = (String) familyObject.get(Constans.USER_FAMILYID);
-                                AVObject family = addFamilyToMy(familyObjId, uuid, familyId, false);
+                                AVObject family = addFamilyToMy(familyObjId, uuid, familyId);
                                 todos.add(family);
 
                                 AVObject.saveAllInBackground(todos, new SaveCallback() {
@@ -255,9 +255,8 @@ public class MainActivity extends BaseActivity {
      * @param my         我的 objectId
      * @param family     对方 uuid
      * @param myFamilyId 与我绑定的人id
-     * @param isSaveData 把对方加入我自己的亲人列表时，要更新 SP
      */
-    private AVObject addFamilyToMy(String my, String family, String myFamilyId, final boolean isSaveData) {
+    private AVObject addFamilyToMy(String my, String family, String myFamilyId) {
         AVObject userInfo = AVObject.createWithoutData(Constans.TABLE_USER_INFO, my);
         String saveFamilyid;
         if (TextUtils.isEmpty(myFamilyId) || !myFamilyId.contains(family)) {
@@ -267,9 +266,6 @@ public class MainActivity extends BaseActivity {
                 saveFamilyid = myFamilyId + "," + family;
             }
             userInfo.put(USER_FAMILYID, saveFamilyid);
-            if (isSaveData) {
-                SPUtil.put(mContext, Constans.SP_FAMILY_ID, FS(saveFamilyid));
-            }
         }
         return userInfo;
     }
@@ -385,7 +381,9 @@ public class MainActivity extends BaseActivity {
                 dialogInterface.dismiss();
             }
         });
-        builder.create().show();
+        AlertDialog alertDialog = builder.create();
+        alertDialog.setCancelable(false);
+        alertDialog.show();
     }
 
 
@@ -429,7 +427,9 @@ public class MainActivity extends BaseActivity {
                 dialogInterface.dismiss();
             }
         });
-        builder.create().show();
+        AlertDialog alertDialog = builder.create();
+        alertDialog.setCancelable(false);
+        alertDialog.show();
     }
     // ============================================== ↑侧边栏↑ ==============================================
 

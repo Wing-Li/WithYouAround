@@ -2,7 +2,9 @@ package com.lyl.myallforyou.ui.image;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.PointF;
 import android.os.Bundle;
+import android.util.DisplayMetrics;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -59,6 +61,10 @@ public class SpecialImageActivity extends BaseImageActivity {
 
             ImgUtils.load(mContext, mUrl, gifImage);
         } else if (mType.equals(ConstantIntent.SPECIAL_IMAGE_LONG)) {
+            DisplayMetrics displayMetrics = new DisplayMetrics();
+            getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
+
+            longImage.setScaleAndCenter(1f, new PointF(displayMetrics.widthPixels, displayMetrics.widthPixels));
             longImage.setVisibility(View.VISIBLE);
             gifImage.setVisibility(View.GONE);
 

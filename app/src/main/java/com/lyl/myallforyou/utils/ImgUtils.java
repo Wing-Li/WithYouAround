@@ -4,15 +4,10 @@ import android.content.Context;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.integration.okhttp3.OkHttpUrlLoader;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
-import com.bumptech.glide.load.model.GlideUrl;
 import com.bumptech.glide.request.target.Target;
 import com.lyl.myallforyou.R;
-import com.lyl.myallforyou.network.Network;
 import com.lyl.myallforyou.ui.essay.GlideCircleTransform;
-
-import java.io.InputStream;
 
 /**
  * Wing_Li
@@ -44,10 +39,11 @@ public class ImgUtils {
             diskCacheStrategy) {
         // 加载GIF慢
         // https://github.com/bumptech/glide/issues/513#issuecomment-117690923、
-        Glide glide = Glide.get(context);
-        OkHttpUrlLoader.Factory factory = new OkHttpUrlLoader.Factory(Network.httpClient);
-
-        glide.register(GlideUrl.class, InputStream.class, factory); if (scaleType == TYPE_NULL) {
+//        Glide glide = Glide.get(context);
+//        OkHttpUrlLoader.Factory factory = new OkHttpUrlLoader.Factory(Network.httpClient);
+//
+//        glide.register(GlideUrl.class, InputStream.class, factory);
+        if (scaleType == TYPE_NULL) {
             Glide.with(context).load(url).placeholder(placeholderRes).error(errorRes).thumbnail(thumbnail).diskCacheStrategy
                     (diskCacheStrategy).into(imageView);
         } else if (scaleType == TYPE_FITCENTER) {
@@ -57,7 +53,7 @@ public class ImgUtils {
             Glide.with(context).load(url).placeholder(placeholderRes).error(errorRes).thumbnail(thumbnail).diskCacheStrategy
                     (diskCacheStrategy).centerCrop().into(imageView);
         } else if (scaleType == TYPE_GIF) {
-            glide.with(context).load(url).asGif().placeholder(placeholderRes).error(errorRes).thumbnail(thumbnail).diskCacheStrategy
+            Glide.with(context).load(url).asGif().placeholder(placeholderRes).error(errorRes).thumbnail(thumbnail).diskCacheStrategy
                     (diskCacheStrategy).into(imageView);
         }
     }

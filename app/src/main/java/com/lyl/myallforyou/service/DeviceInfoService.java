@@ -230,9 +230,9 @@ public class DeviceInfoService extends Service {
         String model = DeviceStatusUtils.getModel();
         deviceInfo.setDevice_model(model);
 
-        // api 等级 : 22
-        int buildLevel = DeviceStatusUtils.getBuildLevel();
-        deviceInfo.setApi_level(String.valueOf(buildLevel));
+        // 获取手机系统版本号 : 2.3.4
+        String buildLevel = AppUtils.getSDKVersionName();
+        deviceInfo.setApi_level(buildLevel);
 
         // GPS 是否开着 : true
         boolean gpsEnabled = NetUtil.isGpsEnabled(mContext);

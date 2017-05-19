@@ -7,6 +7,7 @@ import android.text.TextUtils;
 import com.avos.avoscloud.AVOSCloud;
 import com.litesuits.orm.LiteOrm;
 import com.litesuits.orm.db.DataBaseConfig;
+import com.squareup.leakcanary.LeakCanary;
 import com.tencent.bugly.Bugly;
 
 import java.io.File;
@@ -34,6 +35,8 @@ public class MyApp extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
+
+        LeakCanary.install(this);
 
         initLeancloud();
 
