@@ -108,8 +108,11 @@ public class QrScanActivity extends BaseActivity {
         // 获取到剪贴板的内容
         ClipboardManager clipboardManager = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
         ClipData primaryClip = clipboardManager.getPrimaryClip();
-        ClipData.Item item = primaryClip.getItemAt(0);
-        CharSequence copy = item.getText();
+        CharSequence copy = "";
+        if (primaryClip != null && primaryClip.getItemCount() > 0) {
+            ClipData.Item item = primaryClip.getItemAt(0);
+            copy = item.getText();
+        }
 
         AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
         View view = LayoutInflater.from(mContext).inflate(R.layout.dialog_edit, null);

@@ -4,32 +4,28 @@ import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.RequiresApi;
-import android.support.v4.app.ActivityOptionsCompat;
-import android.support.v4.util.Pair;
+import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.text.TextUtils;
 import android.transition.Slide;
 import android.transition.Visibility;
 import android.view.Gravity;
-import android.view.Menu;
-import android.view.MenuItem;
-import android.view.View;
-import android.widget.TextView;
 
 import com.avos.avoscloud.AVException;
 import com.avos.avoscloud.AVObject;
 import com.avos.avoscloud.AVQuery;
-import com.avos.avoscloud.GetCallback;
+import com.avos.avoscloud.FindCallback;
 import com.lyl.myallforyou.R;
 import com.lyl.myallforyou.constants.Constans;
 import com.lyl.myallforyou.constants.ConstantIntent;
 import com.lyl.myallforyou.data.DeviceInfo;
 import com.lyl.myallforyou.ui.BaseActivity;
 import com.lyl.myallforyou.utils.LogUtils;
-import com.lyl.myallforyou.utils.OpenLocalMapUtil;
-import com.lyl.myallforyou.view.TransitionHelper;
+import com.lyl.myallforyou.view.listener.OnRecycleViewScrollListener;
 
-import java.text.DecimalFormat;
+import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -60,76 +56,57 @@ import static com.lyl.myallforyou.constants.Constans.DEVICE_USED_MEMORY;
 import static com.lyl.myallforyou.constants.Constans.DEVICE_WIFI_NAME;
 import static com.lyl.myallforyou.constants.Constans.DEVICE_WIFI_STATUS;
 
-public class DeviceInfoActivity extends BaseActivity {
+public class DeviceInfoMoreActivity extends BaseActivity {
 
+    public final static int PAGE_COUNT = 10;
     @Bind(R.id.toolbar)
     Toolbar toolbar;
-    @Bind(R.id.device_manufacturer)
-    TextView deviceManufacturer;
-    @Bind(R.id.api_level)
-    TextView apiLevel;
-    @Bind(R.id.system_time)
-    TextView systemTime;
-    @Bind(R.id.system_battery)
-    TextView systemBattery;
-    @Bind(R.id.ring_volume)
-    TextView ringVolume;
-    @Bind(R.id.bluetooth_open)
-    TextView bluetoothOpen;
-    @Bind(R.id.gps_status)
-    TextView gpsStatus;
-    @Bind(R.id.address_location_type)
-    TextView addressLocationType;
-    @Bind(R.id.address)
-    TextView address;
-    @Bind(R.id.sim_type)
-    TextView simType;
-    @Bind(R.id.net_type)
-    TextView netType;
-    @Bind(R.id.wifi_status)
-    TextView wifiStatus;
-    @Bind(R.id.screen_status)
-    TextView screenStatus;
-    @Bind(R.id.screen_brightness)
-    TextView screenBrightness;
-    @Bind(R.id.screen_dormant_time)
-    TextView screenDormantTime;
-    @Bind(R.id.all_memory)
-    TextView allMemory;
-    @Bind(R.id.usable_memory)
-    TextView usableMemory;
+    @Bind(R.id.device_more_recycler)
+    RecyclerView deviceMoreRecycler;
+    @Bind(R.id.device_more_swipe)
+    SwipeRefreshLayout deviceMoreSwipe;
+    private int page = 0;
 
     private String mTargetUuid;
     private String mTargetName;
-    private DeviceInfo mDeviceInfo;
 
+    private List<DeviceInfo> mDeviceInfoList;
+    private DeviceInfoMoreAdapter mDeviceAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_device_info);
+        setContentView(R.layout.activity_device_info_more);
         ButterKnife.bind(this);
 
         getParameters();
-
         toolbar.setTitle(mTargetName);
-        setSupportActionBar(toolbar);
         setBackUI(toolbar);
 
-        getDeviceInfo();
+        mDeviceInfoList = new ArrayList<>();
 
+        initView();
+        getMoreDeviceInfo();
         setupWindowAnimations();
-        address.setOnClickListener(new View.OnClickListener() {
+    }
+
+    private void initView() {
+        deviceMoreRecycler.setLayoutManager(new LinearLayoutManager(mContext));
+        mDeviceAdapter = new DeviceInfoMoreAdapter(mDeviceInfoList, mContext);
+        deviceMoreRecycler.setAdapter(mDeviceAdapter);
+
+        deviceMoreRecycler.addOnScrollListener(new OnRecycleViewScrollListener() {
             @Override
-            public void onClick(View view) {
-                if (mDeviceInfo == null) {
-                    return;
-                }
-                if ("0.0".equals(mDeviceInfo.getAddress_longitude()) || "0.0".equals(mDeviceInfo.getAddress_longitude())) {
-                    showT(getString(R.string.address_error));
-                } else {
-                    OpenLocalMapUtil.openMap(getApplicationContext(), mDeviceInfo.getAddress_latitude(), mDeviceInfo.getAddress_longitude());
-                }
+            public void onLoadMore() {
+                deviceMoreSwipe.setRefreshing(true);
+                getMoreDeviceInfo();
+            }
+        });
+
+        deviceMoreSwipe.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                refresh();
             }
         });
     }
@@ -170,28 +147,40 @@ public class DeviceInfoActivity extends BaseActivity {
         mTargetName = intent.getStringExtra(ConstantIntent.USER_NAME);
     }
 
+    private void refresh() {
+        mDeviceInfoList.clear();
+        page = 0;
+        getMoreDeviceInfo();
+    }
 
-    public void getDeviceInfo() {
+    private void getMoreDeviceInfo() {
         AVQuery<AVObject> avQuery = new AVQuery<AVObject>(Constans.TABLE_DEVICE_INFO);
         avQuery.whereStartsWith(DEVICE_MY_ID, mTargetUuid);
         avQuery.whereContains(DEVICE_MY_ID, mTargetUuid);
         avQuery.orderByDescending("createdAt");
-        avQuery.getFirstInBackground(new GetCallback<AVObject>() {
+        avQuery.limit(PAGE_COUNT);// 最多返回 10 条结果
+        avQuery.skip(page * PAGE_COUNT);// 跳过 20 条结果
+        avQuery.findInBackground(new FindCallback<AVObject>() {
             @Override
-            public void done(AVObject avObject, AVException e) {
-                if (e == null && avObject != null) {
-                    saveDeviceInfo(avObject);
+            public void done(List<AVObject> list, AVException e) {
+                if (e == null && list != null && list.size() > 0) {
+                    page++;
+                    for (AVObject avObject : list) {
+                        saveDeviceInfo(avObject);
+                    }
+
+                    deviceMoreSwipe.setRefreshing(false);
+                    mDeviceAdapter.setData(mDeviceInfoList);
                 } else {
-                    showT(getString(R.string.net_error));
+                    showT(getString(R.string.empty_data));
                     LogUtils.d(TAG, "mTargetUuid:" + mTargetUuid + " ; Except:" + e);
                 }
             }
         });
     }
 
-
     private void saveDeviceInfo(AVObject infoDB) {
-        mDeviceInfo = new DeviceInfo();
+        DeviceInfo mDeviceInfo = new DeviceInfo();
 
         mDeviceInfo.setMy_id(infoDB.getString(DEVICE_MY_ID));
         mDeviceInfo.setMy_address(infoDB.getString(DEVICE_MY_ADDRESS));
@@ -219,108 +208,6 @@ public class DeviceInfoActivity extends BaseActivity {
         mDeviceInfo.setSystem_battery(infoDB.getString(DEVICE_SYSTEM_BATTERY));
         mDeviceInfo.setSystem_runningtime(infoDB.getString(DEVICE_SYSTEM_RUNNINGTIME));
 
-        setView();
-    }
-
-
-    private void setView() {
-        String model = FS(mDeviceInfo.getDevice_model());
-        String mf;
-        if (TextUtils.isEmpty(model)) {
-            mf = FS(mDeviceInfo.getDevice_manufacturer());
-        } else {
-            mf = FS(mDeviceInfo.getDevice_manufacturer()) + "(" + FS(mDeviceInfo.getDevice_model()) + ")";
-        }
-        deviceManufacturer.setText(mf);
-
-        apiLevel.setText(FS(mDeviceInfo.getApi_level()));
-
-        systemTime.setText(FS(mDeviceInfo.getSystem_date()) + " " + FS(mDeviceInfo.getSystem_time()));
-
-        systemBattery.setText(FS(mDeviceInfo.getSystem_battery()));
-
-        ringVolume.setText(FS(mDeviceInfo.getRing_volume()));
-
-        if ("true".equals(FS(mDeviceInfo.getBluetooth_open()))) {
-            bluetoothOpen.setText(R.string.ON);
-        } else {
-            bluetoothOpen.setText(R.string.OFF);
-        }
-
-        if ("true".equals(FS(mDeviceInfo.getGps_status()))) {
-            gpsStatus.setText(R.string.ON);
-        } else {
-            gpsStatus.setText(R.string.OFF);
-        }
-
-        addressLocationType.setText(FS(mDeviceInfo.getAddress_location_type()));
-
-        address.setText(FS(mDeviceInfo.getMy_address()));
-
-        String sim = FS(mDeviceInfo.getSim_type());
-        if (TextUtils.isEmpty(sim)) {
-            simType.setText(R.string.not_sim);
-            netType.setText(R.string.not_sim);
-        } else {
-            simType.setText(sim);
-
-            if ("true".equals(FS(mDeviceInfo.getIs_3G()))) {
-                netType.setText("3G");
-            } else if ("true".equals(FS(mDeviceInfo.getIs_4G()))) {
-                netType.setText("4G");
-            }
-        }
-
-        if ("true".equals(FS(mDeviceInfo.getWifi_status()))) {
-            String wifiName = FS(mDeviceInfo.getWifi_name());
-            if (TextUtils.isEmpty(wifiName)) {
-                wifiStatus.setText(getString(R.string.ON));
-            } else {
-                wifiStatus.setText(getString(R.string.ON) + "(" + FS(mDeviceInfo.getWifi_name()) + ")");
-            }
-        }
-
-        if ("true".equals(FS(mDeviceInfo.getScreen_status()))) {
-            screenStatus.setText(R.string.ON);
-        } else {
-            screenStatus.setText(R.string.OFF);
-        }
-
-        screenBrightness.setText(FS(mDeviceInfo.getScreen_brightness()));
-
-        screenDormantTime.setText(FS(mDeviceInfo.getScreen_dormant_time()));
-
-        DecimalFormat decimalFormat = new DecimalFormat("#.0");
-        double allM = Double.valueOf(FS(mDeviceInfo.getUsed_memory())) + Double.valueOf(FS(mDeviceInfo.getUsable_memory()));
-        String all = decimalFormat.format(Math.round(allM / 1000));
-        allMemory.setText(all + " G");
-
-        String usable = decimalFormat.format(Math.round(Double.valueOf(mDeviceInfo.getUsable_memory()) / 1000));
-        usableMemory.setText(usable + " G");
-    }
-
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.activity_device_more, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        int id = item.getItemId();
-        switch (id) {
-            case R.id.menu_device_more:
-                Intent intent = new Intent(mContext, DeviceInfoMoreActivity.class);
-                intent.putExtra(ConstantIntent.USER_INFO, mTargetUuid);
-                intent.putExtra(ConstantIntent.USER_NAME, mTargetName);
-
-                final Pair<View, String>[] pairs = TransitionHelper.createSafeTransitionParticipants(DeviceInfoActivity.this, true);
-                ActivityOptionsCompat transitionActivityOptions = ActivityOptionsCompat.makeSceneTransitionAnimation(DeviceInfoActivity.this,
-                        pairs);
-                startActivity(intent, transitionActivityOptions.toBundle());
-                break;
-        }
-        return super.onOptionsItemSelected(item);
+        mDeviceInfoList.add(mDeviceInfo);
     }
 }

@@ -491,7 +491,7 @@ public final class AppUtils {
         int second = mCalendar.get(Calendar.SECOND);
 
         String[] systemTime = new String[2];
-        systemTime[0] = year + ":" + month + ":" + day;
+        systemTime[0] = year + "-" + month + "-" + day;
         systemTime[1] = hour + ":" + minuts + ":" + second;
 
         return systemTime;

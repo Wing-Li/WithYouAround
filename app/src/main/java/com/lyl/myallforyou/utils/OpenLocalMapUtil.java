@@ -1,8 +1,12 @@
 package com.lyl.myallforyou.utils;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
+import android.net.Uri;
+
+import com.lyl.myallforyou.R;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,6 +16,39 @@ import java.util.List;
  */
 
 public class OpenLocalMapUtil {
+
+    public static void openMap(Context context, String latitude, String longitude) {
+        if (OpenLocalMapUtil.isGdMapInstalled(context)) {
+            gaode(context, latitude, longitude);
+        } else if (OpenLocalMapUtil.isBaiduMapInstalled(context)) {
+            double[] doubles = OpenLocalMapUtil.gaoDeToBaidu(Double.parseDouble(longitude), Double.parseDouble(latitude));
+            String lo = String.valueOf(doubles[0]);
+            String lat = String.valueOf(doubles[1]);
+            baidu(context, lat, lo);
+        }
+    }
+
+
+    public static void gaode(Context context, String lat, String lo) {
+        Intent i = new Intent();
+        i.setAction("android.intent.action.VIEW");
+        i.addCategory("android.intent.category.DEFAULT");
+        i.setPackage("com.autonavi.minimap");
+        i.setData(Uri.parse("androidamap://viewMap?sourceApplication=" + context.getString(R.string.app_name) + "&poiname=abc&lat=" + lat +
+                "&lon=" + lo + "&dev=0")); //
+        context.startActivity(i);
+    }
+
+
+    public static void baidu(Context context, String lat, String lo) {
+        Intent i = new Intent();
+        i.setAction("android.intent.action.VIEW");
+        i.setPackage("com.baidu.BaiduMap");
+        // location: at,lng (先纬度，后经度) ; title: 打点标题; content	打点内容; traffic	是否开启路况，目前仅查看地图和打点支持，on表示开启，off表示关闭。
+        i.setData(Uri.parse("baidumap://map/marker?location=" + lat + "," + lo + "&title=" + "TA" + "&content=" + "位置" + "&traffic=off"));
+        context.startActivity(i);
+    }
+
     /**
      * 地图应用是否安装 * @return
      */
@@ -48,41 +85,6 @@ public class OpenLocalMapUtil {
         }
         //判断packageNames中是否有目标程序的包名，有TRUE，没有FALSE
         return packageNames.contains(packageName);
-    }
-
-
-    /**
-     * 获取打开百度地图应用uri [http://lbsyun.baidu.com/index.php?title=uri/api/android] * @param originLat * @param originLon * @param desLat * @param
-     * desLon * @return
-     */
-    public static String getBaiduMapUri(String originLat, String originLon, String originName, String desLat, String desLon, String
-            destination, String region, String src) {
-        String uri = "intent://map/direction?origin=latlng:%1$s,%2$s|name:%3$s" + "&destination=latlng:%4$s," +
-                "%5$s|name:%6$s&mode=driving&region=%7$s&src=%8$s#Intent;" + "scheme=bdapp;package=com.baidu.BaiduMap;end";
-
-        return String.format(uri, originLat, originLon, originName, desLat, desLon, destination, region, src);
-    }
-
-
-    /**
-     * 获取打开高德地图应用uri
-     */
-    public static String getGdMapUri(String appName, String slat, String slon, String sname, String dlat, String dlon, String dname) {
-        String uri = "androidamap://route?sourceApplication=%1$s&slat=%2$s&slon=%3$s&sname=%4$s&dlat=%5$s&dlon=%6$s&dname=%7$s&dev=0&m=0&t=2";
-        return String.format(uri, appName, slat, slon, sname, dlat, dlon, dname);
-    }
-
-
-    /**
-     * 网页版百度地图 有经纬度 * @param originLat * @param originLon * @param originName ->注：必填 * @param desLat * @param desLon * @param destination *
-     *
-     * @param region : 当给定region时，认为起点和终点都在同一城市，除非单独给定起点或终点的城市。-->注：必填，不填不会显示导航路线 * @param appName * @return
-     */
-    public static String getWebBaiduMapUri(String originLat, String originLon, String originName, String desLat, String desLon, String
-            destination, String region, String appName) {
-        String uri = "http://api.map.baidu.com/direction?origin=latlng:%1$s,%2$s|name:%3$s" + "&destination=latlng:%4$s," +
-                "%5$s|name:%6$s&mode=driving&region=%7$s&output=html" + "&src=%8$s";
-        return String.format(uri, originLat, originLon, originName, desLat, desLon, destination, region, appName);
     }
 
 

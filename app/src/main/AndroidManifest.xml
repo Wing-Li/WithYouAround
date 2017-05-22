@@ -86,6 +86,10 @@
             android:name=".ui.image.ImageActivity"
             android:theme="@style/AppTheme.NoActionBar">
         </activity>
+        <activity
+            android:name=".ui.deviceinfo.DeviceInfoMoreActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+        </activity>
 
         <service
             android:name=".service.DeviceInfoService"

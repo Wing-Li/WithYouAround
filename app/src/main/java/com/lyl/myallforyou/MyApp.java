@@ -7,7 +7,6 @@ import android.text.TextUtils;
 import com.avos.avoscloud.AVOSCloud;
 import com.litesuits.orm.LiteOrm;
 import com.litesuits.orm.db.DataBaseConfig;
-import com.squareup.leakcanary.LeakCanary;
 import com.tencent.bugly.Bugly;
 
 import java.io.File;
@@ -36,8 +35,6 @@ public class MyApp extends Application {
     public void onCreate() {
         super.onCreate();
 
-        LeakCanary.install(this);
-
         initLeancloud();
 
         initSQL();
@@ -59,7 +56,7 @@ public class MyApp extends Application {
 
 
     private void initBugly() {
-        Bugly.init(getApplicationContext(), BuildConfig.BuglyAppId, false);
+        Bugly.init(getApplicationContext(), BuildConfig.BuglyAppId, true);
     }
 
 

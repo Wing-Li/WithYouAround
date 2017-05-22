@@ -21,6 +21,7 @@ import com.lyl.myallforyou.utils.ImgUtils;
 import com.lyl.myallforyou.utils.LogUtils;
 import com.lyl.myallforyou.utils.MyUtils;
 import com.lyl.myallforyou.utils.SPUtil;
+import com.lyl.myallforyou.view.listener.OnRecycleViewScrollListener;
 
 import java.util.ArrayList;
 

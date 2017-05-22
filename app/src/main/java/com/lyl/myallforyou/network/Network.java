@@ -1,13 +1,11 @@
 package com.lyl.myallforyou.network;
 
 
-import com.lyl.myallforyou.BuildConfig;
 import com.lyl.myallforyou.network.api.NeihanApi;
 
 import java.util.concurrent.TimeUnit;
 
 import okhttp3.OkHttpClient;
-import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
@@ -28,11 +26,11 @@ public class Network {
         httpClientBuilder.connectTimeout(DEFAULT_TIMEOUT, TimeUnit.SECONDS);
         httpClientBuilder.readTimeout(DEFAULT_TIMEOUT, TimeUnit.SECONDS);
 
-        if ("dev".equals(BuildConfig.Environment)) {
-            HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
-            logging.setLevel(HttpLoggingInterceptor.Level.BODY);
-            httpClientBuilder.addInterceptor(logging);
-        }
+//        if ("dev".equals(BuildConfig.Environment)) {
+//            HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
+//            logging.setLevel(HttpLoggingInterceptor.Level.BODY);
+//            httpClientBuilder.addInterceptor(logging);
+//        }
         httpClient = httpClientBuilder.build();
     }
 

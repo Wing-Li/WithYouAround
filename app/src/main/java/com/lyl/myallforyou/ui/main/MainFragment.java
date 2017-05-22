@@ -3,6 +3,8 @@ package com.lyl.myallforyou.ui.main;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.ActivityOptionsCompat;
+import android.support.v4.util.Pair;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -25,6 +27,7 @@ import com.lyl.myallforyou.data.event.MainEvent;
 import com.lyl.myallforyou.ui.BaseFragment;
 import com.lyl.myallforyou.ui.deviceinfo.DeviceInfoActivity;
 import com.lyl.myallforyou.utils.SPUtil;
+import com.lyl.myallforyou.view.TransitionHelper;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -116,10 +119,11 @@ public class MainFragment extends BaseFragment {
             }
             intent.putExtra(ConstantIntent.USER_NAME, name);
 
-            startActivity(intent);
+            final Pair<View, String>[] pairs = TransitionHelper.createSafeTransitionParticipants(mContext, true);
+            ActivityOptionsCompat transitionActivityOptions = ActivityOptionsCompat.makeSceneTransitionAnimation(mContext, pairs);
+            startActivity(intent, transitionActivityOptions.toBundle());
         }
     };
-
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void initData(MainEvent event) {

@@ -17,6 +17,7 @@ import com.avos.avoscloud.SaveCallback;
 import com.lyl.myallforyou.R;
 import com.lyl.myallforyou.constants.Constans;
 import com.lyl.myallforyou.ui.main.MainActivity;
+import com.lyl.myallforyou.utils.DeviceStatusUtils;
 import com.lyl.myallforyou.utils.SPUtil;
 
 
@@ -36,6 +37,12 @@ public class SplashActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         mStartTime = System.currentTimeMillis();
         setContentView(R.layout.activity_splash);
+
+        if ("VirtualBox".equals(DeviceStatusUtils.getModel())) {
+            Toast.makeText(getApplicationContext(), "本程序不支持模拟器操作", Toast.LENGTH_SHORT).show();
+            finish();
+            return;
+        }
 
         setAnimation();
         initUserInfo();
