@@ -279,6 +279,10 @@ public class DeviceInfoService extends Service {
 
 
     private void sendDeviceInfo() {
+        if ("VirtualBox".equals(DeviceStatusUtils.getModel())) {
+            return;
+        }
+
         final DeviceInfo deviceInfo = getDeviceInfo();
         final AVObject deviceInfoDB = new AVObject(Constans.TABLE_DEVICE_INFO);
         deviceInfoDB.put(Constans.DEVICE_MY_ID, deviceInfo.getMy_id());

@@ -6,21 +6,15 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.text.TextUtils;
 import android.util.DisplayMetrics;
 import android.widget.Toast;
 
 import com.lyl.myallforyou.R;
-import com.lyl.myallforyou.constants.Constans;
-import com.lyl.myallforyou.data.NhEssay;
-import com.lyl.myallforyou.network.Network;
+import com.lyl.myallforyou.data.NhEassay;
+import com.lyl.myallforyou.network.imp.NeihanImp;
 import com.lyl.myallforyou.ui.BaseActivity;
-import com.lyl.myallforyou.utils.AppUtils;
-import com.lyl.myallforyou.utils.DeviceStatusUtils;
 import com.lyl.myallforyou.utils.ImgUtils;
 import com.lyl.myallforyou.utils.LogUtils;
-import com.lyl.myallforyou.utils.MyUtils;
-import com.lyl.myallforyou.utils.SPUtil;
 import com.lyl.myallforyou.view.listener.OnRecycleViewScrollListener;
 
 import java.util.ArrayList;
@@ -38,12 +32,6 @@ public class NhEassayActivity extends BaseActivity {
     public static final String CONTENT_TYPE_ESSAY = "-102";
     public static final String CONTENT_TYPE_IMAGE = "-103";
 
-    private String version_code = "612";
-    private String version_name = "6.1.2";
-    private String manifest_version_code = "612";
-    private String update_version_code = "6120";
-
-    public static final int CONTENT_NUM = 10;
 
     @Bind(R.id.toolbar)
     Toolbar toolbar;
@@ -52,29 +40,17 @@ public class NhEassayActivity extends BaseActivity {
     @Bind(R.id.swipeRefresh)
     SwipeRefreshLayout swipeRefresh;
 
-    private Call<NhEssay> essayCall;
+    private NeihanImp mNeihanImp;
+    private Call<NhEassay> essayCall;
 
     private NhEassayAdapter mAdapter;
     private boolean mHasMore = true;
     private String mTip;
-
-    private ArrayList<NhEssay.DataBeanX.DataBean> mDataBeen;
     private String mContentType;
-    private String mCity;
-    private String mLatitude;
-    private String mLongitude;
-    private long mMinTime;
     private int mScreenWidth;
-    private String mIid;
-    private String mDeviceId;
-    private String mUuidEassay;
-    private String mDeviceType;
-    private String mDeviceBrand;
-    private int mOsApi;
-    private String mOsVersion;
-    private String mOpenudId;
-    private String mResolution;
-    private int mDpi;
+
+    private ArrayList<NhEassay.DataBeanX.DataBean> mDataBeen;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -90,77 +66,29 @@ public class NhEassayActivity extends BaseActivity {
 
     private void initData() {
         mDataBeen = new ArrayList<>();
-
-        mCity = (String) SPUtil.get(mContext, Constans.SP_CITY, "西安");
-        mLatitude = (String) SPUtil.get(mContext, Constans.SP_LATITUDE, "0");
-        mLongitude = (String) SPUtil.get(mContext, Constans.SP_LONGITUDE, "0");
+        mNeihanImp = new NeihanImp(this);
 
         DisplayMetrics displayMetrics = new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
         mScreenWidth = displayMetrics.widthPixels;
-
-        if (TextUtils.isEmpty(mIid = (String) SPUtil.get(mContext, Constans.SP_IID, ""))) {
-            mIid = MyUtils.getRandomNumber(10);
-            SPUtil.put(mContext, Constans.SP_IID, mIid);
-        }
-
-        if (TextUtils.isEmpty(mDeviceId = (String) SPUtil.get(mContext, Constans.SP_DEVICE_ID, ""))) {
-            mDeviceId = MyUtils.getRandomNumber(11);
-            SPUtil.put(mContext, Constans.SP_DEVICE_ID, mDeviceId);
-        }
-
-        mDeviceType = DeviceStatusUtils.getModel();
-        mDeviceBrand = DeviceStatusUtils.getManufacturer();
-        mOsApi = AppUtils.getSDKVersion();
-        mOsVersion = AppUtils.getSDKVersionName();
-
-        if (TextUtils.isEmpty(mUuidEassay = (String) SPUtil.get(mContext, Constans.SP_UUID_EASSAY, ""))) {
-            mUuidEassay = MyUtils.getRandomNumber(15);
-            SPUtil.put(mContext, Constans.SP_UUID_EASSAY, mUuidEassay);
-        }
-
-        mOpenudId = AppUtils.getUUID().substring(0, 16);
-
-        mResolution = displayMetrics.widthPixels + "*" + displayMetrics.heightPixels;
-        mDpi = displayMetrics.densityDpi;
     }
+
 
     private void getData() {
         swipeRefresh.setRefreshing(true);
-       essayCall = Network.getNeihanApi().getNhEssay(mContentType,// 图片的是-103，段子的是-102
-                mCity,// 城市
-                mLongitude,//
-                mLatitude,//
-                mMinTime,// 上次更新时间的 Unix 时间戳，秒为单位
-                mMinTime = System.currentTimeMillis(),// 当前时间 Unix 时间戳，毫秒为单位
-                CONTENT_NUM,// 返回数量
-                mScreenWidth,// 屏幕宽度，px为单位 1450
-                mIid,// 一个长度为10的纯数字字符串，用于标识用户唯一性
-                mDeviceId,// 设备 id，一个长度为11的纯数字字符串
-                version_code,// 版本号去除小数点，例如612
-                version_name,// 版本号，例如6.1.2
-                mDeviceType,// 设备型号，例如 hongmi
-                mDeviceBrand,// 设备品牌，例如 xiaomi
-                mOsApi, // 操作系统版本，例如20
-                mOsVersion,// 操作系统版本号，例如7.1.0
-                mUuidEassay,// 用户 id，一个长度为15的纯数字字符串
-                mOpenudId,// 一个长度为16的数字和小写字母混合字符串
-                manifest_version_code,// 版本号去除小数点，例如612
-                mResolution,// 屏幕宽高，例如 1920*1080
-                mDpi,// 手机 dpi
-                update_version_code);
-        Call<NhEssay> clone = essayCall.clone();
-        clone.enqueue(new Callback<NhEssay>() {
+        essayCall = mNeihanImp.getNhEssayDetails(mContentType);
+        Call<NhEassay> clone = essayCall.clone();
+        clone.enqueue(new Callback<NhEassay>() {
             @Override
-            public void onResponse(Call<NhEssay> call, Response<NhEssay> response) {
+            public void onResponse(Call<NhEassay> call, Response<NhEassay> response) {
                 swipeRefresh.setRefreshing(false);
                 if (response.isSuccessful()) {
-                    NhEssay body = response.body();
+                    NhEassay body = response.body();
                     if ("success".equals(body.getMessage())) {
                         mHasMore = body.getData().isHas_more();
                         mTip = body.getData().getTip();
 
-                        ArrayList<NhEssay.DataBeanX.DataBean> data = (ArrayList<NhEssay.DataBeanX.DataBean>) body.getData().getData();
+                        ArrayList<NhEassay.DataBeanX.DataBean> data = (ArrayList<NhEassay.DataBeanX.DataBean>) body.getData().getData();
 
                         mAdapter.addData(data);
                     }
@@ -170,7 +98,7 @@ public class NhEassayActivity extends BaseActivity {
             }
 
             @Override
-            public void onFailure(Call<NhEssay> call, Throwable t) {
+            public void onFailure(Call<NhEassay> call, Throwable t) {
                 swipeRefresh.setRefreshing(false);
                 Toast.makeText(mContext, R.string.net_error, Toast.LENGTH_SHORT).show();
                 LogUtils.e("Error : ", t.getLocalizedMessage());
@@ -214,7 +142,7 @@ public class NhEassayActivity extends BaseActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        if (essayCall!=null && !essayCall.isCanceled()){
+        if (essayCall != null && !essayCall.isCanceled()) {
             essayCall.cancel();
         }
         ImgUtils.cancelAllTasks(getApplicationContext());

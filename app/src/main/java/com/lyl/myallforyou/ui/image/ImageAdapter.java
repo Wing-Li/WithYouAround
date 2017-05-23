@@ -6,7 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.github.chrisbanes.photoview.PhotoView;
-import com.lyl.myallforyou.data.NhEssay;
+import com.lyl.myallforyou.data.NhEassay;
 import com.lyl.myallforyou.utils.ImgUtils;
 import com.lyl.myallforyou.utils.LogUtils;
 
@@ -19,9 +19,9 @@ import java.util.List;
 public class ImageAdapter extends PagerAdapter {
 
     private Context mContext;
-    private List<NhEssay.DataBeanX.DataBean.GroupBean.LargeImageListBean> mData;
+    private List<NhEassay.DataBeanX.DataBean.GroupBean.LargeImageListBean> mData;
 
-    public ImageAdapter(Context context, List<NhEssay.DataBeanX.DataBean.GroupBean.LargeImageListBean> data) {
+    public ImageAdapter(Context context, List<NhEassay.DataBeanX.DataBean.GroupBean.LargeImageListBean> data) {
         mContext = context;
         mData = data;
     }
@@ -52,7 +52,7 @@ public class ImageAdapter extends PagerAdapter {
      */
     @Override
     public Object instantiateItem(ViewGroup container, int position) {
-        NhEssay.DataBeanX.DataBean.GroupBean.LargeImageListBean bean = mData.get(position);
+        NhEassay.DataBeanX.DataBean.GroupBean.LargeImageListBean bean = mData.get(position);
         PhotoView photoView = new PhotoView(mContext);
         photoView.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
         photoView.setAdjustViewBounds(true);

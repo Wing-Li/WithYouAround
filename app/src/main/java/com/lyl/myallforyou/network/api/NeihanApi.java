@@ -1,6 +1,8 @@
 package com.lyl.myallforyou.network.api;
 
-import com.lyl.myallforyou.data.NhEssay;
+import com.lyl.myallforyou.data.NhCommentReply;
+import com.lyl.myallforyou.data.NhComments;
+import com.lyl.myallforyou.data.NhEassay;
 
 import okhttp3.ResponseBody;
 import retrofit2.Call;
@@ -42,29 +44,91 @@ public interface NeihanApi {
      * @return
      */
     @GET("neihan/stream/mix/v1/?mpic=1&webp=1&essence=1&message_cursor=-1&do00le_col_mode=0&ac=wifi&channel=360&aid=7&app_name=joke_essay&device_platform=android&ssmix=a")
-    Call<NhEssay> getNhEssay(@Query("content_type") String content_type,
-                             @Query("am_city") String city,
-                             @Query("am_longitude") String am_longitude,
-                             @Query("am_latitude") String am_latitude,
-                             @Query("min_time") long min_time,
-                             @Query("am_loc_time") long loc_time,
-                             @Query("count") int count,
-                             @Query("screen_width") long screen_width,
-                             @Query("iid") String iid,
-                             @Query("device_id") String device_id,
-                             @Query("version_code") String version_code,
-                             @Query("version_name") String version_name,
-                             @Query("device_type") String device_type,
-                             @Query("device_brand") String device_brand,
-                             @Query("os_api") int os_api,
-                             @Query("os_version") String os_version,
-                             @Query("uuid") String uuid,
-                             @Query("openudid") String openudid,
-                             @Query("manifest_version_code") String manifest_version_code,
-                             @Query("resolution") String resolution,
-                             @Query("dpi") int dpi,
-                             @Query("update_version_code") String update_version_code);
+    Call<NhEassay> getNhEssay(@Query("content_type") String content_type,
+                              @Query("am_city") String city,
+                              @Query("am_longitude") String am_longitude,
+                              @Query("am_latitude") String am_latitude,
+                              @Query("min_time") long min_time,
+                              @Query("am_loc_time") long loc_time,
+                              @Query("count") int count,
+                              @Query("screen_width") long screen_width,
+                              @Query("iid") String iid,
+                              @Query("device_id") String device_id,
+                              @Query("version_code") String version_code,
+                              @Query("version_name") String version_name,
+                              @Query("device_type") String device_type,
+                              @Query("device_brand") String device_brand,
+                              @Query("os_api") int os_api,
+                              @Query("os_version") String os_version,
+                              @Query("uuid") String uuid,
+                              @Query("openudid") String openudid,
+                              @Query("manifest_version_code") String manifest_version_code,
+                              @Query("resolution") String resolution,
+                              @Query("dpi") int dpi,
+                              @Query("update_version_code") String update_version_code);
 
+
+    /**
+     * 获取评论列表
+     *
+     * @param group_id
+     * @param item_id
+     * @param count
+     * @param offset
+     * @return
+     */
+    @GET("neihan/comments/?ac=wifi&channel=360&aid=7&app_name=joke_essay&device_platform=android&ssmix=a")
+    Call<NhComments> getNhComments(@Query("group_id") String group_id,
+                                   @Query("item_id") String item_id,
+                                   @Query("count") int count,
+                                   @Query("offset") int offset,
+                                   @Query("iid") String iid,
+                                   @Query("device_id") String device_id,
+                                   @Query("version_code") String version_code,
+                                   @Query("version_name") String version_name,
+                                   @Query("device_type") String device_type,
+                                   @Query("device_brand") String device_brand,
+                                   @Query("os_api") int os_api,
+                                   @Query("os_version") String os_version,
+                                   @Query("uuid") String uuid,
+                                   @Query("openudid") String openudid,
+                                   @Query("manifest_version_code") String manifest_version_code,
+                                   @Query("resolution") String resolution,
+                                   @Query("dpi") int dpi,
+                                   @Query("update_version_code") String update_version_code);
+
+
+    /**
+     * 获取热门评论 的二级评论
+     *
+     * @param id
+     * @param count
+     * @param offset
+     * @return
+     */
+    @GET("2/comment/v2/reply_list/?ac=wifi&channel=360&aid=7&app_name=joke_essay&device_platform=android&ssmix=a")
+    Call<NhCommentReply> getNhCommentReply(@Query("id") String id,
+                                           @Query("count") int count,
+                                           @Query("offset") int offset,
+                                           @Query("iid") String iid,
+                                           @Query("device_id") String device_id,
+                                           @Query("version_code") String version_code,
+                                           @Query("version_name") String version_name,
+                                           @Query("device_type") String device_type,
+                                           @Query("device_brand") String device_brand,
+                                           @Query("os_api") int os_api,
+                                           @Query("os_version") String os_version,
+                                           @Query("uuid") String uuid,
+                                           @Query("openudid") String openudid,
+                                           @Query("manifest_version_code") String manifest_version_code,
+                                           @Query("resolution") String resolution,
+                                           @Query("dpi") int dpi,
+                                           @Query("update_version_code") String update_version_code);
+
+
+    /**
+     * 下载图片
+     */
     @GET
     Call<ResponseBody> downloadFileWithDynamicUrlSync(@Url String filrUrl);
 }

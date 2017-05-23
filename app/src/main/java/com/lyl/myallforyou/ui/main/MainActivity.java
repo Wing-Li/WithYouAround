@@ -48,14 +48,13 @@ import com.lyl.myallforyou.ui.essay.NhEassayActivity;
 import com.lyl.myallforyou.ui.feedback.FeedbackActivity;
 import com.lyl.myallforyou.ui.qrbind.QrScanActivity;
 import com.lyl.myallforyou.ui.qrbind.QrShareActivity;
+import com.lyl.myallforyou.utils.MyUtils;
 import com.lyl.myallforyou.utils.NetUtil;
 import com.lyl.myallforyou.utils.SPUtil;
 
 import org.greenrobot.eventbus.EventBus;
 
 import java.util.ArrayList;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import static com.lyl.myallforyou.constants.Constans.SP_MY_NAME;
 import static com.lyl.myallforyou.constants.Constans.SP_MY_SGIN;
@@ -168,7 +167,7 @@ public class MainActivity extends BaseActivity {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
                 String edtStr = edt.getText().toString().trim();
-                final String str = checkStr(edtStr, 6, false);
+                final String str = MyUtils.checkStr(mContext, edtStr, 6, false);
                 if (TextUtils.isEmpty(str)) return;
 
                 bindUser(familyUuid, str);
@@ -327,7 +326,7 @@ public class MainActivity extends BaseActivity {
                     } else {
                         AlertDialog alertDialog = new AlertDialog.Builder(mContext)//
                                 .setTitle(R.string.hint)//
-                                .setMessage("内涵图片会消耗您大量的流量，您确定要用流量浏览吗？")//
+                                .setMessage(R.string.use_flux)//
                                 .setPositiveButton(R.string.cancel, null)//
                                 .setNegativeButton(R.string.ok, new DialogInterface.OnClickListener() {
                                     @Override
@@ -340,6 +339,8 @@ public class MainActivity extends BaseActivity {
                         alertDialog.show();
                     }
                 } else if (id == R.id.nav_nhvideo) {
+
+                } else if (id == R.id.nav_help) { // 使用帮助
 
                 } else if (id == R.id.nav_feedback) { // 意见反馈
                     intent = new Intent(mContext, FeedbackActivity.class);
@@ -383,7 +384,7 @@ public class MainActivity extends BaseActivity {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
                 String edtStr = edt.getText().toString().trim();
-                final String str = checkStr(edtStr, 6, false);
+                final String str = MyUtils.checkStr(mContext, edtStr, 6, false);
                 if (TextUtils.isEmpty(str)) return;
 
                 AVObject todo = AVObject.createWithoutData(Constans.TABLE_USER_INFO, objId);
@@ -429,7 +430,7 @@ public class MainActivity extends BaseActivity {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
                 String edtStr = edt.getText().toString().trim();
-                final String str = checkStr(edtStr, 20, true);
+                final String str = MyUtils.checkStr(mContext, edtStr, 20, true);
                 if (TextUtils.isEmpty(str)) return;
 
                 AVObject todo = AVObject.createWithoutData(Constans.TABLE_USER_INFO, objId);
@@ -455,36 +456,6 @@ public class MainActivity extends BaseActivity {
         alertDialog.show();
     }
     // ============================================== ↑侧边栏↑ ==============================================
-
-
-    /**
-     * 检查输入的字符串
-     *
-     * @param str           被检查的内容
-     * @param length        要求的长度
-     * @param isSpecialChar 是否可以输入特殊字符
-     * @return 符合要求则返回原字符串；否则，返回 空字符串
-     */
-    private String checkStr(String str, int length, boolean isSpecialChar) {
-        if (TextUtils.isEmpty(str)) {
-            Toast.makeText(mContext, R.string.not_empty, Toast.LENGTH_SHORT).show();
-            return "";
-        }
-        if (str.length() > length) {
-            Toast.makeText(mContext, getString(R.string.length_error, length), Toast.LENGTH_SHORT).show();
-            return "";
-        }
-        if (!isSpecialChar) {
-            String zhengze = "^[\\u4E00-\\u9FA5A-Za-z0-9_]+$";
-            Pattern pattern = Pattern.compile(zhengze);
-            Matcher matcher = pattern.matcher(str);
-            if (!matcher.matches()) {
-                Toast.makeText(mContext, R.string.style_error, Toast.LENGTH_SHORT).show();
-                return "";
-            }
-        }
-        return str;
-    }
 
 
     private ServiceConnection connection = new ServiceConnection() {

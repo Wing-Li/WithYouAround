@@ -9,7 +9,7 @@ import java.util.List;
  * Created by lyl on 2017/5/8.
  */
 
-public class NhEssay {
+public class NhEassay {
 
     private String message;
     private DataBeanX data;

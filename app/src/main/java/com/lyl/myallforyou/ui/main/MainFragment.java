@@ -1,14 +1,10 @@
 package com.lyl.myallforyou.ui.main;
 
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.ActivityOptionsCompat;
-import android.support.v4.util.Pair;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,13 +17,10 @@ import com.litesuits.orm.db.assit.QueryBuilder;
 import com.lyl.myallforyou.MyApp;
 import com.lyl.myallforyou.R;
 import com.lyl.myallforyou.constants.Constans;
-import com.lyl.myallforyou.constants.ConstantIntent;
 import com.lyl.myallforyou.data.UserInfo;
 import com.lyl.myallforyou.data.event.MainEvent;
 import com.lyl.myallforyou.ui.BaseFragment;
-import com.lyl.myallforyou.ui.deviceinfo.DeviceInfoActivity;
 import com.lyl.myallforyou.utils.SPUtil;
-import com.lyl.myallforyou.view.TransitionHelper;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -78,7 +71,7 @@ public class MainFragment extends BaseFragment {
                 recyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
             }
             mUserInfos = new ArrayList<UserInfo>();
-            mMyAapter = new MainFragmentAdapter(mUserInfos, mListener);
+            mMyAapter = new MainFragmentAdapter(mUserInfos, mContext);
             recyclerView.setAdapter(mMyAapter);
         }
 
@@ -101,29 +94,6 @@ public class MainFragment extends BaseFragment {
         EventBus.getDefault().unregister(this);
     }
 
-
-    private OnListFragmentInteractionListener mListener = new OnListFragmentInteractionListener() {
-        @Override
-        public void onListFragmentInteraction(UserInfo userInfo) {
-            Intent intent = new Intent(mContext, DeviceInfoActivity.class);
-            intent.putExtra(ConstantIntent.USER_INFO, userInfo.getUuid());
-
-            String name = userInfo.getName();
-            String nameNote = userInfo.getNameNote();
-            if (TextUtils.isEmpty(name)) {
-                name = userInfo.getNameNote();
-            } else {
-                if (!TextUtils.isEmpty(nameNote)) {
-                    name = name + " (" + userInfo.getNameNote() + ")";
-                }
-            }
-            intent.putExtra(ConstantIntent.USER_NAME, name);
-
-            final Pair<View, String>[] pairs = TransitionHelper.createSafeTransitionParticipants(mContext, true);
-            ActivityOptionsCompat transitionActivityOptions = ActivityOptionsCompat.makeSceneTransitionAnimation(mContext, pairs);
-            startActivity(intent, transitionActivityOptions.toBundle());
-        }
-    };
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void initData(MainEvent event) {
@@ -151,7 +121,7 @@ public class MainFragment extends BaseFragment {
                         info.setSign(data.getString(Constans.USER_MYSGIN));
                         info.setObjid(data.getObjectId());
 
-                        // 查询本地的用户
+                        // 查询本地的用户,把本地的 id 和 备注 设置给它
                         ArrayList<UserInfo> querySD = MyApp.liteOrm.query(new QueryBuilder<UserInfo>(UserInfo.class).whereEquals(Constans
                                 .SD_USER_OBJID, data.getObjectId()));
                         if (querySD.size() > 0) {
@@ -174,11 +144,7 @@ public class MainFragment extends BaseFragment {
     @Override
     public void onDetach() {
         super.onDetach();
-        mListener = null;
     }
 
 
-    public interface OnListFragmentInteractionListener {
-        void onListFragmentInteraction(UserInfo info);
-    }
 }

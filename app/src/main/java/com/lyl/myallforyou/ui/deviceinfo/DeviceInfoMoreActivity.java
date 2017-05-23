@@ -98,7 +98,9 @@ public class DeviceInfoMoreActivity extends BaseActivity {
         deviceMoreRecycler.addOnScrollListener(new OnRecycleViewScrollListener() {
             @Override
             public void onLoadMore() {
-                deviceMoreSwipe.setRefreshing(true);
+                if (!deviceMoreSwipe.isShown()){
+                    deviceMoreSwipe.setRefreshing(true);
+                }
                 getMoreDeviceInfo();
             }
         });
@@ -163,13 +165,13 @@ public class DeviceInfoMoreActivity extends BaseActivity {
         avQuery.findInBackground(new FindCallback<AVObject>() {
             @Override
             public void done(List<AVObject> list, AVException e) {
+                deviceMoreSwipe.setRefreshing(false);
                 if (e == null && list != null && list.size() > 0) {
                     page++;
                     for (AVObject avObject : list) {
                         saveDeviceInfo(avObject);
                     }
 
-                    deviceMoreSwipe.setRefreshing(false);
                     mDeviceAdapter.setData(mDeviceInfoList);
                 } else {
                     showT(getString(R.string.empty_data));

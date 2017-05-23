@@ -66,5 +66,6 @@
     <string name="download_error">下载失败</string>
     <string name="download_running">正在下载...</string>
     <string name="empty_data">没有数据</string>
+    <string name="use_flux">内涵图片会消耗您大量的流量，您确定要用流量浏览吗？</string>
 
 </resources>

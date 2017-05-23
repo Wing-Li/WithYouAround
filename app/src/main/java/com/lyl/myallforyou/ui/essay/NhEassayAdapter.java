@@ -15,7 +15,7 @@ import android.widget.TextView;
 
 import com.lyl.myallforyou.R;
 import com.lyl.myallforyou.constants.ConstantIntent;
-import com.lyl.myallforyou.data.NhEssay;
+import com.lyl.myallforyou.data.NhEassay;
 import com.lyl.myallforyou.ui.image.ImageActivity;
 import com.lyl.myallforyou.ui.image.SpecialImageActivity;
 import com.lyl.myallforyou.utils.ImgUtils;
@@ -36,18 +36,18 @@ public class NhEassayAdapter extends RecyclerView.Adapter<NhEassayAdapter.BaseVi
     public static final int CONTENT_TYPE_IMAGE = 2;
 
     private Context mContext;
-    private ArrayList<NhEssay.DataBeanX.DataBean> mList;
+    private ArrayList<NhEassay.DataBeanX.DataBean> mList;
     private String mContentType;
     private int mScreenWidth;
 
-    public NhEassayAdapter(Context context, ArrayList<NhEssay.DataBeanX.DataBean> list, String contentType, int screenWidth) {
+    public NhEassayAdapter(Context context, ArrayList<NhEassay.DataBeanX.DataBean> list, String contentType, int screenWidth) {
         mContext = context;
         mList = list;
         mContentType = contentType;
         mScreenWidth = screenWidth;
     }
 
-    public void addData(ArrayList<NhEssay.DataBeanX.DataBean> list) {
+    public void addData(ArrayList<NhEassay.DataBeanX.DataBean> list) {
         mList.addAll(list);
         notifyDataSetChanged();
     }
@@ -90,14 +90,14 @@ public class NhEassayAdapter extends RecyclerView.Adapter<NhEassayAdapter.BaseVi
 
     @Override
     public void onBindViewHolder(final NhEassayAdapter.BaseViewHolder holder, int position) {
-        NhEssay.DataBeanX.DataBean dataBean = mList.get(position);
+        NhEassay.DataBeanX.DataBean dataBean = mList.get(position);
 
         if ("5".equals(dataBean.getType())) { // 广告
             return;
         }
-        final NhEssay.DataBeanX.DataBean.GroupBean group = dataBean.getGroup();
+        final NhEassay.DataBeanX.DataBean.GroupBean group = dataBean.getGroup();
         if (group == null) return;
-        NhEssay.DataBeanX.DataBean.GroupBean.UserBean user = group.getUser();
+        NhEassay.DataBeanX.DataBean.GroupBean.UserBean user = group.getUser();
         if (user != null) {
             // 头像
             ImgUtils.loadCircle(mContext, user.getAvatar_url(), holder.icon);
@@ -142,7 +142,7 @@ public class NhEassayAdapter extends RecyclerView.Adapter<NhEassayAdapter.BaseVi
                     imageHolder.imageContent.setLayoutParams(layoutParams);
 
                     // 加载图片
-                    final List<NhEssay.DataBeanX.DataBean.GroupBean.LargeImageBean.UrlListBean> url_list = group.getLarge_image().getUrl_list();
+                    final List<NhEassay.DataBeanX.DataBean.GroupBean.LargeImageBean.UrlListBean> url_list = group.getLarge_image().getUrl_list();
                     final String imgUrl = url_list.get(0).getUrl();
                     if (1 == group.getIs_gif()) {// 是gif
                         imageHolder.longImageTxt.setText(R.string.show_gif_image);
@@ -150,7 +150,7 @@ public class NhEassayAdapter extends RecyclerView.Adapter<NhEassayAdapter.BaseVi
 
                         String tmUrl = group.getMiddle_image().getUrl_list().get(0).getUrl();
                         ImgUtils.loadC(mContext, tmUrl, imageHolder.imageContent);
-                        LogUtils.d("GIF显示的Url:",tmUrl);
+                        LogUtils.d("GIF显示的Url:", tmUrl);
                         // 跳转到 GIF 页面
                         imageHolder.singleImg.setOnClickListener(new View.OnClickListener() {
                             @Override
@@ -193,29 +193,14 @@ public class NhEassayAdapter extends RecyclerView.Adapter<NhEassayAdapter.BaseVi
                 } else { // 多张图片
                     imageHolder.singleImg.setVisibility(View.GONE);
                     imageHolder.imageGrid.setVisibility(View.VISIBLE);
-                    final List<NhEssay.DataBeanX.DataBean.GroupBean.ThumbImageListBean> thumb_image_list = group.getThumb_image_list();
+                    final List<NhEassay.DataBeanX.DataBean.GroupBean.ThumbImageListBean> thumb_image_list = group.getThumb_image_list();
 
-                    ViewGroup.LayoutParams layoutParams = imageHolder.imageGrid.getLayoutParams();
                     int imgSize = thumb_image_list.size();
                     if (imgSize == 2 || imgSize == 4) {
                         imageHolder.imageGrid.setNumColumns(2);
-                        if (imgSize <= 2) {
-                            layoutParams.height = mScreenWidth / 2 - 4;
-                        } else {
-                            layoutParams.height = mScreenWidth - 4;
-                        }
                     } else {
                         imageHolder.imageGrid.setNumColumns(3);
-                        if (imgSize <= 3) {
-                            layoutParams.height = mScreenWidth / 3 - 4;
-                        } else if (imgSize <= 6) {
-                            layoutParams.height = mScreenWidth / 3 * 2 - 4;
-                        } else {
-                            layoutParams.height = mScreenWidth - 4;
-                        }
                     }
-
-                    imageHolder.imageGrid.setLayoutParams(layoutParams);
 
                     ImageListAdapter imageListAdapter = new ImageListAdapter(thumb_image_list);
                     imageHolder.imageGrid.setAdapter(imageListAdapter);
@@ -279,9 +264,9 @@ public class NhEassayAdapter extends RecyclerView.Adapter<NhEassayAdapter.BaseVi
 
     class ImageListAdapter extends BaseAdapter {
 
-        List<NhEssay.DataBeanX.DataBean.GroupBean.ThumbImageListBean> mList;
+        List<NhEassay.DataBeanX.DataBean.GroupBean.ThumbImageListBean> mList;
 
-        public ImageListAdapter(List<NhEssay.DataBeanX.DataBean.GroupBean.ThumbImageListBean> list) {
+        public ImageListAdapter(List<NhEassay.DataBeanX.DataBean.GroupBean.ThumbImageListBean> list) {
             mList = list;
         }
 
@@ -298,7 +283,7 @@ public class NhEassayAdapter extends RecyclerView.Adapter<NhEassayAdapter.BaseVi
         }
 
         @Override
-        public NhEssay.DataBeanX.DataBean.GroupBean.ThumbImageListBean getItem(int i) {
+        public NhEassay.DataBeanX.DataBean.GroupBean.ThumbImageListBean getItem(int i) {
             return mList.get(i);
         }
 

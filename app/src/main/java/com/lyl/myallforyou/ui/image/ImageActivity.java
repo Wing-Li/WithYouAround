@@ -10,7 +10,7 @@ import android.widget.Button;
 
 import com.lyl.myallforyou.R;
 import com.lyl.myallforyou.constants.ConstantIntent;
-import com.lyl.myallforyou.data.NhEssay;
+import com.lyl.myallforyou.data.NhEassay;
 import com.lyl.myallforyou.view.HackyViewPager;
 
 import java.util.List;
@@ -27,7 +27,7 @@ public class ImageActivity extends BaseImageActivity {
 
     private ImageAdapter mImageAdapter;
 
-    private List<NhEssay.DataBeanX.DataBean.GroupBean.LargeImageListBean> mImageListBeanList;
+    private List<NhEassay.DataBeanX.DataBean.GroupBean.LargeImageListBean> mImageListBeanList;
     private int mPostion;
 
     @Override
@@ -46,7 +46,7 @@ public class ImageActivity extends BaseImageActivity {
     private void getParameter() {
         Intent intent = getIntent();
         mPostion = intent.getIntExtra(ConstantIntent.IMAGE_LIST_POSTION, 0);
-        mImageListBeanList = (List<NhEssay.DataBeanX.DataBean.GroupBean.LargeImageListBean>) intent.getSerializableExtra(ConstantIntent
+        mImageListBeanList = (List<NhEassay.DataBeanX.DataBean.GroupBean.LargeImageListBean>) intent.getSerializableExtra(ConstantIntent
                 .IMAGE_LIST);
     }
 
