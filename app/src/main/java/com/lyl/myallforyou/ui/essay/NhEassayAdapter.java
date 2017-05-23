@@ -2,6 +2,7 @@ package com.lyl.myallforyou.ui.essay;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -90,7 +91,7 @@ public class NhEassayAdapter extends RecyclerView.Adapter<NhEassayAdapter.BaseVi
 
     @Override
     public void onBindViewHolder(final NhEassayAdapter.BaseViewHolder holder, int position) {
-        NhEassay.DataBeanX.DataBean dataBean = mList.get(position);
+        final NhEassay.DataBeanX.DataBean dataBean = mList.get(position);
 
         if ("5".equals(dataBean.getType())) { // 广告
             return;
@@ -116,6 +117,12 @@ public class NhEassayAdapter extends RecyclerView.Adapter<NhEassayAdapter.BaseVi
         switch (getItemViewType(position)) {
             case CONTENT_TYPE_ESSAY:// 段子
                 MyEassayViewHolder eassayHolder = (MyEassayViewHolder) holder;
+                eassayHolder.content.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        goDetails(dataBean);
+                    }
+                });
                 break;
             case CONTENT_TYPE_IMAGE:// 图片
                 MyImageViewHolder imageHolder = (MyImageViewHolder) holder;
@@ -220,12 +227,28 @@ public class NhEassayAdapter extends RecyclerView.Adapter<NhEassayAdapter.BaseVi
         }
     }
 
+    private void goDetails(NhEassay.DataBeanX.DataBean dataBean) {
+        Intent intent = new Intent(mContext, EassayDetailActivity.class);
+        Bundle bundle = new Bundle();
+
+        bundle.putString(ConstantIntent.EASSAY_DETAIL_MGROUP_ID, String.valueOf(dataBean.getGroup().getGroup_id()));
+        bundle.putString(ConstantIntent.EASSAY_DETAIL_NAME, String.valueOf(dataBean.getGroup().getUser().getName()));
+        bundle.putString(ConstantIntent.EASSAY_DETAIL_ICON, String.valueOf(dataBean.getGroup().getUser().getAvatar_url()));
+        bundle.putString(ConstantIntent.EASSAY_DETAIL_TIME, String.valueOf(dataBean.getGroup().getCreate_time()));
+        bundle.putString(ConstantIntent.EASSAY_DETAIL_CONTENT, String.valueOf(dataBean.getGroup().getContent()));
+        bundle.putString(ConstantIntent.EASSAY_DETAIL_COMMENT_ALL_NUM, String.valueOf(dataBean.getGroup().getComment_count()));
+
+        intent.putExtras(bundle);
+        mContext.startActivity(intent);
+    }
+
     @Override
     public int getItemCount() {
         return mList != null && mList.size() >= 0 ? mList.size() : 0;
     }
 
     class BaseViewHolder extends RecyclerView.ViewHolder {
+        View view;
         ImageView icon;
         TextView name;
         TextView time;
@@ -233,6 +256,7 @@ public class NhEassayAdapter extends RecyclerView.Adapter<NhEassayAdapter.BaseVi
 
         public BaseViewHolder(View view) {
             super(view);
+            this.view = view;
             icon = (ImageView) view.findViewById(R.id.item_eassay_icon);
             name = (TextView) view.findViewById(R.id.item_eassay_name);
             time = (TextView) view.findViewById(R.id.item_eassay_time);

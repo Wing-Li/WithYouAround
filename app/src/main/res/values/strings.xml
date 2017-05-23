@@ -59,6 +59,7 @@
     <string name="scan_error">ID异常</string>
     <string name="scan_success">扫描成功</string>
     <string name="nheassay">内涵段子</string>
+    <string name="details">"详情"</string>
     <string name="not_more">没有更多了</string>
     <string name="show_long_image">点击显示长图</string>
     <string name="show_gif_image">点击显示 GIF 图</string>
@@ -67,5 +68,7 @@
     <string name="download_running">正在下载...</string>
     <string name="empty_data">没有数据</string>
     <string name="use_flux">内涵图片会消耗您大量的流量，您确定要用流量浏览吗？</string>
+    <string name="parameter_error">参数错误，请尝试重新打开</string>
+    <string name="text_show_num_comment">查看%1$d条回复</string>
 
 </resources>
