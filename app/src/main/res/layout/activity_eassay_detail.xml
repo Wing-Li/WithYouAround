@@ -15,7 +15,8 @@
         android:id="@+id/eassay_detail_nestedscrollview"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:fillViewport="true">
+        android:fillViewport="true"
+        android:scrollbars="vertical">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -135,6 +136,7 @@
                 android:orientation="vertical">
 
                 <LinearLayout
+                    android:id="@+id/eassay_detail_hot_count_layout"
                     android:layout_width="match_parent"
                     android:layout_height="40dp"
                     android:gravity="bottom"
@@ -154,12 +156,13 @@
                         android:layout_height="wrap_content"
                         android:text="（5）"/>
                 </LinearLayout>
+
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/eassay_detail_recycler_hot"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
             </LinearLayout>
 
-            <android.support.v7.widget.RecyclerView
-                android:id="@+id/eassay_detail_recycler_hot"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
 
             <LinearLayout
                 android:id="@+id/eassay_detail_all_comment_layout"

@@ -60,6 +60,8 @@ public class EassayDetailActivity extends BaseActivity {
     @Bind(R.id.eassay_detail_image_grid)
     GridView eassayDetailImageGrid;
 
+    @Bind(R.id.eassay_detail_hot_count_layout)
+    LinearLayout eassayDetailHotCountLayout;
     @Bind(R.id.eassay_detail_hot_count)
     TextView eassayDetailHotCount;
     @Bind(R.id.eassay_detail_recycler_hot)
@@ -72,6 +74,10 @@ public class EassayDetailActivity extends BaseActivity {
     LinearLayout eassayDetailLayout;
     @Bind(R.id.eassay_detail_nestedscrollview)
     NestedScrollView eassayDetailNestedscrollview;
+    @Bind(R.id.eassay_detail_hot_comment_layout)
+    LinearLayout eassayDetailHotCommentLayout;
+    @Bind(R.id.eassay_detail_all_comment_layout)
+    LinearLayout eassayDetailAllCommentLayout;
 
 
     private String mGroupId;
@@ -147,6 +153,9 @@ public class EassayDetailActivity extends BaseActivity {
 
                             mCommentHotNum = String.valueOf(top_comments.size());
                             eassayDetailHotCount.setText("(" + mCommentHotNum + ")");
+                        }
+                        if (page == 1 && top_comments.size() == 0) {
+                            eassayDetailHotCountLayout.setVisibility(View.GONE);
                         }
 
                         List<NhComments.DataBean.CommentsBean> recent_comments = body.getData().getRecent_comments();

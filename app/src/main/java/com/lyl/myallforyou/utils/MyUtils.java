@@ -6,7 +6,8 @@ import android.widget.Toast;
 
 import com.lyl.myallforyou.R;
 
-import java.util.Calendar;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Random;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -69,8 +70,10 @@ public class MyUtils {
      * @return
      */
     public static String getDate(long cur) {
-        Calendar c = Calendar.getInstance();
-        c.setTimeInMillis(cur);
-        return c.get(Calendar.MONTH) + 1 + "-" + c.get(Calendar.DAY_OF_MONTH) + " " + c.get(Calendar.HOUR_OF_DAY) + ":" + c.get(Calendar.MINUTE);
+//        Calendar c = Calendar.getInstance();
+//        c.setTimeInMillis(cur);
+//        return c.get(Calendar.MONTH) + 1 + "-" + c.get(Calendar.DAY_OF_MONTH) + " " + c.get(Calendar.HOUR_OF_DAY) + ":" + c.get(Calendar.MINUTE);
+        SimpleDateFormat format = new SimpleDateFormat("MM-dd HH:mm");
+        return format.format(new Date(cur));
     }
 }

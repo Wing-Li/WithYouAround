@@ -1,7 +1,9 @@
 package com.lyl.myallforyou.ui.essay;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
+import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,6 +12,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.lyl.myallforyou.R;
+import com.lyl.myallforyou.constants.ConstantIntent;
 import com.lyl.myallforyou.data.NhComments;
 import com.lyl.myallforyou.utils.ImgUtils;
 import com.lyl.myallforyou.utils.MyUtils;
@@ -48,7 +51,7 @@ public class EassayDetailCommentAdapter extends RecyclerView.Adapter<EassayDetai
 
     @Override
     public void onBindViewHolder(CommentViewHolder holder, int position) {
-        NhComments.DataBean.CommentsBean data = mData.get(position);
+        final NhComments.DataBean.CommentsBean data = mData.get(position);
 
         ImgUtils.loadCircle(mContext, data.getAvatar_url(), holder.icon);
 
@@ -66,6 +69,23 @@ public class EassayDetailCommentAdapter extends RecyclerView.Adapter<EassayDetai
             holder.replyNum.setVisibility(View.VISIBLE);
             holder.replyNum.setText(mContext.getString(R.string.text_show_num_comment, (int) data.getSecond_level_comments_count()));
 
+            holder.replyNum.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent intent = new Intent(mContext, DetailCommentReplyActivity.class);
+                    Bundle bundle = new Bundle();
+
+                    bundle.putString(ConstantIntent.EASSAY_DETAIL_MGROUP_ID, String.valueOf(data.getComment_id()));
+                    bundle.putString(ConstantIntent.EASSAY_DETAIL_NAME, String.valueOf(data.getUser_name()));
+                    bundle.putString(ConstantIntent.EASSAY_DETAIL_ICON, String.valueOf(data.getAvatar_url()));
+                    bundle.putString(ConstantIntent.EASSAY_DETAIL_TIME, String.valueOf(data.getCreate_time()));
+                    bundle.putString(ConstantIntent.EASSAY_DETAIL_CONTENT, String.valueOf(data.getText()));
+                    bundle.putString(ConstantIntent.EASSAY_DETAIL_COMMENT_ALL_NUM, String.valueOf(data.getDigg_count()));
+
+                    intent.putExtras(bundle);
+                    mContext.startActivity(intent);
+                }
+            });
         } else {
             holder.replyNum.setVisibility(View.GONE);
         }

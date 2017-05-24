@@ -2,15 +2,15 @@
 <LinearLayout
     android:id="@+id/item_eassay_image_layout"
     xmlns:android="http://schemas.android.com/apk/res/android"
-              android:layout_width="match_parent"
-              android:layout_height="wrap_content"
-              android:layout_marginBottom="4dp"
-              android:background="@color/white"
-              android:translationZ="2dp"
-              android:elevation="2dp"
-              android:orientation="vertical"
-              android:paddingBottom="16dp"
-              android:paddingTop="16dp">
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="4dp"
+    android:background="@color/white"
+    android:elevation="2dp"
+    android:orientation="vertical"
+    android:paddingBottom="16dp"
+    android:paddingTop="16dp"
+    android:translationZ="2dp">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -76,8 +76,8 @@
             android:gravity="center"
             android:paddingBottom="4dp"
             android:paddingTop="8dp"
-            android:visibility="gone"
-            android:textSize="14sp"/>
+            android:textSize="14sp"
+            android:visibility="gone"/>
     </RelativeLayout>
 
 
