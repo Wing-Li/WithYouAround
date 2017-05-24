@@ -73,7 +73,7 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:paddingBottom="16dp"
+                    android:paddingBottom="8dp"
                     android:paddingLeft="16dp"
                     android:paddingRight="16dp">
 
@@ -87,6 +87,45 @@
                         android:textIsSelectable="true"
                         android:textSize="16sp"/>
                 </LinearLayout>
+
+                <RelativeLayout
+                    android:id="@+id/eassay_detail_image_content_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="16dp">
+
+                    <ImageView
+                        android:id="@+id/eassay_detail_image_content"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:adjustViewBounds="true"
+                        android:background="@color/bg_gary"/>
+
+                    <TextView
+                        android:id="@+id/eassay_detail_long_image_text"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentBottom="true"
+                        android:background="#33000000"
+                        android:gravity="center"
+                        android:paddingBottom="4dp"
+                        android:paddingTop="8dp"
+                        android:textSize="14sp"
+                        android:visibility="gone"/>
+                </RelativeLayout>
+
+                <GridView
+                    android:id="@+id/eassay_detail_image_grid"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="16dp"
+                    android:layout_marginTop="8dp"
+                    android:horizontalSpacing="2dp"
+                    android:padding="2dp"
+                    android:verticalSpacing="2dp"
+                    android:visibility="gone"/>
+
             </LinearLayout>
 
             <LinearLayout

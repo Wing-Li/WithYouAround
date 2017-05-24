@@ -1253,7 +1253,7 @@ public class NhEassay {
                     }
                 }
 
-                public static class ThumbImageListBean {
+                public static class ThumbImageListBean implements Serializable {
                     /**
                      * url : http://p1.pstatp.com/list/s362/1e120002134b41111c57.webp
                      * url_list : [{"url":"http://p1.pstatp.com/list/s362/1e120002134b41111c57.webp"},{"url":"http://pb3.pstatp
@@ -1319,7 +1319,7 @@ public class NhEassay {
                         this.url_list = url_list;
                     }
 
-                    public static class UrlListBeanX {
+                    public static class UrlListBeanX implements Serializable {
                         /**
                          * url : http://p1.pstatp.com/list/s362/1e120002134b41111c57.webp
                          */

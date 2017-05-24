@@ -8,12 +8,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.BaseAdapter;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.lyl.myallforyou.R;
 import com.lyl.myallforyou.constants.ConstantIntent;
@@ -223,8 +223,8 @@ public class NhEassayAdapter extends RecyclerView.Adapter<NhEassayAdapter.BaseVi
 
                     imageHolder.imageGrid.setLayoutParams(layoutParams);
 
-                    ImageListAdapter imageListAdapter = new ImageListAdapter(thumb_image_list);
-                    imageHolder.imageGrid.setAdapter(imageListAdapter);
+                    ImageGridAdapter imageGridAdapter = new ImageGridAdapter(mContext, thumb_image_list);
+                    imageHolder.imageGrid.setAdapter(imageGridAdapter);
 
                     imageHolder.imageGrid.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                         @Override
@@ -248,6 +248,7 @@ public class NhEassayAdapter extends RecyclerView.Adapter<NhEassayAdapter.BaseVi
     }
 
     private void goDetails(NhEassay.DataBeanX.DataBean.GroupBean group, int conetntType) {
+
         Intent intent = new Intent(mContext, EassayDetailActivity.class);
         Bundle bundle = new Bundle();
 
@@ -260,7 +261,7 @@ public class NhEassayAdapter extends RecyclerView.Adapter<NhEassayAdapter.BaseVi
 
         switch (conetntType) {
             case CONTENT_TYPE_ESSAY:// 段子
-
+                bundle.putInt(ConstantIntent.EASSAY_DETAIL_CONTENT_TYPE, ConstantIntent.EASSAY_DETAIL_CONTENT_TEXT);
                 break;
             case CONTENT_TYPE_IMAGE:// 图片
                 if (group.getLarge_image_list() == null) {// 一张图片
@@ -277,19 +278,21 @@ public class NhEassayAdapter extends RecyclerView.Adapter<NhEassayAdapter.BaseVi
                     final String imgUrl = url_list.get(0).getUrl();
 
                     if (1 == group.getIs_gif()) {// 是gif
-                        bundle.putString(ConstantIntent.SPECIAL_IMAGE_URL, imgUrl);
-                        bundle.putString(ConstantIntent.SPECIAL_IMAGE_TYPE, ConstantIntent.SPECIAL_IMAGE_GIF);
+                        bundle.putString(ConstantIntent.SPECIAL_IMAGE_URL, group.getMiddle_image().getUrl_list().get(0).getUrl());
+                        bundle.putInt(ConstantIntent.EASSAY_DETAIL_CONTENT_TYPE, ConstantIntent.EASSAY_DETAIL_CONTENT_GIF);
                     } else {
                         if (isLongImage) {// 是长图
                             bundle.putString(ConstantIntent.SPECIAL_IMAGE_URL, imgUrl);
-                            bundle.putString(ConstantIntent.SPECIAL_IMAGE_TYPE, ConstantIntent.SPECIAL_IMAGE_LONG);
+                            bundle.putInt(ConstantIntent.EASSAY_DETAIL_CONTENT_TYPE, ConstantIntent.EASSAY_DETAIL_CONTENT_LONG);
                         } else {// 普通图
                             bundle.putString(ConstantIntent.SPECIAL_IMAGE_URL, imgUrl);
-                            bundle.putString(ConstantIntent.SPECIAL_IMAGE_TYPE, ConstantIntent.SPECIAL_IMAGE_NORMAL);
+                            bundle.putInt(ConstantIntent.EASSAY_DETAIL_CONTENT_TYPE, ConstantIntent.EASSAY_DETAIL_CONTENT_NORMAL);
                         }
                     }
                 } else { // 多张图
+                    bundle.putSerializable(ConstantIntent.IMAGE_THUMB_LIST, (Serializable) group.getThumb_image_list());
                     bundle.putSerializable(ConstantIntent.IMAGE_LIST, (Serializable) group.getLarge_image_list());
+                    bundle.putInt(ConstantIntent.EASSAY_DETAIL_CONTENT_TYPE, ConstantIntent.EASSAY_DETAIL_CONTENT_LIST);
                 }
 
                 break;
@@ -297,6 +300,7 @@ public class NhEassayAdapter extends RecyclerView.Adapter<NhEassayAdapter.BaseVi
 
         intent.putExtras(bundle);
         mContext.startActivity(intent);
+        Toast.makeText(mContext, "进入详情", Toast.LENGTH_SHORT).show();
     }
 
     @Override
@@ -342,58 +346,6 @@ public class NhEassayAdapter extends RecyclerView.Adapter<NhEassayAdapter.BaseVi
             longImageTxt = (TextView) view.findViewById(R.id.item_long_image_text);
             singleImg = (RelativeLayout) view.findViewById(R.id.item_single_image_layout);
             imageGrid = (GridView) view.findViewById(R.id.item_image_list);
-        }
-    }
-
-    class ImageListAdapter extends BaseAdapter {
-
-        List<NhEassay.DataBeanX.DataBean.GroupBean.ThumbImageListBean> mList;
-
-        public ImageListAdapter(List<NhEassay.DataBeanX.DataBean.GroupBean.ThumbImageListBean> list) {
-            mList = list;
-        }
-
-        @Override
-        public int getCount() {
-            if (mList != null) {
-                if (mList.size() >= 0 && mList.size() <= 9) {
-                    return mList.size();
-                } else if (mList.size() > 9) {
-                    return 9;
-                }
-            }
-            return 0;
-        }
-
-        @Override
-        public NhEassay.DataBeanX.DataBean.GroupBean.ThumbImageListBean getItem(int i) {
-            return mList.get(i);
-        }
-
-        @Override
-        public long getItemId(int i) {
-            return i;
-        }
-
-        @Override
-        public View getView(int i, View view, ViewGroup viewGroup) {
-            GridViewHolder holder;
-            if (view == null) {
-                holder = new GridViewHolder();
-                view = LayoutInflater.from(mContext).inflate(R.layout.item_grid_square, viewGroup, false);
-                holder.imgageView = (ImageView) view.findViewById(R.id.item_square);
-                view.setTag(holder);
-            } else {
-                holder = (GridViewHolder) view.getTag();
-            }
-
-            ImgUtils.load(mContext, getItem(i).getUrl_list().get(0).getUrl(), holder.imgageView);
-
-            return view;
-        }
-
-        class GridViewHolder {
-            ImageView imgageView;
         }
     }
 }
