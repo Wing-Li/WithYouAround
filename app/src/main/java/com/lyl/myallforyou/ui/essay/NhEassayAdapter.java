@@ -11,6 +11,7 @@ import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.GridView;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -21,10 +22,10 @@ import com.lyl.myallforyou.ui.image.ImageActivity;
 import com.lyl.myallforyou.ui.image.SpecialImageActivity;
 import com.lyl.myallforyou.utils.ImgUtils;
 import com.lyl.myallforyou.utils.LogUtils;
+import com.lyl.myallforyou.utils.MyUtils;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.List;
 
 /**
@@ -107,9 +108,7 @@ public class NhEassayAdapter extends RecyclerView.Adapter<NhEassayAdapter.BaseVi
             holder.name.setText(user.getName());
         }
         // 时间
-        Calendar calendar = Calendar.getInstance();
-        calendar.setTimeInMillis(dataBean.getGroup().getCreate_time());
-        holder.time.setText(calendar.get(Calendar.HOUR_OF_DAY) + ":" + calendar.get(Calendar.MINUTE) + ":" + calendar.get(Calendar.SECOND));
+        holder.time.setText(MyUtils.getDate(dataBean.getGroup().getCreate_time()));
 
         // 内容
         holder.content.setText(dataBean.getGroup().getContent());
@@ -117,10 +116,10 @@ public class NhEassayAdapter extends RecyclerView.Adapter<NhEassayAdapter.BaseVi
         switch (getItemViewType(position)) {
             case CONTENT_TYPE_ESSAY:// 段子
                 MyEassayViewHolder eassayHolder = (MyEassayViewHolder) holder;
-                eassayHolder.content.setOnClickListener(new View.OnClickListener() {
+                eassayHolder.eassayLayout.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        goDetails(dataBean);
+                        goDetails(group, CONTENT_TYPE_ESSAY);
                     }
                 });
                 break;
@@ -169,7 +168,7 @@ public class NhEassayAdapter extends RecyclerView.Adapter<NhEassayAdapter.BaseVi
                             }
                         });
                     } else {
-                        if (isLongImage) {
+                        if (isLongImage) {// 是长图
                             imageHolder.longImageTxt.setText(R.string.show_long_image);
                             imageHolder.longImageTxt.setVisibility(View.VISIBLE);
 
@@ -183,7 +182,7 @@ public class NhEassayAdapter extends RecyclerView.Adapter<NhEassayAdapter.BaseVi
                                     mContext.startActivity(intent);
                                 }
                             });
-                        } else {
+                        } else {// 普通图片
                             ImgUtils.loadF(mContext, imgUrl, imageHolder.imageContent);
                             // 跳转到可放大缩小页面
                             imageHolder.singleImg.setOnClickListener(new View.OnClickListener() {
@@ -202,12 +201,27 @@ public class NhEassayAdapter extends RecyclerView.Adapter<NhEassayAdapter.BaseVi
                     imageHolder.imageGrid.setVisibility(View.VISIBLE);
                     final List<NhEassay.DataBeanX.DataBean.GroupBean.ThumbImageListBean> thumb_image_list = group.getThumb_image_list();
 
+                    ViewGroup.LayoutParams layoutParams = imageHolder.imageGrid.getLayoutParams();
                     int imgSize = thumb_image_list.size();
                     if (imgSize == 2 || imgSize == 4) {
                         imageHolder.imageGrid.setNumColumns(2);
+                        if (imgSize <= 2) {
+                            layoutParams.height = mScreenWidth / 2 - 4;
+                        } else {
+                            layoutParams.height = mScreenWidth - 4;
+                        }
                     } else {
                         imageHolder.imageGrid.setNumColumns(3);
+                        if (imgSize <= 3) {
+                            layoutParams.height = mScreenWidth / 3 - 4;
+                        } else if (imgSize <= 6) {
+                            layoutParams.height = mScreenWidth / 3 * 2 - 4;
+                        } else {
+                            layoutParams.height = mScreenWidth - 4;
+                        }
                     }
+
+                    imageHolder.imageGrid.setLayoutParams(layoutParams);
 
                     ImageListAdapter imageListAdapter = new ImageListAdapter(thumb_image_list);
                     imageHolder.imageGrid.setAdapter(imageListAdapter);
@@ -223,20 +237,63 @@ public class NhEassayAdapter extends RecyclerView.Adapter<NhEassayAdapter.BaseVi
                         }
                     });
                 }
+                imageHolder.imageLayout.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        goDetails(group, CONTENT_TYPE_IMAGE);
+                    }
+                });
                 break;
         }
     }
 
-    private void goDetails(NhEassay.DataBeanX.DataBean dataBean) {
+    private void goDetails(NhEassay.DataBeanX.DataBean.GroupBean group, int conetntType) {
         Intent intent = new Intent(mContext, EassayDetailActivity.class);
         Bundle bundle = new Bundle();
 
-        bundle.putString(ConstantIntent.EASSAY_DETAIL_MGROUP_ID, String.valueOf(dataBean.getGroup().getGroup_id()));
-        bundle.putString(ConstantIntent.EASSAY_DETAIL_NAME, String.valueOf(dataBean.getGroup().getUser().getName()));
-        bundle.putString(ConstantIntent.EASSAY_DETAIL_ICON, String.valueOf(dataBean.getGroup().getUser().getAvatar_url()));
-        bundle.putString(ConstantIntent.EASSAY_DETAIL_TIME, String.valueOf(dataBean.getGroup().getCreate_time()));
-        bundle.putString(ConstantIntent.EASSAY_DETAIL_CONTENT, String.valueOf(dataBean.getGroup().getContent()));
-        bundle.putString(ConstantIntent.EASSAY_DETAIL_COMMENT_ALL_NUM, String.valueOf(dataBean.getGroup().getComment_count()));
+        bundle.putString(ConstantIntent.EASSAY_DETAIL_MGROUP_ID, String.valueOf(group.getGroup_id()));
+        bundle.putString(ConstantIntent.EASSAY_DETAIL_NAME, String.valueOf(group.getUser().getName()));
+        bundle.putString(ConstantIntent.EASSAY_DETAIL_ICON, String.valueOf(group.getUser().getAvatar_url()));
+        bundle.putString(ConstantIntent.EASSAY_DETAIL_TIME, String.valueOf(group.getCreate_time()));
+        bundle.putString(ConstantIntent.EASSAY_DETAIL_CONTENT, String.valueOf(group.getContent()));
+        bundle.putString(ConstantIntent.EASSAY_DETAIL_COMMENT_ALL_NUM, String.valueOf(group.getComment_count()));
+
+        switch (conetntType) {
+            case CONTENT_TYPE_ESSAY:// 段子
+
+                break;
+            case CONTENT_TYPE_IMAGE:// 图片
+                if (group.getLarge_image_list() == null) {// 一张图片
+                    int width = Integer.parseInt(group.getMiddle_image().getWidth());
+                    int height = Integer.parseInt(group.getMiddle_image().getHeight());
+                    int tHeight = mScreenWidth * height / width;
+
+                    boolean isLongImage = false;
+                    if (tHeight > 1920) {
+                        isLongImage = true;
+                    }
+
+                    final List<NhEassay.DataBeanX.DataBean.GroupBean.LargeImageBean.UrlListBean> url_list = group.getLarge_image().getUrl_list();
+                    final String imgUrl = url_list.get(0).getUrl();
+
+                    if (1 == group.getIs_gif()) {// 是gif
+                        bundle.putString(ConstantIntent.SPECIAL_IMAGE_URL, imgUrl);
+                        bundle.putString(ConstantIntent.SPECIAL_IMAGE_TYPE, ConstantIntent.SPECIAL_IMAGE_GIF);
+                    } else {
+                        if (isLongImage) {// 是长图
+                            bundle.putString(ConstantIntent.SPECIAL_IMAGE_URL, imgUrl);
+                            bundle.putString(ConstantIntent.SPECIAL_IMAGE_TYPE, ConstantIntent.SPECIAL_IMAGE_LONG);
+                        } else {// 普通图
+                            bundle.putString(ConstantIntent.SPECIAL_IMAGE_URL, imgUrl);
+                            bundle.putString(ConstantIntent.SPECIAL_IMAGE_TYPE, ConstantIntent.SPECIAL_IMAGE_NORMAL);
+                        }
+                    }
+                } else { // 多张图
+                    bundle.putSerializable(ConstantIntent.IMAGE_LIST, (Serializable) group.getLarge_image_list());
+                }
+
+                break;
+        }
 
         intent.putExtras(bundle);
         mContext.startActivity(intent);
@@ -248,7 +305,6 @@ public class NhEassayAdapter extends RecyclerView.Adapter<NhEassayAdapter.BaseVi
     }
 
     class BaseViewHolder extends RecyclerView.ViewHolder {
-        View view;
         ImageView icon;
         TextView name;
         TextView time;
@@ -256,7 +312,6 @@ public class NhEassayAdapter extends RecyclerView.Adapter<NhEassayAdapter.BaseVi
 
         public BaseViewHolder(View view) {
             super(view);
-            this.view = view;
             icon = (ImageView) view.findViewById(R.id.item_eassay_icon);
             name = (TextView) view.findViewById(R.id.item_eassay_name);
             time = (TextView) view.findViewById(R.id.item_eassay_time);
@@ -265,13 +320,16 @@ public class NhEassayAdapter extends RecyclerView.Adapter<NhEassayAdapter.BaseVi
     }
 
     class MyEassayViewHolder extends BaseViewHolder {
+        LinearLayout eassayLayout;
 
         public MyEassayViewHolder(View view) {
             super(view);
+            eassayLayout = (LinearLayout) view.findViewById(R.id.item_eassay_layout);
         }
     }
 
     class MyImageViewHolder extends BaseViewHolder {
+        LinearLayout imageLayout;
         ImageView imageContent;
         TextView longImageTxt;
         RelativeLayout singleImg;
@@ -279,6 +337,7 @@ public class NhEassayAdapter extends RecyclerView.Adapter<NhEassayAdapter.BaseVi
 
         public MyImageViewHolder(View view) {
             super(view);
+            imageLayout = (LinearLayout) view.findViewById(R.id.item_eassay_image_layout);
             imageContent = (ImageView) view.findViewById(R.id.item_image_content);
             longImageTxt = (TextView) view.findViewById(R.id.item_long_image_text);
             singleImg = (RelativeLayout) view.findViewById(R.id.item_single_image_layout);

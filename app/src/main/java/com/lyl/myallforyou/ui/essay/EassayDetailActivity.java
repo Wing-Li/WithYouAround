@@ -1,10 +1,11 @@
 package com.lyl.myallforyou.ui.essay;
 
 import android.os.Bundle;
-import android.support.v7.widget.LinearLayoutManager;
+import android.support.v4.widget.NestedScrollView;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.lyl.myallforyou.R;
@@ -14,7 +15,8 @@ import com.lyl.myallforyou.network.imp.NeihanImp;
 import com.lyl.myallforyou.ui.BaseActivity;
 import com.lyl.myallforyou.utils.ImgUtils;
 import com.lyl.myallforyou.utils.LogUtils;
-import com.lyl.myallforyou.view.listener.OnRecycleViewScrollListener;
+import com.lyl.myallforyou.utils.MyUtils;
+import com.lyl.myallforyou.view.WrappingLinearLayoutManager;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -45,6 +47,14 @@ public class EassayDetailActivity extends BaseActivity {
     TextView eassayDetailAllCount;
     @Bind(R.id.eassay_detail_recycler_all)
     RecyclerView eassayDetailRecyclerAll;
+    @Bind(R.id.eassay_detail_layout)
+    LinearLayout eassayDetailLayout;
+    @Bind(R.id.eassay_detail_hot_comment_layout)
+    LinearLayout eassayDetailHotCommentLayout;
+    @Bind(R.id.eassay_detail_all_comment_layout)
+    LinearLayout eassayDetailAllCommentLayout;
+    @Bind(R.id.eassay_detail_nestedscrollview)
+    NestedScrollView eassayDetailNestedscrollview;
 
     private String mGroupId;
     private String mUserName;
@@ -77,7 +87,6 @@ public class EassayDetailActivity extends BaseActivity {
         getParameter();
         initView();
         initData();
-        getData();
     }
 
     private void initData() {
@@ -113,13 +122,13 @@ public class EassayDetailActivity extends BaseActivity {
                             mHotCommentAdapter.setData(mHotCommentsList);
 
                             mCommentHotNum = String.valueOf(top_comments.size());
-                            eassayDetailHotCount.setText(mCommentHotNum);
+                            eassayDetailHotCount.setText("(" + mCommentHotNum + ")");
                         }
 
                         List<NhComments.DataBean.CommentsBean> recent_comments = body.getData().getRecent_comments();
                         if (recent_comments != null && recent_comments.size() > 0) {
-                            mAllCommentsList.addAll(body.getData().getRecent_comments());
-                            mAllCommentAdapter.setData(recent_comments);
+                            mAllCommentsList.addAll(recent_comments);
+                            mAllCommentAdapter.setData(mAllCommentsList);
                         }
                     }
                 }
@@ -154,27 +163,52 @@ public class EassayDetailActivity extends BaseActivity {
 
         eassayDetailName.setText(FS(mUserName));
 
-        eassayDetailTime.setText(FS(mTime));
+        eassayDetailTime.setText(MyUtils.getDate(Long.parseLong(mTime)));
 
         eassayDetailContent.setText(FS(mContent));
 
         eassayDetailHotCount.setText(FS(mCommentHotNum));
 
-        eassayDetailAllCount.setText(FS(mCommentAllNum));
+        eassayDetailAllCount.setText("(" + FS(mCommentAllNum) + ")");
 
         // 设置热门评论列表
-        eassayDetailRecyclerHot.setLayoutManager(new LinearLayoutManager(mContext));
+        WrappingLinearLayoutManager wrappingLinearLayoutManager = new WrappingLinearLayoutManager(mContext);
+        wrappingLinearLayoutManager.setAutoMeasureEnabled(false);
+        eassayDetailRecyclerHot.setLayoutManager(wrappingLinearLayoutManager);
         mHotCommentAdapter = new EassayDetailCommentAdapter(mContext, mHotCommentsList, EassayDetailCommentAdapter.COMMENT_TYPE_HOT);
         eassayDetailRecyclerHot.setAdapter(mHotCommentAdapter);
+        eassayDetailRecyclerHot.setNestedScrollingEnabled(false);
 
         // 设置全部评论列表
-        eassayDetailRecyclerAll.setLayoutManager(new LinearLayoutManager(mContext));
+        WrappingLinearLayoutManager wrappingLinearLayoutManager2 = new WrappingLinearLayoutManager(mContext);
+        wrappingLinearLayoutManager2.setAutoMeasureEnabled(false);
+        eassayDetailRecyclerAll.setLayoutManager(wrappingLinearLayoutManager2);
         mAllCommentAdapter = new EassayDetailCommentAdapter(mContext, mAllCommentsList, EassayDetailCommentAdapter.COMMENT_TYPE_ALL);
         eassayDetailRecyclerAll.setAdapter(mAllCommentAdapter);
-        eassayDetailRecyclerAll.addOnScrollListener(new OnRecycleViewScrollListener() {
+        eassayDetailRecyclerAll.setNestedScrollingEnabled(true);
+
+        // 只能监听 NestedScrollView 滚动了，加载更多评论
+        eassayDetailNestedscrollview.setOnScrollChangeListener(new NestedScrollView.OnScrollChangeListener() {
             @Override
-            public void onLoadMore() {
-                getData();
+            public void onScrollChange(NestedScrollView v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
+                if (scrollY > oldScrollY) {
+                    // 向下滑动
+                }
+
+                if (scrollY < oldScrollY) {
+                    // 向上滑动
+                }
+
+                if (scrollY == 0) {
+                    // 顶部
+                }
+
+                if (scrollY == (v.getChildAt(0).getMeasuredHeight() - v.getMeasuredHeight())) {
+                    // 底部
+                    if (hasMore) {
+                        getData();
+                    }
+                }
             }
         });
     }

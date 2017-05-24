@@ -12,8 +12,8 @@ import android.widget.TextView;
 import com.lyl.myallforyou.R;
 import com.lyl.myallforyou.data.NhComments;
 import com.lyl.myallforyou.utils.ImgUtils;
+import com.lyl.myallforyou.utils.MyUtils;
 
-import java.util.Calendar;
 import java.util.List;
 
 /**
@@ -54,10 +54,7 @@ public class EassayDetailCommentAdapter extends RecyclerView.Adapter<EassayDetai
 
         holder.name.setText(data.getUser_name());
 
-        Calendar c = Calendar.getInstance();
-        c.setTimeInMillis(data.getCreate_time());
-        holder.time.setText(c.get(Calendar.MONTH) + "-" + c.get(Calendar.DAY_OF_MONTH) + " " + c.get(Calendar.HOUR_OF_DAY) + ":" + c.get
-                (Calendar.MINUTE));
+        holder.time.setText(MyUtils.getDate(data.getCreate_time()));
 
         holder.upImg.setColorFilter(Color.GRAY);
 
