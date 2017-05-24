@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.lyl.myallforyou.ui.help.HelpActivity">
+
+    <include layout="@layout/app_bar_main"/>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                style="@style/HelpTextQ"
+                android:background="@color/bg_gary"
+                android:text="@string/q1"/>
+
+            <TextView
+                style="@style/HelpTextA"
+                android:text="@string/a1"/>
+
+            <TextView
+                style="@style/HelpTextQ"
+                android:background="@color/bg_gary"
+                android:text="@string/q2"/>
+
+            <TextView
+                style="@style/HelpTextA"
+                android:text="@string/a2"/>
+
+            <TextView
+                style="@style/HelpTextQ"
+                android:background="@color/bg_gary"
+                android:text="@string/q3"/>
+
+            <TextView
+                style="@style/HelpTextA"
+                android:text="@string/a3"/>
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>

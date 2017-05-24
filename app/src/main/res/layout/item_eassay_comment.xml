@@ -75,6 +75,7 @@
             android:layout_marginBottom="4dp"
             android:layout_marginTop="8dp"
             android:text="这个人很懒，什么也没有留下老段子的时候是最闲了。这个人很懒，什么也没有留下老段子的时候是最闲了这个人很懒，什么也没有留下老段子的时候是最闲了"
+            android:textIsSelectable="true"
             android:textSize="14sp"/>
 
         <TextView

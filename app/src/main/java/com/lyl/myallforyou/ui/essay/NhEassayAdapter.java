@@ -13,7 +13,6 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.lyl.myallforyou.R;
 import com.lyl.myallforyou.constants.ConstantIntent;
@@ -300,7 +299,6 @@ public class NhEassayAdapter extends RecyclerView.Adapter<NhEassayAdapter.BaseVi
 
         intent.putExtras(bundle);
         mContext.startActivity(intent);
-        Toast.makeText(mContext, "进入详情", Toast.LENGTH_SHORT).show();
     }
 
     @Override

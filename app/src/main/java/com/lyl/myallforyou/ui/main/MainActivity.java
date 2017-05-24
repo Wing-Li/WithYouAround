@@ -46,6 +46,7 @@ import com.lyl.myallforyou.ui.BaseActivity;
 import com.lyl.myallforyou.ui.about.AboutActivity;
 import com.lyl.myallforyou.ui.essay.NhEassayActivity;
 import com.lyl.myallforyou.ui.feedback.FeedbackActivity;
+import com.lyl.myallforyou.ui.help.HelpActivity;
 import com.lyl.myallforyou.ui.qrbind.QrScanActivity;
 import com.lyl.myallforyou.ui.qrbind.QrShareActivity;
 import com.lyl.myallforyou.utils.MyUtils;
@@ -341,7 +342,7 @@ public class MainActivity extends BaseActivity {
                 } else if (id == R.id.nav_nhvideo) {
 
                 } else if (id == R.id.nav_help) { // 使用帮助
-
+                    intent = new Intent(mContext, HelpActivity.class);
                 } else if (id == R.id.nav_feedback) { // 意见反馈
                     intent = new Intent(mContext, FeedbackActivity.class);
                 } else if (id == R.id.nav_about) { // 关于

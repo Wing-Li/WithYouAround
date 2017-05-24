@@ -68,7 +68,6 @@
                 android:id="@+id/comment_reply_content"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:elegantTextHeight="true"
                 android:lineSpacingMultiplier="1.18"
                 android:text="PopupWindow的简单实用，无需更多的去自定义，获取去确定PopupWindow的位置等，你只需要使用ListPopupWindow就能满足你简单的 PopupWindow 弹出框的使用了。"
                 android:textIsSelectable="true"

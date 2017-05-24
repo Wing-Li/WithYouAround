@@ -98,6 +98,10 @@
             android:name=".ui.essay.DetailCommentReplyActivity"
             android:theme="@style/AppTheme.NoActionBar">
         </activity>
+        <activity
+            android:name=".ui.help.HelpActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+        </activity>
 
         <service
             android:name=".service.DeviceInfoService"

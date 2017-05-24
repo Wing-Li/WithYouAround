@@ -72,4 +72,14 @@
     <string name="text_show_num_comment">查看%1$d条回复</string>
     <string name="comment_details">评论详情</string>
 
+
+    <string name="q1">1. 如果添加好友？</string>
+    <string name="a1">在 主页 右下角点击“+”，可以扫描对方的二维码，或者输入对方的id。</string>
+    <string name="q2">2. 如果让别人添加我？</string>
+    <string name="a2">如果对方在你身边，可以在主页右上角点击“我的二维码”，让对方扫描自己的二维码；\n如果对方不在身边，可以在主页右上角点击“我的二维码”，点击复制自己的id，将id发送给对方，让对方手动输入。</string>
+    <string name="q3">3. 手机的信息多长时间上传一次？</string>
+    <string name="a3">五分钟上传一次。</string>
+    <string name="help">使用帮助</string>
+
+
 </resources>
