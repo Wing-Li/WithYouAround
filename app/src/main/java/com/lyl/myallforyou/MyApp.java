@@ -51,7 +51,7 @@ public class MyApp extends Application {
         if (!my.exists()) {
             my.mkdirs();
         }
-        return my.getAbsolutePath();
+        return appPath = my.getAbsolutePath();
     }
 
 
