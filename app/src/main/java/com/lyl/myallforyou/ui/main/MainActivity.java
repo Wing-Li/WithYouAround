@@ -5,7 +5,9 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.ServiceConnection;
+import android.graphics.Bitmap;
 import android.graphics.Color;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.support.annotation.NonNull;
@@ -18,6 +20,8 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
+import android.util.DisplayMetrics;
+import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -33,8 +37,13 @@ import com.avos.avoscloud.AVObject;
 import com.avos.avoscloud.AVQuery;
 import com.avos.avoscloud.GetCallback;
 import com.avos.avoscloud.SaveCallback;
+import com.google.zxing.BarcodeFormat;
+import com.google.zxing.MultiFormatWriter;
+import com.google.zxing.WriterException;
+import com.google.zxing.common.BitMatrix;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
+import com.journeyapps.barcodescanner.BarcodeEncoder;
 import com.litesuits.orm.db.model.ConflictAlgorithm;
 import com.lyl.myallforyou.MyApp;
 import com.lyl.myallforyou.R;
@@ -55,6 +64,8 @@ import com.lyl.myallforyou.utils.SPUtil;
 
 import org.greenrobot.eventbus.EventBus;
 
+import java.io.File;
+import java.io.FileOutputStream;
 import java.util.ArrayList;
 
 import static com.lyl.myallforyou.constants.Constans.SP_MY_NAME;
@@ -341,6 +352,8 @@ public class MainActivity extends BaseActivity {
                     }
                 } else if (id == R.id.nav_nhvideo) {
 
+                } else if (id == R.id.nav_ask) { // 邀请好友
+                    shareApp();
                 } else if (id == R.id.nav_help) { // 使用帮助
                     intent = new Intent(mContext, HelpActivity.class);
                 } else if (id == R.id.nav_feedback) { // 意见反馈
@@ -357,6 +370,76 @@ public class MainActivity extends BaseActivity {
                 return true;
             }
         });
+    }
+
+    private void shareApp() {
+        final Bitmap bitmap = encodeAsBitmap(MyApp.mAppShare);
+
+        ImageView imageView = new ImageView(mContext);
+        imageView.setImageBitmap(bitmap);
+
+        AlertDialog alertDialog = new AlertDialog.Builder(mContext)//
+                .setTitle(R.string.ask_friend_hint_msg)//
+                .setView(imageView)//
+                .setNegativeButton(R.string.cancel, null)//
+                .setPositiveButton(R.string.ask_friend, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        File file = new File(MyApp.getAppPath(), "appQR_" + System.currentTimeMillis() + ".png");
+                        try {
+                            if (file.exists()) {
+                                file.delete();
+                            }
+
+                            FileOutputStream fileOutputStream = new FileOutputStream(file);
+                            bitmap.compress(Bitmap.CompressFormat.PNG, 90, fileOutputStream);
+                            fileOutputStream.flush();
+                            fileOutputStream.close();
+                            Toast.makeText(getApplicationContext(), R.string.qr_save_success, Toast.LENGTH_SHORT).show();
+                            sendBroadcast(new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE, Uri.fromFile(file)));
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+
+                        try {
+                            Intent intent = new Intent();
+                            ComponentName cmp = new ComponentName("com.tencent.mm", "com.tencent.mm.ui.LauncherUI");
+                            intent.setAction(Intent.ACTION_MAIN);
+                            intent.addCategory(Intent.CATEGORY_LAUNCHER);
+                            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                            intent.setComponent(cmp);
+                            startActivity(intent);
+                        } catch (Exception e) {
+                            Toast.makeText(getApplicationContext(), R.string.not_weixin, Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                }).create();
+        alertDialog.setCancelable(false);
+        alertDialog.show();
+
+    }
+
+    private Bitmap encodeAsBitmap(String str) {
+        Bitmap bitmap = null;
+        BitMatrix result = null;
+
+        DisplayMetrics displayMetrics = new DisplayMetrics();
+        getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
+
+        int width = displayMetrics.widthPixels / 2;
+        MultiFormatWriter multiFormatWriter = new MultiFormatWriter();
+        try {
+            result = multiFormatWriter.encode(str, BarcodeFormat.QR_CODE, width, width);
+            // 使用 ZXing Android Embedded 要写的代码
+            BarcodeEncoder barcodeEncoder = new BarcodeEncoder();
+            bitmap = barcodeEncoder.createBitmap(result);
+        } catch (WriterException e) {
+            e.printStackTrace();
+        } catch (IllegalArgumentException iae) {
+            return null;
+        }
+
+        return bitmap;
     }
 
     private void openNhEassayImage() {
@@ -495,12 +578,19 @@ public class MainActivity extends BaseActivity {
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK) {
-            if (System.currentTimeMillis() - statTime > 2000) {
-                Toast.makeText(getApplicationContext(), "再次点击关闭程序", Toast.LENGTH_SHORT).show();
+            // 如果侧边栏开着，就把他关掉
+            if (mDrawerLayout != null && mDrawerLayout.isDrawerOpen(Gravity.LEFT)) {
+                mDrawerLayout.closeDrawers();
             } else {
-                finish();
+                // 点击两下返回
+                if (System.currentTimeMillis() - statTime > 2000) {
+                    Toast.makeText(getApplicationContext(), "再次点击关闭程序", Toast.LENGTH_SHORT).show();
+                } else {
+                    finish();
+                }
+                statTime = System.currentTimeMillis();
             }
-            statTime = System.currentTimeMillis();
+
             return true;
         }
         return super.onKeyDown(keyCode, event);

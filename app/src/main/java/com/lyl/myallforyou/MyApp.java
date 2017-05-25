@@ -26,6 +26,7 @@ public class MyApp extends Application {
      */
     public static int UPLOAD_SPACE_TIME = 5 * 60 * 1000 + 2000;
 
+    public static String mAppShare = "http://www.coolapk.com/apk/com.lyl.myallforyou";
 
     public static LiteOrm liteOrm;
 

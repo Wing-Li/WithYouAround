@@ -81,6 +81,10 @@
     <string name="q3">3. 手机的信息多长时间上传一次？</string>
     <string name="a3">五分钟上传一次。</string>
     <string name="help">使用帮助</string>
+    <string name="ask_friend_hint_msg">邀请亲密的人</string>
+    <string name="ask_friend">保存并发送</string>
+    <string name="qr_save_success">二维码保存成功，</string>
+    <string name="not_weixin">您的手机没有微信</string>
 
 
 </resources>
