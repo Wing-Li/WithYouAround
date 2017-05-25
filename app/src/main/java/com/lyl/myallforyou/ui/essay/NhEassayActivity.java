@@ -107,7 +107,11 @@ public class NhEassayActivity extends BaseActivity {
     }
 
     private void initView() {
-        toolbar.setTitle(R.string.nheassay);
+        if (mContentType.equals(CONTENT_TYPE_ESSAY) ){
+            toolbar.setTitle(R.string.nheassay);
+        }else if (mContentType.equals(CONTENT_TYPE_IMAGE)){
+            toolbar.setTitle(R.string.nheassay_image);
+        }
         setSupportActionBar(toolbar);
         setBackUI(toolbar);
 

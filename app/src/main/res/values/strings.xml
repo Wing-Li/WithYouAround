@@ -59,6 +59,7 @@
     <string name="scan_error">ID异常</string>
     <string name="scan_success">扫描成功</string>
     <string name="nheassay">内涵段子</string>
+    <string name="nheassay_image">内涵图片</string>
     <string name="details">"详情"</string>
     <string name="not_more">没有更多了</string>
     <string name="show_long_image">点击显示长图</string>
