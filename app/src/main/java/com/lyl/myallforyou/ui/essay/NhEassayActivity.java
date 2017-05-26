@@ -16,6 +16,7 @@ import com.lyl.myallforyou.ui.BaseActivity;
 import com.lyl.myallforyou.utils.ImgUtils;
 import com.lyl.myallforyou.utils.LogUtils;
 import com.lyl.myallforyou.view.listener.OnRecycleViewScrollListener;
+import com.tencent.bugly.crashreport.CrashReport;
 
 import java.util.ArrayList;
 
@@ -102,6 +103,9 @@ public class NhEassayActivity extends BaseActivity {
                 swipeRefresh.setRefreshing(false);
                 Toast.makeText(mContext, R.string.net_error, Toast.LENGTH_SHORT).show();
                 LogUtils.e("Error : ", t.getLocalizedMessage());
+                if (t != null) {
+                    CrashReport.postCatchedException(t);
+                }
             }
         });
     }

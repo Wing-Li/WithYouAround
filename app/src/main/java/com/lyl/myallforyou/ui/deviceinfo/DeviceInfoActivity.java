@@ -28,6 +28,7 @@ import com.lyl.myallforyou.ui.BaseActivity;
 import com.lyl.myallforyou.utils.LogUtils;
 import com.lyl.myallforyou.utils.OpenLocalMapUtil;
 import com.lyl.myallforyou.view.TransitionHelper;
+import com.tencent.bugly.crashreport.CrashReport;
 
 import java.text.DecimalFormat;
 
@@ -184,6 +185,9 @@ public class DeviceInfoActivity extends BaseActivity {
                 } else {
                     showT(getString(R.string.net_error));
                     LogUtils.d(TAG, "mTargetUuid:" + mTargetUuid + " ; Except:" + e);
+                    if (e != null) {
+                        CrashReport.postCatchedException(e.getCause());
+                    }
                 }
             }
         });
