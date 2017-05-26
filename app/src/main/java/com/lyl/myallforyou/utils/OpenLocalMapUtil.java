@@ -36,6 +36,7 @@ public class OpenLocalMapUtil {
         i.setPackage("com.autonavi.minimap");
         i.setData(Uri.parse("androidamap://viewMap?sourceApplication=" + context.getString(R.string.app_name) + "&poiname=abc&lat=" + lat +
                 "&lon=" + lo + "&dev=0")); //
+        i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         context.startActivity(i);
     }
 
@@ -46,6 +47,7 @@ public class OpenLocalMapUtil {
         i.setPackage("com.baidu.BaiduMap");
         // location: at,lng (先纬度，后经度) ; title: 打点标题; content	打点内容; traffic	是否开启路况，目前仅查看地图和打点支持，on表示开启，off表示关闭。
         i.setData(Uri.parse("baidumap://map/marker?location=" + lat + "," + lo + "&title=" + "TA" + "&content=" + "位置" + "&traffic=off"));
+        i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         context.startActivity(i);
     }
 
