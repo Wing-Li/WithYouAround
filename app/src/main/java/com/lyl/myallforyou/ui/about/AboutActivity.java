@@ -122,7 +122,7 @@ public class AboutActivity extends BaseActivity {
             if (clickNum > 5) {
                 aboutBackRunning.setVisibility(View.VISIBLE);
             }
-            clickNum = ++clickNum;
+            ++clickNum;
         }else {
             clickNum = 0;
             startTime = System.currentTimeMillis();
