@@ -4,6 +4,7 @@ import android.content.Context;
 import android.text.TextUtils;
 import android.widget.Toast;
 
+import com.lyl.myallforyou.BuildConfig;
 import com.lyl.myallforyou.R;
 
 import java.text.SimpleDateFormat;
@@ -17,6 +18,15 @@ import java.util.regex.Pattern;
  */
 
 public class MyUtils {
+
+    public static boolean isDev() {
+        if ("dev".equals(BuildConfig.Environment)) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
     /**
      * 随即获取指定位数的一串纯数字字符串
      *
@@ -65,14 +75,16 @@ public class MyUtils {
     }
 
     /**
-     *  根据时间戳 返回时间 12-14 13:25
+     * 根据时间戳 返回时间 12-14 13:25
+     *
      * @param cur
      * @return
      */
     public static String getDate(long cur) {
 //        Calendar c = Calendar.getInstance();
 //        c.setTimeInMillis(cur);
-//        return c.get(Calendar.MONTH) + 1 + "-" + c.get(Calendar.DAY_OF_MONTH) + " " + c.get(Calendar.HOUR_OF_DAY) + ":" + c.get(Calendar.MINUTE);
+//        return c.get(Calendar.MONTH) + 1 + "-" + c.get(Calendar.DAY_OF_MONTH) + " " + c.get(Calendar.HOUR_OF_DAY) + ":" + c.get(Calendar
+// .MINUTE);
         SimpleDateFormat format = new SimpleDateFormat("MM-dd HH:mm");
         return format.format(new Date(cur));
     }

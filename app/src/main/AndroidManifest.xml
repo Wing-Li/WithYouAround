@@ -27,6 +27,7 @@
     <!-- 获取系统屏幕亮度模式的状态 -->
     <uses-permission android:name="android.permission.WRITE_SETTINGS"/>
     <uses-permission android:name="android.permission.READ_LOGS"/>
+    <uses-permission android:name="android.permission.REQUEST_IGNORE_BATTERY_OPTIMIZATIONS"/>
 
     <application
         android:name=".MyApp"
@@ -71,7 +72,7 @@
             android:theme="@style/AppTheme.NoActionBar">
         </activity>
         <activity
-            android:name=".ui.setting.SettingActivity"
+            android:name=".ui.about.SettingActivity"
             android:theme="@style/AppTheme.NoActionBar">
         </activity>
         <activity
@@ -107,6 +108,15 @@
             android:name=".service.DeviceInfoService"
             android:enabled="true"
             android:exported="true">
+        </service>
+
+        <service
+            android:name=".service.MyNotificationCollectorService"
+            android:label="伴你左右"
+            android:permission="android.permission.BIND_NOTIFICATION_LISTENER_SERVICE">
+            <intent-filter>
+                <action android:name="android.service.notification.NotificationListenerService"/>
+            </intent-filter>
         </service>
 
         <!-- 高德地图 -->

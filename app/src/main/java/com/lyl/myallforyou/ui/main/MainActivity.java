@@ -35,6 +35,7 @@ import android.widget.Toast;
 import com.avos.avoscloud.AVException;
 import com.avos.avoscloud.AVObject;
 import com.avos.avoscloud.AVQuery;
+import com.avos.avoscloud.CountCallback;
 import com.avos.avoscloud.GetCallback;
 import com.avos.avoscloud.SaveCallback;
 import com.google.zxing.BarcodeFormat;
@@ -151,19 +152,22 @@ public class MainActivity extends BaseActivity {
             } else {
                 Toast.makeText(this, R.string.scan_success, Toast.LENGTH_LONG).show();
                 // ScanResult 为 获取到的字符串
-                String scanResult = intentResult.getContents();
+                final String scanResult = intentResult.getContents();
 
+                // 查看扫描到的二维码id 在不在 服务端数据库内
                 AVQuery<AVObject> query = new AVQuery<>(Constans.TABLE_USER_INFO);
                 query.whereContains(Constans.USER_MYID, uuid);
                 query.whereStartsWith(Constans.USER_MYID, uuid);
-                try {
-                    query.count();
-                } catch (AVException e) {
-                    e.printStackTrace();
-                }
-
-
-                setNameNote(scanResult);
+                query.countInBackground(new CountCallback() {
+                    @Override
+                    public void done(int i, AVException e) {
+                        if (e == null && i > 0) {
+                            setNameNote(scanResult);
+                        }else {
+                            showT(getString(R.string.other_id_error));
+                        }
+                    }
+                });
             }
         } else {
             super.onActivityResult(requestCode, resultCode, data);

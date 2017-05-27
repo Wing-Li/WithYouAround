@@ -6,14 +6,101 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="com.lyl.myallforyou.ui.setting.SettingActivity">
+    tools:context="com.lyl.myallforyou.ui.about.SettingActivity">
 
     <include layout="@layout/app_bar_main"/>
 
     <LinearLayout
+        android:id="@+id/setting_push_layout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:background="@color/white"
+        android:elevation="2dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingBottom="16dp"
+        android:paddingLeft="16dp"
+        android:paddingRight="16dp"
+        android:paddingTop="16dp"
+        android:translationZ="2dp">
 
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="通知权限"
+
+            android:textSize="16sp"/>
+
+        <TextView
+            android:id="@+id/setting_push"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="未开启》"
+            android:textSize="16sp"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/setting_auto_start_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:background="@color/white"
+        android:elevation="2dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingBottom="16dp"
+        android:paddingLeft="16dp"
+        android:paddingRight="16dp"
+        android:paddingTop="16dp"
+        android:translationZ="2dp">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="允许开机自启动"
+
+            android:textSize="16sp"/>
+
+        <TextView
+            android:id="@+id/setting_auto_start"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="去设置》"
+            android:textSize="16sp"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/setting_battey_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:background="@color/white"
+        android:elevation="2dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingBottom="16dp"
+        android:paddingLeft="16dp"
+        android:paddingRight="16dp"
+        android:paddingTop="16dp"
+        android:translationZ="2dp">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="忽略省电优化"
+
+            android:textSize="16sp"/>
+
+        <TextView
+            android:id="@+id/setting_battey"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="未开启》"
+            android:textSize="16sp"/>
     </LinearLayout>
 
 </LinearLayout>

@@ -27,6 +27,7 @@
         android:textStyle="bold"/>
 
     <LinearLayout
+        android:id="@+id/about_version_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/white"
@@ -72,6 +73,24 @@
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/about_back_running"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="2dp"
+        android:background="@color/white"
+        android:padding="16dp"
+        android:visibility="gone"
+        android:paddingTop="8sp"
+        android:translationZ="2dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="后台运行设置"/>
+
+    </LinearLayout>
+
+    <LinearLayout
         android:id="@+id/about_ask_friend"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -110,7 +129,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="加入群聊"/>
+            android:text="加入群聊,讨论您的需求"/>
 
         <TextView
             android:layout_width="0dp"

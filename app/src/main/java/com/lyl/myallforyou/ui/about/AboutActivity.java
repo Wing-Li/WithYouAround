@@ -40,6 +40,8 @@ public class AboutActivity extends BaseActivity {
 
     @Bind(R.id.toolbar)
     Toolbar toolbar;
+    @Bind(R.id.about_version_layout)
+    LinearLayout aboutVersionLayout;
     @Bind(R.id.about_version)
     TextView aboutVersion;
     @Bind(R.id.about_email)
@@ -50,6 +52,8 @@ public class AboutActivity extends BaseActivity {
     TextView aboutAddGroup;
     @Bind(R.id.about_add_group_layout)
     LinearLayout aboutAddGroupLayout;
+    @Bind(R.id.about_back_running)
+    LinearLayout aboutBackRunning;
 
 
     @Override
@@ -80,6 +84,13 @@ public class AboutActivity extends BaseActivity {
             }
         });
 
+        aboutVersionLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                showBackRunning();
+            }
+        });
+
         aboutAskFriend.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -94,12 +105,33 @@ public class AboutActivity extends BaseActivity {
             }
         });
 
+        aboutBackRunning.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(mContext, SettingActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 
+    private long startTime = 0;
+    private int clickNum = 0;
+
+    private void showBackRunning() {
+        if (System.currentTimeMillis() - startTime < 2000) {
+            if (clickNum > 5) {
+                aboutBackRunning.setVisibility(View.VISIBLE);
+            }
+            clickNum = ++clickNum;
+        }else {
+            clickNum = 0;
+            startTime = System.currentTimeMillis();
+        }
+    }
 
     public boolean joinQQGroup(String key) {
         Intent intent = new Intent();
-        intent.setData(Uri.parse("mqqopensdkapi://bizAgent/qm/qr?url=http%3A%2F%2Fqm.qq" +
+        intent.setData(Uri.parse("mqqopensdkapi://bizAgent/qm/qr?url=http%3A%2F%2Fqm.qq" + "" + "" + "" + "" + "" + "" + "" +
                 ".com%2Fcgi-bin%2Fqm%2Fqr%3Ffrom%3Dapp%26p%3Dandroid%26k%3D" + key));
         // 此Flag可根据具体产品需要自定义，如设置，则在加群界面按返回，返回手Q主界面，不设置，按返回会返回到呼起产品界面
         // intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -112,7 +144,6 @@ public class AboutActivity extends BaseActivity {
             return false;
         }
     }
-
 
     private void shareApp() {
         final Bitmap bitmap = encodeAsBitmap(MyApp.mAppShare);
@@ -158,7 +189,6 @@ public class AboutActivity extends BaseActivity {
                 }).create();
         alertDialog.setCancelable(false);
         alertDialog.show();
-
     }
 
     private Bitmap encodeAsBitmap(String str) {
