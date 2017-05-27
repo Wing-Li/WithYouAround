@@ -92,4 +92,13 @@ public class WrappingLinearLayoutManager extends LinearLayoutManager {
         measuredDimension[1] = getDecoratedMeasuredHeight(view) + p.bottomMargin + p.topMargin;
         recycler.recycleView(view);
     }
+
+    @Override
+    public void onLayoutChildren(RecyclerView.Recycler recycler, RecyclerView.State state) {
+        try {
+            super.onLayoutChildren(recycler, state);
+        } catch (IndexOutOfBoundsException e) {
+            e.printStackTrace();
+        }
+    }
 }
