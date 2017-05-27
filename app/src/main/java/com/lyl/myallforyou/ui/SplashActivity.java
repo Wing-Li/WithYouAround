@@ -56,8 +56,8 @@ public class SplashActivity extends BaseActivity {
     private void checkNet() {
         if (TextUtils.isEmpty(objId) && !NetUtil.isNetworkAvailable(mContext)) {
             AlertDialog alertDialog = new AlertDialog.Builder(mContext)//
-                    .setTitle("提示")//
-                    .setMessage("初始化数据需要连接网络，当前处于没有网络的次元呢，请小主先去打开网络吧。")//
+                    .setTitle(R.string.hint)//
+                    .setMessage(R.string.init_data_not_net_text)//
                     .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialogInterface, int i) {
@@ -65,14 +65,14 @@ public class SplashActivity extends BaseActivity {
                             dialogInterface.dismiss();
                         }
                     })//
-                    .setPositiveButton("已经有了", new DialogInterface.OnClickListener() {
+                    .setPositiveButton(R.string.had, new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialogInterface, int i) {
                             if (NetUtil.isNetworkAvailable(mContext)) {
                                 dialogInterface.dismiss();
                                 initUserInfo();
                             } else {
-                                showT("还是没有网呢，请小主先去打开网络吧");
+                                showT(getString(R.string.two_not_net));
                                 finish();
                             }
                         }

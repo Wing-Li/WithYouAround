@@ -100,6 +100,10 @@ public class MainActivity extends BaseActivity {
         if (TextUtils.isEmpty(myName)) {
             setName();
         }
+
+        if (!NetUtil.isNetworkAvailable(mContext)) {
+            Toast.makeText(getApplicationContext(), R.string.not_net, Toast.LENGTH_LONG).show();
+        }
     }
 
 
@@ -163,7 +167,7 @@ public class MainActivity extends BaseActivity {
                     public void done(int i, AVException e) {
                         if (e == null && i > 0) {
                             setNameNote(scanResult);
-                        }else {
+                        } else {
                             showT(getString(R.string.other_id_error));
                         }
                     }

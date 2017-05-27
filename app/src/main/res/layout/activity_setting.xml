@@ -10,6 +10,15 @@
 
     <include layout="@layout/app_bar_main"/>
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginTop="4dp"
+        android:text="您可以尝试打开以下选项，让信息在后台也可以发送"
+        android:textColor="@android:color/darker_gray"/>
+
     <LinearLayout
         android:id="@+id/setting_push_layout"
         android:layout_width="match_parent"
@@ -30,7 +39,6 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="通知权限"
-
             android:textSize="16sp"/>
 
         <TextView
@@ -61,7 +69,6 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="允许开机自启动"
-
             android:textSize="16sp"/>
 
         <TextView
@@ -92,7 +99,6 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="忽略省电优化"
-
             android:textSize="16sp"/>
 
         <TextView
@@ -103,4 +109,31 @@
             android:textSize="16sp"/>
     </LinearLayout>
 
+    <View
+        android:layout_width="1dp"
+        android:layout_height="0dp"
+        android:layout_weight="1"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:orientation="vertical"
+        android:paddingLeft="16dp"
+        android:paddingRight="16dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="开发者有话说：本软件设计的初衷就是 双方都知道该软件的作用，并且都同意此软件长期运行在自己手机上，再来使用该软件。目的就是为了给情侣、亲朋提供一个可以互相交流的乐子。"
+            android:textColor="@android:color/darker_gray"
+            android:textSize="13sp"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:text="请大家都理性的看待此软件所存在的意义。\n技术是无情的，人与人才是交心的。"
+            android:textColor="@color/black"/>
+    </LinearLayout>
 </LinearLayout>

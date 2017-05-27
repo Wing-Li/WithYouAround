@@ -90,6 +90,10 @@
     <string name="other_id_error">对方的ID异常，请对方尝试关闭程序，重新打开</string>
     <string name="authorized">已授权》</string>
     <string name="unauthorized">未开启》</string>
+    <string name="not_net">请检查您的网络连接，当前处于没有网的世界~~~</string>
+    <string name="init_data_not_net_text">初始化数据需要连接网络，当前处于没有网络的次元呢，请小主先去打开网络吧。</string>
+    <string name="two_not_net">还是没有网呢，请小主先去打开网络吧</string>
+    <string name="had">已经有了</string>
 
 
 </resources>
