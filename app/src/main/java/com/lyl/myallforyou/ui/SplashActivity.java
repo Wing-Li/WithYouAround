@@ -1,7 +1,10 @@
 package com.lyl.myallforyou.ui;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
+import android.text.TextUtils;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
 import android.view.animation.AnimationSet;
@@ -18,6 +21,7 @@ import com.lyl.myallforyou.R;
 import com.lyl.myallforyou.constants.Constans;
 import com.lyl.myallforyou.ui.main.MainActivity;
 import com.lyl.myallforyou.utils.DeviceStatusUtils;
+import com.lyl.myallforyou.utils.NetUtil;
 import com.lyl.myallforyou.utils.SPUtil;
 
 
@@ -45,7 +49,39 @@ public class SplashActivity extends BaseActivity {
         }
 
         setAnimation();
-        initUserInfo();
+        checkNet();
+
+    }
+
+    private void checkNet() {
+        if (TextUtils.isEmpty(objId) && !NetUtil.isNetworkAvailable(mContext)) {
+            AlertDialog alertDialog = new AlertDialog.Builder(mContext)//
+                    .setTitle("提示")//
+                    .setMessage("初始化数据需要连接网络，当前处于没有网络的次元呢，请小主先去打开网络吧。")//
+                    .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            finish();
+                            dialogInterface.dismiss();
+                        }
+                    })//
+                    .setPositiveButton("已经有了", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            if (NetUtil.isNetworkAvailable(mContext)) {
+                                dialogInterface.dismiss();
+                                initUserInfo();
+                            } else {
+                                showT("还是没有网呢，请小主先去打开网络吧");
+                                finish();
+                            }
+                        }
+                    }).create();
+            alertDialog.setCancelable(false);
+            alertDialog.show();
+        } else {
+            initUserInfo();
+        }
     }
 
 

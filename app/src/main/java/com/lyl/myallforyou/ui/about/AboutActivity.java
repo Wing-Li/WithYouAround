@@ -107,6 +107,7 @@ public class AboutActivity extends BaseActivity {
             startActivity(intent);
             return true;
         } catch (Exception e) {
+            showT(getString(R.string.join_QQ_error));
             // 未安装手Q或安装的版本不支持
             return false;
         }

@@ -3,7 +3,6 @@ package com.lyl.myallforyou.ui.essay;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.DisplayMetrics;
@@ -15,6 +14,7 @@ import com.lyl.myallforyou.network.imp.NeihanImp;
 import com.lyl.myallforyou.ui.BaseActivity;
 import com.lyl.myallforyou.utils.ImgUtils;
 import com.lyl.myallforyou.utils.LogUtils;
+import com.lyl.myallforyou.view.LinearLayoutManagerWrapper;
 import com.lyl.myallforyou.view.listener.OnRecycleViewScrollListener;
 import com.tencent.bugly.crashreport.CrashReport;
 
@@ -120,7 +120,7 @@ public class NhEassayActivity extends BaseActivity {
         setBackUI(toolbar);
 
         mAdapter = new NhEassayAdapter(mContext, mDataBeen, mContentType, mScreenWidth);
-        recyclerView.setLayoutManager(new LinearLayoutManager(mContext));
+        recyclerView.setLayoutManager(new LinearLayoutManagerWrapper(mContext));
         recyclerView.setAdapter(mAdapter);
         recyclerView.addOnScrollListener(new OnRecycleViewScrollListener() {
             @Override

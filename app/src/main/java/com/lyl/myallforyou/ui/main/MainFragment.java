@@ -2,8 +2,6 @@ package com.lyl.myallforyou.ui.main;
 
 import android.content.Context;
 import android.os.Bundle;
-import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -21,6 +19,7 @@ import com.lyl.myallforyou.data.UserInfo;
 import com.lyl.myallforyou.data.event.MainEvent;
 import com.lyl.myallforyou.ui.BaseFragment;
 import com.lyl.myallforyou.utils.SPUtil;
+import com.lyl.myallforyou.view.LinearLayoutManagerWrapper;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -33,18 +32,13 @@ import static com.lyl.myallforyou.constants.Constans.USER_FAMILYID;
 
 public class MainFragment extends BaseFragment {
 
-    private static final String ARG_COLUMN_COUNT = "column-count";
-    private int mColumnCount = 1;
 
     private ArrayList<UserInfo> mUserInfos;
     private MainFragmentAdapter mMyAapter;
 
 
-    public static MainFragment newInstance(int columnCount) {
+    public static MainFragment newInstance() {
         MainFragment fragment = new MainFragment();
-        Bundle args = new Bundle();
-        args.putInt(ARG_COLUMN_COUNT, columnCount);
-        fragment.setArguments(args);
         return fragment;
     }
 
@@ -52,9 +46,6 @@ public class MainFragment extends BaseFragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mColumnCount = getArguments().getInt(ARG_COLUMN_COUNT);
-        }
     }
 
 
@@ -65,11 +56,7 @@ public class MainFragment extends BaseFragment {
         if (view instanceof RecyclerView) {
             Context context = view.getContext();
             RecyclerView recyclerView = (RecyclerView) view;
-            if (mColumnCount <= 1) {
-                recyclerView.setLayoutManager(new LinearLayoutManager(context));
-            } else {
-                recyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
-            }
+            recyclerView.setLayoutManager(new LinearLayoutManagerWrapper(context));
             mUserInfos = new ArrayList<UserInfo>();
             mMyAapter = new MainFragmentAdapter(mUserInfos, mContext);
             recyclerView.setAdapter(mMyAapter);

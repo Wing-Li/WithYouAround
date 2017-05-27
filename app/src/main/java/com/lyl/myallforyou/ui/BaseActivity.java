@@ -77,12 +77,12 @@ public class BaseActivity extends AppCompatActivity {
 
 
     public void showT(String s) {
-        Toast.makeText(mContext, s, Toast.LENGTH_SHORT).show();
+        Toast.makeText(getApplicationContext(), s, Toast.LENGTH_SHORT).show();
     }
 
 
     public void showT(int r) {
-        Toast.makeText(mContext, r, Toast.LENGTH_SHORT).show();
+        Toast.makeText(getApplicationContext(), r, Toast.LENGTH_SHORT).show();
     }
 
 

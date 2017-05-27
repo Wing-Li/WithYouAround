@@ -7,9 +7,8 @@ import android.view.View;
 import android.view.ViewGroup;
 
 /**
- * Created by lyl on 2017/5/24.
+ * 两个 RecyclerView 在同一个页面，都可以滚动
  */
-
 public class WrappingLinearLayoutManager extends LinearLayoutManager {
 
     public WrappingLinearLayoutManager(Context context) {

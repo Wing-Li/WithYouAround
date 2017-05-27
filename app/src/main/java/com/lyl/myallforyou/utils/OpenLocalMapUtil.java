@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.net.Uri;
+import android.widget.Toast;
 
 import com.lyl.myallforyou.R;
 
@@ -18,18 +19,24 @@ import java.util.List;
 public class OpenLocalMapUtil {
 
     public static void openMap(Context context, String latitude, String longitude) {
-        if (OpenLocalMapUtil.isGdMapInstalled(context)) {
-            gaode(context, latitude, longitude);
-        } else if (OpenLocalMapUtil.isBaiduMapInstalled(context)) {
-            double[] doubles = OpenLocalMapUtil.gaoDeToBaidu(Double.parseDouble(longitude), Double.parseDouble(latitude));
-            String lo = String.valueOf(doubles[0]);
-            String lat = String.valueOf(doubles[1]);
-            baidu(context, lat, lo);
+        try {
+            if (OpenLocalMapUtil.isGdMapInstalled(context)) {
+                gaode(context, latitude, longitude);
+            } else if (OpenLocalMapUtil.isBaiduMapInstalled(context)) {
+                double[] doubles = OpenLocalMapUtil.gaoDeToBaidu(Double.parseDouble(longitude), Double.parseDouble(latitude));
+                String lo = String.valueOf(doubles[0]);
+                String lat = String.valueOf(doubles[1]);
+                baidu(context, lat, lo);
+            } else {
+                Toast.makeText(context.getApplicationContext(), "暂时只支持高德地图和百度地图，非常抱歉", Toast.LENGTH_SHORT).show();
+            }
+        } catch (Exception e) {
+            Toast.makeText(context.getApplicationContext(), "您当前安装的地图版本不支持查看，非常抱歉", Toast.LENGTH_SHORT).show();
         }
     }
 
 
-    public static void gaode(Context context, String lat, String lo) {
+    public static void gaode(Context context, String lat, String lo) throws Exception {
         Intent i = new Intent();
         i.setAction("android.intent.action.VIEW");
         i.addCategory("android.intent.category.DEFAULT");
@@ -41,7 +48,7 @@ public class OpenLocalMapUtil {
     }
 
 
-    public static void baidu(Context context, String lat, String lo) {
+    public static void baidu(Context context, String lat, String lo) throws Exception {
         Intent i = new Intent();
         i.setAction("android.intent.action.VIEW");
         i.setPackage("com.baidu.BaiduMap");

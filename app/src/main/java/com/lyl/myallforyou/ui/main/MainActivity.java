@@ -132,7 +132,7 @@ public class MainActivity extends BaseActivity {
 
 
     private void initMainContent() {
-        MainFragment mainFragment = MainFragment.newInstance(1);
+        MainFragment mainFragment = MainFragment.newInstance();
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         transaction.add(R.id.fragment, mainFragment);
         transaction.commit();
@@ -152,6 +152,17 @@ public class MainActivity extends BaseActivity {
                 Toast.makeText(this, R.string.scan_success, Toast.LENGTH_LONG).show();
                 // ScanResult 为 获取到的字符串
                 String scanResult = intentResult.getContents();
+
+                AVQuery<AVObject> query = new AVQuery<>(Constans.TABLE_USER_INFO);
+                query.whereContains(Constans.USER_MYID, uuid);
+                query.whereStartsWith(Constans.USER_MYID, uuid);
+                try {
+                    query.count();
+                } catch (AVException e) {
+                    e.printStackTrace();
+                }
+
+
                 setNameNote(scanResult);
             }
         } else {
@@ -471,20 +482,38 @@ public class MainActivity extends BaseActivity {
                 final String str = MyUtils.checkStr(mContext, edtStr, 6, false);
                 if (TextUtils.isEmpty(str)) return;
 
-                AVObject todo = AVObject.createWithoutData(Constans.TABLE_USER_INFO, objId);
-                todo.put(Constans.USER_MYNAME, str);
-                todo.saveInBackground(new SaveCallback() {
+                // 通过 UUID 找到用户
+                AVQuery<AVObject> query = new AVQuery<>(Constans.TABLE_USER_INFO);
+                query.whereContains(Constans.USER_MYID, uuid);
+                query.whereStartsWith(Constans.USER_MYID, uuid);
+                query.getFirstInBackground(new GetCallback<AVObject>() {
                     @Override
-                    public void done(AVException e) {
-                        if (e == null) {
-                            showT(R.string.save_success);
-                            SPUtil.put(mContext, SP_MY_NAME, str);
-                            mName.setText(str);
-                        } else {
-                            showT(R.string.save_fail);
+                    public void done(AVObject avObject, AVException e) {
+                        if (e == null && avObject != null) {
+                            String objectId = avObject.getObjectId();
+                            if (!objectId.equals(objId)) {
+                                objId = objectId;
+                                SPUtil.put(mContext, Constans.SP_OBJ_ID, objectId);
+                            }
+
+                            AVObject todo = AVObject.createWithoutData(Constans.TABLE_USER_INFO, objId);
+                            todo.put(Constans.USER_MYNAME, str);
+                            todo.saveInBackground(new SaveCallback() {
+                                @Override
+                                public void done(AVException e) {
+                                    if (e == null) {
+                                        showT(R.string.save_success);
+                                        SPUtil.put(mContext, SP_MY_NAME, str);
+                                        mName.setText(str);
+                                    } else {
+                                        showT(R.string.save_fail);
+                                    }
+                                }
+                            });
                         }
                     }
                 });
+
 
                 dialogInterface.dismiss();
             }

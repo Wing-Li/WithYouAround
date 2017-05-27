@@ -5,7 +5,6 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.RequiresApi;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.transition.Slide;
@@ -22,6 +21,7 @@ import com.lyl.myallforyou.constants.ConstantIntent;
 import com.lyl.myallforyou.data.DeviceInfo;
 import com.lyl.myallforyou.ui.BaseActivity;
 import com.lyl.myallforyou.utils.LogUtils;
+import com.lyl.myallforyou.view.LinearLayoutManagerWrapper;
 import com.lyl.myallforyou.view.listener.OnRecycleViewScrollListener;
 
 import java.util.ArrayList;
@@ -91,7 +91,7 @@ public class DeviceInfoMoreActivity extends BaseActivity {
     }
 
     private void initView() {
-        deviceMoreRecycler.setLayoutManager(new LinearLayoutManager(mContext));
+        deviceMoreRecycler.setLayoutManager(new LinearLayoutManagerWrapper(mContext));
         mDeviceAdapter = new DeviceInfoMoreAdapter(mDeviceInfoList, mContext);
         deviceMoreRecycler.setAdapter(mDeviceAdapter);
 

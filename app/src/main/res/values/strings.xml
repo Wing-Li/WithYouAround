@@ -56,7 +56,7 @@
     <string name="address_error">经纬度信息有误</string>
     <string name="copy_success">文本已复制</string>
     <string name="input_user_id">请输入用户ID</string>
-    <string name="scan_error">ID异常</string>
+    <string name="scan_error">二维码内容为空</string>
     <string name="scan_success">扫描成功</string>
     <string name="nheassay">内涵段子</string>
     <string name="nheassay_image">内涵图片</string>
@@ -85,6 +85,7 @@
     <string name="ask_friend">保存并发送</string>
     <string name="qr_save_success">二维码保存成功，</string>
     <string name="not_weixin">您的手机没有微信</string>
+    <string name="join_QQ_error">未安装手机QQ或安装的版本不支持</string>
 
 
 </resources>
