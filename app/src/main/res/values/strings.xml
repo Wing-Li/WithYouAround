@@ -81,6 +81,7 @@
     <string name="q3">3. 手机的信息多长时间上传一次？</string>
     <string name="a3">五分钟上传一次。</string>
     <string name="help">使用帮助</string>
+
     <string name="ask_friend_hint_msg">邀请亲密的人</string>
     <string name="ask_friend">保存并发送</string>
     <string name="qr_save_success">二维码保存成功，</string>
@@ -94,6 +95,15 @@
     <string name="init_data_not_net_text">初始化数据需要连接网络，当前处于没有网络的次元呢，请小主先去打开网络吧。</string>
     <string name="two_not_net">还是没有网呢，请小主先去打开网络吧</string>
     <string name="had">已经有了</string>
+    <string name="delete_success">删除成功</string>
+    <string name="delete">密友删除</string>
+    <string name="delete_friend_dialog_msg">删除后您将无法查看对方的信息，对方也无法继续查看您的信息，您确定要删除吗？</string>
 
+    <array name="main_select_item">
+        <item>查看</item>
+        <item>修改备注</item>
+        <item>删除密友</item>
+        <item>取消</item>
+    </array>
 
 </resources>

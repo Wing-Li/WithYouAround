@@ -3,6 +3,7 @@ package com.lyl.myallforyou.ui.main;
 import android.app.Activity;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.Handler;
 import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.util.Pair;
 import android.support.v7.app.AlertDialog;
@@ -14,16 +15,31 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.avos.avoscloud.AVException;
+import com.avos.avoscloud.AVObject;
+import com.avos.avoscloud.AVQuery;
+import com.avos.avoscloud.GetCallback;
+import com.avos.avoscloud.SaveCallback;
 import com.lyl.myallforyou.MyApp;
 import com.lyl.myallforyou.R;
+import com.lyl.myallforyou.constants.Constans;
 import com.lyl.myallforyou.constants.ConstantIntent;
 import com.lyl.myallforyou.data.UserInfo;
+import com.lyl.myallforyou.data.event.MainEvent;
 import com.lyl.myallforyou.ui.deviceinfo.DeviceInfoActivity;
 import com.lyl.myallforyou.utils.MyUtils;
+import com.lyl.myallforyou.utils.SPUtil;
 import com.lyl.myallforyou.view.TransitionHelper;
 
+import org.greenrobot.eventbus.EventBus;
+
+import java.util.ArrayList;
 import java.util.List;
+
+import static com.lyl.myallforyou.constants.Constans.USER_FAMILYID;
+import static com.lyl.myallforyou.constants.Constans.USER_MYID;
 
 public class MainFragmentAdapter extends RecyclerView.Adapter<MainFragmentAdapter.ViewHolder> {
 
@@ -82,7 +98,7 @@ public class MainFragmentAdapter extends RecyclerView.Adapter<MainFragmentAdapte
             @Override
             public boolean onLongClick(View view) {
                 if (position != 0) {
-                    changeNote(userInfo, position);
+                    selectItem(userInfo, position);
                 }
                 return true;
             }
@@ -136,6 +152,153 @@ public class MainFragmentAdapter extends RecyclerView.Adapter<MainFragmentAdapte
         mContext.startActivity(intent, transitionActivityOptions.toBundle());
     }
 
+    private void selectItem(final UserInfo userInfo, final int position) {
+        AlertDialog alertDialog = new AlertDialog.Builder(mContext).setItems(R.array.main_select_item, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                switch (i) {
+                    case 0:// 查看
+                        skipDeviceInfo(userInfo);
+                        break;
+                    case 1:// 修改备注
+                        changeNote(userInfo, position);
+                        break;
+                    case 2:// 删除密友
+                        deleteFrined(userInfo);
+                        break;
+                    case 3:// 取消
+                        break;
+                }
+
+            }
+        }).create();
+        alertDialog.show();
+
+    }
+
+    private Handler mHandler;
+    /**
+     * 删除密友
+     */
+    private void deleteFrined(final UserInfo userInfo) {
+        AlertDialog alertDialog = new AlertDialog.Builder(mContext)//
+                .setTitle(R.string.delete)//
+                .setMessage(R.string.delete_friend_dialog_msg)//
+                .setPositiveButton(R.string.cancel, null)//
+                .setNegativeButton(R.string.ok, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        String uuid = (String) SPUtil.get(mContext, Constans.SP_UUID, "");
+                        String objId = (String) SPUtil.get(mContext, Constans.SP_OBJ_ID, "");
+                        mHandler = new Handler();
+                        deleteUser(userInfo, uuid, objId);
+                        dialogInterface.dismiss();
+                    }
+                }).create();
+        alertDialog.setCancelable(false);
+        alertDialog.show();
+    }
+
+    /**
+     * 绑定扫描到的数据
+     *
+     * @param uuid  我的uuid
+     * @param objId 我的objId
+     */
+    private void deleteUser(final UserInfo userInfo, final String uuid, final String objId) {
+        // 查询对方的数据
+        AVQuery<AVObject> familyQuery = new AVQuery<>(Constans.TABLE_USER_INFO);
+        familyQuery.whereContains(USER_MYID, userInfo.getUuid());
+        familyQuery.getFirstInBackground(new GetCallback<AVObject>() {
+            @Override
+            public void done(final AVObject familyObject, AVException e) {
+                if (e == null && familyObject != null) {
+                    // 查询自己的数据
+                    AVQuery<AVObject> myQuery = new AVQuery<>(Constans.TABLE_USER_INFO);
+                    myQuery.whereContains(USER_MYID, uuid);
+                    myQuery.getFirstInBackground(new GetCallback<AVObject>() {
+                        @Override
+                        public void done(AVObject myObject, AVException e) {
+                            if (e == null && myObject != null) {
+                                ArrayList<AVObject> todos = new ArrayList<AVObject>();
+
+                                // 把对方从我的表里删除
+                                String myFamily = myObject.getString(USER_FAMILYID);
+                                AVObject my = deleteFamilyToMy(objId, userInfo.getUuid(), myFamily);
+                                todos.add(my);
+
+                                // 把我从对方的表里删除
+                                final String familyObjId = familyObject.getObjectId();
+                                String familyId = (String) familyObject.get(USER_FAMILYID);
+                                AVObject family = deleteFamilyToMy(familyObjId, uuid, familyId);
+                                todos.add(family);
+
+                                AVObject.saveAllInBackground(todos, new SaveCallback() {
+                                    @Override
+                                    public void done(AVException e) {
+                                        if (e == null) {
+                                            // 删除本地存储的用户
+                                            UserInfo userInfo = null;
+                                            try {
+                                                userInfo = new UserInfo();
+                                                userInfo.setId(userInfo.getId());
+                                                userInfo.setObjid(familyObjId);
+                                                userInfo.setUuid(userInfo.getUuid());
+                                                userInfo.setName(familyObject.getString(Constans.USER_MYNAME));
+                                                userInfo.setSign(familyObject.getString(Constans.USER_MYSGIN));
+                                                MyApp.liteOrm.delete(userInfo);
+                                            } catch (Exception ex) {
+                                            }
+
+                                            mHandler.post(new Runnable() {
+                                                @Override
+                                                public void run() {
+                                                    Toast.makeText(mContext, R.string.delete_success, Toast.LENGTH_SHORT).show();
+                                                    EventBus.getDefault().post(new MainEvent());
+                                                }
+                                            });
+
+                                        }
+                                    }
+                                });
+                            }
+                        }
+                    });
+
+                } else {
+                    Toast.makeText(mContext, R.string.not_my_object_id, Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+    }
+
+    /**
+     * 将 family 从 my 删除
+     *
+     * @param my         我的 objectId
+     * @param family     对方 uuid
+     * @param myFamilyId 与我绑定的人id
+     */
+    private AVObject deleteFamilyToMy(String my, String family, String myFamilyId) {
+        AVObject userInfo = AVObject.createWithoutData(Constans.TABLE_USER_INFO, my);
+        if (TextUtils.isEmpty(myFamilyId) || !myFamilyId.contains(family)) {
+            return userInfo;
+        } else {
+            String[] split = myFamilyId.split(",");
+            String saveFamilyid = "";
+            for (String s : split) {
+                if (!s.equals(family)) {
+                    if (TextUtils.isEmpty(saveFamilyid)) {
+                        saveFamilyid = s;
+                    } else {
+                        saveFamilyid = saveFamilyid + "," + s;
+                    }
+                }
+            }
+            userInfo.put(USER_FAMILYID, saveFamilyid);
+        }
+        return userInfo;
+    }
 
     /**
      * 长按设置备注
@@ -171,7 +334,5 @@ public class MainFragmentAdapter extends RecyclerView.Adapter<MainFragmentAdapte
         AlertDialog alertDialog = builder.create();
         alertDialog.setCancelable(false);
         alertDialog.show();
-
-
     }
 }
