@@ -34,6 +34,11 @@ public class DeviceInfoMoreAdapter extends RecyclerView.Adapter<DeviceInfoMoreAd
         notifyDataSetChanged();
     }
 
+    public void clear() {
+        mData.clear();
+        notifyDataSetChanged();
+    }
+
     @Override
     public int getItemCount() {
         return mData != null && mData.size() > 0 ? mData.size() : 0;

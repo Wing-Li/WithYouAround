@@ -184,8 +184,8 @@ public class DeviceInfoActivity extends BaseActivity {
                     saveDeviceInfo(avObject);
                 } else {
                     showT(getString(R.string.net_error));
-                    LogUtils.d(TAG, "mTargetUuid:" + mTargetUuid + " ; Except:" + e);
                     if (e != null) {
+                        LogUtils.d(TAG, "mTargetUuid:" + mTargetUuid + " ; Except:" + e);
                         CrashReport.postCatchedException(e.getCause());
                     }
                 }

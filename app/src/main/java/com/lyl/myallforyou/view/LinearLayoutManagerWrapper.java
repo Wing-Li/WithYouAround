@@ -8,6 +8,7 @@ import android.util.AttributeSet;
 
 /**
  * 解决 RecyclerView 自己的 IndexOutOfBoundsException BUG
+ * http://blog.csdn.net/sugaryaruan/article/details/51968879?_t_t_t=0.7385510554231804
  * Created by lyl on 2017/5/27.
  */
 public class LinearLayoutManagerWrapper extends LinearLayoutManager {

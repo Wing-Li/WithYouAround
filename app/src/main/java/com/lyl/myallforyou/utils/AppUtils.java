@@ -264,9 +264,6 @@ public final class AppUtils {
                 // pkgList 得到该进程下运行的包名
                 String[] pkgList = process.pkgList;
                 for (String pkgName : pkgList) {
-                    if (DEBUG) {
-                        LogUtils.d(TAG, "======正在杀死包名：" + pkgName);
-                    }
                     try {
                         am.killBackgroundProcesses(pkgName);
                         count++;
@@ -275,9 +272,6 @@ public final class AppUtils {
                     }
                 }
             }
-        }
-        if (DEBUG) {
-            LogUtils.d(TAG, "清理了" + (getDeviceUsableMemory(context) - i) + "M内存");
         }
         return count;
     }

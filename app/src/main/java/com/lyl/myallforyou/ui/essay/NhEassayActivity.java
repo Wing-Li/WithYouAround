@@ -90,8 +90,9 @@ public class NhEassayActivity extends BaseActivity {
                         mTip = body.getData().getTip();
 
                         ArrayList<NhEassay.DataBeanX.DataBean> data = (ArrayList<NhEassay.DataBeanX.DataBean>) body.getData().getData();
-
-                        mAdapter.addData(data);
+                        if (data != null && data.size() > 0){
+                            mAdapter.addData(data);
+                        }
                     }
                 } else {
                     LogUtils.e(response.errorBody());
@@ -102,8 +103,8 @@ public class NhEassayActivity extends BaseActivity {
             public void onFailure(Call<NhEassay> call, Throwable t) {
                 swipeRefresh.setRefreshing(false);
                 Toast.makeText(mContext, R.string.net_error, Toast.LENGTH_SHORT).show();
-                LogUtils.e("Error : ", t.getLocalizedMessage());
                 if (t != null) {
+                    LogUtils.e("Error : ", t.getLocalizedMessage());
                     CrashReport.postCatchedException(t);
                 }
             }
@@ -125,11 +126,11 @@ public class NhEassayActivity extends BaseActivity {
         recyclerView.addOnScrollListener(new OnRecycleViewScrollListener() {
             @Override
             public void onLoadMore() {
-                if (mHasMore) {
+//                if (mHasMore) {
                     getData();
-                } else {
-                    showT(getString(R.string.not_more));
-                }
+//                } else {
+//                    showT(getString(R.string.not_more));
+//                }
             }
         });
 
@@ -137,6 +138,7 @@ public class NhEassayActivity extends BaseActivity {
             @Override
             public void onRefresh() {
                 mAdapter.clear();
+                mHasMore = true;
                 getData();
             }
         });

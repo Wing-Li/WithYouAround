@@ -22,10 +22,10 @@ import retrofit2.Call;
 
 public class NeihanImp {
 
-    private String version_code = "612";
-    private String version_name = "6.1.2";
-    private String manifest_version_code = "612";
-    private String update_version_code = "6120";
+    private String version_code = "625";
+    private String version_name = "6.2.5";
+    private String manifest_version_code = "625";
+    private String update_version_code = "6250";
 
     public static final int CONTENT_NUM = 15;
 

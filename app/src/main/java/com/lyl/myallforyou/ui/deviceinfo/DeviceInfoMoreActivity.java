@@ -151,6 +151,7 @@ public class DeviceInfoMoreActivity extends BaseActivity {
 
     private void refresh() {
         mDeviceInfoList.clear();
+        mDeviceAdapter.clear();
         page = 0;
         getMoreDeviceInfo();
     }

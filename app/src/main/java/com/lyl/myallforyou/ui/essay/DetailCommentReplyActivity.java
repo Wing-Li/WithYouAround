@@ -121,8 +121,8 @@ public class DetailCommentReplyActivity extends BaseActivity {
             @Override
             public void onFailure(Call<NhCommentReply> call, Throwable t) {
                 showT(R.string.net_error);
-                LogUtils.e("Error : ", t.getLocalizedMessage());
                 if (t != null) {
+                    LogUtils.e("Error : ", t.getLocalizedMessage());
                     CrashReport.postCatchedException(t);
                 }
             }
