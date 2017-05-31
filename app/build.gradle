@@ -23,8 +23,8 @@ android {
         applicationId "com.lyl.myallforyou"
         minSdkVersion 19
         targetSdkVersion 22
-        versionCode 6
-        versionName "1.1.2"
+        versionCode 7
+        versionName "1.2.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
 
         ndk {
@@ -34,20 +34,20 @@ android {
     }
 
     productFlavors {
-//        foryouDev {
-//            buildConfigField "String", "Environment", '"dev"'
-//            buildConfigField "String", "BuglyAppId", properties.getProperty('BuglyAppId')
-//            buildConfigField "String", "AVOSCloudAppId", properties.getProperty('AVOSCloudAppId')
-//            buildConfigField "String", "AVOSCloudAppKey", properties.getProperty('AVOSCloudAppKey')
-//            manifestPlaceholders = [GAODE_KEY: properties.getProperty('gaodeKey')]
-//        }
-        foryou {
-            buildConfigField "String", "Environment", '"prod"'
+        foryouDev {
+            buildConfigField "String", "Environment", '"dev"'
             buildConfigField "String", "BuglyAppId", properties.getProperty('BuglyAppId')
             buildConfigField "String", "AVOSCloudAppId", properties.getProperty('AVOSCloudAppId')
             buildConfigField "String", "AVOSCloudAppKey", properties.getProperty('AVOSCloudAppKey')
             manifestPlaceholders = [GAODE_KEY: properties.getProperty('gaodeKey')]
         }
+//        foryou {
+//            buildConfigField "String", "Environment", '"prod"'
+//            buildConfigField "String", "BuglyAppId", properties.getProperty('BuglyAppId')
+//            buildConfigField "String", "AVOSCloudAppId", properties.getProperty('AVOSCloudAppId')
+//            buildConfigField "String", "AVOSCloudAppKey", properties.getProperty('AVOSCloudAppKey')
+//            manifestPlaceholders = [GAODE_KEY: properties.getProperty('gaodeKey')]
+//        }
     }
 
     buildTypes {

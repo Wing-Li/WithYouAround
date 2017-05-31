@@ -54,7 +54,6 @@ public class MainFragmentAdapter extends RecyclerView.Adapter<MainFragmentAdapte
 
 
     public void setData(List<UserInfo> data) {
-        mValues.clear();
         mValues = data;
         notifyDataSetChanged();
     }
@@ -253,6 +252,7 @@ public class MainFragmentAdapter extends RecyclerView.Adapter<MainFragmentAdapte
                                             mHandler.post(new Runnable() {
                                                 @Override
                                                 public void run() {
+                                                    notifyDataSetChanged();
                                                     Toast.makeText(mContext, R.string.delete_success, Toast.LENGTH_SHORT).show();
                                                     EventBus.getDefault().post(new MainEvent());
                                                 }
