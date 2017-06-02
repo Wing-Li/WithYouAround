@@ -13,7 +13,6 @@ import com.lyl.myallforyou.data.NhEassay;
 import com.lyl.myallforyou.network.imp.NeihanImp;
 import com.lyl.myallforyou.ui.BaseActivity;
 import com.lyl.myallforyou.utils.ImgUtils;
-import com.lyl.myallforyou.utils.LogUtils;
 import com.lyl.myallforyou.view.LinearLayoutManagerWrapper;
 import com.lyl.myallforyou.view.listener.OnRecycleViewScrollListener;
 import com.tencent.bugly.crashreport.CrashReport;
@@ -95,7 +94,6 @@ public class NhEassayActivity extends BaseActivity {
                         }
                     }
                 } else {
-                    LogUtils.e(response.errorBody());
                 }
             }
 
@@ -104,7 +102,6 @@ public class NhEassayActivity extends BaseActivity {
                 swipeRefresh.setRefreshing(false);
                 Toast.makeText(mContext, R.string.net_error, Toast.LENGTH_SHORT).show();
                 if (t != null) {
-                    LogUtils.e("Error : ", t.getLocalizedMessage());
                     CrashReport.postCatchedException(t);
                 }
             }

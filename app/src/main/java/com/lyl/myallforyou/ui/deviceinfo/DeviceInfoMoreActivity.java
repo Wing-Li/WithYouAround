@@ -20,7 +20,6 @@ import com.lyl.myallforyou.constants.Constans;
 import com.lyl.myallforyou.constants.ConstantIntent;
 import com.lyl.myallforyou.data.DeviceInfo;
 import com.lyl.myallforyou.ui.BaseActivity;
-import com.lyl.myallforyou.utils.LogUtils;
 import com.lyl.myallforyou.view.LinearLayoutManagerWrapper;
 import com.lyl.myallforyou.view.listener.OnRecycleViewScrollListener;
 
@@ -176,7 +175,6 @@ public class DeviceInfoMoreActivity extends BaseActivity {
                     mDeviceAdapter.setData(mDeviceInfoList);
                 } else {
                     showT(getString(R.string.empty_data));
-                    LogUtils.d(TAG, "mTargetUuid:" + mTargetUuid + " ; Except:" + e);
                 }
             }
         });

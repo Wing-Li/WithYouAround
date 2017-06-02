@@ -19,7 +19,6 @@ import com.lyl.myallforyou.constants.Constans;
 import com.lyl.myallforyou.data.DeviceInfo;
 import com.lyl.myallforyou.utils.AppUtils;
 import com.lyl.myallforyou.utils.DeviceStatusUtils;
-import com.lyl.myallforyou.utils.LogUtils;
 import com.lyl.myallforyou.utils.MapLocationUtil;
 import com.lyl.myallforyou.utils.NetUtil;
 import com.lyl.myallforyou.utils.SPUtil;
@@ -141,8 +140,6 @@ public class DeviceInfoService extends Service {
                         SPUtil.put(mContext, Constans.SP_LONGITUDE, String.valueOf(longitude));
                     } else {
                         //定位失败时，可通过ErrCode（错误码）信息来确定失败的原因，errInfo是错误信息，详见错误码表。
-                        LogUtils.e("AmapError", "location Error, ErrCode:" + amapLocation.getErrorCode() + ", errInfo:" + amapLocation
-                                .getErrorInfo());
                     }
                 }
             }

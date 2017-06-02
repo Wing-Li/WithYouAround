@@ -25,7 +25,6 @@ import com.lyl.myallforyou.constants.Constans;
 import com.lyl.myallforyou.constants.ConstantIntent;
 import com.lyl.myallforyou.data.DeviceInfo;
 import com.lyl.myallforyou.ui.BaseActivity;
-import com.lyl.myallforyou.utils.LogUtils;
 import com.lyl.myallforyou.utils.OpenLocalMapUtil;
 import com.lyl.myallforyou.view.TransitionHelper;
 import com.tencent.bugly.crashreport.CrashReport;
@@ -185,7 +184,6 @@ public class DeviceInfoActivity extends BaseActivity {
                 } else {
                     showT(getString(R.string.net_error));
                     if (e != null) {
-                        LogUtils.d(TAG, "mTargetUuid:" + mTargetUuid + " ; Except:" + e);
                         CrashReport.postCatchedException(e.getCause());
                     }
                 }

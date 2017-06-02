@@ -24,7 +24,6 @@ import com.lyl.myallforyou.ui.BaseActivity;
 import com.lyl.myallforyou.ui.image.ImageActivity;
 import com.lyl.myallforyou.ui.image.SpecialImageActivity;
 import com.lyl.myallforyou.utils.ImgUtils;
-import com.lyl.myallforyou.utils.LogUtils;
 import com.lyl.myallforyou.utils.MyUtils;
 import com.lyl.myallforyou.view.WrappingLinearLayoutManager;
 import com.tencent.bugly.crashreport.CrashReport;
@@ -172,7 +171,6 @@ public class EassayDetailActivity extends BaseActivity {
             public void onFailure(Call<NhComments> call, Throwable t) {
                 showT(R.string.net_error);
                 if (t != null) {
-                    LogUtils.e("Error : ", t.getLocalizedMessage());
                     CrashReport.postCatchedException(t);
                 }
             }
