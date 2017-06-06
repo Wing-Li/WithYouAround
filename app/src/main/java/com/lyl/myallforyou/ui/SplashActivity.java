@@ -33,7 +33,6 @@ public class SplashActivity extends BaseActivity {
     private final static long WAIT_TIME = 1000;
 
     private long mStartTime;
-    private int what;
 
 
     @Override
@@ -50,7 +49,6 @@ public class SplashActivity extends BaseActivity {
 
         setAnimation();
         checkNet();
-
     }
 
     private void checkNet() {
@@ -143,6 +141,6 @@ public class SplashActivity extends BaseActivity {
         AnimationSet animationSet = new AnimationSet(true);
         animationSet.addAnimation(translate);
         animationSet.addAnimation(alpha);
-        layout.setAnimation(translate);
+        layout.startAnimation(translate);
     }
 }
