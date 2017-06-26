@@ -17,8 +17,10 @@ buildscript {
 }
 
 allprojects {
-    // 增量编译
     tasks.withType(JavaCompile) {
+        //使在一个单独的守护进程编译
+        options.fork = true
+        //增量编译
         options.incremental = true
     }
     repositories {
