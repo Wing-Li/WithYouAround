@@ -42,10 +42,12 @@
     <string name="save_fail">保存失败，请重试</string>
     <string name="save_success">保存成功</string>
     <string name="user_sign">签名</string>
+    <string name="user_marking">用户标示</string>
     <string name="dialog_namenote_title">给对方设置个备注吧</string>
     <string name="net_error">网络异常，请稍后再试</string>
     <string name="capy_email">邮箱已复制到粘贴板</string>
     <string name="about">关于</string>
+    <string name="userinfo">用户信息</string>
     <string name="bind">绑定</string>
     <string name="my_device">我的设备</string>
     <string name="feedback_hint">感谢您的反馈，我们一定好好改善</string>
@@ -98,6 +100,9 @@
     <string name="delete_success">删除成功</string>
     <string name="delete">密友删除</string>
     <string name="delete_friend_dialog_msg">删除后您将无法查看对方的信息，对方也无法继续查看您的信息，您确定要删除吗？</string>
+    <string name="exit_txt">退&#160;&#160;&#160;&#160;出</string>
+    <string name="login_txt">登&#160;&#160;&#160;&#160;录</string>
+    <string name="marking_reply">改标示已存在，请重新输入</string>
 
     <array name="main_select_item">
         <item>查看</item>

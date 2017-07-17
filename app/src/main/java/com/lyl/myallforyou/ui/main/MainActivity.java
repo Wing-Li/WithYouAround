@@ -59,6 +59,7 @@ import com.lyl.myallforyou.ui.feedback.FeedbackActivity;
 import com.lyl.myallforyou.ui.help.HelpActivity;
 import com.lyl.myallforyou.ui.qrbind.QrScanActivity;
 import com.lyl.myallforyou.ui.qrbind.QrShareActivity;
+import com.lyl.myallforyou.ui.userinfo.UserInfoActivity;
 import com.lyl.myallforyou.utils.MyUtils;
 import com.lyl.myallforyou.utils.NetUtil;
 import com.lyl.myallforyou.utils.SPUtil;
@@ -106,6 +107,22 @@ public class MainActivity extends BaseActivity {
         }
     }
 
+    @Override
+    protected void onStart() {
+        super.onStart();
+        if (mName != null) {
+            String spName = (String) SPUtil.get(mContext, Constans.SP_MY_NAME, "");
+            if (!TextUtils.isEmpty(spName)) {
+                mName.setText(spName);
+            }
+        }
+        if (mSgin != null) {
+            String spSgin = (String) SPUtil.get(mContext, Constans.SP_MY_SGIN, "");
+            if (!TextUtils.isEmpty(spSgin)) {
+                mSgin.setText(spSgin);
+            }
+        }
+    }
 
     private void initToolbar() {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -330,6 +347,12 @@ public class MainActivity extends BaseActivity {
             mSgin.setText(spSgin);
         }
 
+        mIcon.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                setUserInfo();
+            }
+        });
         mName.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -467,6 +490,10 @@ public class MainActivity extends BaseActivity {
         startActivity(intent);
     }
 
+    private void setUserInfo() {
+        Intent intent = new Intent(this, UserInfoActivity.class);
+        startActivity(intent);
+    }
 
     /**
      * 保存名字到服务端

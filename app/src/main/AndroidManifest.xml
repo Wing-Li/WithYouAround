@@ -103,13 +103,16 @@
             android:name=".ui.help.HelpActivity"
             android:theme="@style/AppTheme.NoActionBar">
         </activity>
+        <activity
+            android:name=".ui.userinfo.UserInfoActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+        </activity>
 
         <service
             android:name=".service.DeviceInfoService"
             android:enabled="true"
             android:exported="true">
         </service>
-
         <service
             android:name=".service.MyNotificationCollectorService"
             android:label="伴你左右"

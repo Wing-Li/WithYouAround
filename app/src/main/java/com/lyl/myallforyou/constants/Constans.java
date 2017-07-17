@@ -41,6 +41,7 @@ public class Constans {
     public static String USER_MYID = "myId";
     public static String USER_MYNAME = "myName";
     public static String USER_MYSGIN = "mySgin";
+    public static String USER_MARKING = "myMarking";
     public static String USER_FAMILYID = "familyId";
 
 
@@ -63,6 +64,7 @@ public class Constans {
     // ======================  ↑ SD端数据表 ↑  ======================
     public static String SP_UUID = "uuid";
     public static String SP_OBJ_ID = "sp_user_object_id";
+    public static String SD_MY_MARKING = "sd_user_marking";
     public static String SP_MY_NAME = "sp_my_name";
     public static String SP_MY_SGIN = "sp_my_sgin";
     public static String SP_CITY = "sp_city";

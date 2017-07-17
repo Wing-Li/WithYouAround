@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 
 /**
  * 两个 RecyclerView 在同一个页面，都可以滚动
+ * https://stackoverflow.com/questions/31000081/how-to-use-recyclerview-inside-nestedscrollview/32736113#32736113
  */
 public class WrappingLinearLayoutManager extends LinearLayoutManager {
 

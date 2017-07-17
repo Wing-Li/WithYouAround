@@ -6,6 +6,7 @@ import android.widget.Toast;
 
 import com.lyl.myallforyou.BuildConfig;
 import com.lyl.myallforyou.R;
+import com.lyl.myallforyou.constants.Constans;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -25,6 +26,14 @@ public class MyUtils {
         } else {
             return false;
         }
+    }
+
+    /**
+     * 用户是否登录
+     */
+    public static boolean isLogin(Context mContext) {
+        String spMarking = (String) SPUtil.get(mContext, Constans.SD_MY_MARKING, "");
+        return !TextUtils.isEmpty(spMarking);
     }
 
     /**
