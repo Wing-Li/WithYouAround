@@ -1,12 +1,20 @@
 package com.lyl.myallforyou.utils;
 
 import android.content.Context;
+import android.content.Intent;
 import android.text.TextUtils;
 import android.widget.Toast;
 
+import com.avos.avoscloud.AVException;
+import com.avos.avoscloud.AVObject;
+import com.avos.avoscloud.AVQuery;
+import com.avos.avoscloud.GetCallback;
 import com.lyl.myallforyou.BuildConfig;
 import com.lyl.myallforyou.R;
 import com.lyl.myallforyou.constants.Constans;
+import com.lyl.myallforyou.data.UserInfo;
+import com.lyl.myallforyou.ui.main.MainActivity;
+import com.lyl.myallforyou.ui.userinfo.UserBindCallBack;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -96,5 +104,57 @@ public class MyUtils {
 // .MINUTE);
         SimpleDateFormat format = new SimpleDateFormat("MM-dd HH:mm");
         return format.format(new Date(cur));
+    }
+
+    /**
+     * 用户 退出
+     */
+    public static void clearUserInfo(Context context) {
+        SPUtil.put(context,Constans.SP_OBJ_ID,"");
+        SPUtil.put(context,Constans.SP_UUID,"");
+        SPUtil.put(context,Constans.SP_MY_NAME,"");
+        SPUtil.put(context,Constans.SP_MY_SGIN,"");
+        SPUtil.put(context,Constans.SD_MY_MARKING,"");
+
+        Intent intent = new Intent(context,MainActivity.class);
+        intent.putExtra(MainActivity.TAG_EXIT, true);
+        context.startActivity(intent);
+    }
+
+    /**
+     * 用户登录
+     * @param context
+     * @param tag
+     * @param userBindCallBack
+     */
+    public static void userBind(final Context context, final String tag, final UserBindCallBack userBindCallBack) {
+        // 先查看是否有重复的标示
+        AVQuery<AVObject> query = new AVQuery<>(Constans.TABLE_USER_INFO);
+        query.whereContains(Constans.USER_MARKING, tag);
+        query.whereStartsWith(Constans.USER_MARKING, tag);
+        query.whereEndsWith(Constans.USER_MARKING, tag);
+        query.getFirstInBackground(new GetCallback<AVObject>() {
+            @Override
+            public void done(AVObject data, AVException e) {
+                if (e == null && data != null) {
+                    UserInfo info = new UserInfo();
+                    info.setObjid(data.getObjectId());
+                    info.setUuid(data.getString(Constans.USER_MYID));
+                    info.setName(data.getString(Constans.USER_MYNAME));
+                    info.setSign(data.getString(Constans.USER_MYSGIN));
+                    info.setMarking(tag);
+
+                    SPUtil.put(context, Constans.SP_OBJ_ID, info.getObjid());
+                    SPUtil.put(context, Constans.SP_UUID, info.getUuid());
+                    SPUtil.put(context, Constans.SP_MY_NAME, info.getName());
+                    SPUtil.put(context, Constans.SP_MY_SGIN, info.getSign());
+                    SPUtil.put(context, Constans.SD_MY_MARKING, info.getMarking());
+
+                    userBindCallBack.getUserInfo(info);
+                } else {
+                    Toast.makeText(context, R.string.marking_not, Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
     }
 }

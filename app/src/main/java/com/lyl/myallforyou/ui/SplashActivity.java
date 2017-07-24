@@ -19,8 +19,11 @@ import com.avos.avoscloud.CountCallback;
 import com.avos.avoscloud.SaveCallback;
 import com.lyl.myallforyou.R;
 import com.lyl.myallforyou.constants.Constans;
+import com.lyl.myallforyou.data.UserInfo;
 import com.lyl.myallforyou.ui.main.MainActivity;
+import com.lyl.myallforyou.ui.userinfo.UserBindCallBack;
 import com.lyl.myallforyou.utils.DeviceStatusUtils;
+import com.lyl.myallforyou.utils.DialogUtils;
 import com.lyl.myallforyou.utils.NetUtil;
 import com.lyl.myallforyou.utils.SPUtil;
 
@@ -68,7 +71,7 @@ public class SplashActivity extends BaseActivity {
                         public void onClick(DialogInterface dialogInterface, int i) {
                             if (NetUtil.isNetworkAvailable(mContext)) {
                                 dialogInterface.dismiss();
-                                initUserInfo();
+                                UserBind();
                             } else {
                                 showT(getString(R.string.two_not_net));
                                 finish();
@@ -78,10 +81,29 @@ public class SplashActivity extends BaseActivity {
             alertDialog.setCancelable(false);
             alertDialog.show();
         } else {
-            initUserInfo();
+            UserBind();
         }
     }
 
+    /**
+     * 如果曾经使用过，则可以先绑定老用户
+     */
+    private void UserBind(){
+        if (TextUtils.isEmpty(objId)){
+            DialogUtils.UserBind(mContext, new UserBindCallBack() {
+                @Override
+                public void getUserInfo(UserInfo info) {
+                    if (info == null){
+                        initUserInfo();
+                    }else {
+                        initMain();
+                    }
+                }
+            });
+        }else {
+            initUserInfo();
+        }
+    }
 
     /**
      * 初始化我的信息

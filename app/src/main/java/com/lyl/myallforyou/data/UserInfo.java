@@ -29,6 +29,15 @@ public class UserInfo {
 
     private String icon;
 
+    private String marking;
+
+    public String getMarking() {
+        return marking;
+    }
+
+    public void setMarking(String marking) {
+        this.marking = marking;
+    }
 
     public int getId() {
         return id;

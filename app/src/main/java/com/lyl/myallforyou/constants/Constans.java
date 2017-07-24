@@ -67,6 +67,7 @@ public class Constans {
     public static String SD_MY_MARKING = "sd_user_marking";
     public static String SP_MY_NAME = "sp_my_name";
     public static String SP_MY_SGIN = "sp_my_sgin";
+
     public static String SP_CITY = "sp_city";
     public static String SP_LONGITUDE = "sp_longitude";
     public static String SP_LATITUDE = "sp_latitude";

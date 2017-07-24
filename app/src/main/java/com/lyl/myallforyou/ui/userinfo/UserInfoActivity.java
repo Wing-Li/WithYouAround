@@ -19,7 +19,9 @@ import com.avos.avoscloud.GetCallback;
 import com.avos.avoscloud.SaveCallback;
 import com.lyl.myallforyou.R;
 import com.lyl.myallforyou.constants.Constans;
+import com.lyl.myallforyou.data.UserInfo;
 import com.lyl.myallforyou.ui.BaseActivity;
+import com.lyl.myallforyou.utils.DialogUtils;
 import com.lyl.myallforyou.utils.MyUtils;
 import com.lyl.myallforyou.utils.SPUtil;
 
@@ -59,9 +61,9 @@ public class UserInfoActivity extends BaseActivity {
     }
 
     private void initView() {
-        if (MyUtils.isLogin(mContext)){
+        if (MyUtils.isLogin(mContext)) {
             userinfoExit.setText(R.string.exit_txt);
-        }else {
+        } else {
             userinfoExit.setText(R.string.login_txt);
         }
         userinfoExit.setOnClickListener(new View.OnClickListener() {
@@ -107,10 +109,22 @@ public class UserInfoActivity extends BaseActivity {
     }
 
     private void setUserInfo() {
-        if (MyUtils.isLogin(mContext)){
+        if (MyUtils.isLogin(mContext)) {
+            DialogUtils.UserClear(mContext);
+        } else {
+            DialogUtils.UserBind(mContext, new UserBindCallBack() {
+                @Override
+                public void getUserInfo(UserInfo info) {
+                    if (info != null) {
+                        showT(getString(R.string.user_bind_success));
 
-        }else {
-
+                        userinfoName.setText(info.getName());
+                        userinfoSgin.setText(info.getSign());
+                        userinfoMarking.setText(info.getMarking());
+                        userinfoExit.setText(R.string.exit_txt);
+                    }
+                }
+            });
         }
     }
 
@@ -121,6 +135,7 @@ public class UserInfoActivity extends BaseActivity {
         AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
         View view = LayoutInflater.from(mContext).inflate(R.layout.dialog_edit, null);
         final EditText edt = (EditText) view.findViewById(R.id.dialog_edt);
+        edt.setText(userinfoMarking.getText().toString().trim());
         builder.setTitle(R.string.user_marking);
         builder.setView(view);
         builder.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
@@ -157,7 +172,7 @@ public class UserInfoActivity extends BaseActivity {
                                     }
                                 }
                             });
-                        }else {
+                        } else {
                             showT(getString(R.string.marking_reply));
                         }
                     }

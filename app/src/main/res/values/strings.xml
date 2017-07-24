@@ -35,6 +35,7 @@
     <string name="name_default">点击修改昵称</string>
     <string name="sgin_default">点击修改签名</string>
     <string name="cancel">取消</string>
+    <string name="no_old_user">没有老用户</string>
     <string name="ok">确定</string>
     <string name="not_empty">请输入内容</string>
     <string name="length_error">不能超过 %1$d 个字符</string>
@@ -101,8 +102,12 @@
     <string name="delete">密友删除</string>
     <string name="delete_friend_dialog_msg">删除后您将无法查看对方的信息，对方也无法继续查看您的信息，您确定要删除吗？</string>
     <string name="exit_txt">退&#160;&#160;&#160;&#160;出</string>
-    <string name="login_txt">登&#160;&#160;&#160;&#160;录</string>
+    <string name="login_txt">绑&#160;&#160;&#160;&#160;定</string>
     <string name="marking_reply">改标示已存在，请重新输入</string>
+    <string name="exit_user">退出之后，将清空数据，并且退出本程序。您确定要退出吗？</string>
+    <string name="user_bind_success">用户绑定成功</string>
+    <string name="bind_user_txt">绑定老用户</string>
+    <string name="marking_not">不存在该标示</string>
 
     <array name="main_select_item">
         <item>查看</item>
