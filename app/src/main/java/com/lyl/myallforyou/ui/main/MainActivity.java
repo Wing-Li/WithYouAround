@@ -59,9 +59,7 @@ import com.lyl.myallforyou.ui.feedback.FeedbackActivity;
 import com.lyl.myallforyou.ui.help.HelpActivity;
 import com.lyl.myallforyou.ui.qrbind.QrScanActivity;
 import com.lyl.myallforyou.ui.qrbind.QrShareActivity;
-import com.lyl.myallforyou.ui.userinfo.UserBindCallBack;
 import com.lyl.myallforyou.ui.userinfo.UserInfoActivity;
-import com.lyl.myallforyou.utils.DialogUtils;
 import com.lyl.myallforyou.utils.MyUtils;
 import com.lyl.myallforyou.utils.NetUtil;
 import com.lyl.myallforyou.utils.SPUtil;
@@ -112,18 +110,6 @@ public class MainActivity extends BaseActivity {
     @Override
     protected void onStart() {
         super.onStart();
-        objId = (String) SPUtil.get(mContext, Constans.SP_OBJ_ID, "");
-        if (TextUtils.isEmpty(objId)){
-            DialogUtils.UserBind(mContext, new UserBindCallBack() {
-                @Override
-                public void getUserInfo(UserInfo info) {
-                    if (info == null) {
-                        finish();
-                    }
-                }
-            });
-        }
-
         if (mName != null) {
             String spName = (String) SPUtil.get(mContext, Constans.SP_MY_NAME, "");
             if (!TextUtils.isEmpty(spName)) {
