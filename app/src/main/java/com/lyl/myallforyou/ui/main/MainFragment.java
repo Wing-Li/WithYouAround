@@ -121,8 +121,8 @@ public class MainFragment extends BaseFragment {
                         }
                         mUserInfos.add(info);
                     }
-                    mMyAapter.setData(mUserInfos);
                 }
+                mMyAapter.setData(mUserInfos);
             }
         });
     }

@@ -45,6 +45,24 @@
             <TextView
                 style="@style/HelpTextA"
                 android:text="@string/a3"/>
+
+            <TextView
+                style="@style/HelpTextQ"
+                android:background="@color/bg_gary"
+                android:text="@string/q4"/>
+
+            <TextView
+                style="@style/HelpTextA"
+                android:text="@string/a4"/>
+
+            <TextView
+                style="@style/HelpTextQ"
+                android:background="@color/bg_gary"
+                android:text="@string/q5"/>
+
+            <TextView
+                style="@style/HelpTextA"
+                android:text="@string/a5"/>
         </LinearLayout>
     </ScrollView>
 </LinearLayout>

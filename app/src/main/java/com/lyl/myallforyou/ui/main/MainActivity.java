@@ -80,6 +80,7 @@ public class MainActivity extends BaseActivity {
 
     public static final String TAG = "MainActivity";
 
+    private ImageView mBg;
     private ImageView mIcon;
     private TextView mName;
     private TextView mSgin;
@@ -166,6 +167,8 @@ public class MainActivity extends BaseActivity {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+
+        // 获取扫描的二维码
         IntentResult intentResult = IntentIntegrator.parseActivityResult(requestCode, resultCode, data);
         if (intentResult != null) {
             if (TextUtils.isEmpty(intentResult.getContents())) {
@@ -334,6 +337,7 @@ public class MainActivity extends BaseActivity {
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         View view = navigationView.getHeaderView(0);
 
+        mBg = (ImageView) view.findViewById(R.id.nav_header_bg);
         mIcon = (ImageView) view.findViewById(R.id.nav_header_icon);
         mName = (TextView) view.findViewById(R.id.nav_header_name);
         mSgin = (TextView) view.findViewById(R.id.nav_header_content);
