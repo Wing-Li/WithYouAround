@@ -2,34 +2,26 @@ package com.lyl.myallforyou.ui.about;
 
 import android.content.ClipData;
 import android.content.ClipboardManager;
-import android.content.ComponentName;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.Toolbar;
 import android.util.DisplayMetrics;
 import android.view.View;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.MultiFormatWriter;
 import com.google.zxing.WriterException;
 import com.google.zxing.common.BitMatrix;
 import com.journeyapps.barcodescanner.BarcodeEncoder;
-import com.lyl.myallforyou.MyApp;
 import com.lyl.myallforyou.R;
 import com.lyl.myallforyou.ui.BaseActivity;
 import com.lyl.myallforyou.utils.AppUtils;
-
-import java.io.File;
-import java.io.FileOutputStream;
+import com.lyl.myallforyou.utils.MyUtils;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -94,7 +86,7 @@ public class AboutActivity extends BaseActivity {
         aboutAskFriend.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                shareApp();
+                MyUtils.shareApp(AboutActivity.this);
             }
         });
 
@@ -123,7 +115,7 @@ public class AboutActivity extends BaseActivity {
                 aboutBackRunning.setVisibility(View.VISIBLE);
             }
             ++clickNum;
-        }else {
+        } else {
             clickNum = 0;
             startTime = System.currentTimeMillis();
         }
@@ -131,8 +123,8 @@ public class AboutActivity extends BaseActivity {
 
     public boolean joinQQGroup(String key) {
         Intent intent = new Intent();
-        intent.setData(Uri.parse("mqqopensdkapi://bizAgent/qm/qr?url=http%3A%2F%2Fqm.qq" + "" + "" + "" + "" + "" + "" + "" +
-                ".com%2Fcgi-bin%2Fqm%2Fqr%3Ffrom%3Dapp%26p%3Dandroid%26k%3D" + key));
+        intent.setData(Uri.parse("mqqopensdkapi://bizAgent/qm/qr?url=http%3A%2F%2Fqm.qq" + "" + "" + "" + "" + "" + "" + "" + "" + "" + "" +
+                "" + ".com%2Fcgi-bin%2Fqm%2Fqr%3Ffrom%3Dapp%26p%3Dandroid%26k%3D" + key));
         // 此Flag可根据具体产品需要自定义，如设置，则在加群界面按返回，返回手Q主界面，不设置，按返回会返回到呼起产品界面
         // intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         try {
@@ -145,51 +137,6 @@ public class AboutActivity extends BaseActivity {
         }
     }
 
-    private void shareApp() {
-        final Bitmap bitmap = encodeAsBitmap(MyApp.mAppShare);
-
-        ImageView imageView = new ImageView(mContext);
-        imageView.setImageBitmap(bitmap);
-
-        AlertDialog alertDialog = new AlertDialog.Builder(mContext)//
-                .setTitle(R.string.ask_friend_hint_msg)//
-                .setView(imageView)//
-                .setNegativeButton(R.string.cancel, null)//
-                .setPositiveButton(R.string.ask_friend, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        File file = new File(MyApp.getAppPath(), "appQR_" + System.currentTimeMillis() + ".png");
-                        try {
-                            if (file.exists()) {
-                                file.delete();
-                            }
-
-                            FileOutputStream fileOutputStream = new FileOutputStream(file);
-                            bitmap.compress(Bitmap.CompressFormat.PNG, 90, fileOutputStream);
-                            fileOutputStream.flush();
-                            fileOutputStream.close();
-                            Toast.makeText(getApplicationContext(), R.string.qr_save_success, Toast.LENGTH_SHORT).show();
-                            sendBroadcast(new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE, Uri.fromFile(file)));
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                        }
-
-                        try {
-                            Intent intent = new Intent();
-                            ComponentName cmp = new ComponentName("com.tencent.mm", "com.tencent.mm.ui.LauncherUI");
-                            intent.setAction(Intent.ACTION_MAIN);
-                            intent.addCategory(Intent.CATEGORY_LAUNCHER);
-                            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                            intent.setComponent(cmp);
-                            startActivity(intent);
-                        } catch (Exception e) {
-                            Toast.makeText(getApplicationContext(), R.string.not_weixin, Toast.LENGTH_SHORT).show();
-                        }
-                    }
-                }).create();
-        alertDialog.setCancelable(false);
-        alertDialog.show();
-    }
 
     private Bitmap encodeAsBitmap(String str) {
         Bitmap bitmap = null;

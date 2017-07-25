@@ -18,8 +18,10 @@ import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.lyl.myallforyou.MyApp;
 import com.lyl.myallforyou.R;
 import com.lyl.myallforyou.ui.BaseActivity;
+import com.lyl.myallforyou.utils.DialogUtils;
 import com.lyl.myallforyou.utils.SystemRomUtils;
 
 import butterknife.Bind;
@@ -44,6 +46,10 @@ public class SettingActivity extends BaseActivity {
     TextView settingBattey;
     @Bind(R.id.setting_battey_layout)
     LinearLayout settingBatteyLayout;
+    @Bind(R.id.setting_spacetime)
+    TextView settingSpacetime;
+    @Bind(R.id.setting_spacetime_layout)
+    LinearLayout settingSpacetimeLayout;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -75,7 +81,7 @@ public class SettingActivity extends BaseActivity {
             if (isIgnoreBattery(SettingActivity.this)) {
                 settingBattey.setText("已开启》");
             } else {
-                settingBattey.setText("未开启》");
+                settingBattey.setText(R.string.unauthorized);
             }
         }
     }
@@ -111,6 +117,15 @@ public class SettingActivity extends BaseActivity {
         } else {
             settingBatteyLayout.setVisibility(View.GONE);
         }
+
+        int space_time = (MyApp.UPLOAD_SPACE_TIME - 2000) / 1000 / 60;
+        settingSpacetime.setText(getString(R.string.upload_space_time_txt, space_time));
+        settingSpacetimeLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                DialogUtils.setUploadSpaceTime(mContext);
+            }
+        });
     }
 
     /**

@@ -1,5 +1,6 @@
 package com.lyl.myallforyou.utils;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.text.TextUtils;
@@ -10,6 +11,7 @@ import com.avos.avoscloud.AVObject;
 import com.avos.avoscloud.AVQuery;
 import com.avos.avoscloud.GetCallback;
 import com.lyl.myallforyou.BuildConfig;
+import com.lyl.myallforyou.MyApp;
 import com.lyl.myallforyou.R;
 import com.lyl.myallforyou.constants.Constans;
 import com.lyl.myallforyou.data.UserInfo;
@@ -110,19 +112,20 @@ public class MyUtils {
      * 用户 退出
      */
     public static void clearUserInfo(Context context) {
-        SPUtil.put(context,Constans.SP_OBJ_ID,"");
-        SPUtil.put(context,Constans.SP_UUID,"");
-        SPUtil.put(context,Constans.SP_MY_NAME,"");
-        SPUtil.put(context,Constans.SP_MY_SGIN,"");
-        SPUtil.put(context,Constans.SD_MY_MARKING,"");
+        SPUtil.put(context, Constans.SP_OBJ_ID, "");
+        SPUtil.put(context, Constans.SP_UUID, "");
+        SPUtil.put(context, Constans.SP_MY_NAME, "");
+        SPUtil.put(context, Constans.SP_MY_SGIN, "");
+        SPUtil.put(context, Constans.SD_MY_MARKING, "");
 
-        Intent intent = new Intent(context,MainActivity.class);
+        Intent intent = new Intent(context, MainActivity.class);
         intent.putExtra(MainActivity.TAG_EXIT, true);
         context.startActivity(intent);
     }
 
     /**
      * 用户登录
+     *
      * @param context
      * @param tag
      * @param userBindCallBack
@@ -156,5 +159,16 @@ public class MyUtils {
                 }
             }
         });
+    }
+
+    /**
+     * 分享App
+     */
+    public static void shareApp(Activity activity) {
+        Intent intent = new Intent(Intent.ACTION_SEND);
+        intent.setType("text/plain");
+        intent.putExtra(Intent.EXTRA_SUBJECT, activity.getString(R.string.share));//主题
+        intent.putExtra(Intent.EXTRA_TEXT, activity.getString(R.string.share_txt, MyApp.mAppShare));//文本
+        activity.startActivity(intent);
     }
 }

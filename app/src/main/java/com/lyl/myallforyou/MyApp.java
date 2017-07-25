@@ -7,7 +7,9 @@ import android.text.TextUtils;
 import com.avos.avoscloud.AVOSCloud;
 import com.litesuits.orm.LiteOrm;
 import com.litesuits.orm.db.DataBaseConfig;
+import com.lyl.myallforyou.constants.Constans;
 import com.lyl.myallforyou.utils.MyUtils;
+import com.lyl.myallforyou.utils.SPUtil;
 import com.tencent.bugly.Bugly;
 
 import java.io.File;
@@ -42,6 +44,12 @@ public class MyApp extends Application {
         initSQL();
 
         initBugly();
+
+        initSpaceTime();
+    }
+
+    private void initSpaceTime() {
+        UPLOAD_SPACE_TIME = (int) SPUtil.get(this, Constans.SP_UPLOAD_SPACE_TIME, UPLOAD_SPACE_TIME);
     }
 
     public static String getAppPath() {

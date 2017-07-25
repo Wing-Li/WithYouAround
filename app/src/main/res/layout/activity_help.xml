@@ -63,6 +63,15 @@
             <TextView
                 style="@style/HelpTextA"
                 android:text="@string/a5"/>
+
+            <TextView
+                style="@style/HelpTextQ"
+                android:background="@color/bg_gary"
+                android:text="@string/q6"/>
+
+            <TextView
+                style="@style/HelpTextA"
+                android:text="@string/a6"/>
         </LinearLayout>
     </ScrollView>
 </LinearLayout>

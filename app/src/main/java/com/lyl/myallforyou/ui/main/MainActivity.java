@@ -7,7 +7,6 @@ import android.content.Intent;
 import android.content.ServiceConnection;
 import android.graphics.Bitmap;
 import android.graphics.Color;
-import android.net.Uri;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.support.annotation.NonNull;
@@ -66,8 +65,6 @@ import com.lyl.myallforyou.utils.SPUtil;
 
 import org.greenrobot.eventbus.EventBus;
 
-import java.io.File;
-import java.io.FileOutputStream;
 import java.util.ArrayList;
 
 import static com.lyl.myallforyou.constants.Constans.SP_MY_NAME;
@@ -399,7 +396,7 @@ public class MainActivity extends BaseActivity {
                 } else if (id == R.id.nav_nhvideo) {
 
                 } else if (id == R.id.nav_ask) { // 邀请好友
-                    shareApp();
+                    MyUtils.shareApp(MainActivity.this);
                 } else if (id == R.id.nav_help) { // 使用帮助
                     intent = new Intent(mContext, HelpActivity.class);
                 } else if (id == R.id.nav_feedback) { // 意见反馈
@@ -416,53 +413,6 @@ public class MainActivity extends BaseActivity {
                 return true;
             }
         });
-    }
-
-    private void shareApp() {
-        final Bitmap bitmap = encodeAsBitmap(MyApp.mAppShare);
-
-        ImageView imageView = new ImageView(mContext);
-        imageView.setImageBitmap(bitmap);
-
-        AlertDialog alertDialog = new AlertDialog.Builder(mContext)//
-                .setTitle(R.string.ask_friend_hint_msg)//
-                .setView(imageView)//
-                .setNegativeButton(R.string.cancel, null)//
-                .setPositiveButton(R.string.ask_friend, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        File file = new File(MyApp.getAppPath(), "appQR_" + System.currentTimeMillis() + ".png");
-                        try {
-                            if (file.exists()) {
-                                file.delete();
-                            }
-
-                            FileOutputStream fileOutputStream = new FileOutputStream(file);
-                            bitmap.compress(Bitmap.CompressFormat.PNG, 90, fileOutputStream);
-                            fileOutputStream.flush();
-                            fileOutputStream.close();
-                            Toast.makeText(getApplicationContext(), R.string.qr_save_success, Toast.LENGTH_SHORT).show();
-                            sendBroadcast(new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE, Uri.fromFile(file)));
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                        }
-
-                        try {
-                            Intent intent = new Intent();
-                            ComponentName cmp = new ComponentName("com.tencent.mm", "com.tencent.mm.ui.LauncherUI");
-                            intent.setAction(Intent.ACTION_MAIN);
-                            intent.addCategory(Intent.CATEGORY_LAUNCHER);
-                            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                            intent.setComponent(cmp);
-                            startActivity(intent);
-                        } catch (Exception e) {
-                            Toast.makeText(getApplicationContext(), R.string.not_weixin, Toast.LENGTH_SHORT).show();
-                        }
-                    }
-                }).create();
-        alertDialog.setCancelable(false);
-        alertDialog.show();
-
     }
 
     private Bitmap encodeAsBitmap(String str) {
