@@ -42,7 +42,7 @@ public class NhCommentReply {
         private int stick_total_number;
         private int offset;
         private boolean stick_has_more;
-        private long id;
+        private String id;
         private List<DataBean> data;
         private List<HotCommentsBean> hot_comments;
 
@@ -86,11 +86,11 @@ public class NhCommentReply {
             this.stick_has_more = stick_has_more;
         }
 
-        public long getId() {
+        public String getId() {
             return id;
         }
 
-        public void setId(long id) {
+        public void setId(String id) {
             this.id = id;
         }
 
@@ -118,7 +118,7 @@ public class NhCommentReply {
             private int create_time;
             private UserBean user;
             private boolean user_digg;
-            private int id;
+            private String id;
 
             public boolean isIs_owner() {
                 return is_owner;
@@ -176,11 +176,11 @@ public class NhCommentReply {
                 this.user_digg = user_digg;
             }
 
-            public int getId() {
+            public String getId() {
                 return id;
             }
 
-            public void setId(int id) {
+            public void setId(String id) {
                 this.id = id;
             }
 
@@ -201,6 +201,15 @@ public class NhCommentReply {
                 private String avatar_url;
                 private boolean is_pro_user;
                 private List<?> author_badge;
+                private String id;
+
+                public String getId() {
+                    return id;
+                }
+
+                public void setId(String id) {
+                    this.id = id;
+                }
 
                 public Object getIs_followed() {
                     return is_followed;
@@ -340,7 +349,7 @@ public class NhCommentReply {
             private int create_time;
             private UserBeanX user;
             private boolean user_digg;
-            private int id;
+            private String id;
 
             public boolean isIs_owner() {
                 return is_owner;
@@ -398,11 +407,11 @@ public class NhCommentReply {
                 this.user_digg = user_digg;
             }
 
-            public int getId() {
+            public String getId() {
                 return id;
             }
 
-            public void setId(int id) {
+            public void setId(String id) {
                 this.id = id;
             }
 
