@@ -1,6 +1,8 @@
 package com.lyl.myallforyou.utils;
 
 import android.app.Activity;
+import android.content.ClipData;
+import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.Intent;
 import android.text.TextUtils;
@@ -165,10 +167,17 @@ public class MyUtils {
      * 分享App
      */
     public static void shareApp(Activity activity) {
-        Intent intent = new Intent(Intent.ACTION_SEND);
-        intent.setType("text/plain");
-        intent.putExtra(Intent.EXTRA_SUBJECT, activity.getString(R.string.share));//主题
-        intent.putExtra(Intent.EXTRA_TEXT, activity.getString(R.string.share_txt, MyApp.mAppShare));//文本
-        activity.startActivity(intent);
+        try {
+            Intent intent = new Intent(Intent.ACTION_SEND);
+            intent.setType("text/plain");
+            intent.putExtra(Intent.EXTRA_SUBJECT, activity.getString(R.string.share));//主题
+            intent.putExtra(Intent.EXTRA_TEXT, activity.getString(R.string.share_txt, MyApp.mAppShare));//文本
+            activity.startActivity(intent);
+        } catch (Exception e) {
+            ClipboardManager clipboardManager = (ClipboardManager) activity.getSystemService(Context.CLIPBOARD_SERVICE);
+            clipboardManager.setPrimaryClip(ClipData.newPlainText("text", activity.getString(R.string.share_txt, MyApp.mAppShare)));
+
+            Toast.makeText(activity.getApplicationContext(), R.string.share_error_hint,Toast.LENGTH_LONG).show();
+        }
     }
 }

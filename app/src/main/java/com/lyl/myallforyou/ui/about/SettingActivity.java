@@ -236,11 +236,16 @@ public class SettingActivity extends BaseActivity {
     public void ignoreBatteryOptimization(Activity activity) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             //  判断当前APP是否有加入电池优化的白名单，如果没有，弹出加入电池优化的白名单的设置对话框。
-            if (!isIgnoreBattery(activity)) {
-                Intent intent = new Intent(Settings.ACTION_REQUEST_IGNORE_BATTERY_OPTIMIZATIONS);
-                intent.setData(Uri.parse("package:" + activity.getPackageName()));
-                startActivity(intent);
+            try {
+                if (!isIgnoreBattery(activity)) {
+                    Intent intent = new Intent(Settings.ACTION_REQUEST_IGNORE_BATTERY_OPTIMIZATIONS);
+                    intent.setData(Uri.parse("package:" + activity.getPackageName()));
+                    startActivity(intent);
+                }
+            }catch (Exception e){
+                showT(R.string.device_not_support);
             }
+
         }
     }
 }

@@ -120,6 +120,8 @@
     <string name="upload_space_time_success">设置成功，下次启动生效</string>
     <string name="share_txt">这个APP可以让我们看到彼此手机的各种信息，感觉挺有意思的，我们一起来玩玩吧。\n\n下载地址：%1$s</string>
     <string name="share">分享</string>
+    <string name="device_not_support">抱歉，您的手机可能不支持该功能</string>
+    <string name="share_error_hint">抱歉，分享出现异常。要分享的文字已复制到您的粘贴板中，你可以直接去想要分享的平台 粘贴 即可。</string>
 
 
     <array name="main_select_item">
