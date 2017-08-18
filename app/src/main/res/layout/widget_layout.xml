@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    android:id="@+id/widget_layout"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <LinearLayout
+        style="@style/DeviceInfoLayout"
+        android:background="#00000000"
+        android:weightSum="4">
+
+        <TextView
+            style="@style/DeviceInfoContentTitle"
+            android:text="设备厂商："/>
+
+        <TextView
+            android:id="@+id/device_manufacturer"
+            style="@style/DeviceInfoContent"
+            android:text="@string/default_str"/>
+    </LinearLayout>
+
+    <LinearLayout
+        style="@style/DeviceInfoLayout"
+        android:background="#00000000"
+        android:weightSum="4">
+
+        <TextView
+            style="@style/DeviceInfoContentTitle"
+            android:text="时        间："/>
+
+        <TextView
+            android:id="@+id/system_time"
+            style="@style/DeviceInfoContent"
+            android:text="@string/default_str"/>
+    </LinearLayout>
+
+    <LinearLayout
+        style="@style/DeviceInfoLayout"
+        android:background="#00000000"
+        android:weightSum="4">
+
+        <TextView
+            style="@style/DeviceInfoContentTitle"
+            android:text="电        量："/>
+
+        <TextView
+            android:id="@+id/system_battery"
+            style="@style/DeviceInfoContent"
+            android:text="@string/default_str"/>
+    </LinearLayout>
+
+    <LinearLayout
+        style="@style/DeviceInfoLayout"
+        android:background="#00000000"
+        android:weightSum="4">
+
+        <TextView
+            style="@style/DeviceInfoContentTitle"
+            android:text="屏幕状态："/>
+
+        <TextView
+            android:id="@+id/screen_status"
+            style="@style/DeviceInfoContent"
+            android:text="@string/default_str"/>
+    </LinearLayout>
+
+    <LinearLayout
+        style="@style/DeviceInfoLayout"
+        android:background="#00000000"
+        android:weightSum="4">
+
+        <TextView
+            style="@style/DeviceInfoContentTitle"
+            android:text="位        置："/>
+
+        <TextView
+            android:id="@+id/address"
+            style="@style/DeviceInfoContent"
+            android:text="@string/default_str"/>
+    </LinearLayout>
+</LinearLayout>

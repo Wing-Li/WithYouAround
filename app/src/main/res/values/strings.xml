@@ -130,5 +130,7 @@
         <item>删除密友</item>
         <item>取消</item>
     </array>
+    <string name="appwidget_text">EXAMPLE</string>
+    <string name="add_widget">Add widget</string>
 
 </resources>

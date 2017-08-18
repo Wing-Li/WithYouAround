@@ -62,6 +62,7 @@ import com.lyl.myallforyou.ui.userinfo.UserInfoActivity;
 import com.lyl.myallforyou.utils.MyUtils;
 import com.lyl.myallforyou.utils.NetUtil;
 import com.lyl.myallforyou.utils.SPUtil;
+import com.lyl.myallforyou.widget.WidgetService;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -94,6 +95,7 @@ public class MainActivity extends BaseActivity {
 
         Intent intent = new Intent(this, DeviceInfoService.class);
         bindService(intent, connection, Context.BIND_AUTO_CREATE);
+        startService(new Intent(this, WidgetService.class));
 
         String myName = (String) SPUtil.get(mContext, SP_MY_NAME, "");
         if (TextUtils.isEmpty(myName)) {
@@ -127,8 +129,8 @@ public class MainActivity extends BaseActivity {
         setSupportActionBar(toolbar);
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer, toolbar, R.string.navigation_drawer_open, R.string
-                .navigation_drawer_close);
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer, toolbar, R.string
+                .navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
         toggle.syncState();
     }
@@ -326,8 +328,8 @@ public class MainActivity extends BaseActivity {
 
     public void initDrawerLayout() {
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, mDrawerLayout, R.string.navigation_drawer_open, R.string
-                .navigation_drawer_close);
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, mDrawerLayout, R.string
+                .navigation_drawer_open, R.string.navigation_drawer_close);
         mDrawerLayout.setDrawerListener(toggle);
         toggle.syncState();
 

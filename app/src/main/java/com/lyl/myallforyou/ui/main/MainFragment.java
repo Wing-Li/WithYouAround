@@ -3,6 +3,7 @@ package com.lyl.myallforyou.ui.main;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,6 +14,7 @@ import com.avos.avoscloud.AVQuery;
 import com.avos.avoscloud.FindCallback;
 import com.litesuits.orm.db.assit.QueryBuilder;
 import com.lyl.myallforyou.MyApp;
+import com.lyl.myallforyou.MyShared;
 import com.lyl.myallforyou.R;
 import com.lyl.myallforyou.constants.Constans;
 import com.lyl.myallforyou.data.UserInfo;
@@ -120,6 +122,14 @@ public class MainFragment extends BaseFragment {
                             MyApp.liteOrm.save(info);
                         }
                         mUserInfos.add(info);
+                    }
+
+                    // 如果桌面 uuid 是空的，就把第一个设置为它
+                    MyShared myShared = new MyShared(mContext);
+                    String widgetUuid = myShared.getWidgetUuid();
+                    if (TextUtils.isEmpty(widgetUuid)){
+                        myShared.setWidgetUuid(mUserInfos.get(1).getUuid());
+                        myShared.setWidgetName(mUserInfos.get(1).getName());
                     }
                 }
                 mMyAapter.setData(mUserInfos);
