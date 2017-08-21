@@ -35,12 +35,12 @@ public class WidgetService extends Service {
         mTimerTask = new TimerTask() {
             @Override
             public void run() {
-                Intent updateIntent=new Intent(ACTION_UPDATE_ALL);
+                Intent updateIntent = new Intent(ACTION_UPDATE_ALL);
                 mContext.sendBroadcast(updateIntent);
             }
         };
         mTimer = new Timer();
-        mTimer.schedule(mTimerTask, 5000, 10 * 1000);
+        mTimer.schedule(mTimerTask, 3000, UPDATE_TIME);
 
         super.onCreate();
     }

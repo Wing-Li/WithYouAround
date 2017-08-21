@@ -5,6 +5,9 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.ServiceConnection;
 
+import com.lyl.myallforyou.service.DeviceInfoService;
+import com.lyl.myallforyou.widget.WidgetService;
+
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -17,6 +20,21 @@ public final class ServiceUtils {
 
     private ServiceUtils() {
         throw new UnsupportedOperationException("u can't instantiate me...");
+    }
+
+
+    public static final String DEVICE_INFO_SERVICE = "com.lyl.myallforyou.service.DeviceInfoService";
+    public static final String WIDGET_SERVICE = "com.lyl.myallforyou.widget.WidgetService";
+
+    public static void startMyServer(Context context) {
+        boolean serviceRunning = ServiceUtils.isServiceRunning(context.getApplicationContext(), DEVICE_INFO_SERVICE);
+        if (!serviceRunning) {
+            ServiceUtils.startService(context.getApplicationContext(), DeviceInfoService.class);
+        }
+        boolean appwidget = ServiceUtils.isServiceRunning(context.getApplicationContext(), WIDGET_SERVICE);
+        if (!appwidget) {
+            ServiceUtils.startService(context.getApplicationContext(), WidgetService.class);
+        }
     }
 
     /**

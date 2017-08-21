@@ -16,6 +16,7 @@ import com.lyl.myallforyou.R;
 import com.lyl.myallforyou.constants.Constans;
 import com.lyl.myallforyou.utils.AppUtils;
 import com.lyl.myallforyou.utils.SPUtil;
+import com.lyl.myallforyou.utils.ServiceUtils;
 
 /**
  * Created by lyl on 2017/4/5.
@@ -39,6 +40,12 @@ public class BaseActivity extends AppCompatActivity {
         initAppData();
     }
 
+    @Override
+    protected void onStart() {
+        super.onStart();
+        // 检查 上传服务/更新桌面部件服务，没开，就打开
+        ServiceUtils.startMyServer(getApplicationContext());
+    }
 
     private void initAppData() {
         uuid = (String) SPUtil.get(mContext, Constans.SP_UUID, "");

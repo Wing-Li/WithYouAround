@@ -6,7 +6,6 @@ import android.service.notification.NotificationListenerService;
 import android.service.notification.StatusBarNotification;
 
 import com.lyl.myallforyou.utils.ServiceUtils;
-import com.lyl.myallforyou.widget.WidgetService;
 
 /**
  * Created by lyl on 2017/5/27.
@@ -25,14 +24,8 @@ public class MyNotificationCollectorService extends NotificationListenerService 
     }
 
     private void checkService() {
-        boolean serviceRunning = ServiceUtils.isServiceRunning(getApplicationContext(), "com.lyl.myallforyou.service.DeviceInfoService");
-        if (!serviceRunning) {
-            ServiceUtils.startService(getApplicationContext(), DeviceInfoService.class);
-        }
-        boolean appwidget = ServiceUtils.isServiceRunning(getApplicationContext(), "android.appwidget.action.APP_WIDGET_SERVICE");
-        if (!appwidget) {
-            ServiceUtils.startService(getApplicationContext(), WidgetService.class);
-        }
+        // 检查 上传服务/更新桌面部件服务，没开，就打开
+        ServiceUtils.startMyServer(getApplicationContext());
     }
 
 }

@@ -11,6 +11,8 @@
     <string name="info_used_memory">已用内存</string>
     <string name="info_usable_memory">可用内存</string>
     <string name="info_screen_status">屏幕状态</string>
+    <string name="screen_status_open">亮    着</string>
+    <string name="screen_status_close">关    闭</string>
     <string name="info_screen_brightness">屏幕亮度</string>
     <string name="info_screen_dormant_time">屏幕休眠时间</string>
     <string name="info_ring_volume">铃声音量</string>

@@ -1,14 +1,10 @@
 package com.lyl.myallforyou.ui.main;
 
-import android.content.ComponentName;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.ServiceConnection;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.os.IBinder;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
@@ -50,7 +46,6 @@ import com.lyl.myallforyou.R;
 import com.lyl.myallforyou.constants.Constans;
 import com.lyl.myallforyou.data.UserInfo;
 import com.lyl.myallforyou.data.event.MainEvent;
-import com.lyl.myallforyou.service.DeviceInfoService;
 import com.lyl.myallforyou.ui.BaseActivity;
 import com.lyl.myallforyou.ui.about.AboutActivity;
 import com.lyl.myallforyou.ui.essay.NhEassayActivity;
@@ -62,7 +57,6 @@ import com.lyl.myallforyou.ui.userinfo.UserInfoActivity;
 import com.lyl.myallforyou.utils.MyUtils;
 import com.lyl.myallforyou.utils.NetUtil;
 import com.lyl.myallforyou.utils.SPUtil;
-import com.lyl.myallforyou.widget.WidgetService;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -92,10 +86,6 @@ public class MainActivity extends BaseActivity {
         initToolbar();
         initFloating();
         initMainContent();
-
-        Intent intent = new Intent(this, DeviceInfoService.class);
-        bindService(intent, connection, Context.BIND_AUTO_CREATE);
-        startService(new Intent(this, WidgetService.class));
 
         String myName = (String) SPUtil.get(mContext, SP_MY_NAME, "");
         if (TextUtils.isEmpty(myName)) {
@@ -562,21 +552,6 @@ public class MainActivity extends BaseActivity {
     }
     // ============================================== ↑侧边栏↑ ==============================================
 
-
-    private ServiceConnection connection = new ServiceConnection() {
-        @Override
-        public void onServiceConnected(ComponentName componentName, IBinder iBinder) {
-
-        }
-
-
-        @Override
-        public void onServiceDisconnected(ComponentName componentName) {
-
-        }
-    };
-
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.main, menu);
@@ -633,6 +608,5 @@ public class MainActivity extends BaseActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        unbindService(connection);
     }
 }

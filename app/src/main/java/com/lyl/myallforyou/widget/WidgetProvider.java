@@ -7,7 +7,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.RemoteViews;
-import android.widget.Toast;
 
 import com.lyl.myallforyou.MyShared;
 import com.lyl.myallforyou.R;
@@ -61,13 +60,9 @@ public class WidgetProvider extends AppWidgetProvider {
             // “更新”广播
             updateAllAppWidgets(context, AppWidgetManager.getInstance(context), idsSet);
         } else if (CLICK_ACTION.equals(intent.getAction())) {
-            Toast.makeText(context, "hello dog!", Toast.LENGTH_SHORT).show();
+
         } else if (intent.hasCategory(Intent.CATEGORY_ALTERNATIVE)) {
-            MyShared myShared = new MyShared(context);
-            Intent i = new Intent(context, DeviceInfoActivity.class);
-            i.putExtra(ConstantIntent.USER_INFO, myShared.getWidgetUuid());
-            i.putExtra(ConstantIntent.USER_NAME, myShared.getWidgetName());
-            context.startActivity(i);
+
         }
     }
 
@@ -81,7 +76,8 @@ public class WidgetProvider extends AppWidgetProvider {
         while (it.hasNext()) {
             appID = ((Integer) it.next()).intValue();
 
-            String widgetUuid = new MyShared(context).getWidgetUuid();
+            final MyShared myShared = new MyShared(context);
+            final String widgetUuid = myShared.getWidgetUuid();
             final int finalAppID = appID;
             DeviceInfoImp.getDeviceInfo(widgetUuid, new DeviceInfoImp.DeviceInfoCallback() {
                 @Override
@@ -92,13 +88,17 @@ public class WidgetProvider extends AppWidgetProvider {
                     // 设备厂商
                     remoteView.setTextViewText(R.id.device_manufacturer, deviceInfo.getDevice_manufacturer());
                     // 系统时间
-                    remoteView.setTextViewText(R.id.system_time, deviceInfo.getSystem_time());
+                    remoteView.setTextViewText(R.id.system_time, deviceInfo.getSystem_date() + " " + deviceInfo
+                            .getSystem_time());
                     // 电量
                     remoteView.setTextViewText(R.id.system_battery, deviceInfo.getSystem_battery());
                     // 屏幕状态
-                    remoteView.setTextViewText(R.id.screen_status, deviceInfo.getScreen_status());
+                    int screen = "true".equals(deviceInfo.getScreen_status()) ? R.string.screen_status_open : R
+                            .string.screen_status_close;
+                    remoteView.setTextViewText(R.id.screen_status, context.getString(screen));
                     // 位置
                     remoteView.setTextViewText(R.id.address, deviceInfo.getMy_address());
+                    // 点击跳转到详情
                     remoteView.setOnClickPendingIntent(R.id.widget_layout, getPendingIntent(context));
                     // 更新 widget
                     appWidgetManager.updateAppWidget(finalAppID, remoteView);
@@ -112,10 +112,11 @@ public class WidgetProvider extends AppWidgetProvider {
     }
 
     private PendingIntent getPendingIntent(Context context) {
-        Intent intent = new Intent();
-        intent.setClass(context, AppWidgetProvider.class);
-        intent.addCategory(Intent.CATEGORY_ALTERNATIVE);
-        PendingIntent pi = PendingIntent.getBroadcast(context, 0, intent, 0);
+        MyShared myShared = new MyShared(context);
+        Intent i = new Intent(context, DeviceInfoActivity.class);
+        i.putExtra(ConstantIntent.USER_INFO, myShared.getWidgetUuid());
+        i.putExtra(ConstantIntent.USER_NAME, myShared.getWidgetName());
+        PendingIntent pi = PendingIntent.getActivity(context, 0, i, 0);
         return pi;
     }
 
