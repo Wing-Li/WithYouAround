@@ -44,6 +44,7 @@
     <string name="style_error">只能输入由中文、英文、数字、下划线</string>
     <string name="save_fail">保存失败，请重试</string>
     <string name="save_success">保存成功</string>
+    <string name="setting_success">"设置成功"</string>
     <string name="user_sign">签名</string>
     <string name="user_marking">用户标示</string>
     <string name="dialog_namenote_title">给对方设置个备注吧</string>
@@ -128,6 +129,7 @@
 
     <array name="main_select_item">
         <item>查看</item>
+        <item>设为星标</item>
         <item>修改备注</item>
         <item>删除密友</item>
         <item>取消</item>

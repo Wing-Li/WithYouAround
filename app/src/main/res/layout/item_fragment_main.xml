@@ -34,9 +34,19 @@
         android:layout_alignParentBottom="true"
         android:layout_marginRight="16dp"
         android:layout_marginTop="4dp"
+        android:layout_toLeftOf="@+id/item_star"
         android:ellipsize="end"
         android:maxLines="1"
         android:text="当你看向我的时候，感觉自己仿佛拥有了全世界。"
         android:textSize="14sp"/>
+
+    <ImageView
+        android:id="@+id/item_star"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:src="@drawable/star"
+        android:visibility="gone"/>
 
 </RelativeLayout>

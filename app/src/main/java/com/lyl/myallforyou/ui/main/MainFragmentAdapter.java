@@ -23,6 +23,7 @@ import com.avos.avoscloud.AVQuery;
 import com.avos.avoscloud.GetCallback;
 import com.avos.avoscloud.SaveCallback;
 import com.lyl.myallforyou.MyApp;
+import com.lyl.myallforyou.MyShared;
 import com.lyl.myallforyou.R;
 import com.lyl.myallforyou.constants.Constans;
 import com.lyl.myallforyou.constants.ConstantIntent;
@@ -32,6 +33,7 @@ import com.lyl.myallforyou.ui.deviceinfo.DeviceInfoActivity;
 import com.lyl.myallforyou.utils.MyUtils;
 import com.lyl.myallforyou.utils.SPUtil;
 import com.lyl.myallforyou.view.TransitionHelper;
+import com.lyl.myallforyou.widget.WidgetService;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -45,11 +47,13 @@ public class MainFragmentAdapter extends RecyclerView.Adapter<MainFragmentAdapte
 
     private Activity mContext;
     private List<UserInfo> mValues;
+    private MyShared myShared;
 
 
     public MainFragmentAdapter(List<UserInfo> items, Activity context) {
         mValues = items;
         mContext = context;
+        myShared = new MyShared(context);
     }
 
 
@@ -102,6 +106,12 @@ public class MainFragmentAdapter extends RecyclerView.Adapter<MainFragmentAdapte
                 return true;
             }
         });
+
+        if (myShared.getWidgetUuid().equals(userInfo.getUuid())) {
+            holder.star.setVisibility(View.VISIBLE);
+        } else {
+            holder.star.setVisibility(View.GONE);
+        }
     }
 
 
@@ -116,7 +126,7 @@ public class MainFragmentAdapter extends RecyclerView.Adapter<MainFragmentAdapte
         public final ImageView icon;
         public final TextView name;
         public final TextView content;
-
+        public final ImageView star;
 
         public ViewHolder(View view) {
             super(view);
@@ -124,6 +134,7 @@ public class MainFragmentAdapter extends RecyclerView.Adapter<MainFragmentAdapte
             icon = (ImageView) view.findViewById(R.id.item_icon);
             name = (TextView) view.findViewById(R.id.item_name);
             content = (TextView) view.findViewById(R.id.item_content);
+            star = (ImageView) view.findViewById(R.id.item_star);
         }
     }
 
@@ -147,25 +158,32 @@ public class MainFragmentAdapter extends RecyclerView.Adapter<MainFragmentAdapte
         intent.putExtra(ConstantIntent.USER_NAME, name);
 
         final Pair<View, String>[] pairs = TransitionHelper.createSafeTransitionParticipants(mContext, true);
-        ActivityOptionsCompat transitionActivityOptions = ActivityOptionsCompat.makeSceneTransitionAnimation(mContext, pairs);
+        ActivityOptionsCompat transitionActivityOptions = ActivityOptionsCompat.makeSceneTransitionAnimation
+                (mContext, pairs);
         mContext.startActivity(intent, transitionActivityOptions.toBundle());
     }
 
     private void selectItem(final UserInfo userInfo, final int position) {
-        AlertDialog alertDialog = new AlertDialog.Builder(mContext).setItems(R.array.main_select_item, new DialogInterface.OnClickListener() {
+        AlertDialog alertDialog = new AlertDialog.Builder(mContext).setItems(R.array.main_select_item, new
+                DialogInterface.OnClickListener() {
+
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
+                // 这里是按填入的 数组的顺序排的，写常量没意义
                 switch (i) {
                     case 0:// 查看
                         skipDeviceInfo(userInfo);
                         break;
-                    case 1:// 修改备注
+                    case 1://设为星标
+                        setStar(userInfo);
+                        break;
+                    case 2:// 修改备注
                         changeNote(userInfo, position);
                         break;
-                    case 2:// 删除密友
+                    case 3:// 删除密友
                         deleteFrined(userInfo);
                         break;
-                    case 3:// 取消
+                    case 4:// 取消
                         break;
                 }
 
@@ -175,7 +193,31 @@ public class MainFragmentAdapter extends RecyclerView.Adapter<MainFragmentAdapte
 
     }
 
+    /**
+     * 设为星标用户
+     */
+    private void setStar(UserInfo userInfo) {
+        myShared.setWidgetUuid(userInfo.getUuid());
+        String name = userInfo.getName();
+        String nameNote = userInfo.getNameNote();
+        if (TextUtils.isEmpty(name)) {
+            name = userInfo.getNameNote();
+        } else {
+            if (!TextUtils.isEmpty(nameNote)) {
+                name = name + " (" + userInfo.getNameNote() + ")";
+            }
+        }
+        myShared.setWidgetName(name);
+
+        Toast.makeText(mContext.getApplicationContext(), R.string.setting_success, Toast.LENGTH_SHORT).show();
+        notifyDataSetChanged();
+
+        Intent updateIntent = new Intent(WidgetService.ACTION_UPDATE_ALL);
+        mContext.sendBroadcast(updateIntent);
+    }
+
     private Handler mHandler;
+
     /**
      * 删除密友
      */
@@ -253,7 +295,8 @@ public class MainFragmentAdapter extends RecyclerView.Adapter<MainFragmentAdapte
                                                 @Override
                                                 public void run() {
                                                     notifyDataSetChanged();
-                                                    Toast.makeText(mContext, R.string.delete_success, Toast.LENGTH_SHORT).show();
+                                                    Toast.makeText(mContext, R.string.delete_success, Toast
+                                                            .LENGTH_SHORT).show();
                                                     EventBus.getDefault().post(new MainEvent());
                                                 }
                                             });
