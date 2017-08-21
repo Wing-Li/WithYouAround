@@ -23,6 +23,8 @@ import com.lyl.myallforyou.ui.BaseActivity;
 import com.lyl.myallforyou.utils.AppUtils;
 import com.lyl.myallforyou.utils.MyUtils;
 
+import java.net.URISyntaxException;
+
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
@@ -46,6 +48,8 @@ public class AboutActivity extends BaseActivity {
     LinearLayout aboutAddGroupLayout;
     @Bind(R.id.about_back_running)
     LinearLayout aboutBackRunning;
+    @Bind(R.id.about_play_layout)
+    LinearLayout aboutPlayLayout;
 
 
     @Override
@@ -104,6 +108,13 @@ public class AboutActivity extends BaseActivity {
                 startActivity(intent);
             }
         });
+
+        aboutPlayLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                play();
+            }
+        });
     }
 
     private long startTime = 0;
@@ -123,8 +134,8 @@ public class AboutActivity extends BaseActivity {
 
     public boolean joinQQGroup(String key) {
         Intent intent = new Intent();
-        intent.setData(Uri.parse("mqqopensdkapi://bizAgent/qm/qr?url=http%3A%2F%2Fqm.qq" + "" + "" + "" + "" + "" + "" + "" + "" + "" + "" +
-                "" + ".com%2Fcgi-bin%2Fqm%2Fqr%3Ffrom%3Dapp%26p%3Dandroid%26k%3D" + key));
+        intent.setData(Uri.parse("mqqopensdkapi://bizAgent/qm/qr?url=http%3A%2F%2Fqm.qq" + "" + "" + "" + "" + "" +
+                "" + "" + "" + "" + "" + "" + ".com%2Fcgi-bin%2Fqm%2Fqr%3Ffrom%3Dapp%26p%3Dandroid%26k%3D" + key));
         // 此Flag可根据具体产品需要自定义，如设置，则在加群界面按返回，返回手Q主界面，不设置，按返回会返回到呼起产品界面
         // intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         try {
@@ -137,6 +148,19 @@ public class AboutActivity extends BaseActivity {
         }
     }
 
+    private void play() {
+        String play = "FKX09669ZJGDKLVHTD2VB9";
+        String intentFullUrl = "intent://platformapi/startapp?saId=10000007&" +
+                "clientVersion=3.7.0.0718&qrcode=https%3A%2F%2Fqr.alipay.com%2F" + play + "%3F_s" +
+                "%3Dweb-other&_t=1472443966571#Intent;" + "scheme=alipayqr;package=com.eg.android.AlipayGphone;end";
+        Intent intent = null;
+        try {
+            intent = Intent.parseUri(intentFullUrl, Intent.URI_INTENT_SCHEME);
+            startActivity(intent);
+        } catch (URISyntaxException e) {
+            e.printStackTrace();
+        }
+    }
 
     private Bitmap encodeAsBitmap(String str) {
         Bitmap bitmap = null;

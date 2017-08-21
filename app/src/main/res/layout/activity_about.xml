@@ -149,4 +149,21 @@
             android:textIsSelectable="true"/>
     </LinearLayout>
 
+    <LinearLayout
+        android:id="@+id/about_play_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="2dp"
+        android:background="@color/white"
+        android:orientation="horizontal"
+        android:padding="16dp"
+        android:paddingTop="8sp"
+        android:translationZ="2dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="支持开发者"/>
+    </LinearLayout>
+
 </LinearLayout>
