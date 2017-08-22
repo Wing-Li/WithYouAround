@@ -167,6 +167,8 @@ public class UserInfoActivity extends BaseActivity {
                                         showT(R.string.save_success);
                                         SPUtil.put(mContext, Constans.SD_MY_MARKING, edtStr);
                                         userinfoMarking.setText(edtStr);
+
+                                        userinfoExit.setText(R.string.exit_txt);
                                     } else {
                                         showT(R.string.save_fail);
                                     }

@@ -19,8 +19,6 @@ public class WidgetService extends Service {
 
     // 更新 widget 的广播对应的action
     public static final String ACTION_UPDATE_ALL = "com.lyl.myallforyou.widget.UPDATE_ALL";
-    // 周期性更新 widget 的周期
-    private static final int UPDATE_TIME = MyApp.UPLOAD_SPACE_TIME;
 
     private Context mContext;
 
@@ -40,7 +38,7 @@ public class WidgetService extends Service {
             }
         };
         mTimer = new Timer();
-        mTimer.schedule(mTimerTask, 1000, UPDATE_TIME);
+        mTimer.schedule(mTimerTask, 4000, MyApp.UPLOAD_SPACE_TIME);
 
         super.onCreate();
     }
