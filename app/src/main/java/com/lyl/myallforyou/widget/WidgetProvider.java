@@ -60,7 +60,12 @@ public class WidgetProvider extends AppWidgetProvider {
             // “更新”广播
             updateAllAppWidgets(context, AppWidgetManager.getInstance(context), idsSet);
         } else if (CLICK_ACTION.equals(intent.getAction())) {
-
+            MyShared myShared = new MyShared(context);
+            Intent i = new Intent(context, DeviceInfoActivity.class);
+            i.putExtra(ConstantIntent.USER_INFO, myShared.getWidgetUuid());
+            i.putExtra(ConstantIntent.USER_NAME, myShared.getWidgetName());
+            i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            context.startActivity(i);
         } else if (intent.hasCategory(Intent.CATEGORY_ALTERNATIVE)) {
 
         }
@@ -76,8 +81,7 @@ public class WidgetProvider extends AppWidgetProvider {
         while (it.hasNext()) {
             appID = ((Integer) it.next()).intValue();
 
-            final MyShared myShared = new MyShared(context);
-            final String widgetUuid = myShared.getWidgetUuid();
+            String widgetUuid = new MyShared(context).getWidgetUuid();
             final int finalAppID = appID;
             DeviceInfoImp.getDeviceInfo(widgetUuid, new DeviceInfoImp.DeviceInfoCallback() {
                 @Override
@@ -112,11 +116,8 @@ public class WidgetProvider extends AppWidgetProvider {
     }
 
     private PendingIntent getPendingIntent(Context context) {
-        MyShared myShared = new MyShared(context);
-        Intent i = new Intent(context, DeviceInfoActivity.class);
-        i.putExtra(ConstantIntent.USER_INFO, myShared.getWidgetUuid());
-        i.putExtra(ConstantIntent.USER_NAME, myShared.getWidgetName());
-        PendingIntent pi = PendingIntent.getActivity(context, 0, i, 0);
+        Intent i = new Intent(CLICK_ACTION);
+        PendingIntent pi = PendingIntent.getBroadcast(context, 0, i, 0);
         return pi;
     }
 

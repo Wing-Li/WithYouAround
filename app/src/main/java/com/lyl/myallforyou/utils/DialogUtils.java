@@ -79,7 +79,7 @@ public class DialogUtils {
         builder.setNegativeButton(R.string.no_old_user, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
-                userBindCallBack.getUserInfo(null);
+                userBindCallBack.onUserInfo(null);
                 dialogInterface.dismiss();
             }
         });

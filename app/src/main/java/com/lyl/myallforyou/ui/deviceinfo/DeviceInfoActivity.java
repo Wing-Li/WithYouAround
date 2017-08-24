@@ -21,6 +21,7 @@ import com.lyl.myallforyou.constants.ConstantIntent;
 import com.lyl.myallforyou.data.DeviceInfo;
 import com.lyl.myallforyou.network.imp.DeviceInfoImp;
 import com.lyl.myallforyou.ui.BaseActivity;
+import com.lyl.myallforyou.ui.main.MainActivity;
 import com.lyl.myallforyou.utils.OpenLocalMapUtil;
 import com.lyl.myallforyou.view.TransitionHelper;
 
@@ -255,5 +256,14 @@ public class DeviceInfoActivity extends BaseActivity {
                 break;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onBackPressed() {
+        // 这个方法可以判断当前Activity是否是最后一个Activity
+        if (isTaskRoot()) {
+            startActivity(new Intent(mContext, MainActivity.class));
+        }
+        super.onBackPressed();
     }
 }

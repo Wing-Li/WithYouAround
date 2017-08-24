@@ -155,9 +155,10 @@ public class MyUtils {
                     SPUtil.put(context, Constans.SP_MY_SGIN, info.getSign());
                     SPUtil.put(context, Constans.SD_MY_MARKING, info.getMarking());
 
-                    userBindCallBack.getUserInfo(info);
+                    userBindCallBack.onUserInfo(info);
                 } else {
                     Toast.makeText(context, R.string.marking_not, Toast.LENGTH_SHORT).show();
+                    userBindCallBack.onFail();
                 }
             }
         });

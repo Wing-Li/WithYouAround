@@ -6,8 +6,6 @@ import android.content.Intent;
 import android.os.IBinder;
 import android.support.annotation.Nullable;
 
-import com.lyl.myallforyou.MyApp;
-
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -38,7 +36,7 @@ public class WidgetService extends Service {
             }
         };
         mTimer = new Timer();
-        mTimer.schedule(mTimerTask, 4000, MyApp.UPLOAD_SPACE_TIME);
+        mTimer.schedule(mTimerTask, 4000, 10000);
 
         super.onCreate();
     }

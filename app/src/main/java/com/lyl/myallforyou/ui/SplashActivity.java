@@ -92,12 +92,18 @@ public class SplashActivity extends BaseActivity {
         if (TextUtils.isEmpty(objId)){
             DialogUtils.UserBind(mContext, new UserBindCallBack() {
                 @Override
-                public void getUserInfo(UserInfo info) {
+                public void onUserInfo(UserInfo info) {
                     if (info == null){
                         initUserInfo();
                     }else {
                         initMain();
                     }
+                }
+
+                @Override
+                public void onFail() {
+                    finish();
+                    startActivity(new Intent(mContext,SplashActivity.class));
                 }
             });
         }else {

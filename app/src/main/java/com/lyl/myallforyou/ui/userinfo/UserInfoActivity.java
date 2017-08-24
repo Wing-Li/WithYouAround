@@ -114,7 +114,7 @@ public class UserInfoActivity extends BaseActivity {
         } else {
             DialogUtils.UserBind(mContext, new UserBindCallBack() {
                 @Override
-                public void getUserInfo(UserInfo info) {
+                public void onUserInfo(UserInfo info) {
                     if (info != null) {
                         showT(getString(R.string.user_bind_success));
 
@@ -123,6 +123,11 @@ public class UserInfoActivity extends BaseActivity {
                         userinfoMarking.setText(info.getMarking());
                         userinfoExit.setText(R.string.exit_txt);
                     }
+                }
+
+                @Override
+                public void onFail() {
+
                 }
             });
         }
