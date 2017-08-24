@@ -1,6 +1,10 @@
 <resources>
     <string name="app_name">伴你左右</string>
 
+    <!--上线注意事项：-->
+    <!--1. 测试时，上传的时间间隔被修改了。需查看是否恢复-->
+    <!--2. 测试时，桌面部件间隔被修改了。需查看是否恢复-->
+
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
 
