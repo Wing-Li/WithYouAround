@@ -81,7 +81,7 @@
 
     <string name="help">使用帮助</string>
     <string name="q1">1. 如果添加好友？</string>
-    <string name="a1">在 主页 右下角点击“+”，可以扫描对方的二维码，或者输入对方的id。</string>
+    <string name="a1">在 主页 右下角点击“+”，可以扫描对方的二维码。或者点击右上角“手动输入”输入对方的id。</string>
     <string name="q2">2. 如果让别人添加我？</string>
     <string name="a2">如果对方在你身边，可以在主页右上角点击“我的二维码”，让对方扫描自己的二维码；\n如果对方不在身边，可以在主页右上角点击“我的二维码”，点击复制自己的id，将id发送给对方，让对方手动输入。</string>
     <string name="q3">3. 手机的信息多长时间上传一次？</string>
@@ -92,6 +92,8 @@
     <string name="a5">本程序的第一原则，不涉及用户的隐私。如果用账户/密码，那必然会需要 手机号或邮箱，以及可能泄露用户的常用密码，所以添加 用户标示 目的仅是为了能够找回以前的数据，不做其他使用。</string>
     <string name="q6">6. 如何修改上传的间隔时间？</string>
     <string name="a6">在关于页面，连续点击版本号，会出现设置条目，进入设置页面可以设置。需要重启App才能生效。</string>
+    <string name="q7">7. 星标用户有什么用？</string>
+    <string name="a7">本APP有桌面小部件的功能，可以将某个人的信息直接显示在桌面上，而那个人就是星标密友啦。</string>
 
     <string name="ask_friend_hint_msg">邀请亲密的人</string>
     <string name="ask_friend">保存并发送</string>
