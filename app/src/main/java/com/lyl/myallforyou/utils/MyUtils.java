@@ -48,6 +48,10 @@ public class MyUtils {
         return !TextUtils.isEmpty(spMarking);
     }
 
+    public static void showT(Context context, int r) {
+        Toast.makeText(context, r, Toast.LENGTH_SHORT).show();
+    }
+
     /**
      * 随即获取指定位数的一串纯数字字符串
      *
@@ -104,7 +108,8 @@ public class MyUtils {
     public static String getDate(long cur) {
 //        Calendar c = Calendar.getInstance();
 //        c.setTimeInMillis(cur);
-//        return c.get(Calendar.MONTH) + 1 + "-" + c.get(Calendar.DAY_OF_MONTH) + " " + c.get(Calendar.HOUR_OF_DAY) + ":" + c.get(Calendar
+//        return c.get(Calendar.MONTH) + 1 + "-" + c.get(Calendar.DAY_OF_MONTH) + " " + c.get(Calendar.HOUR_OF_DAY) +
+// ":" + c.get(Calendar
 // .MINUTE);
         SimpleDateFormat format = new SimpleDateFormat("MM-dd HH:mm");
         return format.format(new Date(cur));
@@ -176,9 +181,10 @@ public class MyUtils {
             activity.startActivity(intent);
         } catch (Exception e) {
             ClipboardManager clipboardManager = (ClipboardManager) activity.getSystemService(Context.CLIPBOARD_SERVICE);
-            clipboardManager.setPrimaryClip(ClipData.newPlainText("text", activity.getString(R.string.share_txt, MyApp.mAppShare)));
+            clipboardManager.setPrimaryClip(ClipData.newPlainText("text", activity.getString(R.string.share_txt,
+                    MyApp.mAppShare)));
 
-            Toast.makeText(activity.getApplicationContext(), R.string.share_error_hint,Toast.LENGTH_LONG).show();
+            Toast.makeText(activity.getApplicationContext(), R.string.share_error_hint, Toast.LENGTH_LONG).show();
         }
     }
 }

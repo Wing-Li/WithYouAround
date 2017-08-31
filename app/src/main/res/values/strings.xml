@@ -143,4 +143,7 @@
     <string name="appwidget_text">EXAMPLE</string>
     <string name="add_widget">Add widget</string>
 
+    <string name="install_alipay_fail">您没有安装支付宝</string>
+    <string name="alipay_hint">点击右上角在 本地相册 中，选择作者二维码支付</string>
+
 </resources>

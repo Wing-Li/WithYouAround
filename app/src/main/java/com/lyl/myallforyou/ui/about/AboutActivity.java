@@ -22,8 +22,7 @@ import com.lyl.myallforyou.R;
 import com.lyl.myallforyou.ui.BaseActivity;
 import com.lyl.myallforyou.utils.AppUtils;
 import com.lyl.myallforyou.utils.MyUtils;
-
-import java.net.URISyntaxException;
+import com.lyl.myallforyou.utils.PlayUtils;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -112,7 +111,7 @@ public class AboutActivity extends BaseActivity {
         aboutPlayLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                play();
+                PlayUtils.play(mContext);
             }
         });
     }
@@ -145,20 +144,6 @@ public class AboutActivity extends BaseActivity {
             showT(getString(R.string.join_QQ_error));
             // 未安装手Q或安装的版本不支持
             return false;
-        }
-    }
-
-    private void play() {
-        String play = "FKX09669ZJGDKLVHTD2VB9";
-        String intentFullUrl = "intent://platformapi/startapp?saId=10000007&" +
-                "clientVersion=3.7.0.0718&qrcode=https%3A%2F%2Fqr.alipay.com%2F" + play + "%3F_s" +
-                "%3Dweb-other&_t=1472443966571#Intent;" + "scheme=alipayqr;package=com.eg.android.AlipayGphone;end";
-        Intent intent = null;
-        try {
-            intent = Intent.parseUri(intentFullUrl, Intent.URI_INTENT_SCHEME);
-            startActivity(intent);
-        } catch (URISyntaxException e) {
-            e.printStackTrace();
         }
     }
 
