@@ -75,8 +75,13 @@ public final class NetUtil {
      * @return Gps是否可用
      */
     public static boolean isGpsEnabled(Context context) {
-        LocationManager lm = (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
-        return lm.isProviderEnabled(LocationManager.GPS_PROVIDER);
+        try {
+            LocationManager lm = (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
+            return lm.isProviderEnabled(LocationManager.GPS_PROVIDER);
+        }catch (Exception e){
+            // 没有权限
+            return false;
+        }
     }
 
 

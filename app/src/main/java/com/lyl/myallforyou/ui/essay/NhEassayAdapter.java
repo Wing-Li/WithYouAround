@@ -49,12 +49,17 @@ public class NhEassayAdapter extends RecyclerView.Adapter<NhEassayAdapter.BaseVi
     }
 
     public void addData(ArrayList<NhEassay.DataBeanX.DataBean> list) {
+        int positionStart = mList.size() <= 0 ? 0 : mList.size();
         mList.addAll(list);
-        notifyDataSetChanged();
+
+        notifyItemRangeInserted(positionStart, list.size());
     }
 
     public void clear() {
+        int size = mList.size();
         mList.clear();
+
+        notifyItemRangeRemoved(0, size);
     }
 
     @Override
