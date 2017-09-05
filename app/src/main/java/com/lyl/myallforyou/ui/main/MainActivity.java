@@ -169,8 +169,8 @@ public class MainActivity extends BaseActivity {
 
                 // 查看扫描到的二维码id 在不在 服务端数据库内
                 AVQuery<AVObject> query = new AVQuery<>(Constans.TABLE_USER_INFO);
-                query.whereContains(Constans.USER_MYID, uuid);
-                query.whereStartsWith(Constans.USER_MYID, uuid);
+                query.whereContains(Constans.USER_MYID, scanResult);
+                query.whereStartsWith(Constans.USER_MYID, scanResult);
                 query.countInBackground(new CountCallback() {
                     @Override
                     public void done(int i, AVException e) {
@@ -277,13 +277,14 @@ public class MainActivity extends BaseActivity {
                                         }
                                     }
                                 });
+                            }else {
+                                showT(R.string.not_my_object_id);
                             }
                         }
                     });
 
                 } else {
-                    showT(R.string.not_my_object_id);
-                    finish();
+                    showT(R.string.other_id_error);
                 }
             }
         });
