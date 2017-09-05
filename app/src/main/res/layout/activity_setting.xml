@@ -16,127 +16,86 @@
         android:layout_marginLeft="16dp"
         android:layout_marginRight="16dp"
         android:layout_marginTop="4dp"
+        android:layout_gravity="center_horizontal"
+        android:textSize="13sp"
         android:text="您可以尝试打开以下选项，让信息在后台也可以发送"
         android:textColor="@android:color/darker_gray"/>
 
     <LinearLayout
         android:id="@+id/setting_push_layout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
         android:layout_marginTop="4dp"
-        android:background="@color/white"
-        android:elevation="1dp"
-        android:gravity="center_vertical"
-        android:orientation="horizontal"
-        android:paddingBottom="16dp"
-        android:paddingLeft="16dp"
-        android:paddingRight="16dp"
-        android:paddingTop="16dp"
-        android:translationZ="2dp">
+        style="@style/DeviceInfoLayout">
 
         <TextView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="通知权限"
-            android:textSize="16sp"/>
+            android:textSize="14sp"/>
 
         <TextView
             android:id="@+id/setting_push"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="未开启》"
-            android:textSize="16sp"/>
+            android:textSize="14sp"/>
     </LinearLayout>
 
     <LinearLayout
         android:id="@+id/setting_auto_start_layout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="4dp"
-        android:background="@color/white"
-        android:elevation="1dp"
-        android:gravity="center_vertical"
-        android:orientation="horizontal"
-        android:paddingBottom="16dp"
-        android:paddingLeft="16dp"
-        android:paddingRight="16dp"
-        android:paddingTop="16dp"
-        android:translationZ="2dp">
+        style="@style/DeviceInfoLayout">
 
         <TextView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="允许开机自启动"
-            android:textSize="16sp"/>
+            android:textSize="14sp"/>
 
         <TextView
             android:id="@+id/setting_auto_start"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="去设置》"
-            android:textSize="16sp"/>
+            android:textSize="14sp"/>
     </LinearLayout>
 
     <LinearLayout
         android:id="@+id/setting_battey_layout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="4dp"
-        android:background="@color/white"
-        android:elevation="1dp"
-        android:gravity="center_vertical"
-        android:orientation="horizontal"
-        android:paddingBottom="16dp"
-        android:paddingLeft="16dp"
-        android:paddingRight="16dp"
-        android:paddingTop="16dp"
-        android:translationZ="2dp">
+        style="@style/DeviceInfoLayout">
 
         <TextView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="忽略省电优化"
-            android:textSize="16sp"/>
+            android:textSize="14sp"/>
 
         <TextView
             android:id="@+id/setting_battey"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="未开启》"
-            android:textSize="16sp"/>
+            android:textSize="14sp"/>
     </LinearLayout>
 
     <LinearLayout
         android:id="@+id/setting_spacetime_layout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="4dp"
-        android:background="@color/white"
-        android:elevation="1dp"
-        android:gravity="center_vertical"
-        android:orientation="horizontal"
-        android:paddingBottom="16dp"
-        android:paddingLeft="16dp"
-        android:paddingRight="16dp"
-        android:paddingTop="16dp"
-        android:translationZ="2dp">
+        style="@style/DeviceInfoLayout">
 
         <TextView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="上传间隔"
-            android:textSize="16sp"/>
+            android:textSize="14sp"/>
 
         <TextView
             android:id="@+id/setting_spacetime"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="5分钟》"
-            android:textSize="16sp"/>
+            android:textSize="14sp"/>
     </LinearLayout>
 
     <View

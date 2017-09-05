@@ -45,10 +45,15 @@ public class DeviceInfoService extends Service {
     public void onCreate() {
         super.onCreate();
         mContext = this;
+    }
 
+
+    @Override
+    public int onStartCommand(Intent intent, int flags, int startId) {
         initMap();
         initBattey();
         initData();
+        return super.onStartCommand(intent, flags, startId);
     }
 
 
@@ -156,17 +161,17 @@ public class DeviceInfoService extends Service {
     }
 
 
-    TimerTask timerTask = new TimerTask() {
+    TimerTask mTimerTask = new TimerTask() {
         @Override
         public void run() {
             sendDeviceInfo();
         }
     };
-
+    Timer mTimer;
 
     private void initData() {
-        Timer timer = new Timer();
-        timer.schedule(timerTask, 30 * 1000, MyApp.UPLOAD_SPACE_TIME);
+        mTimer = new Timer();
+        mTimer.schedule(mTimerTask, 30 * 1000, MyApp.UPLOAD_SPACE_TIME);
     }
 
 
@@ -326,5 +331,7 @@ public class DeviceInfoService extends Service {
         super.onDestroy();
         MapLocationUtil.destroyLocation();
         unregisterReceiver(broadcastReceiver);
+        mTimerTask.cancel();
+        mTimer.cancel();
     }
 }

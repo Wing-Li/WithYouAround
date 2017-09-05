@@ -1,7 +1,6 @@
 package com.lyl.myallforyou.widget;
 
 import android.app.Service;
-import android.content.Context;
 import android.content.Intent;
 import android.os.IBinder;
 import android.support.annotation.Nullable;
@@ -20,26 +19,11 @@ public class WidgetService extends Service {
     // 更新 widget 的广播对应的action
     public static final String ACTION_UPDATE_ALL = "com.lyl.myallforyou.widget.UPDATE_ALL";
 
-    private Context mContext;
-
     private Timer mTimer;
     private TimerTask mTimerTask;
 
     @Override
     public void onCreate() {
-        // 创建并开启线程
-        mContext = this.getApplicationContext();
-
-        mTimerTask = new TimerTask() {
-            @Override
-            public void run() {
-                Intent updateIntent = new Intent(ACTION_UPDATE_ALL);
-                mContext.sendBroadcast(updateIntent);
-            }
-        };
-        mTimer = new Timer();
-        mTimer.schedule(mTimerTask, 4000, MyApp.MAP_SPACE_TIME);
-
         super.onCreate();
     }
 
@@ -64,8 +48,16 @@ public class WidgetService extends Service {
     */
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-        super.onStartCommand(intent, flags, startId);
+        mTimerTask = new TimerTask() {
+            @Override
+            public void run() {
+                Intent updateIntent = new Intent(ACTION_UPDATE_ALL);
+                sendBroadcast(updateIntent);
+            }
+        };
+        mTimer = new Timer();
+        mTimer.schedule(mTimerTask, 4000, MyApp.UPLOAD_SPACE_TIME);
 
-        return START_STICKY;
+        return super.onStartCommand(intent, flags, startId);
     }
 }

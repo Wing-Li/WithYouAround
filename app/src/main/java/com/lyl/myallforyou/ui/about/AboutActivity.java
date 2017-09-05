@@ -21,7 +21,6 @@ import com.journeyapps.barcodescanner.BarcodeEncoder;
 import com.lyl.myallforyou.R;
 import com.lyl.myallforyou.ui.BaseActivity;
 import com.lyl.myallforyou.utils.AppUtils;
-import com.lyl.myallforyou.utils.MyUtils;
 import com.lyl.myallforyou.utils.PlayUtils;
 
 import butterknife.Bind;
@@ -33,14 +32,10 @@ public class AboutActivity extends BaseActivity {
 
     @Bind(R.id.toolbar)
     Toolbar toolbar;
-    @Bind(R.id.about_version_layout)
-    LinearLayout aboutVersionLayout;
     @Bind(R.id.about_version)
     TextView aboutVersion;
     @Bind(R.id.about_email)
     TextView aboutEmail;
-    @Bind(R.id.about_ask_friend)
-    LinearLayout aboutAskFriend;
     @Bind(R.id.about_add_group)
     TextView aboutAddGroup;
     @Bind(R.id.about_add_group_layout)
@@ -79,20 +74,6 @@ public class AboutActivity extends BaseActivity {
             }
         });
 
-        aboutVersionLayout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                showBackRunning();
-            }
-        });
-
-        aboutAskFriend.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                MyUtils.shareApp(AboutActivity.this);
-            }
-        });
-
         aboutAddGroupLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -114,21 +95,6 @@ public class AboutActivity extends BaseActivity {
                 PlayUtils.play(mContext);
             }
         });
-    }
-
-    private long startTime = 0;
-    private int clickNum = 0;
-
-    private void showBackRunning() {
-        if (System.currentTimeMillis() - startTime < 2000) {
-            if (clickNum > 5) {
-                aboutBackRunning.setVisibility(View.VISIBLE);
-            }
-            ++clickNum;
-        } else {
-            clickNum = 0;
-            startTime = System.currentTimeMillis();
-        }
     }
 
     public boolean joinQQGroup(String key) {

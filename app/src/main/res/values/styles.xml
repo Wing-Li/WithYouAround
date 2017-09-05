@@ -30,6 +30,10 @@
         <item name="android:translationZ">2dp</item>
     </style>
 
+    <style name="DeviceInfoLayout_Widget" parent="@style/DeviceInfoLayout">
+        <item name="android:layout_height">32dp</item>
+    </style>
+
     <style name="DeviceInfoTitle">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
@@ -46,11 +50,17 @@
         <item name="android:layout_weight">1</item>
     </style>
 
+    <style name="DeviceInfoContentTitle_Widget" parent="@style/DeviceInfoContentTitle">
+    </style>
+
     <style name="DeviceInfoContent">
         <item name="android:layout_width">0dp</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_weight">3</item>
         <item name="android:gravity">right</item>
+    </style>
+
+    <style name="DeviceInfoContent_Widget" parent="@style/DeviceInfoContent">
     </style>
 
     <style name="HelpTextQ">

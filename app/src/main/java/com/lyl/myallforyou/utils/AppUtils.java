@@ -16,6 +16,7 @@ package com.lyl.myallforyou.utils;
  * limitations under the License.
  */
 
+import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
 import android.app.ActivityManager;
 import android.app.ActivityManager.MemoryInfo;
@@ -422,7 +423,7 @@ public final class AppUtils {
     private final static X500Principal DEBUG_DN = new X500Principal("CN=Android Debug,O=Android,C=US");
 
 
-    public static String getUUID(){
+    public static String getUUID() {
         return UUID.randomUUID().toString();
     }
 
@@ -472,6 +473,7 @@ public final class AppUtils {
      * @return st[0] (2017:1:26);
      * st[1] (13:26:20)
      */
+    @SuppressLint("WrongConstant")
     public static String[] getSystemTime() {
         long time = System.currentTimeMillis();
         Calendar mCalendar = Calendar.getInstance();
@@ -486,7 +488,11 @@ public final class AppUtils {
 
         String[] systemTime = new String[2];
         systemTime[0] = year + "-" + month + "-" + day;
-        systemTime[1] = hour + ":" + minuts + ":" + second;
+
+        String minutsStr = minuts < 10 ? "0" + minuts : String.valueOf(minuts);
+        String secondStr = second < 10 ? "0" + second : String.valueOf(second);
+
+        systemTime[1] = hour + ":" + minutsStr + ":" + secondStr;
 
         return systemTime;
     }
