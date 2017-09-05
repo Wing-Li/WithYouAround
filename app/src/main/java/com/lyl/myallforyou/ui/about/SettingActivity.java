@@ -6,6 +6,7 @@ import android.content.ActivityNotFoundException;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -18,10 +19,14 @@ import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.dingmouren.colorpicker.ColorPickerDialog;
+import com.dingmouren.colorpicker.OnColorPickerListener;
 import com.lyl.myallforyou.MyApp;
 import com.lyl.myallforyou.R;
+import com.lyl.myallforyou.constants.Constans;
 import com.lyl.myallforyou.ui.BaseActivity;
 import com.lyl.myallforyou.utils.DialogUtils;
+import com.lyl.myallforyou.utils.SPUtil;
 import com.lyl.myallforyou.utils.SystemRomUtils;
 
 import butterknife.Bind;
@@ -50,6 +55,10 @@ public class SettingActivity extends BaseActivity {
     TextView settingSpacetime;
     @Bind(R.id.setting_spacetime_layout)
     LinearLayout settingSpacetimeLayout;
+    @Bind(R.id.setting_widget_color)
+    View settingWidgetColor;
+    @Bind(R.id.setting_widget_color_layout)
+    LinearLayout settingWidgetColorLayout;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -126,7 +135,42 @@ public class SettingActivity extends BaseActivity {
                 DialogUtils.setUploadSpaceTime(mContext);
             }
         });
+
+
+        final int color = (int) SPUtil.get(mContext, Constans.SP_WIDGET_COLOR, Color.WHITE);
+        settingWidgetColor.setBackgroundColor(color);
+        settingWidgetColorLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // 创建颜色选择器
+                new ColorPickerDialog(mContext,//
+                        color,//
+                        false,//
+                        mOnColorPickerListener//
+                ).show();
+            }
+        });
     }
+
+    /**
+     * 取色器的监听器
+     */
+    private OnColorPickerListener mOnColorPickerListener = new OnColorPickerListener() {
+        @Override
+        public void onColorCancel(ColorPickerDialog dialog) {//取消选择的颜色
+        }
+
+        @Override
+        public void onColorChange(ColorPickerDialog dialog, int color) {//实时监听颜色变化
+        }
+
+        @Override
+        public void onColorConfirm(ColorPickerDialog dialog, int color) {//确定的颜色
+            SPUtil.put(mContext, Constans.SP_WIDGET_COLOR, color);
+            settingWidgetColor.setBackgroundColor(color);
+            showT(R.string.upload_space_time_success);
+        }
+    };
 
     /**
      * 判断是否拥有通知使用权
@@ -156,7 +200,8 @@ public class SettingActivity extends BaseActivity {
         } catch (ActivityNotFoundException e) {
             try {
                 Intent intent = new Intent();
-                ComponentName cn = new ComponentName("com.android.settings", "com.android.settings.Settings$NotificationAccessSettingsActivity");
+                ComponentName cn = new ComponentName("com.android.settings", "com.android.settings" + "" + "" +
+                        ".Settings$NotificationAccessSettingsActivity");
                 intent.setComponent(cn);
                 intent.putExtra(":settings:show_fragment", "NotificationAccessSettings");
                 context.startActivity(intent);
@@ -183,13 +228,16 @@ public class SettingActivity extends BaseActivity {
             Log.e("HLQ_Struggle", "******************当前手机型号为：" + getMobileType());
             ComponentName componentName = null;
             if (getMobileType().equals("Xiaomi") || SystemRomUtils.isMIUI()) { // 红米Note4测试通过
-                componentName = new ComponentName("com.miui.securitycenter", "com.miui.permcenter.autostart.AutoStartManagementActivity");
+                componentName = new ComponentName("com.miui.securitycenter", "com.miui.permcenter.autostart" + "" + "" +
+                        ".AutoStartManagementActivity");
             } else if (getMobileType().equals("Letv")) { // 乐视2测试通过
                 intent.setAction("com.letv.android.permissionautoboot");
             } else if (getMobileType().equals("samsung")) { // 三星Note5测试通过
-                componentName = new ComponentName("com.samsung.android.sm_cn", "com.samsung.android.sm.ui.ram.AutoRunActivity");
+                componentName = new ComponentName("com.samsung.android.sm_cn", "com.samsung.android.sm.ui.ram" + "" +
+                        ".AutoRunActivity");
             } else if (getMobileType().equals("HUAWEI") || SystemRomUtils.isEMUI()) { // 华为测试通过
-                componentName = new ComponentName("com.huawei.systemmanager", "com.huawei.systemmanager.optimize.process.ProtectActivity");
+                componentName = new ComponentName("com.huawei.systemmanager", "com.huawei.systemmanager.optimize" +
+                        "" + ".process.ProtectActivity");
             } else if (getMobileType().equals("vivo")) { // VIVO测试通过
                 componentName = ComponentName.unflattenFromString("com.iqoo.secure/.safeguard.PurviewTabActivity");
             } else if (getMobileType().equals("Meizu") || SystemRomUtils.isFlyme()) { //万恶的魅族
@@ -197,9 +245,11 @@ public class SettingActivity extends BaseActivity {
                 // 针对魅族，我们只能通过魅族内置手机管家去设置自启动，所以我在这里直接跳转到魅族内置手机管家界面，具体结果请看图
                 componentName = ComponentName.unflattenFromString("com.meizu.safe/.permission.PermissionMainActivity");
             } else if (getMobileType().equals("OPPO")) { // OPPO R8205测试通过
-                componentName = ComponentName.unflattenFromString("com.oppo.safe/.permission.startup.StartupAppListActivity");
+                componentName = ComponentName.unflattenFromString("com.oppo.safe/.permission.startup" + "" + "" +
+                        ".StartupAppListActivity");
             } else if (getMobileType().equals("ulong")) { // 360手机 未测试
-                componentName = new ComponentName("com.yulong.android.coolsafe", ".ui.activity.autorun.AutoRunListActivity");
+                componentName = new ComponentName("com.yulong.android.coolsafe", ".ui.activity.autorun" + "" + "" +
+                        ".AutoRunListActivity");
             } else {
                 // 以上只是市面上主流机型，由于公司你懂的，所以很不容易才凑齐以上设备
                 // 针对于其他设备，我们只能调整当前系统app查看详情界面
@@ -242,7 +292,7 @@ public class SettingActivity extends BaseActivity {
                     intent.setData(Uri.parse("package:" + activity.getPackageName()));
                     startActivity(intent);
                 }
-            }catch (Exception e){
+            } catch (Exception e) {
                 showT(R.string.device_not_support);
             }
 

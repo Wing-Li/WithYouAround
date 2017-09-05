@@ -5,15 +5,18 @@ import android.appwidget.AppWidgetManager;
 import android.appwidget.AppWidgetProvider;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.widget.RemoteViews;
 
 import com.lyl.myallforyou.MyShared;
 import com.lyl.myallforyou.R;
+import com.lyl.myallforyou.constants.Constans;
 import com.lyl.myallforyou.constants.ConstantIntent;
 import com.lyl.myallforyou.data.DeviceInfo;
 import com.lyl.myallforyou.network.imp.DeviceInfoImp;
 import com.lyl.myallforyou.ui.deviceinfo.DeviceInfoActivity;
+import com.lyl.myallforyou.utils.SPUtil;
 
 import java.util.HashSet;
 import java.util.Iterator;
@@ -89,6 +92,18 @@ public class WidgetProvider extends AppWidgetProvider {
                     // 获取 example_appwidget.xml 对应的RemoteViews
                     RemoteViews remoteView = new RemoteViews(context.getPackageName(), R.layout.widget_layout);
 
+                    int color = (int) SPUtil.get(context, Constans.SP_WIDGET_COLOR, Color.WHITE);
+                    remoteView.setTextColor(R.id.device_manufacturer_title, color);
+                    remoteView.setTextColor(R.id.device_manufacturer, color);
+                    remoteView.setTextColor(R.id.system_time_title, color);
+                    remoteView.setTextColor(R.id.system_time, color);
+                    remoteView.setTextColor(R.id.system_battery_title, color);
+                    remoteView.setTextColor(R.id.system_battery, color);
+                    remoteView.setTextColor(R.id.screen_status_title, color);
+                    remoteView.setTextColor(R.id.screen_status, color);
+                    remoteView.setTextColor(R.id.address_title, color);
+                    remoteView.setTextColor(R.id.address, color);
+
                     // 设备厂商
                     remoteView.setTextViewText(R.id.device_manufacturer, deviceInfo.getDevice_manufacturer());
                     // 系统时间
@@ -113,6 +128,10 @@ public class WidgetProvider extends AppWidgetProvider {
                 }
             });
         }
+    }
+
+    private void setTextViewColor(int... id) {
+
     }
 
     private PendingIntent getPendingIntent(Context context) {

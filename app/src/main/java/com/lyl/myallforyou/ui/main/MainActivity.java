@@ -215,9 +215,12 @@ public class MainActivity extends BaseActivity {
                 dialogInterface.dismiss();
             }
         });
-        AlertDialog alertDialog = builder.create();
-        alertDialog.setCancelable(false);
-        alertDialog.show();
+        try {
+            AlertDialog alertDialog = builder.create();
+            alertDialog.setCancelable(false);
+            alertDialog.show();
+        } catch (Exception e) {
+        }
     }
 
 
@@ -277,7 +280,7 @@ public class MainActivity extends BaseActivity {
                                         }
                                     }
                                 });
-                            }else {
+                            } else {
                                 showT(R.string.not_my_object_id);
                             }
                         }

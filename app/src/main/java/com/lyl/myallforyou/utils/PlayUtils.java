@@ -27,24 +27,23 @@ public class PlayUtils {
      * 如果跳转失败了，则跳转到支付宝的扫一扫，保存支付宝的二维码到本地
      */
     public static void play(Context context) {
-        qrPlayAlipay(context, false);
-//        if (!hasInstalledAlipayClient(context.getApplicationContext())) {
-//            // 跳转到微信扫描页面，选择微信的二维码
-//            qrPlayAlipay(context, false);
-//            return;
-//        }
-//
-//        String play = "FKX09669ZJGDKLVHTD2VB9";
-//        String intentFullUrl = "intent://platformapi/startapp?saId=10000007&" +
-//                "clientVersion=3.7.0.0718&qrcode=https%3A%2F%2Fqr.alipay.com%2F" + play + "%3F_s" +
-//                "%3Dweb-other&_t=1472443966571#Intent;" + "scheme=alipayqr;package=com.eg.android.AlipayGphone;end";
-//        try {
-//            Intent intent = Intent.parseUri(intentFullUrl, Intent.URI_INTENT_SCHEME);
-//            context.startActivity(intent);
-//        } catch (Exception e) {
-//            // 如果跳转转账页面失败，就显示扫描页面，让用户扫描二维码
-//            qrPlayAlipay(context, true);
-//        }
+        if (!hasInstalledAlipayClient(context.getApplicationContext())) {
+            // 跳转到微信扫描页面，选择微信的二维码
+            qrPlayAlipay(context, false);
+            return;
+        }
+
+        String play = "FKX09669ZJGDKLVHTD2VB9";
+        String intentFullUrl = "intent://platformapi/startapp?saId=10000007&" +
+                "clientVersion=3.7.0.0718&qrcode=https%3A%2F%2Fqr.alipay.com%2F" + play + "%3F_s" +
+                "%3Dweb-other&_t=1472443966571#Intent;" + "scheme=alipayqr;package=com.eg.android.AlipayGphone;end";
+        try {
+            Intent intent = Intent.parseUri(intentFullUrl, Intent.URI_INTENT_SCHEME);
+            context.startActivity(intent);
+        } catch (Exception e) {
+            // 如果跳转转账页面失败，就显示扫描页面，让用户扫描二维码
+            qrPlayAlipay(context, true);
+        }
     }
 
     /**

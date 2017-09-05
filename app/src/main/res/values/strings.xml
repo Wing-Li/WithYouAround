@@ -89,15 +89,17 @@
     <string name="q2">2. 如果让别人添加我？</string>
     <string name="a2">如果对方在你身边，可以在主页右上角点击“我的二维码”，让对方扫描自己的二维码；\n如果对方不在身边，可以在主页右上角点击“我的二维码”，点击复制自己的id，将id发送给对方，让对方手动输入。</string>
     <string name="q3">3. 手机的信息多长时间上传一次？</string>
-    <string name="a3">默认五分钟上传一次。</string>
+    <string name="a3">默认十分钟上传一次。</string>
     <string name="q4">4. 如何找回之前的数据？</string>
     <string name="a4">在侧边栏点击程序图标，跳转到用户详情页面，长按设置用户标志，则可以在其他手机使用用户标示同步之前的信息。\n如果没有设置用户标志，想要找回数据。您可以在 关于 页面点击 加入群聊 找群主帮你找回之前的信息。</string>
     <string name="q5">5. 为什么不使用用户名/密码的形式来记录用户？</string>
     <string name="a5">本程序的第一原则，不涉及用户的隐私。如果用账户/密码，那必然会需要 手机号或邮箱，以及可能泄露用户的常用密码，所以添加 用户标示 目的仅是为了能够找回以前的数据，不做其他使用。</string>
     <string name="q6">6. 如何修改上传的间隔时间？</string>
-    <string name="a6">在关于页面，连续点击版本号，会出现设置条目，进入设置页面可以设置。需要重启App才能生效。</string>
+    <string name="a6">在关于页面，点击“软件设置”，进入设置页面可以设置。需要重启App才能生效。</string>
     <string name="q7">7. 星标用户有什么用？</string>
     <string name="a7">本APP有桌面小部件的功能，可以将某个人的信息直接显示在桌面上，而那个人就是星标密友啦。</string>
+    <string name="q8">8. 如何修改桌面部件显示的文字颜色？</string>
+    <string name="a8">在“关于”页面，点击“软件设置”可以看到 桌面文字颜色，即可设置。</string>
 
     <string name="ask_friend_hint_msg">邀请亲密的人</string>
     <string name="ask_friend">保存并发送</string>
@@ -125,7 +127,7 @@
     <string name="upload_space_time_hint">设置范围：5-30之间</string>
     <string name="upload_space_time_title">间隔时间（分钟）</string>
     <string name="upload_space_time_error">请确认您输入的是否是正整数</string>
-    <string name="upload_space_time_txt">%1$d分钟</string>
+    <string name="upload_space_time_txt">%1$d分钟》</string>
     <string name="upload_space_time_success">设置成功，下次启动生效</string>
     <string name="share_txt">这个APP可以让我们看到彼此手机的各种信息，感觉挺有意思的，我们一起来玩玩吧。\n\n下载地址：%1$s</string>
     <string name="share">分享</string>

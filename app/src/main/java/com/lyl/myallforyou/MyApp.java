@@ -27,7 +27,7 @@ public class MyApp extends Application {
     /**
      * 信息上传的间隔时间
      */
-    public static int UPLOAD_SPACE_TIME = 5 * 60 * 1000 + 2000;
+    public static int UPLOAD_SPACE_TIME = 10 * 60 * 1000 + 2000;
 
     public static String mAppShare = "http://www.coolapk.com/apk/com.lyl.myallforyou";
     public static LiteOrm liteOrm;

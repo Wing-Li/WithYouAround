@@ -23,8 +23,8 @@ android {
         applicationId "com.lyl.myallforyou"
         minSdkVersion 19
         targetSdkVersion 22
-        versionCode 13
-        versionName "1.4.2"
+        versionCode 14
+        versionName "1.4.3"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
 
         ndk {
@@ -94,4 +94,5 @@ dependencies {
     compile 'com.journeyapps:zxing-android-embedded:3.3.0'
     compile 'cn.leancloud.android:avoscloud-sdk:v3.16.4'
     compile 'com.tencent.bugly:crashreport_upgrade:1.2.5'
+    compile 'com.dingmouren.colorpicker:colorpicker:1.0.1'
 }

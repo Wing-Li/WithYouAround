@@ -12,6 +12,7 @@
         android:weightSum="4">
 
         <TextView
+            android:id="@+id/device_manufacturer_title"
             style="@style/DeviceInfoContentTitle_Widget"
             android:text="设备厂商："/>
 
@@ -27,6 +28,7 @@
         android:weightSum="4">
 
         <TextView
+            android:id="@+id/system_time_title"
             style="@style/DeviceInfoContentTitle_Widget"
             android:text="时        间："/>
 
@@ -42,6 +44,7 @@
         android:weightSum="4">
 
         <TextView
+            android:id="@+id/system_battery_title"
             style="@style/DeviceInfoContentTitle_Widget"
             android:text="电        量："/>
 
@@ -57,6 +60,7 @@
         android:weightSum="4">
 
         <TextView
+            android:id="@+id/screen_status_title"
             style="@style/DeviceInfoContentTitle_Widget"
             android:text="屏幕状态："/>
 
@@ -72,6 +76,7 @@
         android:weightSum="4">
 
         <TextView
+            android:id="@+id/address_title"
             style="@style/DeviceInfoContentTitle_Widget"
             android:text="位        置："/>
 
