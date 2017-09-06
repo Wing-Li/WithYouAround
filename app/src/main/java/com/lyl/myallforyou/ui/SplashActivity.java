@@ -54,6 +54,19 @@ public class SplashActivity extends BaseActivity {
         checkNet();
     }
 
+    private void setAnimation() {
+        LinearLayout layout = (LinearLayout) findViewById(R.id.layout);
+        TranslateAnimation translate = new TranslateAnimation(Animation.RELATIVE_TO_SELF, 0, Animation.RELATIVE_TO_SELF, 0, Animation
+                .RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0);
+        AlphaAnimation alpha = new AlphaAnimation(0, 1);
+        alpha.setDuration(WAIT_TIME);
+        translate.setDuration(WAIT_TIME);
+        AnimationSet animationSet = new AnimationSet(true);
+        animationSet.addAnimation(translate);
+        animationSet.addAnimation(alpha);
+        layout.startAnimation(translate);
+    }
+
     private void checkNet() {
         if (TextUtils.isEmpty(objId) && !NetUtil.isNetworkAvailable(mContext)) {
             AlertDialog alertDialog = new AlertDialog.Builder(mContext)//
@@ -120,27 +133,29 @@ public class SplashActivity extends BaseActivity {
         query.countInBackground(new CountCallback() {
             @Override
             public void done(int i, AVException e) {
-                if (e == null && i <= 0) {
+                if (e == null && i <= 0) {// 不存在
                     final AVObject userInfo = new AVObject(Constans.TABLE_USER_INFO);
                     userInfo.put(Constans.USER_MYID, uuid);
                     userInfo.saveInBackground(new SaveCallback() {
                         @Override
                         public void done(AVException e) {
                             if (e != null) {
-                                Toast.makeText(mContext, R.string.upload_error, Toast.LENGTH_SHORT).show();
+                                Toast.makeText(mContext, R.string.init_info_fail, Toast.LENGTH_SHORT).show();
+                                finish();
                             } else {
                                 Toast.makeText(mContext, R.string.upload_success, Toast.LENGTH_SHORT).show();
                                 String objectId = userInfo.getObjectId();
                                 SPUtil.put(mContext, Constans.SP_OBJ_ID, objectId);
+                                initMain();
                             }
                         }
                     });
+                }else {
+                    initMain();
                 }
-                initMain();
             }
         });
     }
-
 
     private void initMain() {
         // 如果加载时间不到2秒就等一会，超过两秒就直接跳
@@ -158,17 +173,4 @@ public class SplashActivity extends BaseActivity {
         finish();
     }
 
-
-    private void setAnimation() {
-        LinearLayout layout = (LinearLayout) findViewById(R.id.layout);
-        TranslateAnimation translate = new TranslateAnimation(Animation.RELATIVE_TO_SELF, 0, Animation.RELATIVE_TO_SELF, 0, Animation
-                .RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0);
-        AlphaAnimation alpha = new AlphaAnimation(0, 1);
-        alpha.setDuration(WAIT_TIME);
-        translate.setDuration(WAIT_TIME);
-        AnimationSet animationSet = new AnimationSet(true);
-        animationSet.addAnimation(translate);
-        animationSet.addAnimation(alpha);
-        layout.startAnimation(translate);
-    }
 }
