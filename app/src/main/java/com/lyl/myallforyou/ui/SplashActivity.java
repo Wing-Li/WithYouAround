@@ -20,12 +20,18 @@ import com.avos.avoscloud.SaveCallback;
 import com.lyl.myallforyou.R;
 import com.lyl.myallforyou.constants.Constans;
 import com.lyl.myallforyou.data.UserInfo;
+import com.lyl.myallforyou.im.IMCallBack;
+import com.lyl.myallforyou.im.IMutils;
 import com.lyl.myallforyou.ui.main.MainActivity;
 import com.lyl.myallforyou.ui.userinfo.UserBindCallBack;
 import com.lyl.myallforyou.utils.DeviceStatusUtils;
 import com.lyl.myallforyou.utils.DialogUtils;
 import com.lyl.myallforyou.utils.NetUtil;
 import com.lyl.myallforyou.utils.SPUtil;
+
+import java.io.File;
+
+import cn.jpush.im.android.api.JMessageClient;
 
 
 public class SplashActivity extends BaseActivity {
@@ -168,6 +174,28 @@ public class SplashActivity extends BaseActivity {
             }
         }
 
+        // 登陆极光服务器，登陆成功后跳转主页面
+        IMutils.loginJG(uuid, IMutils.password, new IMCallBack() {
+            @Override
+            public void onSuccess(int code, String msg) {
+                cn.jpush.im.android.api.model.UserInfo myInfo = JMessageClient.getMyInfo();
+                File avatarFile = myInfo.getAvatarFile();
+                //登陆成功,如果用户有头像就把头像存起来,没有就设置null
+                if (avatarFile != null) {
+                    SPUtil.put(mContext, Constans.SP_MY_ICON, avatarFile.getAbsolutePath());
+                }
+                goMain();
+            }
+
+            @Override
+            public void onFail(int code, String msg) {
+                showT(getString(R.string.login_jg_fail));
+                goMain();
+            }
+        });
+    }
+
+    private void goMain(){
         Intent intent = new Intent(SplashActivity.this, MainActivity.class);
         startActivity(intent);
         finish();

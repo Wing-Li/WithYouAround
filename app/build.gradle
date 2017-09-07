@@ -31,6 +31,12 @@ android {
             // 设置支持的SO库架构
             abiFilters 'armeabi', 'x86', 'armeabi-v7a'//, 'x86_64', 'arm64-v8a'
         }
+
+        manifestPlaceholders = [
+                JPUSH_PKGNAME : applicationId,
+                JPUSH_APPKEY : properties.getProperty('JPUSH_APPKEY'), //JPush上注册的包名对应的appkey.
+                JPUSH_CHANNEL : "developer-default", //暂时填写默认值即可.
+        ]
     }
 
     productFlavors {
@@ -95,4 +101,8 @@ dependencies {
     compile 'cn.leancloud.android:avoscloud-sdk:v3.16.4'
     compile 'com.tencent.bugly:crashreport_upgrade:1.2.5'
     compile 'com.dingmouren.colorpicker:colorpicker:1.0.1'
+    // 极光推送
+    compile 'cn.jiguang.sdk:jpush:3.0.3'  // 推送,此处以JPush 3.0.3 版本为例。
+    compile 'cn.jiguang.sdk:jmessage:2.2.1'  // IM,此处以JMessage 2.2.1 版本为例。
+    compile 'cn.jiguang.sdk:jcore:1.1.6'  // 此处以JCore 1.1.6 版本为例。
 }

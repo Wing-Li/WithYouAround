@@ -8,17 +8,25 @@ import com.avos.avoscloud.AVOSCloud;
 import com.litesuits.orm.LiteOrm;
 import com.litesuits.orm.db.DataBaseConfig;
 import com.lyl.myallforyou.constants.Constans;
+import com.lyl.myallforyou.im.entity.NotificationClickEventReceiver;
 import com.lyl.myallforyou.utils.MyUtils;
 import com.lyl.myallforyou.utils.SPUtil;
 import com.tencent.bugly.Bugly;
 
 import java.io.File;
 
+import cn.jpush.im.android.api.JMessageClient;
+
 /**
  * Created by lyl on 2017/4/6.
  */
 
 public class MyApp extends Application {
+
+    public static final String TARGET_ID = "targetId";
+    public static final String TARGET_APP_KEY = "targetAppKey";
+    public static final String GROUP_ID = "groupId";
+    public static final String CONV_TITLE = "conv_title";
 
     /**
      * 位置获取的间隔时间
@@ -43,7 +51,17 @@ public class MyApp extends Application {
 
         initBugly();
 
+        initJG();
+
         initSpaceTime();
+    }
+
+    private void initJG(){
+        JMessageClient.init(this);
+        //设置Notification的模式
+        JMessageClient.setNotificationFlag(JMessageClient.FLAG_NOTIFY_WITH_SOUND | JMessageClient.FLAG_NOTIFY_WITH_LED | JMessageClient.FLAG_NOTIFY_WITH_VIBRATE);
+        //注册Notification点击的接收器
+        new NotificationClickEventReceiver(getApplicationContext());
     }
 
     private void initSpaceTime() {

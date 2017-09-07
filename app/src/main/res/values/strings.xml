@@ -31,6 +31,7 @@
     <string name="info_system_time">TA的时间</string>
     <string name="info_system_battery">电量</string>
     <string name="not_my_object_id">账号信息有误，请尝试重新打开应用程序</string>
+    <string name="init_info_fail">初始化信息失败，请尝试重新打开程序</string>
     <string name="upload_error">上传出错</string>
     <string name="upload_success">信息上传成功</string>
     <string name="ON">开</string>
@@ -147,5 +148,6 @@
 
     <string name="install_alipay_fail">您没有安装支付宝</string>
     <string name="alipay_hint">点击右上角在 本地相册 中，选择作者二维码支付</string>
+    <string name="login_jg_fail">登陆聊天系统出错，您将不能聊天。\n您可以尝试重启App</string>
 
 </resources>
