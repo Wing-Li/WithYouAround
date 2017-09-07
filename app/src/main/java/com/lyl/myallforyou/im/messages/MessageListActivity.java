@@ -21,6 +21,7 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.target.Target;
 import com.lyl.myallforyou.R;
+import com.lyl.myallforyou.im.IMutils;
 import com.lyl.myallforyou.im.models.DefaultUser;
 import com.lyl.myallforyou.im.models.MyMessage;
 import com.lyl.myallforyou.im.views.ChatView;
@@ -83,7 +84,23 @@ public class MessageListActivity extends BaseActivity implements ChatView.OnKeyb
     }
 
     private void getParmeter() {
+        mMyUserInfo = IMutils.getMyInfo();
         // TODO
+    }
+
+    /**
+     * 是否是自己发送的消息
+     */
+    private MyMessage setUserInfo(MyMessage message, boolean isMySelf) {
+        if (isMySelf) {
+            message.setUserInfo(new DefaultUser("1", mMyUserInfo.getNickname(), mMyUserInfo.getAvatarFile()
+                    .getAbsolutePath()));
+        } else {
+            message.setUserInfo(new DefaultUser("0", mTargetName, mTargetIcon));
+        }
+        message.setTimeString(new SimpleDateFormat("HH:mm", Locale.getDefault()).format(new Date()));
+
+        return message;
     }
 
     private void initKeyboard() {
@@ -101,8 +118,7 @@ public class MessageListActivity extends BaseActivity implements ChatView.OnKeyb
                     return false;
                 }
                 MyMessage message = new MyMessage(input.toString(), IMessage.MessageType.SEND_TEXT);
-                message.setUserInfo(new DefaultUser("1", "Ironman", "R.drawable.ironman"));
-                message.setTimeString(new SimpleDateFormat("HH:mm", Locale.getDefault()).format(new Date()));
+                message = setUserInfo(message,true);
                 mAdapter.addToStart(message, true);
                 return true;
             }
@@ -129,9 +145,8 @@ public class MessageListActivity extends BaseActivity implements ChatView.OnKeyb
                         throw new RuntimeException("Invalid FileItem type. Must be Type.Image or Type.Video");
                     }
 
-                    message.setTimeString(new SimpleDateFormat("HH:mm", Locale.getDefault()).format(new Date()));
                     message.setMediaFilePath(item.getFilePath());
-                    message.setUserInfo(new DefaultUser("1", "Ironman", "R.drawable.ironman"));
+                    message = setUserInfo(message, true);
 
                     final MyMessage fMsg = message;
                     MessageListActivity.this.runOnUiThread(new Runnable() {
@@ -200,10 +215,9 @@ public class MessageListActivity extends BaseActivity implements ChatView.OnKeyb
             @Override
             public void onFinishRecord(File voiceFile, int duration) {
                 MyMessage message = new MyMessage(null, IMessage.MessageType.SEND_VOICE);
-                message.setUserInfo(new DefaultUser("1", "Ironman", "R.drawable.ironman"));
                 message.setMediaFilePath(voiceFile.getPath());
                 message.setDuration(duration);
-                message.setTimeString(new SimpleDateFormat("HH:mm", Locale.getDefault()).format(new Date()));
+                message = setUserInfo(message, true);
                 mAdapter.addToStart(message, true);
             }
 
@@ -218,9 +232,8 @@ public class MessageListActivity extends BaseActivity implements ChatView.OnKeyb
             @Override
             public void onTakePictureCompleted(String photoPath) {
                 final MyMessage message = new MyMessage(null, IMessage.MessageType.SEND_IMAGE);
-                message.setTimeString(new SimpleDateFormat("HH:mm", Locale.getDefault()).format(new Date()));
                 message.setMediaFilePath(photoPath);
-                message.setUserInfo(new DefaultUser("1", "Ironman", "R.drawable.ironman"));
+                setUserInfo(message, true);
                 MessageListActivity.this.runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
@@ -326,7 +339,7 @@ public class MessageListActivity extends BaseActivity implements ChatView.OnKeyb
         });
 
         MyMessage message = new MyMessage("Hello World", IMessage.MessageType.RECEIVE_TEXT);
-        message.setUserInfo(new DefaultUser("0", "Deadpool", "R.drawable.deadpool"));
+        message = setUserInfo(message, false);
         mAdapter.addToStart(message, true);
         mAdapter.addToEnd(mData);
         mAdapter.setOnLoadMoreListener(new MsgListAdapter.OnLoadMoreListener() {
