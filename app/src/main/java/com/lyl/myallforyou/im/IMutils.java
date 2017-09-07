@@ -7,6 +7,7 @@ import java.util.List;
 
 import cn.jpush.im.android.api.JMessageClient;
 import cn.jpush.im.android.api.model.Conversation;
+import cn.jpush.im.android.api.model.Message;
 import cn.jpush.im.android.api.model.UserInfo;
 import cn.jpush.im.api.BasicCallback;
 
@@ -129,6 +130,12 @@ public class IMutils {
         if (conv != null) {
             conv.resetUnreadCount();
         }
+    }
+
+    public static List<Message> getAllMessage(String username){
+        UserInfo info = JMessageClient.getMyInfo();
+        Conversation conv = JMessageClient.getSingleConversation(username, info.getAppKey());
+        return conv.getAllMessage();
     }
 
     public static List<Conversation> getConversationList() {

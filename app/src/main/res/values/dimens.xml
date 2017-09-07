@@ -16,4 +16,6 @@ http://developer.android.com/guide/topics/appwidgets/index.html#CreatingLayout
     -->
     <dimen name="widget_margin">8dp</dimen>
 
+    <dimen name="chat_title_bar_txt_size">20sp</dimen>
+
 </resources>

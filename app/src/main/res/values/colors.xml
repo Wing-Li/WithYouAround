@@ -12,4 +12,6 @@
     <color name="tr_black">#99000000</color>
     <color name="transparent">#00000000</color>
     <color name="sky_blue">#4ABEE2</color>
+
+    <color name="chat_title_bg">#427BED</color>
 </resources>
