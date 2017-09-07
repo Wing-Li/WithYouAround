@@ -1,6 +1,7 @@
 package com.lyl.myallforyou.utils;
 
 import android.content.Context;
+import android.net.Uri;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
@@ -63,7 +64,11 @@ public class ImgUtils {
     }
 
     public static void loadCircle(Context context, String url, ImageView imageView) {
-        Glide.with(context).load(url).placeholder(placeholderRes).error(errorRes).transform(new GlideCircleTransform(context)).into(imageView);
+        Glide.with(context).load(url).placeholder(placeholderRes).error(placeholderRes).transform(new GlideCircleTransform(context)).into(imageView);
+    }
+
+    public static void loadCircle(Context context, Uri uri, ImageView imageView) {
+        Glide.with(context).load(uri).placeholder(placeholderRes).error(placeholderRes).transform(new GlideCircleTransform(context)).into(imageView);
     }
 
     public static void load(Context context, String url, ImageView imageView) {

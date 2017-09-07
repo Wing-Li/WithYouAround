@@ -1,6 +1,7 @@
 package com.lyl.myallforyou.ui.userinfo;
 
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.Toolbar;
@@ -20,7 +21,10 @@ import com.avos.avoscloud.SaveCallback;
 import com.lyl.myallforyou.R;
 import com.lyl.myallforyou.constants.Constans;
 import com.lyl.myallforyou.data.UserInfo;
+import com.lyl.myallforyou.im.IMCallBack;
+import com.lyl.myallforyou.im.IMutils;
 import com.lyl.myallforyou.ui.BaseActivity;
+import com.lyl.myallforyou.ui.SplashActivity;
 import com.lyl.myallforyou.utils.DialogUtils;
 import com.lyl.myallforyou.utils.MyUtils;
 import com.lyl.myallforyou.utils.SPUtil;
@@ -118,10 +122,12 @@ public class UserInfoActivity extends BaseActivity {
                     if (info != null) {
                         showT(getString(R.string.user_bind_success));
 
-                        userinfoName.setText(info.getName());
-                        userinfoSgin.setText(info.getSign());
-                        userinfoMarking.setText(info.getMarking());
-                        userinfoExit.setText(R.string.exit_txt);
+                        Intent intent = new Intent(mContext, SplashActivity.class);
+                        startActivity(intent);
+//                        userinfoName.setText(info.getName());
+//                        userinfoSgin.setText(info.getSign());
+//                        userinfoMarking.setText(info.getMarking());
+//                        userinfoExit.setText(R.string.exit_txt);
                     }
                 }
 
@@ -247,6 +253,18 @@ public class UserInfoActivity extends BaseActivity {
                     }
                 });
 
+                // 将昵称上传到聊天服务器
+                IMutils.updateUserName(str, new IMCallBack() {
+                    @Override
+                    public void onSuccess(int code, String msg) {
+
+                    }
+
+                    @Override
+                    public void onFail(int code, String msg) {
+
+                    }
+                });
 
                 dialogInterface.dismiss();
             }

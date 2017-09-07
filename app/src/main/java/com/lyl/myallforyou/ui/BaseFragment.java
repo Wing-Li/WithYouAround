@@ -26,9 +26,13 @@ public class BaseFragment extends Fragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mContext = getActivity();
-        initData();
     }
 
+    @Override
+    public void onStart() {
+        super.onStart();
+        initData();
+    }
 
     private void initData() {
         uuid = (String) SPUtil.get(mContext, Constans.SP_UUID, "");

@@ -3,6 +3,7 @@ package com.lyl.myallforyou.ui.main;
 import android.app.Activity;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Handler;
 import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.util.Pair;
@@ -29,7 +30,10 @@ import com.lyl.myallforyou.constants.Constans;
 import com.lyl.myallforyou.constants.ConstantIntent;
 import com.lyl.myallforyou.data.UserInfo;
 import com.lyl.myallforyou.data.event.MainEvent;
+import com.lyl.myallforyou.im.IMutils;
+import com.lyl.myallforyou.im.entity.ChatInfo;
 import com.lyl.myallforyou.ui.deviceinfo.DeviceInfoActivity;
+import com.lyl.myallforyou.utils.ImgUtils;
 import com.lyl.myallforyou.utils.MyUtils;
 import com.lyl.myallforyou.utils.SPUtil;
 import com.lyl.myallforyou.view.TransitionHelper;
@@ -37,6 +41,7 @@ import com.lyl.myallforyou.widget.WidgetService;
 
 import org.greenrobot.eventbus.EventBus;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -74,8 +79,15 @@ public class MainFragmentAdapter extends RecyclerView.Adapter<MainFragmentAdapte
     public void onBindViewHolder(final ViewHolder holder, final int position) {
         final UserInfo userInfo = mValues.get(position);
 
+        ChatInfo chatInfo = IMutils.getSingleConversation(userInfo.getUuid());
+
         // TODO 加载图片
-        holder.icon.setImageResource(R.mipmap.icon);
+        File icon = chatInfo.getIcon();
+        if (icon != null && icon.exists()) {
+            ImgUtils.loadCircle(mContext, Uri.fromFile(icon), holder.icon);
+        } else {
+            holder.icon.setImageResource(R.mipmap.icon);
+        }
 
         String name = userInfo.getName();
         String nameNote = userInfo.getNameNote();
@@ -90,13 +102,18 @@ public class MainFragmentAdapter extends RecyclerView.Adapter<MainFragmentAdapte
 
         holder.content.setText(userInfo.getSign());
 
+        int readCount = chatInfo.getUnReadCount();
+        if (readCount > 0) {
+            holder.unRead.setText(String.valueOf(readCount));
+            holder.unRead.setVisibility(View.VISIBLE);
+        }
+
         holder.mView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 skipDeviceInfo(userInfo);
             }
         });
-
         holder.mView.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View view) {
@@ -127,6 +144,7 @@ public class MainFragmentAdapter extends RecyclerView.Adapter<MainFragmentAdapte
         public final TextView name;
         public final TextView content;
         public final ImageView star;
+        public final TextView unRead;
 
         public ViewHolder(View view) {
             super(view);
@@ -135,6 +153,7 @@ public class MainFragmentAdapter extends RecyclerView.Adapter<MainFragmentAdapte
             name = (TextView) view.findViewById(R.id.item_name);
             content = (TextView) view.findViewById(R.id.item_content);
             star = (ImageView) view.findViewById(R.id.item_star);
+            unRead = (TextView) view.findViewById(R.id.item_unread_count);
         }
     }
 

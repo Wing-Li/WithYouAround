@@ -4,6 +4,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Color;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
@@ -46,6 +47,8 @@ import com.lyl.myallforyou.R;
 import com.lyl.myallforyou.constants.Constans;
 import com.lyl.myallforyou.data.UserInfo;
 import com.lyl.myallforyou.data.event.MainEvent;
+import com.lyl.myallforyou.im.IMCallBack;
+import com.lyl.myallforyou.im.IMutils;
 import com.lyl.myallforyou.ui.BaseActivity;
 import com.lyl.myallforyou.ui.about.AboutActivity;
 import com.lyl.myallforyou.ui.essay.NhEassayActivity;
@@ -54,12 +57,14 @@ import com.lyl.myallforyou.ui.help.HelpActivity;
 import com.lyl.myallforyou.ui.qrbind.QrScanActivity;
 import com.lyl.myallforyou.ui.qrbind.QrShareActivity;
 import com.lyl.myallforyou.ui.userinfo.UserInfoActivity;
+import com.lyl.myallforyou.utils.ImgUtils;
 import com.lyl.myallforyou.utils.MyUtils;
 import com.lyl.myallforyou.utils.NetUtil;
 import com.lyl.myallforyou.utils.SPUtil;
 
 import org.greenrobot.eventbus.EventBus;
 
+import java.io.File;
 import java.util.ArrayList;
 
 import static com.lyl.myallforyou.constants.Constans.SP_MY_NAME;
@@ -343,6 +348,10 @@ public class MainActivity extends BaseActivity {
         if (!TextUtils.isEmpty(spSgin)) {
             mSgin.setText(spSgin);
         }
+        File avatarFile = IMutils.getMyInfo().getAvatarFile();
+        if (avatarFile != null) {
+            ImgUtils.loadCircle(mContext, Uri.fromFile(avatarFile), mIcon);
+        }
 
         mIcon.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -500,6 +509,18 @@ public class MainActivity extends BaseActivity {
                     }
                 });
 
+                // 将昵称上传到聊天服务器
+                IMutils.updateUserName(str, new IMCallBack() {
+                    @Override
+                    public void onSuccess(int code, String msg) {
+
+                    }
+
+                    @Override
+                    public void onFail(int code, String msg) {
+
+                    }
+                });
 
                 dialogInterface.dismiss();
             }

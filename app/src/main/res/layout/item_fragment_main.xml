@@ -16,6 +16,17 @@
         android:layout_marginLeft="16dp"
         android:src="@mipmap/icon"/>
 
+    <TextView
+        android:id="@+id/item_unread_count"
+        android:layout_width="16dp"
+        android:layout_height="16dp"
+        android:layout_alignLeft="@+id/item_icon"
+        android:layout_marginLeft="-4dp"
+        android:background="@drawable/unread_count_bg"
+        android:textColor="@color/white"
+        android:gravity="center"
+        android:textSize="10sp"
+        android:visibility="gone"/>
 
     <TextView
         android:id="@+id/item_name"
