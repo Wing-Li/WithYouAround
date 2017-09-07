@@ -181,7 +181,7 @@ public class SplashActivity extends BaseActivity {
                 cn.jpush.im.android.api.model.UserInfo myInfo = JMessageClient.getMyInfo();
                 File avatarFile = myInfo.getAvatarFile();
                 //登陆成功,如果用户有头像就把头像存起来,没有就设置null
-                if (avatarFile != null) {
+                if (avatarFile != null && avatarFile.exists()) {
                     SPUtil.put(mContext, Constans.SP_MY_ICON, avatarFile.getAbsolutePath());
                 }
                 goMain();

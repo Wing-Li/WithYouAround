@@ -106,7 +106,20 @@ public class IMutils {
     /**
      * 获取单个单聊会话,没有则创建
      */
-    public static ChatInfo getSingleConversation(String username) {
+    public static Conversation getSingleConversation(String username) {
+        UserInfo info = JMessageClient.getMyInfo();
+        Conversation conv = JMessageClient.getSingleConversation(username, info.getAppKey());
+        if (conv == null) {
+            conv = createSingleConversation(username, info.getAppKey());
+        }
+
+        return conv;
+    }
+
+    /**
+     * 获取单个单聊会话,没有则创建
+     */
+    public static ChatInfo getSingleConversationChatInfo(String username) {
         UserInfo info = JMessageClient.getMyInfo();
         Conversation conv = JMessageClient.getSingleConversation(username, info.getAppKey());
         if (conv == null) {
@@ -116,6 +129,7 @@ public class IMutils {
         ChatInfo chatInfo = new ChatInfo();
         chatInfo.setId(conv.getId());
         chatInfo.setTitle(conv.getTitle());
+        chatInfo.setTargetAppKey(conv.getTargetAppKey());
         chatInfo.setIcon(conv.getAvatarFile());
         chatInfo.setUnReadCount(conv.getUnReadMsgCnt());
         return chatInfo;

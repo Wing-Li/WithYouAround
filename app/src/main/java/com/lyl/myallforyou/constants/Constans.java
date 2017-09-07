@@ -78,5 +78,11 @@ public class Constans {
     public static String SP_UPLOAD_SPACE_TIME = "sp_upload_space_time";
     public static String SP_WIDGET_COLOR = "sp_widget_color";
 
+    public static final String TARGET_ID = "targetId";
+    public static final String TARGET_APP_KEY = "targetAppKey";
+    public static final String GROUP_ID = "groupId";
+    public static final String CONV_TITLE = "conv_title";
+
+
 
 }

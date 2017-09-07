@@ -32,6 +32,7 @@ import com.lyl.myallforyou.data.UserInfo;
 import com.lyl.myallforyou.data.event.MainEvent;
 import com.lyl.myallforyou.im.IMutils;
 import com.lyl.myallforyou.im.entity.ChatInfo;
+import com.lyl.myallforyou.im.messages.ChatActivity;
 import com.lyl.myallforyou.ui.deviceinfo.DeviceInfoActivity;
 import com.lyl.myallforyou.utils.ImgUtils;
 import com.lyl.myallforyou.utils.MyUtils;
@@ -79,9 +80,8 @@ public class MainFragmentAdapter extends RecyclerView.Adapter<MainFragmentAdapte
     public void onBindViewHolder(final ViewHolder holder, final int position) {
         final UserInfo userInfo = mValues.get(position);
 
-        ChatInfo chatInfo = IMutils.getSingleConversation(userInfo.getUuid());
+        final ChatInfo chatInfo = IMutils.getSingleConversationChatInfo(userInfo.getUuid());
 
-        // TODO 加载图片
         File icon = chatInfo.getIcon();
         if (icon != null && icon.exists()) {
             ImgUtils.loadCircle(mContext, Uri.fromFile(icon), holder.icon);
@@ -118,7 +118,7 @@ public class MainFragmentAdapter extends RecyclerView.Adapter<MainFragmentAdapte
             @Override
             public boolean onLongClick(View view) {
                 if (position != 0) {
-                    selectItem(userInfo, position);
+                    selectItem(userInfo, chatInfo, position);
                 }
                 return true;
             }
@@ -157,6 +157,12 @@ public class MainFragmentAdapter extends RecyclerView.Adapter<MainFragmentAdapte
         }
     }
 
+    private void skipChatActivity(String convId, String convTitle) {
+        Intent intent = new Intent(mContext, ChatActivity.class);
+        intent.putExtra(Constans.TARGET_ID, convId);
+        intent.putExtra(Constans.CONV_TITLE, convTitle);
+        mContext.startActivity(intent);
+    }
 
     /**
      * 跳转详情页面
@@ -165,6 +171,16 @@ public class MainFragmentAdapter extends RecyclerView.Adapter<MainFragmentAdapte
         Intent intent = new Intent(mContext, DeviceInfoActivity.class);
         intent.putExtra(ConstantIntent.USER_INFO, userInfo.getUuid());
 
+        String name = getName(userInfo);
+        intent.putExtra(ConstantIntent.USER_NAME, name);
+
+        final Pair<View, String>[] pairs = TransitionHelper.createSafeTransitionParticipants(mContext, true);
+        ActivityOptionsCompat transitionActivityOptions = ActivityOptionsCompat.makeSceneTransitionAnimation
+                (mContext, pairs);
+        mContext.startActivity(intent, transitionActivityOptions.toBundle());
+    }
+
+    private String getName(UserInfo userInfo) {
         String name = userInfo.getName();
         String nameNote = userInfo.getNameNote();
         if (TextUtils.isEmpty(name)) {
@@ -174,15 +190,10 @@ public class MainFragmentAdapter extends RecyclerView.Adapter<MainFragmentAdapte
                 name = name + " (" + userInfo.getNameNote() + ")";
             }
         }
-        intent.putExtra(ConstantIntent.USER_NAME, name);
-
-        final Pair<View, String>[] pairs = TransitionHelper.createSafeTransitionParticipants(mContext, true);
-        ActivityOptionsCompat transitionActivityOptions = ActivityOptionsCompat.makeSceneTransitionAnimation
-                (mContext, pairs);
-        mContext.startActivity(intent, transitionActivityOptions.toBundle());
+        return name;
     }
 
-    private void selectItem(final UserInfo userInfo, final int position) {
+    private void selectItem(final UserInfo userInfo, final ChatInfo chatInfo, final int position) {
         AlertDialog alertDialog = new AlertDialog.Builder(mContext).setItems(R.array.main_select_item, new
                 DialogInterface.OnClickListener() {
 
@@ -193,16 +204,19 @@ public class MainFragmentAdapter extends RecyclerView.Adapter<MainFragmentAdapte
                     case 0:// 查看
                         skipDeviceInfo(userInfo);
                         break;
-                    case 1://设为星标
+                    case 1:// 发送消息
+                        skipChatActivity(userInfo.getUuid(), getName(userInfo));
+                        break;
+                    case 2://设为星标
                         setStar(userInfo);
                         break;
-                    case 2:// 修改备注
+                    case 3:// 修改备注
                         changeNote(userInfo, position);
                         break;
-                    case 3:// 删除密友
+                    case 4:// 删除密友
                         deleteFrined(userInfo);
                         break;
-                    case 4:// 取消
+                    case 5:// 取消
                         break;
                 }
 

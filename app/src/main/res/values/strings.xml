@@ -138,6 +138,7 @@
 
     <array name="main_select_item">
         <item>查看</item>
+        <item>发送消息</item>
         <item>设为星标</item>
         <item>修改备注</item>
         <item>删除密友</item>

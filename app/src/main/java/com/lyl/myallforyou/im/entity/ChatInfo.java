@@ -8,6 +8,7 @@ import java.io.File;
  */
 public class ChatInfo {
     private String id;
+    private String targetAppKey;
     private String title;
     private File icon;
     private int unReadCount;
@@ -18,6 +19,14 @@ public class ChatInfo {
 
     public void setId(String id) {
         this.id = id;
+    }
+
+    public String getTargetAppKey() {
+        return targetAppKey;
+    }
+
+    public void setTargetAppKey(String targetAppKey) {
+        this.targetAppKey = targetAppKey;
     }
 
     public String getTitle() {

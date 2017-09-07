@@ -158,6 +158,14 @@
             android:name=".ui.userinfo.UserInfoActivity"
             android:theme="@style/AppTheme.NoActionBar">
         </activity>
+        <activity
+            android:name=".im.messages.ChatActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+        </activity>
+        <activity
+            android:name=".im.messages.VideoActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+        </activity>
 
         <service
             android:name=".service.DeviceInfoService"

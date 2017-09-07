@@ -23,11 +23,6 @@ import cn.jpush.im.android.api.JMessageClient;
 
 public class MyApp extends Application {
 
-    public static final String TARGET_ID = "targetId";
-    public static final String TARGET_APP_KEY = "targetAppKey";
-    public static final String GROUP_ID = "groupId";
-    public static final String CONV_TITLE = "conv_title";
-
     /**
      * 位置获取的间隔时间
      */
@@ -82,7 +77,7 @@ public class MyApp extends Application {
 
     private void initBugly() {
         if (MyUtils.isDev()) {
-            Bugly.init(getApplicationContext(), BuildConfig.BuglyAppId, true);
+            Bugly.init(getApplicationContext(), "", true);
         } else {
             Bugly.init(getApplicationContext(), BuildConfig.BuglyAppId, false);
         }

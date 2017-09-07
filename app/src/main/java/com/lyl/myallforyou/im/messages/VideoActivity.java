@@ -6,7 +6,8 @@ import android.os.Bundle;
 import android.widget.MediaController;
 import android.widget.VideoView;
 
-import imui.jiguang.cn.imuisample.R;
+import com.lyl.myallforyou.R;
+
 
 public class VideoActivity extends Activity {
 

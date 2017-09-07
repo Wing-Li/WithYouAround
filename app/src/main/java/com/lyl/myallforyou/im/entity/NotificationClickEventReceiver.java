@@ -4,8 +4,8 @@ package com.lyl.myallforyou.im.entity;
 import android.content.Context;
 import android.content.Intent;
 
-import com.lyl.myallforyou.MyApp;
-import com.lyl.myallforyou.ui.main.MainActivity;
+import com.lyl.myallforyou.constants.Constans;
+import com.lyl.myallforyou.im.messages.ChatActivity;
 
 import cn.jpush.im.android.api.JMessageClient;
 import cn.jpush.im.android.api.enums.ConversationType;
@@ -36,16 +36,16 @@ public class NotificationClickEventReceiver {
             String appKey = msg.getFromAppKey();
             ConversationType type = msg.getTargetType();
             Conversation conv;
-            Intent notificationIntent = new Intent(mContext, MainActivity.class);
+            Intent notificationIntent = new Intent(mContext, ChatActivity.class);
             if (type == ConversationType.single) {
                 conv = JMessageClient.getSingleConversation(targetId, appKey);
-                notificationIntent.putExtra(MyApp.TARGET_ID, targetId);
-                notificationIntent.putExtra(MyApp.TARGET_APP_KEY, appKey);
+                notificationIntent.putExtra(Constans.TARGET_ID, targetId);
+                notificationIntent.putExtra(Constans.TARGET_APP_KEY, appKey);
             } else {
                 conv = JMessageClient.getGroupConversation(Long.parseLong(targetId));
-                notificationIntent.putExtra(MyApp.GROUP_ID, Long.parseLong(targetId));
+                notificationIntent.putExtra(Constans.GROUP_ID, Long.parseLong(targetId));
             }
-            notificationIntent.putExtra(MyApp.CONV_TITLE, conv.getTitle());
+            notificationIntent.putExtra(Constans.CONV_TITLE, conv.getTitle());
             conv.resetUnreadCount();
 //        notificationIntent.setAction(Intent.ACTION_MAIN);
             notificationIntent.putExtra("fromGroup", false);

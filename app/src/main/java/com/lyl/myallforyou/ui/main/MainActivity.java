@@ -95,6 +95,22 @@ public class MainActivity extends BaseActivity {
         String myName = (String) SPUtil.get(mContext, SP_MY_NAME, "");
         if (TextUtils.isEmpty(myName)) {
             setName();
+        }else {
+            // 如果名字不是空，检查一下聊天服务器的名字是不是空
+            String nickname = IMutils.getMyInfo().getNickname();
+            if (TextUtils.isEmpty(nickname)){
+                IMutils.updateUserName(myName, new IMCallBack() {
+                    @Override
+                    public void onSuccess(int code, String msg) {
+
+                    }
+
+                    @Override
+                    public void onFail(int code, String msg) {
+
+                    }
+                });
+            }
         }
 
         if (!NetUtil.isNetworkAvailable(mContext)) {
@@ -349,7 +365,7 @@ public class MainActivity extends BaseActivity {
             mSgin.setText(spSgin);
         }
         File avatarFile = IMutils.getMyInfo().getAvatarFile();
-        if (avatarFile != null) {
+        if (avatarFile != null && avatarFile.exists()) {
             ImgUtils.loadCircle(mContext, Uri.fromFile(avatarFile), mIcon);
         }
 

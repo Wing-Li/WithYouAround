@@ -21,6 +21,7 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.target.Target;
 import com.lyl.myallforyou.R;
+import com.lyl.myallforyou.constants.Constans;
 import com.lyl.myallforyou.im.IMutils;
 import com.lyl.myallforyou.im.models.DefaultUser;
 import com.lyl.myallforyou.im.models.MyMessage;
@@ -28,6 +29,7 @@ import com.lyl.myallforyou.im.views.ChatView;
 import com.lyl.myallforyou.ui.BaseActivity;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -45,10 +47,16 @@ import cn.jiguang.imui.chatinput.model.VideoItem;
 import cn.jiguang.imui.commons.ImageLoader;
 import cn.jiguang.imui.commons.models.IMessage;
 import cn.jiguang.imui.messages.MsgListAdapter;
+import cn.jpush.im.android.api.JMessageClient;
+import cn.jpush.im.android.api.content.TextContent;
+import cn.jpush.im.android.api.exceptions.JMFileSizeExceedException;
+import cn.jpush.im.android.api.model.Conversation;
+import cn.jpush.im.android.api.model.Message;
 import cn.jpush.im.android.api.model.UserInfo;
+import cn.jpush.im.api.BasicCallback;
 
 
-public class MessageListActivity extends BaseActivity implements ChatView.OnKeyboardChangedListener, ChatView
+public class ChatActivity extends BaseActivity implements ChatView.OnKeyboardChangedListener, ChatView
         .OnSizeChangedListener, View.OnTouchListener {
 
     private ChatView mChatView;
@@ -58,8 +66,11 @@ public class MessageListActivity extends BaseActivity implements ChatView.OnKeyb
     private InputMethodManager mImm;
     private Window mWindow;
 
+    private Conversation mConv;
+
     private UserInfo mMyUserInfo;
     private String mTargetId;
+    private String mConvTitle;
     private String mTargetName;
     private String mTargetIcon;
 
@@ -75,7 +86,7 @@ public class MessageListActivity extends BaseActivity implements ChatView.OnKeyb
 
         mChatView = (ChatView) findViewById(R.id.chat_view);
         mChatView.initModule();
-        mChatView.setTitle(mTargetName);
+        mChatView.setTitle(mConvTitle);
 
         mData = new ArrayList<>();
         initMsgAdapter();
@@ -84,8 +95,11 @@ public class MessageListActivity extends BaseActivity implements ChatView.OnKeyb
     }
 
     private void getParmeter() {
+        mTargetId = getIntent().getStringExtra(Constans.TARGET_ID);
+        mConvTitle = getIntent().getStringExtra(Constans.CONV_TITLE);
+        mConv = IMutils.getSingleConversation(mTargetId);
+
         mMyUserInfo = IMutils.getMyInfo();
-        // TODO
     }
 
     /**
@@ -93,8 +107,10 @@ public class MessageListActivity extends BaseActivity implements ChatView.OnKeyb
      */
     private MyMessage setUserInfo(MyMessage message, boolean isMySelf) {
         if (isMySelf) {
-            message.setUserInfo(new DefaultUser("1", mMyUserInfo.getNickname(), mMyUserInfo.getAvatarFile()
-                    .getAbsolutePath()));
+            File file = mMyUserInfo.getAvatarFile();
+            if (file != null && file.exists()) {
+                message.setUserInfo(new DefaultUser("1", mMyUserInfo.getNickname(), file.getAbsolutePath()));
+            }
         } else {
             message.setUserInfo(new DefaultUser("0", mTargetName, mTargetIcon));
         }
@@ -118,8 +134,21 @@ public class MessageListActivity extends BaseActivity implements ChatView.OnKeyb
                     return false;
                 }
                 MyMessage message = new MyMessage(input.toString(), IMessage.MessageType.SEND_TEXT);
-                message = setUserInfo(message,true);
+                message = setUserInfo(message, true);
                 mAdapter.addToStart(message, true);
+
+                Message sendMessage = mConv.createSendMessage(new TextContent(input.toString()));
+                sendMessage.setOnSendCompleteCallback(new BasicCallback() {
+                    @Override
+                    public void gotResult(int responseCode, String responseDesc) {
+                        if (responseCode == 0) {
+                            //消息发送成功
+                        } else {
+                            //消息发送失败
+                        }
+                    }
+                });
+                JMessageClient.sendMessage(sendMessage);
                 return true;
             }
 
@@ -149,10 +178,17 @@ public class MessageListActivity extends BaseActivity implements ChatView.OnKeyb
                     message = setUserInfo(message, true);
 
                     final MyMessage fMsg = message;
-                    MessageListActivity.this.runOnUiThread(new Runnable() {
+                    ChatActivity.this.runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
                             mAdapter.addToStart(fMsg, true);
+                            try {
+                                mConv.createSendFileMessage(new File(fMsg.getMediaFilePath()), fMsg.getMediaFilePath());
+                            } catch (FileNotFoundException e) {
+                                e.printStackTrace();
+                            } catch (JMFileSizeExceedException e) {
+                                e.printStackTrace();
+                            }
                         }
                     });
                 }
@@ -234,7 +270,7 @@ public class MessageListActivity extends BaseActivity implements ChatView.OnKeyb
                 final MyMessage message = new MyMessage(null, IMessage.MessageType.SEND_IMAGE);
                 message.setMediaFilePath(photoPath);
                 setUserInfo(message, true);
-                MessageListActivity.this.runOnUiThread(new Runnable() {
+                ChatActivity.this.runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
                         mAdapter.addToStart(message, true);
@@ -304,7 +340,7 @@ public class MessageListActivity extends BaseActivity implements ChatView.OnKeyb
                 if (message.getType() == IMessage.MessageType.RECEIVE_VIDEO || message.getType() == IMessage
                         .MessageType.SEND_VIDEO) {
                     if (!TextUtils.isEmpty(message.getMediaFilePath())) {
-                        Intent intent = new Intent(MessageListActivity.this, VideoActivity.class);
+                        Intent intent = new Intent(ChatActivity.this, VideoActivity.class);
                         intent.putExtra(VideoActivity.VIDEO_PATH, message.getMediaFilePath());
                         startActivity(intent);
                     }

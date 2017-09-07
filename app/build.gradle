@@ -40,13 +40,13 @@ android {
     }
 
     productFlavors {
-//        foryouDev {
-//            buildConfigField "String", "Environment", '"dev"'
-//            buildConfigField "String", "BuglyAppId", properties.getProperty('BuglyAppId')
-//            buildConfigField "String", "AVOSCloudAppId", properties.getProperty('AVOSCloudAppId')
-//            buildConfigField "String", "AVOSCloudAppKey", properties.getProperty('AVOSCloudAppKey')
-//            manifestPlaceholders = [GAODE_KEY: properties.getProperty('gaodeKey')]
-//        }
+        foryouDev {
+            buildConfigField "String", "Environment", '"dev"'
+            buildConfigField "String", "BuglyAppId", properties.getProperty('BuglyAppId')
+            buildConfigField "String", "AVOSCloudAppId", properties.getProperty('AVOSCloudAppId')
+            buildConfigField "String", "AVOSCloudAppKey", properties.getProperty('AVOSCloudAppKey')
+            manifestPlaceholders = [GAODE_KEY: properties.getProperty('gaodeKey')]
+        }
         foryou {
             buildConfigField "String", "Environment", '"prod"'
             buildConfigField "String", "BuglyAppId", properties.getProperty('BuglyAppId')
@@ -57,9 +57,6 @@ android {
     }
 
     buildTypes {
-        debug {
-            signingConfig signingConfigs.config
-        }
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
