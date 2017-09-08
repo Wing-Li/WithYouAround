@@ -12,6 +12,7 @@ import cn.jpush.im.android.api.enums.ConversationType;
 import cn.jpush.im.android.api.event.NotificationClickEvent;
 import cn.jpush.im.android.api.model.Conversation;
 import cn.jpush.im.android.api.model.Message;
+import cn.jpush.im.android.api.model.UserInfo;
 
 public class NotificationClickEventReceiver {
     private Context mContext;
@@ -24,6 +25,7 @@ public class NotificationClickEventReceiver {
 
     /**
      * 收到消息处理
+     *
      * @param notificationClickEvent 通知点击事件
      */
     public void onEvent(NotificationClickEvent notificationClickEvent) {
@@ -40,17 +42,16 @@ public class NotificationClickEventReceiver {
             if (type == ConversationType.single) {
                 conv = JMessageClient.getSingleConversation(targetId, appKey);
                 notificationIntent.putExtra(Constans.TARGET_ID, targetId);
-                notificationIntent.putExtra(Constans.TARGET_APP_KEY, appKey);
             } else {
                 conv = JMessageClient.getGroupConversation(Long.parseLong(targetId));
                 notificationIntent.putExtra(Constans.GROUP_ID, Long.parseLong(targetId));
             }
-            notificationIntent.putExtra(Constans.CONV_TITLE, conv.getTitle());
+            UserInfo targetInfo = (UserInfo) conv.getTargetInfo();
+            notificationIntent.putExtra(Constans.CONV_TITLE, targetInfo.getNickname());
             conv.resetUnreadCount();
 //        notificationIntent.setAction(Intent.ACTION_MAIN);
             notificationIntent.putExtra("fromGroup", false);
-            notificationIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK
-                    | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            notificationIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
             mContext.startActivity(notificationIntent);
         }
     }

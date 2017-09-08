@@ -4,9 +4,9 @@ package com.lyl.myallforyou.im.messages;
 import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.os.Environment;
-import android.os.Handler;
 import android.text.TextUtils;
 import android.text.format.DateFormat;
 import android.util.Log;
@@ -19,7 +19,6 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.request.target.Target;
 import com.lyl.myallforyou.R;
 import com.lyl.myallforyou.constants.Constans;
 import com.lyl.myallforyou.im.IMutils;
@@ -29,10 +28,10 @@ import com.lyl.myallforyou.im.views.ChatView;
 import com.lyl.myallforyou.ui.BaseActivity;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
@@ -48,12 +47,16 @@ import cn.jiguang.imui.commons.ImageLoader;
 import cn.jiguang.imui.commons.models.IMessage;
 import cn.jiguang.imui.messages.MsgListAdapter;
 import cn.jpush.im.android.api.JMessageClient;
+import cn.jpush.im.android.api.content.CustomContent;
+import cn.jpush.im.android.api.content.ImageContent;
+import cn.jpush.im.android.api.content.MediaContent;
 import cn.jpush.im.android.api.content.TextContent;
-import cn.jpush.im.android.api.exceptions.JMFileSizeExceedException;
+import cn.jpush.im.android.api.content.VoiceContent;
+import cn.jpush.im.android.api.enums.MessageDirect;
+import cn.jpush.im.android.api.event.MessageEvent;
 import cn.jpush.im.android.api.model.Conversation;
 import cn.jpush.im.android.api.model.Message;
 import cn.jpush.im.android.api.model.UserInfo;
-import cn.jpush.im.api.BasicCallback;
 
 
 public class ChatActivity extends BaseActivity implements ChatView.OnKeyboardChangedListener, ChatView
@@ -78,6 +81,7 @@ public class ChatActivity extends BaseActivity implements ChatView.OnKeyboardCha
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chat);
+        JMessageClient.registerEventReceiver(this);
 
         this.mImm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
         mWindow = getWindow();
@@ -88,10 +92,15 @@ public class ChatActivity extends BaseActivity implements ChatView.OnKeyboardCha
         mChatView.initModule();
         mChatView.setTitle(mConvTitle);
 
-        mData = new ArrayList<>();
         initMsgAdapter();
 
         initKeyboard();
+    }
+
+    @Override
+    protected void onDestroy() {
+        JMessageClient.unRegisterEventReceiver(this);
+        super.onDestroy();
     }
 
     private void getParmeter() {
@@ -100,21 +109,49 @@ public class ChatActivity extends BaseActivity implements ChatView.OnKeyboardCha
         mConv = IMutils.getSingleConversation(mTargetId);
 
         mMyUserInfo = IMutils.getMyInfo();
+
+        // 加载所有信息
+        mData = new ArrayList<>();
+        List<Message> allMessage = mConv.getAllMessage();
+        Collections.reverse(allMessage);
+        for (Message msg : allMessage) {
+            mData.add(megTomymsg(msg));
+        }
     }
 
     /**
      * 是否是自己发送的消息
      */
-    private MyMessage setUserInfo(MyMessage message, boolean isMySelf) {
-        if (isMySelf) {
+    private MyMessage setMyUserInfo(MyMessage message) {
+        File file = mMyUserInfo.getAvatarFile();
+        String iconPath = file != null && file.exists() ? file.getAbsolutePath() : "";
+        message.setUserInfo(new DefaultUser("1", mMyUserInfo.getNickname(), iconPath));
+        message.setTimeString(new SimpleDateFormat("HH:mm", Locale.getDefault()).format(new Date()));
+
+        return message;
+    }
+
+    /**
+     * 是否是自己发送的消息
+     */
+    private MyMessage setMessageTime(Message msg, MyMessage message) {
+        boolean isMe = false;
+        if (MessageDirect.send == msg.getDirect()) {
+            isMe = true;
+        } else if (MessageDirect.receive == msg.getDirect()) {
+            isMe = false;
+        }
+        if (isMe) {
             File file = mMyUserInfo.getAvatarFile();
-            if (file != null && file.exists()) {
-                message.setUserInfo(new DefaultUser("1", mMyUserInfo.getNickname(), file.getAbsolutePath()));
-            }
+            String iconPath = file != null && file.exists() ? file.getAbsolutePath() : "";
+            message.setUserInfo(new DefaultUser("1", mMyUserInfo.getNickname(), iconPath));
         } else {
             message.setUserInfo(new DefaultUser("0", mTargetName, mTargetIcon));
         }
-        message.setTimeString(new SimpleDateFormat("HH:mm", Locale.getDefault()).format(new Date()));
+
+        Date date = new Date();
+        date.setTime(msg.getCreateTime());
+        message.setTimeString(new SimpleDateFormat("HH:mm", Locale.getDefault()).format(date));
 
         return message;
     }
@@ -134,21 +171,10 @@ public class ChatActivity extends BaseActivity implements ChatView.OnKeyboardCha
                     return false;
                 }
                 MyMessage message = new MyMessage(input.toString(), IMessage.MessageType.SEND_TEXT);
-                message = setUserInfo(message, true);
+                message = setMyUserInfo(message);
                 mAdapter.addToStart(message, true);
 
-                Message sendMessage = mConv.createSendMessage(new TextContent(input.toString()));
-                sendMessage.setOnSendCompleteCallback(new BasicCallback() {
-                    @Override
-                    public void gotResult(int responseCode, String responseDesc) {
-                        if (responseCode == 0) {
-                            //消息发送成功
-                        } else {
-                            //消息发送失败
-                        }
-                    }
-                });
-                JMessageClient.sendMessage(sendMessage);
+                IMutils.sendMessageText(getApplicationContext(), mConv, input.toString());
                 return true;
             }
 
@@ -174,21 +200,24 @@ public class ChatActivity extends BaseActivity implements ChatView.OnKeyboardCha
                         throw new RuntimeException("Invalid FileItem type. Must be Type.Image or Type.Video");
                     }
 
+                    message = setMyUserInfo(message);
                     message.setMediaFilePath(item.getFilePath());
-                    message = setUserInfo(message, true);
 
                     final MyMessage fMsg = message;
                     ChatActivity.this.runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
-                            mAdapter.addToStart(fMsg, true);
-                            try {
-                                mConv.createSendFileMessage(new File(fMsg.getMediaFilePath()), fMsg.getMediaFilePath());
-                            } catch (FileNotFoundException e) {
-                                e.printStackTrace();
-                            } catch (JMFileSizeExceedException e) {
-                                e.printStackTrace();
+                            File file = new File(fMsg.getMediaFilePath());
+
+                            if (fMsg.getType() == IMessage.MessageType.SEND_IMAGE) {
+                                IMutils.sendMessageImage(getApplicationContext(), mConv, file);
+                            } else if (fMsg.getType() == IMessage.MessageType.SEND_VIDEO) {
+                                IMutils.sendMessageFile(getApplicationContext(), mConv, file);
+                            } else {
+                                throw new RuntimeException("Invalid FileItem type. Must be Type.Image or Type.Video");
                             }
+
+                            mAdapter.addToStart(fMsg, true);
                         }
                     });
                 }
@@ -253,8 +282,10 @@ public class ChatActivity extends BaseActivity implements ChatView.OnKeyboardCha
                 MyMessage message = new MyMessage(null, IMessage.MessageType.SEND_VOICE);
                 message.setMediaFilePath(voiceFile.getPath());
                 message.setDuration(duration);
-                message = setUserInfo(message, true);
+                message = setMyUserInfo(message);
                 mAdapter.addToStart(message, true);
+
+                IMutils.sendMessageVoice(getApplicationContext(), mConv, voiceFile, duration);
             }
 
             @Override
@@ -266,13 +297,15 @@ public class ChatActivity extends BaseActivity implements ChatView.OnKeyboardCha
         // 相机相关的接口
         mChatView.setOnCameraCallbackListener(new OnCameraCallbackListener() {
             @Override
-            public void onTakePictureCompleted(String photoPath) {
+            public void onTakePictureCompleted(final String photoPath) {
                 final MyMessage message = new MyMessage(null, IMessage.MessageType.SEND_IMAGE);
                 message.setMediaFilePath(photoPath);
-                setUserInfo(message, true);
+                setMyUserInfo(message);
                 ChatActivity.this.runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
+                        File file = new File(photoPath);
+                        IMutils.sendMessageImage(getApplicationContext(), mConv, file);
                         mAdapter.addToStart(message, true);
                     }
                 });
@@ -302,25 +335,37 @@ public class ChatActivity extends BaseActivity implements ChatView.OnKeyboardCha
         });
     }
 
+
     private void initMsgAdapter() {
         ImageLoader imageLoader = new ImageLoader() {
             @Override
             public void loadAvatarImage(ImageView avatarImageView, String string) {
-                if (string.contains("R.drawable")) {
+                if (TextUtils.isEmpty(string)) {
+                    Glide.with(getApplicationContext()).load(string).placeholder(R.drawable.aurora_headicon_default)
+                            .into(avatarImageView);
+                } else if (string.contains("R.drawable")) {
                     Integer resId = getResources().getIdentifier(string.replace("R.drawable.", ""), "drawable",
                             getPackageName());
 
                     avatarImageView.setImageResource(resId);
                 } else {
-                    Glide.with(getApplicationContext()).load(string).placeholder(R.drawable.aurora_headicon_default)
-                            .into(avatarImageView);
+
                 }
             }
 
             @Override
             public void loadImage(ImageView imageView, String string) {
-                Glide.with(getApplicationContext()).load(string).fitCenter().placeholder(R.drawable
-                        .aurora_picture_not_found).override(400, Target.SIZE_ORIGINAL).into(imageView);
+                BitmapFactory.Options options = new BitmapFactory.Options();
+                /**
+                 * 最关键在此，把options.inJustDecodeBounds = true;
+                 * 这里再decodeFile()，返回的bitmap为空，但此时调用options.outHeight时，已经包含了图片的高了
+                 */
+                options.inJustDecodeBounds = true;
+                BitmapFactory.decodeFile(string, options); // 此时返回的bitmap为null
+                int height = options.outHeight * 400 / options.outWidth;
+
+                Glide.with(getApplicationContext()).load(string).centerCrop().placeholder(R.drawable.gary_bg)
+                        .override(400, height).into(imageView);
             }
         };
 
@@ -374,9 +419,6 @@ public class ChatActivity extends BaseActivity implements ChatView.OnKeyboardCha
             }
         });
 
-        MyMessage message = new MyMessage("Hello World", IMessage.MessageType.RECEIVE_TEXT);
-        message = setUserInfo(message, false);
-        mAdapter.addToStart(message, true);
         mAdapter.addToEnd(mData);
         mAdapter.setOnLoadMoreListener(new MsgListAdapter.OnLoadMoreListener() {
             @Override
@@ -393,12 +435,138 @@ public class ChatActivity extends BaseActivity implements ChatView.OnKeyboardCha
     }
 
     private void loadNextPage() {
-        new Handler().postDelayed(new Runnable() {
+//        new Handler().postDelayed(new Runnable() {
+//            @Override
+//            public void run() {
+//                mAdapter.addToEnd(mData);
+//            }
+//        }, 1000);
+    }
+
+    public void onEvent(MessageEvent event) {
+        Message msg = event.getMessage();
+        MyMessage message;
+        switch (msg.getContentType()) {
+            case text:
+                //处理文字消息
+                TextContent textContent = (TextContent) msg.getContent();
+
+                message = new MyMessage(textContent.getText(), IMessage.MessageType.RECEIVE_TEXT);
+                message = setMessageTime(msg, message);
+                updateMessage(message);
+                break;
+            case image:
+                //处理图片消息
+                ImageContent imageContent = (ImageContent) msg.getContent();
+                imageContent.getLocalPath();//图片本地地址
+                imageContent.getLocalThumbnailPath();//图片对应缩略图的本地地址
+
+                message = new MyMessage(null, IMessage.MessageType.RECEIVE_IMAGE);
+                message.setMediaFilePath(imageContent.getLocalThumbnailPath());
+                message = setMessageTime(msg, message);
+                updateMessage(message);
+                break;
+            case voice:
+                //处理语音消息
+                VoiceContent voiceContent = (VoiceContent) msg.getContent();
+                voiceContent.getLocalPath();//语音文件本地地址
+                voiceContent.getDuration();//语音文件时长
+
+                message = new MyMessage(null, IMessage.MessageType.RECEIVE_VOICE);
+                message.setMediaFilePath(voiceContent.getLocalPath());
+                message.setDuration(voiceContent.getDuration());
+                message = setMessageTime(msg, message);
+                updateMessage(message);
+                break;
+            case video:
+                //视频消息
+                MediaContent mediaContent = (VoiceContent) msg.getContent();
+                mediaContent.getLocalPath();//视频文件本地地址
+
+                message = new MyMessage(null, IMessage.MessageType.RECEIVE_VIDEO);
+                message.setMediaFilePath(mediaContent.getLocalPath());
+                message = setMessageTime(msg, message);
+                updateMessage(message);
+                break;
+            case custom:
+                //处理自定义消息
+                CustomContent customContent = (CustomContent) msg.getContent();
+                customContent.getNumberValue("custom_num"); //获取自定义的值
+                customContent.getBooleanValue("custom_boolean");
+                customContent.getStringValue("custom_string");
+                break;
+        }
+    }
+
+    private void updateMessage(final MyMessage message) {
+        runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                mAdapter.addToEnd(mData);
+                mAdapter.addToStart(message, true);
             }
-        }, 1000);
+        });
+    }
+
+    private MyMessage megTomymsg(Message msg) {
+        MyMessage message = null;
+        boolean isMe = false;
+        if (MessageDirect.send == msg.getDirect()) {
+            isMe = true;
+        } else if (MessageDirect.receive == msg.getDirect()) {
+            isMe = false;
+        }
+
+        IMessage.MessageType type = null;
+        switch (msg.getContentType()) {
+            case text:
+                //处理文字消息
+                TextContent textContent = (TextContent) msg.getContent();
+                type = isMe ? IMessage.MessageType.SEND_TEXT : IMessage.MessageType.RECEIVE_TEXT;
+                message = new MyMessage(textContent.getText(), type);
+                message = setMessageTime(msg, message);
+                break;
+            case image:
+                //处理图片消息
+                ImageContent imageContent = (ImageContent) msg.getContent();
+                imageContent.getLocalPath();//图片本地地址
+                imageContent.getLocalThumbnailPath();//图片对应缩略图的本地地址
+
+                type = isMe ? IMessage.MessageType.SEND_IMAGE : IMessage.MessageType.RECEIVE_IMAGE;
+                message = new MyMessage(null, type);
+                message.setMediaFilePath(imageContent.getLocalThumbnailPath());
+                message = setMessageTime(msg, message);
+                break;
+            case voice:
+                //处理语音消息
+                VoiceContent voiceContent = (VoiceContent) msg.getContent();
+                voiceContent.getLocalPath();//语音文件本地地址
+                voiceContent.getDuration();//语音文件时长
+
+                type = isMe ? IMessage.MessageType.SEND_VOICE : IMessage.MessageType.RECEIVE_VOICE;
+                message = new MyMessage(null, type);
+                message.setMediaFilePath(voiceContent.getLocalPath());
+                message.setDuration(voiceContent.getDuration());
+                message = setMessageTime(msg, message);
+                break;
+            case video:
+                //视频消息
+                MediaContent mediaContent = (VoiceContent) msg.getContent();
+                mediaContent.getLocalPath();//视频文件本地地址
+
+                type = isMe ? IMessage.MessageType.SEND_VIDEO : IMessage.MessageType.RECEIVE_VIDEO;
+                message = new MyMessage(null, type);
+                message.setMediaFilePath(mediaContent.getLocalPath());
+                message = setMessageTime(msg, message);
+                break;
+            case custom:
+                //处理自定义消息
+                CustomContent customContent = (CustomContent) msg.getContent();
+                customContent.getNumberValue("custom_num"); //获取自定义的值
+                customContent.getBooleanValue("custom_boolean");
+                customContent.getStringValue("custom_string");
+                break;
+        }
+        return message;
     }
 
     @Override

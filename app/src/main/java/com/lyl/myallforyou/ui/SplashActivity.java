@@ -175,7 +175,8 @@ public class SplashActivity extends BaseActivity {
         }
 
         // 登陆极光服务器，登陆成功后跳转主页面
-        IMutils.loginJG(uuid, IMutils.password, new IMCallBack() {
+        String currUuid = (String) SPUtil.get(mContext, Constans.SP_UUID, "");
+        IMutils.loginJG(currUuid, IMutils.password, new IMCallBack() {
             @Override
             public void onSuccess(int code, String msg) {
                 cn.jpush.im.android.api.model.UserInfo myInfo = JMessageClient.getMyInfo();

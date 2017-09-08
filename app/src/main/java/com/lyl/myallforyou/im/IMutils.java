@@ -1,11 +1,16 @@
 package com.lyl.myallforyou.im;
 
+import android.content.Context;
+
+import com.lyl.myallforyou.R;
 import com.lyl.myallforyou.im.entity.ChatInfo;
+import com.lyl.myallforyou.utils.MyUtils;
 
 import java.io.File;
 import java.util.List;
 
 import cn.jpush.im.android.api.JMessageClient;
+import cn.jpush.im.android.api.content.TextContent;
 import cn.jpush.im.android.api.model.Conversation;
 import cn.jpush.im.android.api.model.Message;
 import cn.jpush.im.android.api.model.UserInfo;
@@ -92,7 +97,7 @@ public class IMutils {
         });
     }
 
-    public static UserInfo getMyInfo(){
+    public static UserInfo getMyInfo() {
         return JMessageClient.getMyInfo();
     }
 
@@ -146,7 +151,7 @@ public class IMutils {
         }
     }
 
-    public static List<Message> getAllMessage(String username){
+    public static List<Message> getAllMessage(String username) {
         UserInfo info = JMessageClient.getMyInfo();
         Conversation conv = JMessageClient.getSingleConversation(username, info.getAppKey());
         return conv.getAllMessage();
@@ -154,6 +159,71 @@ public class IMutils {
 
     public static List<Conversation> getConversationList() {
         return JMessageClient.getConversationList();
+    }
+
+    private static void seendMessage(final Context context, Message sendMessage) {
+        sendMessage.setOnSendCompleteCallback(new BasicCallback() {
+            @Override
+            public void gotResult(int responseCode, String responseDesc) {
+                if (responseCode == 0) {
+                    //消息发送成功
+                } else {
+                    //消息发送失败
+                    MyUtils.showT(context.getApplicationContext(), R.string.send_message_fail);
+                }
+            }
+        });
+        JMessageClient.sendMessage(sendMessage);
+    }
+
+    public static void sendMessageText(Context context, Conversation conv, String str) {
+        Message sendMessage = conv.createSendMessage(new TextContent(str));
+        seendMessage(context, sendMessage);
+    }
+
+    public static void sendMessageImage(Context context, Conversation conv, File file) {
+        Message sendMessage = null;
+        try {
+            if (file.exists()) {
+                sendMessage = conv.createSendImageMessage(file, file.getName());
+                seendMessage(context, sendMessage);
+            } else {
+                MyUtils.showT(context.getApplicationContext(), R.string.file_not_exists);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            MyUtils.showT(context.getApplicationContext(), R.string.send_message_fail);
+        }
+    }
+
+    public static void sendMessageVoice(Context context, Conversation conv, File file, int duration) {
+        Message sendMessage = null;
+        try {
+            if (file.exists()) {
+                sendMessage = conv.createSendVoiceMessage(file, duration);
+                seendMessage(context, sendMessage);
+            } else {
+                MyUtils.showT(context.getApplicationContext(), R.string.file_not_exists);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            MyUtils.showT(context.getApplicationContext(), R.string.send_message_fail);
+        }
+    }
+
+    public static void sendMessageFile(Context context, Conversation conv, File file) {
+        Message sendMessage = null;
+        try {
+            if (file.exists()) {
+                sendMessage = conv.createSendFileMessage(file, file.getName());
+                seendMessage(context, sendMessage);
+            } else {
+                MyUtils.showT(context.getApplicationContext(), R.string.file_not_exists);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            MyUtils.showT(context.getApplicationContext(), R.string.send_message_fail);
+        }
     }
     // =================================== ↑创建会话↑===================================
 }
