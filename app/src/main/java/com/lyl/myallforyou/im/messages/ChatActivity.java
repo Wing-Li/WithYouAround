@@ -107,6 +107,7 @@ public class ChatActivity extends BaseActivity implements ChatView.OnKeyboardCha
         mTargetId = getIntent().getStringExtra(Constans.TARGET_ID);
         mConvTitle = getIntent().getStringExtra(Constans.CONV_TITLE);
         mConv = IMutils.getSingleConversation(mTargetId);
+        mConv.resetUnreadCount();// 初始化未读数
 
         mMyUserInfo = IMutils.getMyInfo();
 

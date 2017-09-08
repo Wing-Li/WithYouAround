@@ -98,26 +98,33 @@ public class MainFragmentAdapter extends RecyclerView.Adapter<MainFragmentAdapte
                 name = name + " (" + userInfo.getNameNote() + ")";
             }
         }
-        holder.name.setText(name);
+        final String finalName = name;
+        holder.name.setText(finalName);
 
         holder.content.setText(userInfo.getSign());
 
-        int readCount = chatInfo.getUnReadCount();
+        final int readCount = chatInfo.getUnReadCount();
         if (readCount > 0) {
             holder.unRead.setText(String.valueOf(readCount));
             holder.unRead.setVisibility(View.VISIBLE);
+        }else {
+            holder.unRead.setVisibility(View.GONE);
         }
 
         holder.mView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                skipDeviceInfo(userInfo);
+                if (readCount > 0) {
+                    skipChatActivity(userInfo.getUuid(), finalName);
+                } else {
+                    skipDeviceInfo(userInfo);
+                }
             }
         });
         holder.mView.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View view) {
-                if (position != 0) {
+                if (position != 0) {// 第一个是自己
                     selectItem(userInfo, chatInfo, position);
                 }
                 return true;

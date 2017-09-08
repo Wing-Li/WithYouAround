@@ -1,288 +1,309 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/bg_gary"
-    android:orientation="vertical"
     tools:context="com.lyl.myallforyou.ui.deviceinfo.DeviceInfoActivity">
 
-    <include layout="@layout/app_bar_main"/>
 
-    <ScrollView
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
 
-        <LinearLayout
+        <include layout="@layout/app_bar_main"/>
+
+        <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:layout_height="wrap_content">
 
-            <TextView
-                style="@style/DeviceInfoTitle"
-                android:text="系统信息"/>
 
             <LinearLayout
-                style="@style/DeviceInfoLayout"
-                android:weightSum="4">
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
 
                 <TextView
-                    style="@style/DeviceInfoContentTitle"
-                    android:text="设备厂商："/>
+                    style="@style/DeviceInfoTitle"
+                    android:text="系统信息"/>
+
+                <LinearLayout
+                    style="@style/DeviceInfoLayout"
+                    android:weightSum="4">
+
+                    <TextView
+                        style="@style/DeviceInfoContentTitle"
+                        android:text="设备厂商："/>
+
+                    <TextView
+                        android:id="@+id/device_manufacturer"
+                        style="@style/DeviceInfoContent"
+                        android:text="@string/default_str"/>
+                </LinearLayout>
+
+                <LinearLayout
+                    style="@style/DeviceInfoLayout"
+                    android:weightSum="4">
+
+                    <TextView
+                        style="@style/DeviceInfoContentTitle"
+                        android:text="API  等级："/>
+
+                    <TextView
+                        android:id="@+id/api_level"
+                        style="@style/DeviceInfoContent"
+                        android:text="@string/default_str"/>
+                </LinearLayout>
+
+                <LinearLayout
+                    style="@style/DeviceInfoLayout"
+                    android:weightSum="4">
+
+                    <TextView
+                        style="@style/DeviceInfoContentTitle"
+                        android:text="时        间："/>
+
+                    <TextView
+                        android:id="@+id/system_time"
+                        style="@style/DeviceInfoContent"
+                        android:text="@string/default_str"/>
+                </LinearLayout>
+
+                <LinearLayout
+                    style="@style/DeviceInfoLayout"
+                    android:weightSum="4">
+
+                    <TextView
+                        style="@style/DeviceInfoContentTitle"
+                        android:text="电        量："/>
+
+                    <TextView
+                        android:id="@+id/system_battery"
+                        style="@style/DeviceInfoContent"
+                        android:text="@string/default_str"/>
+                </LinearLayout>
+
+                <LinearLayout
+                    style="@style/DeviceInfoLayout"
+                    android:weightSum="4">
+
+                    <TextView
+                        style="@style/DeviceInfoContentTitle"
+                        android:text="音        量："/>
+
+                    <TextView
+                        android:id="@+id/ring_volume"
+                        style="@style/DeviceInfoContent"
+                        android:text="@string/default_str"/>
+                </LinearLayout>
+
+                <LinearLayout
+                    style="@style/DeviceInfoLayout"
+                    android:weightSum="4">
+
+                    <TextView
+                        style="@style/DeviceInfoContentTitle"
+                        android:text="蓝        牙："/>
+
+                    <TextView
+                        android:id="@+id/bluetooth_open"
+                        style="@style/DeviceInfoContent"
+                        android:text="@string/default_str"/>
+                </LinearLayout>
+
+                <LinearLayout
+                    style="@style/DeviceInfoLayout"
+                    android:weightSum="4">
+
+                    <TextView
+                        style="@style/DeviceInfoContentTitle"
+                        android:text="G    P    S："/>
+
+                    <TextView
+                        android:id="@+id/gps_status"
+                        style="@style/DeviceInfoContent"
+                        android:text="@string/default_str"/>
+                </LinearLayout>
+
 
                 <TextView
-                    android:id="@+id/device_manufacturer"
-                    style="@style/DeviceInfoContent"
-                    android:text="@string/default_str"/>
+                    style="@style/DeviceInfoTitle"
+                    android:text="位置"/>
+
+                <LinearLayout
+                    style="@style/DeviceInfoLayout"
+                    android:weightSum="4">
+
+                    <TextView
+                        style="@style/DeviceInfoContentTitle"
+                        android:text="位置来源："/>
+
+                    <TextView
+                        android:id="@+id/address_location_type"
+                        style="@style/DeviceInfoContent"
+                        android:text="@string/default_str"/>
+                </LinearLayout>
+
+                <LinearLayout
+                    style="@style/DeviceInfoLayout"
+                    android:weightSum="4">
+
+                    <TextView
+                        style="@style/DeviceInfoContentTitle"
+                        android:text="位        置："/>
+
+                    <TextView
+                        android:id="@+id/address"
+                        style="@style/DeviceInfoContent"
+                        android:text="@string/default_str"/>
+                </LinearLayout>
+
+
+                <TextView
+                    style="@style/DeviceInfoTitle"
+                    android:text="网络相关"/>
+
+                <LinearLayout
+                    style="@style/DeviceInfoLayout"
+                    android:weightSum="4">
+
+                    <TextView
+                        style="@style/DeviceInfoContentTitle"
+                        android:text="SIM类型："/>
+
+                    <TextView
+                        android:id="@+id/sim_type"
+                        style="@style/DeviceInfoContent"
+                        android:text="@string/default_str"/>
+                </LinearLayout>
+
+                <LinearLayout
+                    style="@style/DeviceInfoLayout"
+                    android:weightSum="4">
+
+                    <TextView
+                        style="@style/DeviceInfoContentTitle"
+                        android:text="网络状态："/>
+
+                    <TextView
+                        android:id="@+id/net_type"
+                        style="@style/DeviceInfoContent"
+                        android:text="@string/default_str"/>
+                </LinearLayout>
+
+                <LinearLayout
+                    style="@style/DeviceInfoLayout"
+                    android:weightSum="4">
+
+                    <TextView
+                        style="@style/DeviceInfoContentTitle"
+                        android:text="WIFI 状态："/>
+
+                    <TextView
+                        android:id="@+id/wifi_status"
+                        style="@style/DeviceInfoContent"
+                        android:text="@string/default_str"/>
+                </LinearLayout>
+
+
+                <TextView
+                    style="@style/DeviceInfoTitle"
+                    android:text="屏幕信息"/>
+
+                <LinearLayout
+                    style="@style/DeviceInfoLayout"
+                    android:weightSum="4">
+
+                    <TextView
+                        style="@style/DeviceInfoContentTitle"
+                        android:text="状        态："/>
+
+                    <TextView
+                        android:id="@+id/screen_status"
+                        style="@style/DeviceInfoContent"
+                        android:text="@string/default_str"/>
+                </LinearLayout>
+
+                <LinearLayout
+                    style="@style/DeviceInfoLayout"
+                    android:weightSum="4">
+
+                    <TextView
+                        style="@style/DeviceInfoContentTitle"
+                        android:text="亮        度："/>
+
+                    <TextView
+                        android:id="@+id/screen_brightness"
+                        style="@style/DeviceInfoContent"
+                        android:text="@string/default_str"/>
+                </LinearLayout>
+
+                <LinearLayout
+                    style="@style/DeviceInfoLayout"
+                    android:weightSum="4">
+
+                    <TextView
+                        style="@style/DeviceInfoContentTitle"
+                        android:text="休眠时间："/>
+
+                    <TextView
+                        android:id="@+id/screen_dormant_time"
+                        style="@style/DeviceInfoContent"
+                        android:text="@string/default_str"/>
+                </LinearLayout>
+
+
+                <TextView
+                    style="@style/DeviceInfoTitle"
+                    android:text="内存"/>
+
+                <LinearLayout
+                    style="@style/DeviceInfoLayout"
+                    android:weightSum="4">
+
+                    <TextView
+                        style="@style/DeviceInfoContentTitle"
+                        android:text="全部内存："/>
+
+                    <TextView
+                        android:id="@+id/all_memory"
+                        style="@style/DeviceInfoContent"
+                        android:text="@string/default_str"/>
+                </LinearLayout>
+
+                <LinearLayout
+                    style="@style/DeviceInfoLayout"
+                    android:weightSum="4">
+
+                    <TextView
+                        style="@style/DeviceInfoContentTitle"
+                        android:text="可用内存："/>
+
+                    <TextView
+                        android:id="@+id/usable_memory"
+                        style="@style/DeviceInfoContent"
+                        android:text="@string/default_str"/>
+                </LinearLayout>
+
             </LinearLayout>
+        </ScrollView>
 
-            <LinearLayout
-                style="@style/DeviceInfoLayout"
-                android:weightSum="4">
+    </LinearLayout>
 
-                <TextView
-                    style="@style/DeviceInfoContentTitle"
-                    android:text="API  等级："/>
-
-                <TextView
-                    android:id="@+id/api_level"
-                    style="@style/DeviceInfoContent"
-                    android:text="@string/default_str"/>
-            </LinearLayout>
-
-            <LinearLayout
-                style="@style/DeviceInfoLayout"
-                android:weightSum="4">
-
-                <TextView
-                    style="@style/DeviceInfoContentTitle"
-                    android:text="时        间："/>
-
-                <TextView
-                    android:id="@+id/system_time"
-                    style="@style/DeviceInfoContent"
-                    android:text="@string/default_str"/>
-            </LinearLayout>
-
-            <LinearLayout
-                style="@style/DeviceInfoLayout"
-                android:weightSum="4">
-
-                <TextView
-                    style="@style/DeviceInfoContentTitle"
-                    android:text="电        量："/>
-
-                <TextView
-                    android:id="@+id/system_battery"
-                    style="@style/DeviceInfoContent"
-                    android:text="@string/default_str"/>
-            </LinearLayout>
-
-            <LinearLayout
-                style="@style/DeviceInfoLayout"
-                android:weightSum="4">
-
-                <TextView
-                    style="@style/DeviceInfoContentTitle"
-                    android:text="音        量："/>
-
-                <TextView
-                    android:id="@+id/ring_volume"
-                    style="@style/DeviceInfoContent"
-                    android:text="@string/default_str"/>
-            </LinearLayout>
-
-            <LinearLayout
-                style="@style/DeviceInfoLayout"
-                android:weightSum="4">
-
-                <TextView
-                    style="@style/DeviceInfoContentTitle"
-                    android:text="蓝        牙："/>
-
-                <TextView
-                    android:id="@+id/bluetooth_open"
-                    style="@style/DeviceInfoContent"
-                    android:text="@string/default_str"/>
-            </LinearLayout>
-
-            <LinearLayout
-                style="@style/DeviceInfoLayout"
-                android:weightSum="4">
-
-                <TextView
-                    style="@style/DeviceInfoContentTitle"
-                    android:text="G    P    S："/>
-
-                <TextView
-                    android:id="@+id/gps_status"
-                    style="@style/DeviceInfoContent"
-                    android:text="@string/default_str"/>
-            </LinearLayout>
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/device_fab"
+        app:srcCompat="@android:drawable/ic_menu_send"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"
+        android:layout_margin="@dimen/fab_margin"/>
+</RelativeLayout>
 
 
-            <TextView
-                style="@style/DeviceInfoTitle"
-                android:text="位置"/>
 
-            <LinearLayout
-                style="@style/DeviceInfoLayout"
-                android:weightSum="4">
-
-                <TextView
-                    style="@style/DeviceInfoContentTitle"
-                    android:text="位置来源："/>
-
-                <TextView
-                    android:id="@+id/address_location_type"
-                    style="@style/DeviceInfoContent"
-                    android:text="@string/default_str"/>
-            </LinearLayout>
-
-            <LinearLayout
-                style="@style/DeviceInfoLayout"
-                android:weightSum="4">
-
-                <TextView
-                    style="@style/DeviceInfoContentTitle"
-                    android:text="位        置："/>
-
-                <TextView
-                    android:id="@+id/address"
-                    style="@style/DeviceInfoContent"
-                    android:text="@string/default_str"/>
-            </LinearLayout>
-
-
-            <TextView
-                style="@style/DeviceInfoTitle"
-                android:text="网络相关"/>
-
-            <LinearLayout
-                style="@style/DeviceInfoLayout"
-                android:weightSum="4">
-
-                <TextView
-                    style="@style/DeviceInfoContentTitle"
-                    android:text="SIM类型："/>
-
-                <TextView
-                    android:id="@+id/sim_type"
-                    style="@style/DeviceInfoContent"
-                    android:text="@string/default_str"/>
-            </LinearLayout>
-
-            <LinearLayout
-                style="@style/DeviceInfoLayout"
-                android:weightSum="4">
-
-                <TextView
-                    style="@style/DeviceInfoContentTitle"
-                    android:text="网络状态："/>
-
-                <TextView
-                    android:id="@+id/net_type"
-                    style="@style/DeviceInfoContent"
-                    android:text="@string/default_str"/>
-            </LinearLayout>
-
-            <LinearLayout
-                style="@style/DeviceInfoLayout"
-                android:weightSum="4">
-
-                <TextView
-                    style="@style/DeviceInfoContentTitle"
-                    android:text="WIFI 状态："/>
-
-                <TextView
-                    android:id="@+id/wifi_status"
-                    style="@style/DeviceInfoContent"
-                    android:text="@string/default_str"/>
-            </LinearLayout>
-
-
-            <TextView
-                style="@style/DeviceInfoTitle"
-                android:text="屏幕信息"/>
-
-            <LinearLayout
-                style="@style/DeviceInfoLayout"
-                android:weightSum="4">
-
-                <TextView
-                    style="@style/DeviceInfoContentTitle"
-                    android:text="状        态："/>
-
-                <TextView
-                    android:id="@+id/screen_status"
-                    style="@style/DeviceInfoContent"
-                    android:text="@string/default_str"/>
-            </LinearLayout>
-
-            <LinearLayout
-                style="@style/DeviceInfoLayout"
-                android:weightSum="4">
-
-                <TextView
-                    style="@style/DeviceInfoContentTitle"
-                    android:text="亮        度："/>
-
-                <TextView
-                    android:id="@+id/screen_brightness"
-                    style="@style/DeviceInfoContent"
-                    android:text="@string/default_str"/>
-            </LinearLayout>
-
-            <LinearLayout
-                style="@style/DeviceInfoLayout"
-                android:weightSum="4">
-
-                <TextView
-                    style="@style/DeviceInfoContentTitle"
-                    android:text="休眠时间："/>
-
-                <TextView
-                    android:id="@+id/screen_dormant_time"
-                    style="@style/DeviceInfoContent"
-                    android:text="@string/default_str"/>
-            </LinearLayout>
-
-
-            <TextView
-                style="@style/DeviceInfoTitle"
-                android:text="内存"/>
-
-            <LinearLayout
-                style="@style/DeviceInfoLayout"
-                android:weightSum="4">
-
-                <TextView
-                    style="@style/DeviceInfoContentTitle"
-                    android:text="全部内存："/>
-
-                <TextView
-                    android:id="@+id/all_memory"
-                    style="@style/DeviceInfoContent"
-                    android:text="@string/default_str"/>
-            </LinearLayout>
-
-            <LinearLayout
-                style="@style/DeviceInfoLayout"
-                android:weightSum="4">
-
-                <TextView
-                    style="@style/DeviceInfoContentTitle"
-                    android:text="可用内存："/>
-
-                <TextView
-                    android:id="@+id/usable_memory"
-                    style="@style/DeviceInfoContent"
-                    android:text="@string/default_str"/>
-            </LinearLayout>
-
-        </LinearLayout>
-    </ScrollView>
-
-</LinearLayout>

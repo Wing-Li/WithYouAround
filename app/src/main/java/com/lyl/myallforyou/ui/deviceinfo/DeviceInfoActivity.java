@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.RequiresApi;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.util.Pair;
 import android.support.v7.widget.Toolbar;
@@ -17,8 +18,10 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.lyl.myallforyou.R;
+import com.lyl.myallforyou.constants.Constans;
 import com.lyl.myallforyou.constants.ConstantIntent;
 import com.lyl.myallforyou.data.DeviceInfo;
+import com.lyl.myallforyou.im.messages.ChatActivity;
 import com.lyl.myallforyou.network.imp.DeviceInfoImp;
 import com.lyl.myallforyou.ui.BaseActivity;
 import com.lyl.myallforyou.ui.main.MainActivity;
@@ -68,6 +71,8 @@ public class DeviceInfoActivity extends BaseActivity {
     TextView allMemory;
     @Bind(R.id.usable_memory)
     TextView usableMemory;
+    @Bind(R.id.device_fab)
+    FloatingActionButton deviceFab;
 
     private String mTargetUuid;
     private String mTargetName;
@@ -101,13 +106,29 @@ public class DeviceInfoActivity extends BaseActivity {
                 if (mDeviceInfo == null) {
                     return;
                 }
-                if ("0.0".equals(mDeviceInfo.getAddress_longitude()) || "0.0".equals(mDeviceInfo.getAddress_longitude())) {
+                if ("0.0".equals(mDeviceInfo.getAddress_longitude()) || "0.0".equals(mDeviceInfo.getAddress_longitude
+                        ())) {
                     showT(getString(R.string.address_error));
                 } else {
-                    OpenLocalMapUtil.openMap(getApplicationContext(), mDeviceInfo.getAddress_latitude(), mDeviceInfo.getAddress_longitude());
+                    OpenLocalMapUtil.openMap(getApplicationContext(), mDeviceInfo.getAddress_latitude(), mDeviceInfo
+                            .getAddress_longitude());
                 }
             }
         });
+
+        deviceFab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                skipChatActivity(mTargetUuid, mTargetName);
+            }
+        });
+    }
+
+    private void skipChatActivity(String convId, String convTitle) {
+        Intent intent = new Intent(mContext, ChatActivity.class);
+        intent.putExtra(Constans.TARGET_ID, convId);
+        intent.putExtra(Constans.CONV_TITLE, convTitle);
+        mContext.startActivity(intent);
     }
 
     private void setupWindowAnimations() {
@@ -231,7 +252,8 @@ public class DeviceInfoActivity extends BaseActivity {
         screenDormantTime.setText(FS(mDeviceInfo.getScreen_dormant_time()));
 
         DecimalFormat decimalFormat = new DecimalFormat("#.0");
-        double allM = Double.valueOf(FS(mDeviceInfo.getUsed_memory())) + Double.valueOf(FS(mDeviceInfo.getUsable_memory()));
+        double allM = Double.valueOf(FS(mDeviceInfo.getUsed_memory())) + Double.valueOf(FS(mDeviceInfo
+                .getUsable_memory()));
         String all = decimalFormat.format(Math.round(allM / 1000));
         allMemory.setText(all + " G");
 
@@ -255,9 +277,10 @@ public class DeviceInfoActivity extends BaseActivity {
                 intent.putExtra(ConstantIntent.USER_INFO, mTargetUuid);
                 intent.putExtra(ConstantIntent.USER_NAME, mTargetName);
 
-                final Pair<View, String>[] pairs = TransitionHelper.createSafeTransitionParticipants(DeviceInfoActivity.this, true);
-                ActivityOptionsCompat transitionActivityOptions = ActivityOptionsCompat.makeSceneTransitionAnimation(DeviceInfoActivity.this,
-                        pairs);
+                final Pair<View, String>[] pairs = TransitionHelper.createSafeTransitionParticipants
+                        (DeviceInfoActivity.this, true);
+                ActivityOptionsCompat transitionActivityOptions = ActivityOptionsCompat.makeSceneTransitionAnimation
+                        (DeviceInfoActivity.this, pairs);
                 startActivity(intent, transitionActivityOptions.toBundle());
                 break;
         }
