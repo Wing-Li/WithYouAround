@@ -2,7 +2,9 @@ package com.lyl.myallforyou.im.messages;
 
 
 import android.Manifest;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
@@ -16,6 +18,7 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
@@ -36,6 +39,8 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
+import butterknife.Bind;
+import butterknife.ButterKnife;
 import cn.jiguang.imui.chatinput.ChatInputView;
 import cn.jiguang.imui.chatinput.listener.OnCameraCallbackListener;
 import cn.jiguang.imui.chatinput.listener.OnClickEditTextListener;
@@ -62,6 +67,11 @@ import cn.jpush.im.android.api.model.UserInfo;
 public class ChatActivity extends BaseActivity implements ChatView.OnKeyboardChangedListener, ChatView
         .OnSizeChangedListener, View.OnTouchListener {
 
+    @Bind(R.id.back_iv)
+    ImageView backIv;
+    @Bind(R.id.clear_tv)
+    TextView clearTv;
+
     private ChatView mChatView;
     private MsgListAdapter<MyMessage> mAdapter;
     private List<MyMessage> mData;
@@ -74,13 +84,12 @@ public class ChatActivity extends BaseActivity implements ChatView.OnKeyboardCha
     private UserInfo mMyUserInfo;
     private String mTargetId;
     private String mConvTitle;
-    private String mTargetName;
-    private String mTargetIcon;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chat);
+        ButterKnife.bind(this);
         JMessageClient.registerEventReceiver(this);
 
         this.mImm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
@@ -95,6 +104,39 @@ public class ChatActivity extends BaseActivity implements ChatView.OnKeyboardCha
         initMsgAdapter();
 
         initKeyboard();
+
+        initView();
+    }
+
+    private void initView() {
+        backIv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
+        clearTv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                new AlertDialog.Builder(mContext)//
+                        .setTitle(R.string.hint)//
+                        .setMessage(R.string.delete_chat_list)//
+                        .setNegativeButton(R.string.ok, new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                if (mConv.deleteAllMessage()) {
+                                    showT(R.string.delete_success);
+                                    finish();
+                                } else {
+                                    showT(R.string.delete_fail);
+                                }
+                                dialog.dismiss();
+                            }
+                        })//
+                        .setPositiveButton(R.string.cancel, null)//
+                        .create().show();
+            }
+        });
     }
 
     @Override
@@ -147,7 +189,10 @@ public class ChatActivity extends BaseActivity implements ChatView.OnKeyboardCha
             String iconPath = file != null && file.exists() ? file.getAbsolutePath() : "";
             message.setUserInfo(new DefaultUser("1", mMyUserInfo.getNickname(), iconPath));
         } else {
-            message.setUserInfo(new DefaultUser("0", mTargetName, mTargetIcon));
+            UserInfo fromUser = msg.getFromUser();
+            File file = fromUser.getAvatarFile();
+            String iconPath = file != null && file.exists() ? file.getAbsolutePath() : "";
+            message.setUserInfo(new DefaultUser("0", fromUser.getNickname(), iconPath));
         }
 
         Date date = new Date();

@@ -13,5 +13,8 @@
     <color name="transparent">#00000000</color>
     <color name="sky_blue">#4ABEE2</color>
 
-    <color name="chat_title_bg">#427BED</color>
+    <!--极光推送的 SDK UI 有这些颜色，是蓝色。这里把它的重写一下，就会覆盖它的。 -->
+    <color name="aurora_msg_receive_bubble_default_color">#00AA8D</color>
+    <color name="aurora_msg_receive_bubble_pressed_color">#008975</color>
+    <color name="aurora_msg_receive_bubble_selected_color">#00BF9A</color>
 </resources>

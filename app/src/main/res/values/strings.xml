@@ -116,6 +116,7 @@
     <string name="two_not_net">还是没有网呢，请小主先去打开网络吧</string>
     <string name="had">已经有了</string>
     <string name="delete_success">删除成功</string>
+    <string name="delete_fail">删除失败</string>
     <string name="delete">密友删除</string>
     <string name="delete_friend_dialog_msg">删除后您将无法查看对方的信息，对方也无法继续查看您的信息，您确定要删除吗？</string>
     <string name="exit_txt">退&#160;&#160;&#160;&#160;出</string>
@@ -152,5 +153,6 @@
     <string name="login_jg_fail">登陆聊天系统出错，您将不能聊天。\n您可以尝试重启App</string>
     <string name="send_message_fail">消息发送失败</string>
     <string name="file_not_exists">文件不存在</string>
+    <string name="delete_chat_list">您确定要删除所有记录吗？</string>
 
 </resources>

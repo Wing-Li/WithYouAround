@@ -341,6 +341,14 @@ public class MainFragmentAdapter extends RecyclerView.Adapter<MainFragmentAdapte
                                                 }
                                             });
 
+                                        }else {
+                                            mHandler.post(new Runnable() {
+                                                @Override
+                                                public void run() {
+                                                    Toast.makeText(mContext, R.string.delete_fail, Toast
+                                                            .LENGTH_SHORT).show();
+                                                }
+                                            });
                                         }
                                     }
                                 });

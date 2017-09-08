@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <com.lyl.myallforyou.im.views.ChatView
+    android:id="@+id/chat_view"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/chat_view"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#f3f3f3"
@@ -12,16 +12,45 @@
         android:id="@+id/title_container"
         android:layout_width="match_parent"
         android:layout_height="48dp"
-        android:background="@color/chat_title_bg"
-        android:gravity="center">
+        android:background="@color/colorPrimary"
+        android:gravity="center"
+        android:translationZ="4dp"
+        android:elevation="4dp">
+
+        <ImageView
+            android:id="@+id/back_iv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="8dp"
+            android:padding="8dp"
+            android:src="@drawable/ic_arrow_back_white_24dp"/>
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:layout_weight="1"/>
 
         <TextView
             android:id="@+id/title_tv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@color/white"
-            android:textSize="@dimen/chat_title_bar_txt_size" />
+            android:textSize="@dimen/chat_title_bar_txt_size"/>
 
+        <View
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:layout_weight="1"/>
+
+        <TextView
+            android:id="@+id/clear_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/white"
+            android:gravity="center"
+            android:layout_marginRight="16dp"
+            android:text="删除\n聊天记录"
+            android:textSize="12sp"/>
     </LinearLayout>
 
     <LinearLayout
@@ -35,8 +64,8 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             app:avatarHeight="48dp"
-            app:avatarWidth="48dp"
             app:avatarRadius="5dp"
+            app:avatarWidth="48dp"
             app:bubbleMaxWidth="0.70"
             app:dateTextSize="14sp"
             app:receiveBubblePaddingLeft="16dp"
@@ -46,7 +75,7 @@
             app:sendBubblePaddingLeft="8dp"
             app:sendBubblePaddingRight="16dp"
             app:sendTextColor="#7587A8"
-            app:sendTextSize="14sp" />
+            app:sendTextSize="14sp"/>
 
     </LinearLayout>
 
@@ -55,7 +84,7 @@
         android:id="@+id/chat_input"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true" />
+        android:layout_alignParentBottom="true"/>
 
 
 </com.lyl.myallforyou.im.views.ChatView>
