@@ -1,5 +1,6 @@
 package com.lyl.myallforyou.ui.main;
 
+import android.app.Activity;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -34,6 +35,8 @@ import com.avos.avoscloud.AVQuery;
 import com.avos.avoscloud.CountCallback;
 import com.avos.avoscloud.GetCallback;
 import com.avos.avoscloud.SaveCallback;
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.MultiFormatWriter;
 import com.google.zxing.WriterException;
@@ -61,6 +64,11 @@ import com.lyl.myallforyou.utils.ImgUtils;
 import com.lyl.myallforyou.utils.MyUtils;
 import com.lyl.myallforyou.utils.NetUtil;
 import com.lyl.myallforyou.utils.SPUtil;
+import com.lzy.imagepicker.ImagePicker;
+import com.lzy.imagepicker.bean.ImageItem;
+import com.lzy.imagepicker.loader.ImageLoader;
+import com.lzy.imagepicker.ui.ImageGridActivity;
+import com.lzy.imagepicker.view.CropImageView;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -76,6 +84,7 @@ import static com.lyl.myallforyou.constants.Constans.USER_MYSGIN;
 public class MainActivity extends BaseActivity {
 
     public static final String TAG = "MainActivity";
+    public static final int IMAGE_PICKER = 1008;
 
     private ImageView mBg;
     private ImageView mIcon;
@@ -95,10 +104,10 @@ public class MainActivity extends BaseActivity {
         String myName = (String) SPUtil.get(mContext, SP_MY_NAME, "");
         if (TextUtils.isEmpty(myName)) {
             setName();
-        }else {
+        } else {
             // 如果名字不是空，检查一下聊天服务器的名字是不是空
             String nickname = IMutils.getMyInfo().getNickname();
-            if (TextUtils.isEmpty(nickname)){
+            if (TextUtils.isEmpty(nickname)) {
                 IMutils.updateUserName(myName, new IMCallBack() {
                     @Override
                     public void onSuccess(int code, String msg) {
@@ -116,6 +125,8 @@ public class MainActivity extends BaseActivity {
         if (!NetUtil.isNetworkAvailable(mContext)) {
             Toast.makeText(getApplicationContext(), R.string.not_net, Toast.LENGTH_LONG).show();
         }
+
+        initImagePicker();
     }
 
     @Override
@@ -177,7 +188,28 @@ public class MainActivity extends BaseActivity {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        // 修改头像
+        if (resultCode == ImagePicker.RESULT_CODE_ITEMS) {
+            if (data != null && requestCode == IMAGE_PICKER) {
+                ArrayList<ImageItem> images = (ArrayList<ImageItem>) data.getSerializableExtra(ImagePicker
+                        .EXTRA_RESULT_ITEMS);
+                ImageItem image = images.get(0);
+                final File file = new File(image.path);
 
+                IMutils.updateUserIcon(file, new IMCallBack() {
+                    @Override
+                    public void onSuccess(int code, String msg) {
+                        ImgUtils.loadCircle(mContext, Uri.fromFile(file), mIcon);
+                        showT(R.string.save_success);
+                    }
+
+                    @Override
+                    public void onFail(int code, String msg) {
+                        showT(R.string.save_fail);
+                    }
+                });
+            }
+        }
         // 获取扫描的二维码
         IntentResult intentResult = IntentIntegrator.parseActivityResult(requestCode, resultCode, data);
         if (intentResult != null) {
@@ -340,7 +372,6 @@ public class MainActivity extends BaseActivity {
 
     // ============================================== ↓侧边栏↓ ==============================================
 
-
     public void initDrawerLayout() {
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, mDrawerLayout, R.string
@@ -373,6 +404,13 @@ public class MainActivity extends BaseActivity {
             @Override
             public void onClick(View view) {
                 setUserInfo();
+            }
+        });
+        mIcon.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                setIcon();
+                return true;
             }
         });
         mName.setOnClickListener(new View.OnClickListener() {
@@ -593,6 +631,58 @@ public class MainActivity extends BaseActivity {
     }
     // ============================================== ↑侧边栏↑ ==============================================
 
+    // ============================================== ↓图片选择↓ ==============================================
+
+    private void setIcon() {
+        Intent intent = new Intent(this, ImageGridActivity.class);
+        startActivityForResult(intent, IMAGE_PICKER);
+    }
+
+    private void initImagePicker() {
+        ImagePicker imagePicker = ImagePicker.getInstance();
+        imagePicker.setImageLoader(new PicassoImageLoader());   //设置图片加载器
+        imagePicker.setShowCamera(true);  //显示拍照按钮
+        imagePicker.setCrop(true);        //允许裁剪（单选才有效）
+        imagePicker.setSaveRectangle(true); //是否按矩形区域保存
+        imagePicker.setSelectLimit(1);    //选中数量限制
+        imagePicker.setStyle(CropImageView.Style.CIRCLE);  //裁剪框的形状
+        imagePicker.setFocusWidth(800);   //裁剪框的宽度。单位像素（圆形自动取宽高最小值）
+        imagePicker.setFocusHeight(800);  //裁剪框的高度。单位像素（圆形自动取宽高最小值）
+        imagePicker.setOutPutX(1000);//保存文件的宽度。单位像素
+        imagePicker.setOutPutY(1000);//保存文件的高度。单位像素
+    }
+
+    class PicassoImageLoader implements ImageLoader {
+
+        @Override
+        public void displayImage(Activity activity, String path, ImageView imageView, int width, int height) {
+            Glide.with(activity).load(Uri.fromFile(new File(path)))//
+                    .placeholder(R.drawable.gary_bg)//
+                    .error(R.drawable.gary_bg)//
+                    .override(width, height)//
+                    .centerCrop()//
+                    .diskCacheStrategy(DiskCacheStrategy.RESULT)//
+                    .into(imageView);
+        }
+
+        @Override
+        public void displayImagePreview(Activity activity, String path, ImageView imageView, int width, int height) {
+            Glide.with(activity).load(Uri.fromFile(new File(path)))//
+                    .placeholder(R.drawable.gary_bg)//
+                    .error(R.drawable.gary_bg)//
+                    .override(width, height)//
+                    .centerCrop()//
+                    .diskCacheStrategy(DiskCacheStrategy.RESULT)//
+                    .into(imageView);
+        }
+
+        @Override
+        public void clearMemoryCache() {
+            //这里是清除缓存的方法,根据需要自己实现
+        }
+    }
+
+    // ============================================== ↑图片选择↑ ==============================================
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.main, menu);

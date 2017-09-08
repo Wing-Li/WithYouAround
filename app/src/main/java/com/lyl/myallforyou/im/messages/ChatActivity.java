@@ -22,6 +22,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.lyl.myallforyou.MyApp;
 import com.lyl.myallforyou.R;
 import com.lyl.myallforyou.constants.Constans;
 import com.lyl.myallforyou.im.IMutils;
@@ -301,8 +302,7 @@ public class ChatActivity extends BaseActivity implements ChatView.OnKeyboardCha
                 String[] perms = new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.CAMERA,
                         Manifest.permission.RECORD_AUDIO};
 
-                File rootDir = getFilesDir();
-                String fileDir = rootDir.getAbsolutePath() + "/photo";
+                String fileDir = MyApp.getAppPath() + "/photo";
                 mChatView.setCameraCaptureFile(fileDir, new SimpleDateFormat("yyyy-MM-dd-hhmmss", Locale.getDefault()
                 ).format(new Date()));
                 return true;
