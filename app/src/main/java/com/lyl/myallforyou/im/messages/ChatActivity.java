@@ -386,16 +386,16 @@ public class ChatActivity extends BaseActivity implements ChatView.OnKeyboardCha
         ImageLoader imageLoader = new ImageLoader() {
             @Override
             public void loadAvatarImage(ImageView avatarImageView, String string) {
-                if (TextUtils.isEmpty(string)) {
-                    Glide.with(getApplicationContext()).load(string).placeholder(R.drawable.aurora_headicon_default)
+                if (!TextUtils.isEmpty(string)) {
+                    Glide.with(getApplicationContext())//
+                            .load(string)//
+                            .placeholder(R.drawable.aurora_headicon_default)//
                             .into(avatarImageView);
                 } else if (string.contains("R.drawable")) {
                     Integer resId = getResources().getIdentifier(string.replace("R.drawable.", ""), "drawable",
                             getPackageName());
 
                     avatarImageView.setImageResource(resId);
-                } else {
-
                 }
             }
 

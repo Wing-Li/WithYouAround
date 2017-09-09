@@ -31,7 +31,6 @@ import com.lyl.myallforyou.constants.ConstantIntent;
 import com.lyl.myallforyou.data.UserInfo;
 import com.lyl.myallforyou.data.event.MainEvent;
 import com.lyl.myallforyou.im.IMutils;
-import com.lyl.myallforyou.im.entity.ChatInfo;
 import com.lyl.myallforyou.im.messages.ChatActivity;
 import com.lyl.myallforyou.ui.deviceinfo.DeviceInfoActivity;
 import com.lyl.myallforyou.utils.ImgUtils;
@@ -45,6 +44,8 @@ import org.greenrobot.eventbus.EventBus;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
+
+import cn.jpush.im.android.api.model.Conversation;
 
 import static com.lyl.myallforyou.constants.Constans.USER_FAMILYID;
 import static com.lyl.myallforyou.constants.Constans.USER_MYID;
@@ -79,14 +80,31 @@ public class MainFragmentAdapter extends RecyclerView.Adapter<MainFragmentAdapte
     @Override
     public void onBindViewHolder(final ViewHolder holder, final int position) {
         final UserInfo userInfo = mValues.get(position);
+        int readCount = 0;
+        if (position == 0) { // 第一条是自己，直接显示头像
+            String iconPath = (String) SPUtil.get(mContext, Constans.SP_MY_ICON, "");
+            if (TextUtils.isEmpty(iconPath)){
+                holder.icon.setImageResource(R.mipmap.icon);
+            }else {
+                ImgUtils.loadCircle(mContext, iconPath, holder.icon);
+            }
+        }else { // 之后每次请求头像 和 未读数
+            final Conversation conv = IMutils.getSingleConversation(userInfo.getUuid());
 
-        final ChatInfo chatInfo = IMutils.getSingleConversationChatInfo(userInfo.getUuid());
+            File icon = conv.getAvatarFile();
+            if (icon != null && icon.exists()) {
+                ImgUtils.loadCircle(mContext, Uri.fromFile(icon), holder.icon);
+            } else {
+                holder.icon.setImageResource(R.mipmap.icon);
+            }
 
-        File icon = chatInfo.getIcon();
-        if (icon != null && icon.exists()) {
-            ImgUtils.loadCircle(mContext, Uri.fromFile(icon), holder.icon);
-        } else {
-            holder.icon.setImageResource(R.mipmap.icon);
+            readCount = conv.getUnReadMsgCnt();
+            if (readCount > 0) {
+                holder.unRead.setText(String.valueOf(readCount));
+                holder.unRead.setVisibility(View.VISIBLE);
+            } else {
+                holder.unRead.setVisibility(View.GONE);
+            }
         }
 
         String name = userInfo.getName();
@@ -103,18 +121,12 @@ public class MainFragmentAdapter extends RecyclerView.Adapter<MainFragmentAdapte
 
         holder.content.setText(userInfo.getSign());
 
-        final int readCount = chatInfo.getUnReadCount();
-        if (readCount > 0) {
-            holder.unRead.setText(String.valueOf(readCount));
-            holder.unRead.setVisibility(View.VISIBLE);
-        }else {
-            holder.unRead.setVisibility(View.GONE);
-        }
 
+        final int finalReadCount = readCount;
         holder.mView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (readCount > 0) {
+                if (finalReadCount > 0) {
                     skipChatActivity(userInfo.getUuid(), finalName);
                 } else {
                     skipDeviceInfo(userInfo);
@@ -125,7 +137,7 @@ public class MainFragmentAdapter extends RecyclerView.Adapter<MainFragmentAdapte
             @Override
             public boolean onLongClick(View view) {
                 if (position != 0) {// 第一个是自己
-                    selectItem(userInfo, chatInfo, position);
+                    selectItem(userInfo, position);
                 }
                 return true;
             }
@@ -200,7 +212,7 @@ public class MainFragmentAdapter extends RecyclerView.Adapter<MainFragmentAdapte
         return name;
     }
 
-    private void selectItem(final UserInfo userInfo, final ChatInfo chatInfo, final int position) {
+    private void selectItem(final UserInfo userInfo, final int position) {
         AlertDialog alertDialog = new AlertDialog.Builder(mContext).setItems(R.array.main_select_item, new
                 DialogInterface.OnClickListener() {
 
@@ -341,7 +353,7 @@ public class MainFragmentAdapter extends RecyclerView.Adapter<MainFragmentAdapte
                                                 }
                                             });
 
-                                        }else {
+                                        } else {
                                             mHandler.post(new Runnable() {
                                                 @Override
                                                 public void run() {
