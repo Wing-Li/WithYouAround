@@ -24,7 +24,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
-import com.lyl.myallforyou.MyApp;
 import com.lyl.myallforyou.R;
 import com.lyl.myallforyou.constants.Constans;
 import com.lyl.myallforyou.im.IMutils;
@@ -32,6 +31,9 @@ import com.lyl.myallforyou.im.models.DefaultUser;
 import com.lyl.myallforyou.im.models.MyMessage;
 import com.lyl.myallforyou.im.views.ChatView;
 import com.lyl.myallforyou.ui.BaseActivity;
+import com.lzy.imagepicker.ImagePicker;
+import com.lzy.imagepicker.bean.ImageItem;
+import com.lzy.imagepicker.ui.ImageGridActivity;
 
 import java.io.File;
 import java.text.SimpleDateFormat;
@@ -45,7 +47,6 @@ import java.util.Locale;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import cn.jiguang.imui.chatinput.ChatInputView;
-import cn.jiguang.imui.chatinput.listener.OnCameraCallbackListener;
 import cn.jiguang.imui.chatinput.listener.OnClickEditTextListener;
 import cn.jiguang.imui.chatinput.listener.OnMenuClickListener;
 import cn.jiguang.imui.chatinput.listener.RecordVoiceListener;
@@ -69,6 +70,9 @@ import cn.jpush.im.android.api.model.UserInfo;
 
 public class ChatActivity extends BaseActivity implements ChatView.OnKeyboardChangedListener, ChatView
         .OnSizeChangedListener, View.OnTouchListener {
+
+    public static final int IMAGE_PICKER = 901;
+    public static final int REQUEST_CODE_SELECT = 902;
 
     @Bind(R.id.back_iv)
     ImageView backIv;
@@ -109,6 +113,27 @@ public class ChatActivity extends BaseActivity implements ChatView.OnKeyboardCha
         initKeyboard();
 
         initView();
+
+        //
+        setImagePicker();
+    }
+
+    /**
+     * 选择头像需要剪切，聊天页面不需要。需要重新设置
+     */
+    private void setImagePicker() {
+        ImagePicker imagePicker = ImagePicker.getInstance();
+        imagePicker.setCrop(false);
+        imagePicker.setMultiMode(true);
+    }
+
+    /**
+     * 退出的时候，重置设置
+     */
+    private void reImagePicker() {
+        ImagePicker imagePicker = ImagePicker.getInstance();
+        imagePicker.setMultiMode(false);
+        imagePicker.setCrop(true);
     }
 
     private void initView() {
@@ -146,6 +171,7 @@ public class ChatActivity extends BaseActivity implements ChatView.OnKeyboardCha
     protected void onDestroy() {
         JMessageClient.unRegisterEventReceiver(this);
         JMessageClient.exitConversation();
+        reImagePicker();
         super.onDestroy();
     }
 
@@ -234,44 +260,7 @@ public class ChatActivity extends BaseActivity implements ChatView.OnKeyboardCha
              */
             @Override
             public void onSendFiles(List<FileItem> list) {
-                if (list == null || list.isEmpty()) {
-                    return;
-                }
-
-                MyMessage message;
-                for (FileItem item : list) {
-                    if (item.getType() == FileItem.Type.Image) {
-                        message = new MyMessage(null, IMessage.MessageType.SEND_IMAGE);
-
-                    } else if (item.getType() == FileItem.Type.Video) {
-                        message = new MyMessage(null, IMessage.MessageType.SEND_VIDEO);
-                        message.setDuration(((VideoItem) item).getDuration());
-
-                    } else {
-                        throw new RuntimeException("Invalid FileItem type. Must be Type.Image or Type.Video");
-                    }
-
-                    message = setMyUserInfo(message);
-                    message.setMediaFilePath(item.getFilePath());
-
-                    final MyMessage fMsg = message;
-                    ChatActivity.this.runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            File file = new File(fMsg.getMediaFilePath());
-
-                            if (fMsg.getType() == IMessage.MessageType.SEND_IMAGE) {
-                                IMutils.sendMessageImage(getApplicationContext(), mConv, file);
-                            } else if (fMsg.getType() == IMessage.MessageType.SEND_VIDEO) {
-                                IMutils.sendMessageFile(getApplicationContext(), mConv, file);
-                            } else {
-                                throw new RuntimeException("Invalid FileItem type. Must be Type.Image or Type.Video");
-                            }
-
-                            mAdapter.addToStart(fMsg, true);
-                        }
-                    });
-                }
+                // 图片和照相 自己处理
             }
 
             /**
@@ -282,7 +271,6 @@ public class ChatActivity extends BaseActivity implements ChatView.OnKeyboardCha
             public boolean switchToMicrophoneMode() {
                 String[] perms = new String[]{Manifest.permission.RECORD_AUDIO, Manifest.permission
                         .WRITE_EXTERNAL_STORAGE};
-
                 return true;
             }
 
@@ -292,9 +280,10 @@ public class ChatActivity extends BaseActivity implements ChatView.OnKeyboardCha
              */
             @Override
             public boolean switchToGalleryMode() {
-                String[] perms = new String[]{Manifest.permission.READ_EXTERNAL_STORAGE};
-
-                return true;
+                toSelectImage();
+                ChatInputView chatInputView = mChatView.getChatInputView();
+                chatInputView.dismissMenuLayout();
+                return false;
             }
 
             /**
@@ -303,13 +292,10 @@ public class ChatActivity extends BaseActivity implements ChatView.OnKeyboardCha
              */
             @Override
             public boolean switchToCameraMode() {
-                String[] perms = new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.CAMERA,
-                        Manifest.permission.RECORD_AUDIO};
-
-                String fileDir = MyApp.getAppPath() + "/photo";
-                mChatView.setCameraCaptureFile(fileDir, new SimpleDateFormat("yyyy-MM-dd-hhmmss", Locale.getDefault()
-                ).format(new Date()));
-                return true;
+                toCamera();
+                ChatInputView chatInputView = mChatView.getChatInputView();
+                chatInputView.dismissMenuLayout();
+                return false;
             }
         });
 
@@ -344,45 +330,87 @@ public class ChatActivity extends BaseActivity implements ChatView.OnKeyboardCha
             }
         });
 
-        // 相机相关的接口
-        mChatView.setOnCameraCallbackListener(new OnCameraCallbackListener() {
-            @Override
-            public void onTakePictureCompleted(final String photoPath) {
-                final MyMessage message = new MyMessage(null, IMessage.MessageType.SEND_IMAGE);
-                message.setMediaFilePath(photoPath);
-                setMyUserInfo(message);
-                ChatActivity.this.runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        File file = new File(photoPath);
-                        IMutils.sendMessageImage(getApplicationContext(), mConv, file);
-                        mAdapter.addToStart(message, true);
-                    }
-                });
-            }
-
-            @Override
-            public void onStartVideoRecord() {
-
-            }
-
-            @Override
-            public void onFinishVideoRecord(String videoPath) {
-                // 请注意，点击发送视频的事件会回调给 onSendFiles，这个是在录制完视频后触发的
-            }
-
-            @Override
-            public void onCancelVideoRecord() {
-
-            }
-        });
-
         mChatView.setOnTouchEditTextListener(new OnClickEditTextListener() {
             @Override
             public void onTouchEditText() {
 //                mAdapter.getLayoutManager().scrollToPosition(0);
             }
         });
+    }
+
+    private void toSelectImage() {
+        Intent intent = new Intent(this, ImageGridActivity.class);
+        startActivityForResult(intent, IMAGE_PICKER);
+    }
+
+    private void toCamera() {
+        Intent intent = new Intent(this, ImageGridActivity.class);
+        intent.putExtra(ImageGridActivity.EXTRAS_TAKE_PICKERS, true); // 是否是直接打开相机
+        startActivityForResult(intent, REQUEST_CODE_SELECT);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        // 图片 或 拍照 返回的结果
+        if (resultCode == ImagePicker.RESULT_CODE_ITEMS) {
+            if (data != null && (requestCode == IMAGE_PICKER || requestCode == REQUEST_CODE_SELECT)) {
+                ArrayList<ImageItem> images = (ArrayList<ImageItem>) data.getSerializableExtra(ImagePicker
+                        .EXTRA_RESULT_ITEMS);
+
+                List<FileItem> list = new ArrayList<>();
+                FileItem file;
+                for (ImageItem imageItem : images) {
+                    file = new FileItem(imageItem.path, imageItem.name, String.valueOf(imageItem.size), String
+                            .valueOf(imageItem.addTime));
+                    file.setType(FileItem.Type.Image);
+                    list.add(file);
+                }
+                // 发送 选择/拍摄 的图片
+                sendImage(list);
+            }
+        }
+    }
+
+    private void sendImage(List<FileItem> list) {
+        if (list == null || list.isEmpty()) {
+            return;
+        }
+
+        MyMessage message;
+        for (FileItem item : list) {
+            if (item.getType() == FileItem.Type.Image) {
+                message = new MyMessage(null, IMessage.MessageType.SEND_IMAGE);
+
+            } else if (item.getType() == FileItem.Type.Video) {
+                message = new MyMessage(null, IMessage.MessageType.SEND_VIDEO);
+                message.setDuration(((VideoItem) item).getDuration());
+
+            } else {
+                throw new RuntimeException("Invalid FileItem type. Must be Type.Image or Type.Video");
+            }
+
+            message = setMyUserInfo(message);
+            message.setMediaFilePath(item.getFilePath());
+
+            final MyMessage fMsg = message;
+            ChatActivity.this.runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    File file = new File(fMsg.getMediaFilePath());
+
+                    if (fMsg.getType() == IMessage.MessageType.SEND_IMAGE) {
+                        IMutils.sendMessageImage(getApplicationContext(), mConv, file);
+                    } else if (fMsg.getType() == IMessage.MessageType.SEND_VIDEO) {
+                        IMutils.sendMessageFile(getApplicationContext(), mConv, file);
+                    } else {
+                        throw new RuntimeException("Invalid FileItem type. Must be Type.Image or Type.Video");
+                    }
+
+                    mAdapter.addToStart(fMsg, true);
+                }
+            });
+        }
     }
 
     static ImageLoader imageLoader = new ImageLoader() {
@@ -428,7 +456,6 @@ public class ChatActivity extends BaseActivity implements ChatView.OnKeyboardCha
         mAdapter.setOnMsgClickListener(new MsgListAdapter.OnMsgClickListener<MyMessage>() {
             @Override
             public void onMessageClick(MyMessage message) {
-                // do something
                 if (message.getType() == IMessage.MessageType.RECEIVE_VIDEO || message.getType() == IMessage
                         .MessageType.SEND_VIDEO) {
                     if (!TextUtils.isEmpty(message.getMediaFilePath())) {
@@ -437,7 +464,7 @@ public class ChatActivity extends BaseActivity implements ChatView.OnKeyboardCha
                         startActivity(intent);
                     }
                 } else {
-                    Toast.makeText(getApplicationContext(), "点击消息事件", Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(getApplicationContext(), "点击消息事件", Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -451,8 +478,8 @@ public class ChatActivity extends BaseActivity implements ChatView.OnKeyboardCha
                     ClipboardManager clipboardManager = (ClipboardManager) getSystemService(CLIPBOARD_SERVICE);
                     ClipData clipData = ClipData.newPlainText("test", message.getText());
                     clipboardManager.setPrimaryClip(clipData);
+                    Toast.makeText(getApplicationContext(), R.string.copy_success, Toast.LENGTH_SHORT).show();
                 }
-//                Toast.makeText(getApplicationContext(), "长按消息事件", Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -460,7 +487,7 @@ public class ChatActivity extends BaseActivity implements ChatView.OnKeyboardCha
             @Override
             public void onAvatarClick(MyMessage message) {
                 DefaultUser userInfo = (DefaultUser) message.getFromUser();
-//                Toast.makeText(getApplicationContext(), "头像点击事件", Toast.LENGTH_SHORT).show();
+                //Toast.makeText(getApplicationContext(), "头像点击事件", Toast.LENGTH_SHORT).show();
             }
         });
 
