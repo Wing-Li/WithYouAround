@@ -164,16 +164,6 @@ public class SplashActivity extends BaseActivity {
     }
 
     private void initMain() {
-        // 如果加载时间不到2秒就等一会，超过两秒就直接跳
-        long ringTime = System.currentTimeMillis() - mStartTime;
-        if (ringTime < WAIT_TIME) {
-            try {
-                Thread.sleep(WAIT_TIME - ringTime);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-        }
-
         // 登陆极光服务器，登陆成功后跳转主页面
         String currUuid = (String) SPUtil.get(mContext, Constans.SP_UUID, "");
         IMutils.loginJG(currUuid, IMutils.password, new IMCallBack() {
@@ -197,6 +187,16 @@ public class SplashActivity extends BaseActivity {
     }
 
     private void goMain(){
+        // 如果加载时间不到2秒就等一会，超过两秒就直接跳
+        long ringTime = System.currentTimeMillis() - mStartTime;
+        if (ringTime < WAIT_TIME) {
+            try {
+                Thread.sleep(WAIT_TIME - ringTime);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+
         Intent intent = new Intent(SplashActivity.this, MainActivity.class);
         startActivity(intent);
         finish();

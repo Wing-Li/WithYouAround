@@ -86,7 +86,7 @@ public class UserInfoActivity extends BaseActivity {
         if (!TextUtils.isEmpty(spSgin)) {
             userinfoSgin.setText(spSgin);
         }
-        String spMarking = (String) SPUtil.get(mContext, Constans.SD_MY_MARKING, "");
+        String spMarking = (String) SPUtil.get(mContext, Constans.SP_MY_MARKING, "");
         if (!TextUtils.isEmpty(spMarking)) {
             userinfoMarking.setText(spMarking);
         }
@@ -176,7 +176,7 @@ public class UserInfoActivity extends BaseActivity {
                                 public void done(AVException e) {
                                     if (e == null) {
                                         showT(R.string.save_success);
-                                        SPUtil.put(mContext, Constans.SD_MY_MARKING, edtStr);
+                                        SPUtil.put(mContext, Constans.SP_MY_MARKING, edtStr);
                                         userinfoMarking.setText(edtStr);
 
                                         userinfoExit.setText(R.string.exit_txt);

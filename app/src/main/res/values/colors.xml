@@ -17,4 +17,16 @@
     <color name="aurora_msg_receive_bubble_default_color">#00AA8D</color>
     <color name="aurora_msg_receive_bubble_pressed_color">#008975</color>
     <color name="aurora_msg_receive_bubble_selected_color">#00BF9A</color>
+
+    <color name="aurora_bg_edittext_default">#e5e5e5</color>
+    <color name="aurora_bg_edittext_focus">#00AA8D</color>
+    <color name="aurora_bg_input_container">#e5e5e5</color>
+    <color name="aurora_bg_input_default">#f3f3f3</color>
+    <color name="aurora_bg_voice_btn_default">#3f80dc</color>
+    <color name="aurora_bg_voice_btn_pressed">#3773cb</color>
+    <color name="aurora_chronometer_text_color">#92A7C5</color>
+    <color name="aurora_cursor_color_default">#8db4eb</color>
+    <color name="aurora_hint_color_input">#8b8b8b</color>
+    <color name="aurora_jpush_blue">#3f80dc</color>
+    <color name="aurora_text_color_input">#000000</color>
 </resources>

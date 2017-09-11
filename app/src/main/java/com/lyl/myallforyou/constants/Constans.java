@@ -64,7 +64,7 @@ public class Constans {
     // ======================  ↑ SD端数据表 ↑  ======================
     public static String SP_UUID = "uuid";
     public static String SP_OBJ_ID = "sp_user_object_id";
-    public static String SD_MY_MARKING = "sd_user_marking";
+    public static String SP_MY_MARKING = "sd_user_marking";
     public static String SP_MY_NAME = "sp_my_name";
     public static String SP_MY_SGIN = "sp_my_sgin";
     public static String SP_MY_ICON = "sp_my_icon";

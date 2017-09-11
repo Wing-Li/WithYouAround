@@ -44,7 +44,7 @@ public class MyUtils {
      * 用户是否登录
      */
     public static boolean isLogin(Context mContext) {
-        String spMarking = (String) SPUtil.get(mContext, Constans.SD_MY_MARKING, "");
+        String spMarking = (String) SPUtil.get(mContext, Constans.SP_MY_MARKING, "");
         return !TextUtils.isEmpty(spMarking);
     }
 
@@ -123,7 +123,8 @@ public class MyUtils {
         SPUtil.put(context, Constans.SP_UUID, "");
         SPUtil.put(context, Constans.SP_MY_NAME, "");
         SPUtil.put(context, Constans.SP_MY_SGIN, "");
-        SPUtil.put(context, Constans.SD_MY_MARKING, "");
+        SPUtil.put(context, Constans.SP_MY_MARKING, "");
+        SPUtil.put(context, Constans.SP_MY_ICON, "");
 
         Intent intent = new Intent(context, MainActivity.class);
         intent.putExtra(MainActivity.TAG_EXIT, true);
@@ -158,7 +159,7 @@ public class MyUtils {
                     SPUtil.put(context, Constans.SP_UUID, info.getUuid());
                     SPUtil.put(context, Constans.SP_MY_NAME, info.getName());
                     SPUtil.put(context, Constans.SP_MY_SGIN, info.getSign());
-                    SPUtil.put(context, Constans.SD_MY_MARKING, info.getMarking());
+                    SPUtil.put(context, Constans.SP_MY_MARKING, info.getMarking());
 
                     userBindCallBack.onUserInfo(info);
                 } else {

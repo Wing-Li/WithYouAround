@@ -3,6 +3,8 @@ package com.lyl.myallforyou.im.messages;
 
 import android.Manifest;
 import android.app.AlertDialog;
+import android.content.ClipData;
+import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -143,12 +145,14 @@ public class ChatActivity extends BaseActivity implements ChatView.OnKeyboardCha
     @Override
     protected void onDestroy() {
         JMessageClient.unRegisterEventReceiver(this);
+        JMessageClient.exitConversation();
         super.onDestroy();
     }
 
     private void getParmeter() {
         mTargetId = getIntent().getStringExtra(Constans.TARGET_ID);
         mConvTitle = getIntent().getStringExtra(Constans.CONV_TITLE);
+        JMessageClient.enterSingleConversation(mTargetId);
         mConv = IMutils.getSingleConversation(mTargetId);
         mConv.resetUnreadCount();// 初始化未读数
 
@@ -381,40 +385,37 @@ public class ChatActivity extends BaseActivity implements ChatView.OnKeyboardCha
         });
     }
 
+    static ImageLoader imageLoader = new ImageLoader() {
+        @Override
+        public void loadAvatarImage(ImageView avatarImageView, String string) {
+            if (!TextUtils.isEmpty(string)) {
+                Glide.with(avatarImageView.getContext())//
+                        .load(string)//
+                        .into(avatarImageView);
+            } else {
+                Glide.with(avatarImageView.getContext())//
+                        .load(string)//
+                        .placeholder(R.drawable.aurora_headicon_default)//
+                        .into(avatarImageView);
+            }
+        }
+
+        @Override
+        public void loadImage(ImageView imageView, String string) {
+            BitmapFactory.Options options = new BitmapFactory.Options();
+            options.inJustDecodeBounds = true;
+            BitmapFactory.decodeFile(string, options); // 此时返回的bitmap为null
+            int height = options.outHeight * 400 / options.outWidth;
+
+            Glide.with(imageView.getContext()).load(string)//
+                    .centerCrop()//
+                    .placeholder(R.drawable.gary_bg)//
+                    .override(400, height)//
+                    .into(imageView);
+        }
+    };
 
     private void initMsgAdapter() {
-        ImageLoader imageLoader = new ImageLoader() {
-            @Override
-            public void loadAvatarImage(ImageView avatarImageView, String string) {
-                if (!TextUtils.isEmpty(string)) {
-                    Glide.with(getApplicationContext())//
-                            .load(string)//
-                            .placeholder(R.drawable.aurora_headicon_default)//
-                            .into(avatarImageView);
-                } else if (string.contains("R.drawable")) {
-                    Integer resId = getResources().getIdentifier(string.replace("R.drawable.", ""), "drawable",
-                            getPackageName());
-
-                    avatarImageView.setImageResource(resId);
-                }
-            }
-
-            @Override
-            public void loadImage(ImageView imageView, String string) {
-                BitmapFactory.Options options = new BitmapFactory.Options();
-                /**
-                 * 最关键在此，把options.inJustDecodeBounds = true;
-                 * 这里再decodeFile()，返回的bitmap为空，但此时调用options.outHeight时，已经包含了图片的高了
-                 */
-                options.inJustDecodeBounds = true;
-                BitmapFactory.decodeFile(string, options); // 此时返回的bitmap为null
-                int height = options.outHeight * 400 / options.outWidth;
-
-                Glide.with(getApplicationContext()).load(string).centerCrop().placeholder(R.drawable.gary_bg)
-                        .override(400, height).into(imageView);
-            }
-        };
-
         // 使用默认UI
         MsgListAdapter.HoldersConfig holdersConfig = new MsgListAdapter.HoldersConfig();
         mAdapter = new MsgListAdapter<>(uuid, holdersConfig, imageLoader);
@@ -444,8 +445,14 @@ public class ChatActivity extends BaseActivity implements ChatView.OnKeyboardCha
         mAdapter.setMsgLongClickListener(new MsgListAdapter.OnMsgLongClickListener<MyMessage>() {
             @Override
             public void onMessageLongClick(MyMessage message) {
-                Toast.makeText(getApplicationContext(), "长按消息事件", Toast.LENGTH_SHORT).show();
-                // do something
+                // 长按 文字 复制
+                if (message.getType() == IMessage.MessageType.RECEIVE_TEXT || message.getType() == IMessage
+                        .MessageType.SEND_TEXT) {
+                    ClipboardManager clipboardManager = (ClipboardManager) getSystemService(CLIPBOARD_SERVICE);
+                    ClipData clipData = ClipData.newPlainText("test", message.getText());
+                    clipboardManager.setPrimaryClip(clipData);
+                }
+//                Toast.makeText(getApplicationContext(), "长按消息事件", Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -453,15 +460,14 @@ public class ChatActivity extends BaseActivity implements ChatView.OnKeyboardCha
             @Override
             public void onAvatarClick(MyMessage message) {
                 DefaultUser userInfo = (DefaultUser) message.getFromUser();
-                Toast.makeText(getApplicationContext(), "头像点击事件", Toast.LENGTH_SHORT).show();
-                // do something
+//                Toast.makeText(getApplicationContext(), "头像点击事件", Toast.LENGTH_SHORT).show();
             }
         });
 
         mAdapter.setMsgStatusViewClickListener(new MsgListAdapter.OnMsgStatusViewClickListener<MyMessage>() {
             @Override
             public void onStatusViewClick(MyMessage message) {
-                // message status view click, resend or download here
+                // 消息状态 view click, resend or download here
             }
         });
 
@@ -542,6 +548,7 @@ public class ChatActivity extends BaseActivity implements ChatView.OnKeyboardCha
                 customContent.getStringValue("custom_string");
                 break;
         }
+        mConv.resetUnreadCount();
     }
 
     private void updateMessage(final MyMessage message) {

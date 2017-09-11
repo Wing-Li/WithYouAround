@@ -144,6 +144,16 @@ public class MainActivity extends BaseActivity {
                 mSgin.setText(spSgin);
             }
         }
+        if (mIcon != null) {
+            String spSgin = (String) SPUtil.get(mContext, Constans.SP_MY_ICON, "");
+            if (TextUtils.isEmpty(spSgin)) {
+                File avatarFile = IMutils.getMyInfo().getAvatarFile();
+                if (avatarFile != null && avatarFile.exists()){
+                    SPUtil.put(getApplicationContext(), Constans.SP_MY_ICON, avatarFile);
+                    ImgUtils.loadCircle(mContext, Uri.fromFile(avatarFile), mIcon);
+                }
+            }
+        }
     }
 
     private void initToolbar() {
@@ -203,6 +213,7 @@ public class MainActivity extends BaseActivity {
                     public void onSuccess(int code, String msg) {
                         ImgUtils.loadCircle(mContext, Uri.fromFile(file), mIcon);
                         EventBus.getDefault().post(new MainEvent());
+                        SPUtil.put(getApplicationContext(), Constans.SP_MY_ICON, file);
                         showT(R.string.save_success);
                     }
 

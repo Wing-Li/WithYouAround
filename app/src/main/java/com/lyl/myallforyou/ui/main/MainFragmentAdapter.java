@@ -90,8 +90,8 @@ public class MainFragmentAdapter extends RecyclerView.Adapter<MainFragmentAdapte
             }
         }else { // 之后每次请求头像 和 未读数
             final Conversation conv = IMutils.getSingleConversation(userInfo.getUuid());
-
-            File icon = conv.getAvatarFile();
+            cn.jpush.im.android.api.model.UserInfo info = (cn.jpush.im.android.api.model.UserInfo) conv.getTargetInfo();
+            File icon = info.getAvatarFile();
             if (icon != null && icon.exists()) {
                 ImgUtils.loadCircle(mContext, Uri.fromFile(icon), holder.icon);
             } else {
