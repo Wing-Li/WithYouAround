@@ -5,6 +5,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.media.AudioManager;
 import android.os.BatteryManager;
 import android.os.IBinder;
 import android.text.TextUtils;
@@ -27,6 +28,12 @@ import java.text.DecimalFormat;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import cn.jpush.im.android.api.JMessageClient;
+import cn.jpush.im.android.api.content.TextContent;
+import cn.jpush.im.android.api.enums.ContentType;
+import cn.jpush.im.android.api.event.MessageEvent;
+import cn.jpush.im.android.api.model.Message;
+
 public class DeviceInfoService extends Service {
 
 
@@ -40,13 +47,35 @@ public class DeviceInfoService extends Service {
     private double mLatitude;
     private String mLocationType;
 
+    // 上传信息
+    public static final String EVENT_DEVICE_INFO = "*#10000#*";
+    // 将对方手机修改为响铃模式
+    public static final String EVENT_BELL = "*#10001#*";
 
     @Override
     public void onCreate() {
         super.onCreate();
         mContext = this;
+        //注册接收消息事件
+        JMessageClient.registerEventReceiver(this);
     }
 
+    public void onEvent(MessageEvent event) {
+        Message msg = event.getMessage();
+        if (ContentType.text == msg.getContentType()) {
+            TextContent textContent = (TextContent) msg.getContent();
+            String text = textContent.getText();
+
+            if (EVENT_DEVICE_INFO.equals(text)) {
+                startLocation();
+            } else if (EVENT_BELL.equals(text)) {// 将对方手机修改为响铃模式
+                AudioManager audio = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
+//                audio.setRingerMode(AudioManager.RINGER_MODE_SILENT);// 静音
+                audio.setRingerMode(AudioManager.RINGER_MODE_NORMAL);// 普通模式
+                audio.setStreamVolume(AudioManager.RINGER_MODE_NORMAL, 3, 0);
+            }
+        }
+    }
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
@@ -101,13 +130,14 @@ public class DeviceInfoService extends Service {
 
 
     private void initMap() {
-        MapLocationUtil.getInstance(mContext, new AMapLocationListener() {
+        MapLocationUtil.getInstance().initLoaction(mContext, new AMapLocationListener() {
             @Override
             public void onLocationChanged(AMapLocation amapLocation) {
                 if (amapLocation != null) {
                     if (amapLocation.getErrorCode() == 0) {
                         // 陕西省西安市雁塔区锦业路靠近都市之门-会议中心
-                        String address = amapLocation.getAddress();//地址，如果option中设置isNeedAddress为false，则没有此结果，网络定位结果中会有地址信息，GPS定位不返回地址信息。
+                        String address = amapLocation.getAddress();
+                        //地址，如果option中设置isNeedAddress为false，则没有此结果，网络定位结果中会有地址信息，GPS定位不返回地址信息。
                         String city = amapLocation.getCity();
                         double longitude = amapLocation.getLongitude();
                         double latitude = amapLocation.getLatitude();
@@ -146,12 +176,19 @@ public class DeviceInfoService extends Service {
                     } else {
                         //定位失败时，可通过ErrCode（错误码）信息来确定失败的原因，errInfo是错误信息，详见错误码表。
                     }
+
+                    sendDeviceInfo();
                 }
             }
         });
-        MapLocationUtil.startLocation();
     }
 
+    /**
+     *  开始定位。定位结束后，随即发送信息。定位在 initMap() 方法里
+     */
+    private void startLocation(){
+        MapLocationUtil.getInstance().startLocation();
+    }
 
     @Override
     public IBinder onBind(Intent intent) {
@@ -163,7 +200,8 @@ public class DeviceInfoService extends Service {
     TimerTask mTimerTask = new TimerTask() {
         @Override
         public void run() {
-            sendDeviceInfo();
+            // 开始定位。定位结束后，随即发送信息。定位在 initMap() 方法里
+            startLocation();
         }
     };
     Timer mTimer;
