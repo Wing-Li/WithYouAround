@@ -22,6 +22,40 @@
         android:layout_height="wrap_content"
         android:background="@color/white"
         android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:padding="16dp"
+        >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="头 像："/>
+
+        <ImageView
+            android:id="@+id/userinfo_icon"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:scaleType="fitEnd"
+            android:src="@mipmap/icon"/>
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:layout_marginTop="1px"
+        android:background="@color/gary"/>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:layout_marginTop="8dp"
+        android:background="@color/gary"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:orientation="horizontal"
         android:padding="16dp"
         >
 

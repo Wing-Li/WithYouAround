@@ -107,7 +107,7 @@
     <string name="qr_save_success">二维码保存成功，</string>
     <string name="not_weixin">您的手机没有微信</string>
     <string name="join_QQ_error">未安装手机QQ或安装的版本不支持</string>
-    <string name="back_running">后台运行设置</string>
+    <string name="setting_title">设置</string>
     <string name="other_id_error">对方的ID异常，请对方尝试关闭程序，重新打开</string>
     <string name="authorized">已授权》</string>
     <string name="unauthorized">未开启》</string>
@@ -154,5 +154,6 @@
     <string name="send_message_fail">消息发送失败</string>
     <string name="file_not_exists">文件不存在</string>
     <string name="delete_chat_list">您确定要删除所有记录吗？</string>
+    <string name="updata_loading">开始上传</string>
 
 </resources>

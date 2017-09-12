@@ -2,6 +2,7 @@ package com.lyl.myallforyou.ui.userinfo;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.Toolbar;
@@ -10,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -25,9 +27,17 @@ import com.lyl.myallforyou.im.IMCallBack;
 import com.lyl.myallforyou.im.IMutils;
 import com.lyl.myallforyou.ui.BaseActivity;
 import com.lyl.myallforyou.ui.SplashActivity;
+import com.lyl.myallforyou.ui.main.MainActivity;
 import com.lyl.myallforyou.utils.DialogUtils;
+import com.lyl.myallforyou.utils.ImgUtils;
 import com.lyl.myallforyou.utils.MyUtils;
 import com.lyl.myallforyou.utils.SPUtil;
+import com.lzy.imagepicker.ImagePicker;
+import com.lzy.imagepicker.bean.ImageItem;
+import com.lzy.imagepicker.ui.ImageGridActivity;
+
+import java.io.File;
+import java.util.ArrayList;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -50,6 +60,8 @@ public class UserInfoActivity extends BaseActivity {
     TextView userinfoMarking;
     @Bind(R.id.userinfo_marking_layout)
     LinearLayout userinfoMarkingLayout;
+    @Bind(R.id.userinfo_icon)
+    ImageView userinfoIcon;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -78,6 +90,10 @@ public class UserInfoActivity extends BaseActivity {
         });
 
 
+        String spIcon = (String) SPUtil.get(mContext, Constans.SP_MY_ICON, "");
+        if (!TextUtils.isEmpty(spIcon)) {
+            ImgUtils.loadCircle(getApplicationContext(), spIcon, userinfoIcon);
+        }
         String spName = (String) SPUtil.get(mContext, Constans.SP_MY_NAME, "");
         if (!TextUtils.isEmpty(spName)) {
             userinfoName.setText(spName);
@@ -91,6 +107,12 @@ public class UserInfoActivity extends BaseActivity {
             userinfoMarking.setText(spMarking);
         }
 
+        userinfoIcon.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                setIcon();
+            }
+        });
         userinfoName.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -110,6 +132,42 @@ public class UserInfoActivity extends BaseActivity {
                 return true;
             }
         });
+    }
+
+    private void setIcon() {
+        Intent intent = new Intent(getApplicationContext(), ImageGridActivity.class);
+        startActivityForResult(intent, MainActivity.IMAGE_PICKER);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        // 修改头像
+        if (resultCode == ImagePicker.RESULT_CODE_ITEMS) {
+            if (data != null && requestCode == MainActivity.IMAGE_PICKER) {
+                ArrayList<ImageItem> images = (ArrayList<ImageItem>) data.getSerializableExtra(ImagePicker
+                        .EXTRA_RESULT_ITEMS);
+                ImageItem image = images.get(0);
+                final File file = new File(image.path);
+
+                showT(getString(R.string.updata_loading));
+
+                IMutils.updateUserIcon(file, new IMCallBack() {
+                    @Override
+                    public void onSuccess(int code, String msg) {
+                        ImgUtils.loadCircle(mContext, Uri.fromFile(file), userinfoIcon);
+                        SPUtil.put(getApplicationContext(), Constans.SP_MY_ICON, file);
+                        showT(R.string.save_success);
+                    }
+
+                    @Override
+                    public void onFail(int code, String msg) {
+                        showT(R.string.save_fail);
+                    }
+                });
+            }
+            return;
+        }
     }
 
     private void setUserInfo() {

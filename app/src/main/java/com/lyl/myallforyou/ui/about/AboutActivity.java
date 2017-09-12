@@ -20,6 +20,7 @@ import com.google.zxing.common.BitMatrix;
 import com.journeyapps.barcodescanner.BarcodeEncoder;
 import com.lyl.myallforyou.R;
 import com.lyl.myallforyou.ui.BaseActivity;
+import com.lyl.myallforyou.ui.feedback.FeedbackActivity;
 import com.lyl.myallforyou.utils.AppUtils;
 import com.lyl.myallforyou.utils.PlayUtils;
 
@@ -40,10 +41,10 @@ public class AboutActivity extends BaseActivity {
     TextView aboutAddGroup;
     @Bind(R.id.about_add_group_layout)
     LinearLayout aboutAddGroupLayout;
-    @Bind(R.id.about_back_running)
-    LinearLayout aboutBackRunning;
     @Bind(R.id.about_play_layout)
     LinearLayout aboutPlayLayout;
+    @Bind(R.id.about_feedback)
+    LinearLayout aboutFeedback;
 
 
     @Override
@@ -64,6 +65,13 @@ public class AboutActivity extends BaseActivity {
         String verName = AppUtils.getVerName(mContext);
         aboutVersion.setText("v." + verName);
 
+        aboutFeedback.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(mContext, FeedbackActivity.class));
+            }
+        });
+
         aboutEmail.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View view) {
@@ -78,14 +86,6 @@ public class AboutActivity extends BaseActivity {
             @Override
             public void onClick(View view) {
                 joinQQGroup(groupKey);
-            }
-        });
-
-        aboutBackRunning.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(mContext, SettingActivity.class);
-                startActivity(intent);
             }
         });
 

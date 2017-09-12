@@ -66,7 +66,7 @@ public class SettingActivity extends BaseActivity {
         setContentView(R.layout.activity_setting);
         ButterKnife.bind(this);
 
-        toolbar.setTitle(R.string.back_running);
+        toolbar.setTitle(R.string.setting_title);
         setSupportActionBar(toolbar);
         setBackUI(toolbar);
 

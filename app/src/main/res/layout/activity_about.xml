@@ -42,7 +42,7 @@
     </LinearLayout>
 
     <LinearLayout
-        android:id="@+id/about_back_running"
+        android:id="@+id/about_feedback"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="2dp"
@@ -54,7 +54,8 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="软件设置"/>
+            android:text="意见反馈"/>
+
     </LinearLayout>
 
     <LinearLayout
