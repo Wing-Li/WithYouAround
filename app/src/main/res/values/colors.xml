@@ -19,7 +19,7 @@
     <color name="aurora_msg_receive_bubble_selected_color">#00BF9A</color>
 
     <color name="aurora_bg_edittext_default">#e5e5e5</color>
-    <color name="aurora_bg_edittext_focus">#00AA8D</color>
+    <color name="aurora_bg_edittext_focus">#7E8392</color>
     <color name="aurora_bg_input_container">#e5e5e5</color>
     <color name="aurora_bg_input_default">#f3f3f3</color>
     <color name="aurora_bg_voice_btn_default">#3f80dc</color>

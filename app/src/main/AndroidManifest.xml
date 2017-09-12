@@ -89,7 +89,7 @@
 
         <activity
             android:name=".ui.SplashActivity"
-            >
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 
@@ -99,7 +99,7 @@
         <activity
             android:name=".ui.main.MainActivity"
             android:launchMode="singleTask"
-            >
+            android:screenOrientation="portrait">
         </activity>
         <activity
             android:name=".ui.deviceinfo.DeviceInfoActivity"
@@ -108,63 +108,63 @@
         </activity>
         <activity
             android:name=".ui.qrbind.QrScanActivity"
-            >
+            android:screenOrientation="portrait">
         </activity>
         <activity
             android:name=".ui.qrbind.QrShareActivity"
-            >
+            android:screenOrientation="portrait">
         </activity>
         <activity
             android:name=".ui.about.AboutActivity"
-            >
+            android:screenOrientation="portrait">
         </activity>
         <activity
             android:name=".ui.feedback.FeedbackActivity"
-            >
+            android:screenOrientation="portrait">
         </activity>
         <activity
             android:name=".ui.about.SettingActivity"
-            >
+            android:screenOrientation="portrait">
         </activity>
         <activity
             android:name=".ui.essay.NhEassayActivity"
-            >
+            android:screenOrientation="portrait">
         </activity>
         <activity
             android:name=".ui.image.SpecialImageActivity"
-            >
+            android:screenOrientation="portrait">
         </activity>
         <activity
             android:name=".ui.image.ImageActivity"
-            >
+            android:screenOrientation="portrait">
         </activity>
         <activity
             android:name=".ui.deviceinfo.DeviceInfoMoreActivity"
-            >
+            android:screenOrientation="portrait">
         </activity>
         <activity
             android:name=".ui.essay.EassayDetailActivity"
-            >
+            android:screenOrientation="portrait">
         </activity>
         <activity
             android:name=".ui.essay.DetailCommentReplyActivity"
-            >
+            android:screenOrientation="portrait">
         </activity>
         <activity
             android:name=".ui.help.HelpActivity"
-            >
+            android:screenOrientation="portrait">
         </activity>
         <activity
             android:name=".ui.userinfo.UserInfoActivity"
-            >
+            android:screenOrientation="portrait">
         </activity>
         <activity
             android:name=".im.messages.ChatActivity"
-            >
+            android:screenOrientation="portrait">
         </activity>
         <activity
             android:name=".im.messages.VideoActivity"
-            >
+            android:screenOrientation="portrait">
         </activity>
 
         <service

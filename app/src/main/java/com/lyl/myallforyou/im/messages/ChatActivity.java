@@ -26,11 +26,13 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.lyl.myallforyou.R;
 import com.lyl.myallforyou.constants.Constans;
+import com.lyl.myallforyou.constants.ConstantIntent;
 import com.lyl.myallforyou.im.IMutils;
 import com.lyl.myallforyou.im.models.DefaultUser;
 import com.lyl.myallforyou.im.models.MyMessage;
 import com.lyl.myallforyou.im.views.ChatView;
 import com.lyl.myallforyou.ui.BaseActivity;
+import com.lyl.myallforyou.ui.image.SpecialImageActivity;
 import com.lzy.imagepicker.ImagePicker;
 import com.lzy.imagepicker.bean.ImageItem;
 import com.lzy.imagepicker.ui.ImageGridActivity;
@@ -140,7 +142,7 @@ public class ChatActivity extends BaseActivity implements ChatView.OnKeyboardCha
         backIv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                finish();
+                onBackPressed();
             }
         });
         clearTv.setOnClickListener(new View.OnClickListener() {
@@ -463,6 +465,12 @@ public class ChatActivity extends BaseActivity implements ChatView.OnKeyboardCha
                         intent.putExtra(VideoActivity.VIDEO_PATH, message.getMediaFilePath());
                         startActivity(intent);
                     }
+                } else if (message.getType() == IMessage.MessageType.RECEIVE_IMAGE || message.getType() == IMessage
+                        .MessageType.SEND_IMAGE) {
+                    Intent intent = new Intent(mContext, SpecialImageActivity.class);
+                    intent.putExtra(ConstantIntent.SPECIAL_IMAGE_URL, message.getMediaFilePath());
+                    intent.putExtra(ConstantIntent.SPECIAL_IMAGE_TYPE, ConstantIntent.SPECIAL_IMAGE_NORMAL);
+                    mContext.startActivity(intent);
                 } else {
                     //Toast.makeText(getApplicationContext(), "点击消息事件", Toast.LENGTH_SHORT).show();
                 }
@@ -712,5 +720,16 @@ public class ChatActivity extends BaseActivity implements ChatView.OnKeyboardCha
                 break;
         }
         return false;
+    }
+
+    @Override
+    public void onBackPressed() {
+        ChatInputView chatInputView = mChatView.getChatInputView();
+        if (chatInputView.getMenuState() == View.VISIBLE) {
+            chatInputView.dismissMenuLayout();
+            return;
+        }
+        
+        super.onBackPressed();
     }
 }
