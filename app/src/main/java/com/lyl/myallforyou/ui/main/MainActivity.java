@@ -476,7 +476,8 @@ public class MainActivity extends BaseActivity {
                 } else if (id == R.id.nav_help) { // 使用帮助
                     intent = new Intent(mContext, HelpActivity.class);
                 } else if (id == R.id.nav_setting) { // 设置
-                    intent = new Intent(mContext, SettingActivity.class);
+                    startActivity(new Intent(mContext, SettingActivity.class));
+                    finish();
                 } else if (id == R.id.nav_about) { // 关于
                     intent = new Intent(mContext, AboutActivity.class);
                 }

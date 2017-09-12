@@ -51,45 +51,45 @@
             </intent-filter>
         </receiver>
 
-        <service android:name=".widget.WidgetService" >
+        <service android:name=".widget.WidgetService">
             <intent-filter>
-                <action android:name="android.appwidget.action.APP_WIDGET_SERVICE" />
+                <action android:name="android.appwidget.action.APP_WIDGET_SERVICE"/>
             </intent-filter>
         </service>
 
         <!-- WidgetReceiver 服务广播 -->
         <receiver
             android:name=".widget.WidgetReceiver"
-            android:permission="com.opencdk.appwidget.permission.APP_WIDGET"
-            android:exported="true" >
-            <intent-filter android:priority="0x6fffffff" >
+            android:exported="true"
+            android:permission="com.opencdk.appwidget.permission.APP_WIDGET">
+            <intent-filter android:priority="0x6fffffff">
 
-                <action android:name="com.opencdk.appwidget.action.DAEMON_RECEIVER" />
+                <action android:name="com.opencdk.appwidget.action.DAEMON_RECEIVER"/>
 
                 <!-- 【必须】 系统广播：开屏和网络切换 -->
-                <action android:name="android.intent.action.USER_PRESENT" />
-                <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
+                <action android:name="android.intent.action.USER_PRESENT"/>
+                <action android:name="android.net.conn.CONNECTIVITY_CHANGE"/>
 
                 <!-- 【可选】 一些常用的系统广播，增强widget service的复活机会，请根据需要选择。当然，你也可以添加APP自定义的一些广播让启动service -->
-                <action android:name="android.intent.action.BOOT_COMPLETED" />
-                <action android:name="android.bluetooth.adapter.action.STATE_CHANGED" />
-                <action android:name="android.intent.action.ACTION_POWER_CONNECTED" />
-                <action android:name="android.intent.action.ACTION_POWER_DISCONNECTED" />
+                <action android:name="android.intent.action.BOOT_COMPLETED"/>
+                <action android:name="android.bluetooth.adapter.action.STATE_CHANGED"/>
+                <action android:name="android.intent.action.ACTION_POWER_CONNECTED"/>
+                <action android:name="android.intent.action.ACTION_POWER_DISCONNECTED"/>
             </intent-filter>
             <!-- 【可选】 usb相关的系统广播，增强widget service的复活机会，请根据需要添加 -->
-            <intent-filter android:priority="0x6fffffff" >
-                <action android:name="android.intent.action.MEDIA_UNMOUNTED" />
-                <action android:name="android.intent.action.MEDIA_REMOVED" />
-                <action android:name="android.intent.action.MEDIA_CHECKING" />
-                <action android:name="android.intent.action.MEDIA_EJECT" />
+            <intent-filter android:priority="0x6fffffff">
+                <action android:name="android.intent.action.MEDIA_UNMOUNTED"/>
+                <action android:name="android.intent.action.MEDIA_REMOVED"/>
+                <action android:name="android.intent.action.MEDIA_CHECKING"/>
+                <action android:name="android.intent.action.MEDIA_EJECT"/>
 
-                <data android:scheme="file" />
+                <data android:scheme="file"/>
             </intent-filter>
         </receiver>
 
         <activity
             android:name=".ui.SplashActivity"
-            android:theme="@style/AppTheme.NoActionBar">
+            >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 
@@ -99,72 +99,72 @@
         <activity
             android:name=".ui.main.MainActivity"
             android:launchMode="singleTask"
-            android:theme="@style/AppTheme.NoActionBar">
+            >
         </activity>
         <activity
             android:name=".ui.deviceinfo.DeviceInfoActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar">
+            >
         </activity>
         <activity
             android:name=".ui.qrbind.QrScanActivity"
-            android:theme="@style/AppTheme.NoActionBar">
+            >
         </activity>
         <activity
             android:name=".ui.qrbind.QrShareActivity"
-            android:theme="@style/AppTheme.NoActionBar">
+            >
         </activity>
         <activity
             android:name=".ui.about.AboutActivity"
-            android:theme="@style/AppTheme.NoActionBar">
+            >
         </activity>
         <activity
             android:name=".ui.feedback.FeedbackActivity"
-            android:theme="@style/AppTheme.NoActionBar">
+            >
         </activity>
         <activity
             android:name=".ui.about.SettingActivity"
-            android:theme="@style/AppTheme.NoActionBar">
+            >
         </activity>
         <activity
             android:name=".ui.essay.NhEassayActivity"
-            android:theme="@style/AppTheme.NoActionBar">
+            >
         </activity>
         <activity
             android:name=".ui.image.SpecialImageActivity"
-            android:theme="@style/AppTheme.NoActionBar">
+            >
         </activity>
         <activity
             android:name=".ui.image.ImageActivity"
-            android:theme="@style/AppTheme.NoActionBar">
+            >
         </activity>
         <activity
             android:name=".ui.deviceinfo.DeviceInfoMoreActivity"
-            android:theme="@style/AppTheme.NoActionBar">
+            >
         </activity>
         <activity
             android:name=".ui.essay.EassayDetailActivity"
-            android:theme="@style/AppTheme.NoActionBar">
+            >
         </activity>
         <activity
             android:name=".ui.essay.DetailCommentReplyActivity"
-            android:theme="@style/AppTheme.NoActionBar">
+            >
         </activity>
         <activity
             android:name=".ui.help.HelpActivity"
-            android:theme="@style/AppTheme.NoActionBar">
+            >
         </activity>
         <activity
             android:name=".ui.userinfo.UserInfoActivity"
-            android:theme="@style/AppTheme.NoActionBar">
+            >
         </activity>
         <activity
             android:name=".im.messages.ChatActivity"
-            android:theme="@style/AppTheme.NoActionBar">
+            >
         </activity>
         <activity
             android:name=".im.messages.VideoActivity"
-            android:theme="@style/AppTheme.NoActionBar">
+            >
         </activity>
 
         <service

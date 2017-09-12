@@ -38,6 +38,9 @@ public class BaseActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         mContext = this;
         initAppData();
+
+        int i = (int) SPUtil.get(getApplicationContext(), Constans.SP_THEME, R.color.colorPrimary);
+        setMyTheme(i);
     }
 
     @Override
@@ -104,6 +107,40 @@ public class BaseActivity extends AppCompatActivity {
             return "";
         } else {
             return s;
+        }
+    }
+
+    public void setMyTheme(int selectedColor) {
+        if (selectedColor == getResources().getColor(R.color.colorBluePrimary)) {
+            setTheme(R.style.BlueTheme);
+        } else if (selectedColor == getResources().getColor(R.color.colorRedPrimary)) {
+            setTheme(R.style.RedTheme);
+        } else if (selectedColor == getResources().getColor(R.color.colorBrownPrimary)) {
+            setTheme(R.style.BrownTheme);
+        } else if (selectedColor == getResources().getColor(R.color.colorGreenPrimary)) {
+            setTheme(R.style.GreenTheme);
+        } else if (selectedColor == getResources().getColor(R.color.colorPurplePrimary)) {
+            setTheme(R.style.PurpleTheme);
+        } else if (selectedColor == getResources().getColor(R.color.colorPrimary)) {
+            setTheme(R.style.TealTheme);
+        } else if (selectedColor == getResources().getColor(R.color.colorPinkPrimary)) {
+            setTheme(R.style.PinkTheme);
+        } else if (selectedColor == getResources().getColor(R.color.colorDeepPurplePrimary)) {
+            setTheme(R.style.DeepPurpleTheme);
+        } else if (selectedColor == getResources().getColor(R.color.colorOrangePrimary)) {
+            setTheme(R.style.OrangeTheme);
+        } else if (selectedColor == getResources().getColor(R.color.colorIndigoPrimary)) {
+            setTheme(R.style.IndigoTheme);
+        } else if (selectedColor == getResources().getColor(R.color.colorLightGreenPrimary)) {
+            setTheme(R.style.LightGreenTheme);
+        } else if (selectedColor == getResources().getColor(R.color.colorDeepOrangePrimary)) {
+            setTheme(R.style.DeepOrangeTheme);
+        } else if (selectedColor == getResources().getColor(R.color.colorLimePrimary)) {
+            setTheme(R.style.LimeTheme);
+        } else if (selectedColor == getResources().getColor(R.color.colorBlueGreyPrimary)) {
+            setTheme(R.style.BlueGreyTheme);
+        } else if (selectedColor == getResources().getColor(R.color.colorCyanPrimary)) {
+            setTheme(R.style.CyanTheme);
         }
     }
 }

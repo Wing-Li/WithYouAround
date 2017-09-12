@@ -12,6 +12,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.PowerManager;
 import android.provider.Settings;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -19,12 +20,14 @@ import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.afollestad.materialdialogs.color.ColorChooserDialog;
 import com.dingmouren.colorpicker.ColorPickerDialog;
 import com.dingmouren.colorpicker.OnColorPickerListener;
 import com.lyl.myallforyou.MyApp;
 import com.lyl.myallforyou.R;
 import com.lyl.myallforyou.constants.Constans;
 import com.lyl.myallforyou.ui.BaseActivity;
+import com.lyl.myallforyou.ui.main.MainActivity;
 import com.lyl.myallforyou.utils.DialogUtils;
 import com.lyl.myallforyou.utils.SPUtil;
 import com.lyl.myallforyou.utils.SystemRomUtils;
@@ -35,8 +38,7 @@ import butterknife.ButterKnife;
 /**
  * Created by lyl on 2017/5/27.
  */
-
-public class SettingActivity extends BaseActivity {
+public class SettingActivity extends BaseActivity implements ColorChooserDialog.ColorCallback {
     @Bind(R.id.toolbar)
     Toolbar toolbar;
     @Bind(R.id.setting_push)
@@ -59,6 +61,10 @@ public class SettingActivity extends BaseActivity {
     View settingWidgetColor;
     @Bind(R.id.setting_widget_color_layout)
     LinearLayout settingWidgetColorLayout;
+    @Bind(R.id.setting_theme)
+    View settingTheme;
+    @Bind(R.id.setting_theme_layout)
+    LinearLayout settingThemeLayout;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -68,7 +74,13 @@ public class SettingActivity extends BaseActivity {
 
         toolbar.setTitle(R.string.setting_title);
         setSupportActionBar(toolbar);
-        setBackUI(toolbar);
+        toolbar.setNavigationIcon(R.drawable.ic_arrow_back_white_24dp);
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onBackPressed();
+            }
+        });
 
         initView();
     }
@@ -77,6 +89,14 @@ public class SettingActivity extends BaseActivity {
     protected void onStart() {
         super.onStart();
         setView();
+    }
+
+    @Override
+    public void onBackPressed() {
+        finish();
+
+        Intent intent = new Intent(mContext, MainActivity.class);
+        startActivity(intent);
     }
 
     private void setView() {
@@ -150,6 +170,22 @@ public class SettingActivity extends BaseActivity {
                 ).show();
             }
         });
+
+        int i = (int) SPUtil.get(getApplicationContext(), Constans.SP_THEME, R.color.colorPrimary);
+        settingTheme.setBackgroundColor(i);
+        // 选择主题
+        settingThemeLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                new ColorChooserDialog.Builder(SettingActivity.this, R.string.select_theme)//
+                        .customColors(R.array.colors, null)//
+                        .doneButton(R.string.ok)//
+                        .cancelButton(R.string.cancel)//
+                        .allowUserColorInput(false)//
+                        .allowUserColorInputAlpha(false)//
+                        .show();
+            }
+        });
     }
 
     /**
@@ -200,7 +236,7 @@ public class SettingActivity extends BaseActivity {
         } catch (ActivityNotFoundException e) {
             try {
                 Intent intent = new Intent();
-                ComponentName cn = new ComponentName("com.android.settings", "com.android.settings" + "" + "" +
+                ComponentName cn = new ComponentName("com.android.settings", "com.android.settings" + "" + "" + "" +
                         ".Settings$NotificationAccessSettingsActivity");
                 intent.setComponent(cn);
                 intent.putExtra(":settings:show_fragment", "NotificationAccessSettings");
@@ -228,8 +264,8 @@ public class SettingActivity extends BaseActivity {
             Log.e("HLQ_Struggle", "******************当前手机型号为：" + getMobileType());
             ComponentName componentName = null;
             if (getMobileType().equals("Xiaomi") || SystemRomUtils.isMIUI()) { // 红米Note4测试通过
-                componentName = new ComponentName("com.miui.securitycenter", "com.miui.permcenter.autostart" + "" + "" +
-                        ".AutoStartManagementActivity");
+                componentName = new ComponentName("com.miui.securitycenter", "com.miui.permcenter.autostart" + "" +
+                        "" + ".AutoStartManagementActivity");
             } else if (getMobileType().equals("Letv")) { // 乐视2测试通过
                 intent.setAction("com.letv.android.permissionautoboot");
             } else if (getMobileType().equals("samsung")) { // 三星Note5测试通过
@@ -245,11 +281,11 @@ public class SettingActivity extends BaseActivity {
                 // 针对魅族，我们只能通过魅族内置手机管家去设置自启动，所以我在这里直接跳转到魅族内置手机管家界面，具体结果请看图
                 componentName = ComponentName.unflattenFromString("com.meizu.safe/.permission.PermissionMainActivity");
             } else if (getMobileType().equals("OPPO")) { // OPPO R8205测试通过
-                componentName = ComponentName.unflattenFromString("com.oppo.safe/.permission.startup" + "" + "" +
-                        ".StartupAppListActivity");
+                componentName = ComponentName.unflattenFromString("com.oppo.safe/.permission.startup" + "" + "" + ""
+                        + ".StartupAppListActivity");
             } else if (getMobileType().equals("ulong")) { // 360手机 未测试
                 componentName = new ComponentName("com.yulong.android.coolsafe", ".ui.activity.autorun" + "" + "" +
-                        ".AutoRunListActivity");
+                        "" + ".AutoRunListActivity");
             } else {
                 // 以上只是市面上主流机型，由于公司你懂的，所以很不容易才凑齐以上设备
                 // 针对于其他设备，我们只能调整当前系统app查看详情界面
@@ -298,4 +334,18 @@ public class SettingActivity extends BaseActivity {
 
         }
     }
+
+    /**
+     * 设置主题 确定按钮
+     *
+     * @param dialog
+     * @param selectedColor
+     */
+    @Override
+    public void onColorSelection(@NonNull ColorChooserDialog dialog, int selectedColor) {
+        SPUtil.put(getApplicationContext(), Constans.SP_THEME, selectedColor);
+
+        onBackPressed();
+    }
+
 }

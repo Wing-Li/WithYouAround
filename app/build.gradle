@@ -98,6 +98,8 @@ dependencies {
     compile 'cn.leancloud.android:avoscloud-sdk:v3.16.4'
     compile 'com.tencent.bugly:crashreport_upgrade:1.2.5'
     compile 'com.dingmouren.colorpicker:colorpicker:1.0.1'
+    compile 'com.afollestad.material-dialogs:core:0.9.0.2'
+    compile 'com.afollestad.material-dialogs:commons:0.9.0.2'
     // 极光推送
 //    compile 'cn.jiguang.sdk:jpush:3.0.3'  // 推送,此处以JPush 3.0.3 版本为例。
     compile 'cn.jiguang.sdk:jmessage:2.2.1'  // IM,此处以JMessage 2.2.1 版本为例。
