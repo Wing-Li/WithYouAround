@@ -87,6 +87,7 @@ public class MainFragment extends BaseFragment {
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void initData(MainEvent event) {
         mUserInfos.clear();
+        mMyAapter.notifyDataSetChanged();
         // 先添加自己
         UserInfo info = new UserInfo();
         info.setObjid(objId);

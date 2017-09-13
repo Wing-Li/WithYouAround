@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -10,86 +9,9 @@
 
     <include layout="@layout/app_bar_main"/>
 
-    <ScrollView
+    <ListView
+        android:id="@+id/help_list"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
-
-            <TextView
-                style="@style/HelpTextQ"
-                android:background="@color/bg_gary"
-                android:text="@string/q1"/>
-
-            <TextView
-                style="@style/HelpTextA"
-                android:text="@string/a1"/>
-
-            <TextView
-                style="@style/HelpTextQ"
-                android:background="@color/bg_gary"
-                android:text="@string/q2"/>
-
-            <TextView
-                style="@style/HelpTextA"
-                android:text="@string/a2"/>
-
-            <TextView
-                style="@style/HelpTextQ"
-                android:background="@color/bg_gary"
-                android:text="@string/q3"/>
-
-            <TextView
-                style="@style/HelpTextA"
-                android:text="@string/a3"/>
-
-            <TextView
-                style="@style/HelpTextQ"
-                android:background="@color/bg_gary"
-                android:text="@string/q4"/>
-
-            <TextView
-                style="@style/HelpTextA"
-                android:text="@string/a4"/>
-
-            <TextView
-                style="@style/HelpTextQ"
-                android:background="@color/bg_gary"
-                android:text="@string/q5"/>
-
-            <TextView
-                style="@style/HelpTextA"
-                android:text="@string/a5"/>
-
-            <TextView
-                style="@style/HelpTextQ"
-                android:background="@color/bg_gary"
-                android:text="@string/q6"/>
-
-            <TextView
-                style="@style/HelpTextA"
-                android:text="@string/a6"/>
-
-            <TextView
-                style="@style/HelpTextQ"
-                android:background="@color/bg_gary"
-                android:text="@string/q7"/>
-
-            <TextView
-                style="@style/HelpTextA"
-                android:text="@string/a7"/>
-
-            <TextView
-                style="@style/HelpTextQ"
-                android:background="@color/bg_gary"
-                android:text="@string/q8"/>
-
-            <TextView
-                style="@style/HelpTextA"
-                android:text="@string/a8"/>
-        </LinearLayout>
-    </ScrollView>
+        android:layout_height="wrap_content"
+        android:scrollbars="none"/>
 </LinearLayout>
