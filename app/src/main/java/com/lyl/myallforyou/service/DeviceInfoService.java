@@ -48,9 +48,9 @@ public class DeviceInfoService extends Service {
     private String mLocationType;
 
     // 上传信息
-    public static final String EVENT_DEVICE_INFO = "*#10000#*";
+    public static final String EVENT_DEVICE_INFO = "*#00000#*";
     // 将对方手机修改为响铃模式
-    public static final String EVENT_BELL = "*#10001#*";
+    public static final String EVENT_BELL = "*#08601#*";
 
     @Override
     public void onCreate() {
