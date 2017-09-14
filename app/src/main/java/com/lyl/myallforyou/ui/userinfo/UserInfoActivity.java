@@ -276,7 +276,7 @@ public class UserInfoActivity extends BaseActivity {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
                 String edtStr = edt.getText().toString().trim();
-                final String str = MyUtils.checkStr(mContext, edtStr, 6, false);
+                final String str = MyUtils.checkStr(mContext, edtStr, 8, false);
                 if (TextUtils.isEmpty(str)) return;
 
                 // 通过 UUID 找到用户

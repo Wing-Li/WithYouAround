@@ -129,7 +129,7 @@
     <string name="delete">密友删除</string>
     <string name="delete_friend_dialog_msg">删除后您将无法查看对方的信息，对方也无法继续查看您的信息，您确定要删除吗？</string>
     <string name="exit_txt">退&#160;&#160;&#160;&#160;出</string>
-    <string name="login_txt">绑&#160;&#160;&#160;&#160;定</string>
+    <string name="login_txt">登&#160;&#160;&#160;&#160;陆</string>
     <string name="marking_reply">改标示已存在，请重新输入</string>
     <string name="exit_user">退出之后将清空数据，并退出本程序。\n您确定要退出吗？</string>
     <string name="user_bind_success">用户绑定成功</string>
