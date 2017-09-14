@@ -138,6 +138,20 @@
                         android:text="@string/default_str"/>
                 </LinearLayout>
 
+                <LinearLayout
+                    style="@style/DeviceInfoLayout"
+                    android:weightSum="4">
+
+                    <TextView
+                        style="@style/DeviceInfoContentTitle"
+                        android:text="直线距离："/>
+
+                    <TextView
+                        android:id="@+id/address_distance"
+                        style="@style/DeviceInfoContent"
+                        android:text="@string/default_str"/>
+                </LinearLayout>
+
                 <TextView
                     style="@style/DeviceInfoTitle"
                     android:text="系统信息"/>

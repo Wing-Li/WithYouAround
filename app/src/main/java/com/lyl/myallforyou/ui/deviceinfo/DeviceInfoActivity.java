@@ -25,7 +25,9 @@ import com.lyl.myallforyou.im.messages.ChatActivity;
 import com.lyl.myallforyou.network.imp.DeviceInfoImp;
 import com.lyl.myallforyou.ui.BaseActivity;
 import com.lyl.myallforyou.ui.main.MainActivity;
+import com.lyl.myallforyou.utils.GPSUtil;
 import com.lyl.myallforyou.utils.OpenLocalMapUtil;
+import com.lyl.myallforyou.utils.SPUtil;
 import com.lyl.myallforyou.view.TransitionHelper;
 
 import java.text.DecimalFormat;
@@ -73,6 +75,8 @@ public class DeviceInfoActivity extends BaseActivity {
     TextView usableMemory;
     @Bind(R.id.device_fab)
     FloatingActionButton deviceFab;
+    @Bind(R.id.address_distance)
+    TextView addressDistance;
 
     private String mTargetUuid;
     private String mTargetName;
@@ -216,6 +220,16 @@ public class DeviceInfoActivity extends BaseActivity {
 
         addressLocationType.setText(FS(mDeviceInfo.getAddress_location_type()));
 
+        String myLatitude = (String) SPUtil.get(mContext, Constans.SP_LATITUDE, "");
+        String myLongitude = (String) SPUtil.get(mContext, Constans.SP_LONGITUDE, "");
+        String address_latitude = mDeviceInfo.getAddress_latitude();
+        String address_longitude = mDeviceInfo.getAddress_longitude();
+        if (!GPSUtil.isEmpty(myLatitude) && !GPSUtil.isEmpty(myLongitude) && !GPSUtil.isEmpty(address_latitude) &&
+                !GPSUtil.isEmpty(address_longitude)) {
+            double distDouble = GPSUtil.LantitudeLongitudeDist(Double.parseDouble(myLongitude), Double.parseDouble
+                    (myLatitude), Double.parseDouble(address_longitude), Double.parseDouble(address_latitude));
+            addressDistance.setText(GPSUtil.formatDist(distDouble));
+        }
         address.setText(FS(mDeviceInfo.getMy_address()));
 
         String sim = FS(mDeviceInfo.getSim_type());
