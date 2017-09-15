@@ -31,8 +31,6 @@ import com.lyl.myallforyou.utils.SPUtil;
 
 import java.io.File;
 
-import cn.jpush.im.android.api.JMessageClient;
-
 
 public class SplashActivity extends BaseActivity {
 
@@ -62,8 +60,8 @@ public class SplashActivity extends BaseActivity {
 
     private void setAnimation() {
         LinearLayout layout = (LinearLayout) findViewById(R.id.layout);
-        TranslateAnimation translate = new TranslateAnimation(Animation.RELATIVE_TO_SELF, 0, Animation.RELATIVE_TO_SELF, 0, Animation
-                .RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0);
+        TranslateAnimation translate = new TranslateAnimation(Animation.RELATIVE_TO_SELF, 0, Animation
+                .RELATIVE_TO_SELF, 0, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0);
         AlphaAnimation alpha = new AlphaAnimation(0, 1);
         alpha.setDuration(WAIT_TIME);
         translate.setDuration(WAIT_TIME);
@@ -107,14 +105,14 @@ public class SplashActivity extends BaseActivity {
     /**
      * 如果曾经使用过，则可以先绑定老用户
      */
-    private void UserBind(){
-        if (TextUtils.isEmpty(objId)){
+    private void UserBind() {
+        if (TextUtils.isEmpty(objId)) {
             DialogUtils.UserBind(mContext, new UserBindCallBack() {
                 @Override
                 public void onUserInfo(UserInfo info) {
-                    if (info == null){
+                    if (info == null) {
                         initUserInfo();
-                    }else {
+                    } else {
                         initMain();
                     }
                 }
@@ -122,10 +120,10 @@ public class SplashActivity extends BaseActivity {
                 @Override
                 public void onFail() {
                     finish();
-                    startActivity(new Intent(mContext,SplashActivity.class));
+                    startActivity(new Intent(mContext, SplashActivity.class));
                 }
             });
-        }else {
+        } else {
             initUserInfo();
         }
     }
@@ -156,7 +154,7 @@ public class SplashActivity extends BaseActivity {
                             }
                         }
                     });
-                }else {
+                } else {
                     initMain();
                 }
             }
@@ -169,11 +167,13 @@ public class SplashActivity extends BaseActivity {
         IMutils.loginJG(currUuid, IMutils.password, new IMCallBack() {
             @Override
             public void onSuccess(int code, String msg) {
-                cn.jpush.im.android.api.model.UserInfo myInfo = JMessageClient.getMyInfo();
-                File avatarFile = myInfo.getAvatarFile();
-                //登陆成功,如果用户有头像就把头像存起来,没有就设置null
-                if (avatarFile != null && avatarFile.exists()) {
-                    SPUtil.put(mContext, Constans.SP_MY_ICON, avatarFile.getAbsolutePath());
+                cn.jpush.im.android.api.model.UserInfo myInfo = IMutils.getMyInfo();
+                if (myInfo != null) {
+                    File avatarFile = myInfo.getAvatarFile();
+                    //登陆成功,如果用户有头像就把头像存起来,没有就设置null
+                    if (avatarFile != null && avatarFile.exists()) {
+                        SPUtil.put(mContext, Constans.SP_MY_ICON, avatarFile.getAbsolutePath());
+                    }
                 }
                 goMain();
             }
@@ -186,7 +186,7 @@ public class SplashActivity extends BaseActivity {
         });
     }
 
-    private void goMain(){
+    private void goMain() {
         // 如果加载时间不到2秒就等一会，超过两秒就直接跳
         long ringTime = System.currentTimeMillis() - mStartTime;
         if (ringTime < WAIT_TIME) {

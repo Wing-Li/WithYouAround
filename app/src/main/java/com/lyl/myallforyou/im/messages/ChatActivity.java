@@ -186,6 +186,12 @@ public class ChatActivity extends BaseActivity implements ChatView.OnKeyboardCha
 
         mMyUserInfo = IMutils.getMyInfo();
 
+        if (mMyUserInfo == null){
+            showT(getString(R.string.user_info_error));
+            finish();
+            return;
+        }
+
         // 加载所有信息
         mData = new ArrayList<>();
         List<Message> allMessage = mConv.getAllMessage();

@@ -106,19 +106,22 @@ public class MainActivity extends BaseActivity {
             setName();
         } else {
             // 如果名字不是空，检查一下聊天服务器的名字是不是空
-            String nickname = IMutils.getMyInfo().getNickname();
-            if (TextUtils.isEmpty(nickname)) {
-                IMutils.updateUserName(myName, new IMCallBack() {
-                    @Override
-                    public void onSuccess(int code, String msg) {
+            cn.jpush.im.android.api.model.UserInfo myInfo = IMutils.getMyInfo();
+            if (myInfo != null) {
+                String nickname = myInfo.getNickname();
+                if (TextUtils.isEmpty(nickname)) {
+                    IMutils.updateUserName(myName, new IMCallBack() {
+                        @Override
+                        public void onSuccess(int code, String msg) {
 
-                    }
+                        }
 
-                    @Override
-                    public void onFail(int code, String msg) {
+                        @Override
+                        public void onFail(int code, String msg) {
 
-                    }
-                });
+                        }
+                    });
+                }
             }
         }
 
@@ -147,12 +150,15 @@ public class MainActivity extends BaseActivity {
         if (mIcon != null) {
             String spSgin = (String) SPUtil.get(mContext, Constans.SP_MY_ICON, "");
             if (TextUtils.isEmpty(spSgin)) {
-                File avatarFile = IMutils.getMyInfo().getAvatarFile();
-                if (avatarFile != null && avatarFile.exists()){
-                    SPUtil.put(getApplicationContext(), Constans.SP_MY_ICON, avatarFile);
-                    ImgUtils.loadCircle(mContext, Uri.fromFile(avatarFile), mIcon);
+                cn.jpush.im.android.api.model.UserInfo myInfo = IMutils.getMyInfo();
+                if (myInfo != null) {
+                    File avatarFile = myInfo.getAvatarFile();
+                    if (avatarFile != null && avatarFile.exists()) {
+                        SPUtil.put(getApplicationContext(), Constans.SP_MY_ICON, avatarFile);
+                        ImgUtils.loadCircle(mContext, Uri.fromFile(avatarFile), mIcon);
+                    }
                 }
-            }else {
+            } else {
                 ImgUtils.loadCircle(mContext, spSgin, mIcon);
             }
         }

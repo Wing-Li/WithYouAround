@@ -164,5 +164,6 @@
     <string name="delete_chat_list">您确定要删除所有记录吗？</string>
     <string name="updata_loading">开始上传</string>
     <string name="select_theme">切换主题</string>
+    <string name="user_info_error">用户信息出错</string>
 
 </resources>

@@ -52,13 +52,14 @@ public class GPSUtil {
 
     public static String formatDist(Double dist) {
         String result = "";
-        DecimalFormat decimalFormat = new DecimalFormat("#0.0");
+
         if (dist >= 1000) {
             dist = dist / 1000;
-            result = decimalFormat.format(dist);
-            result = result + " 公里";
+            DecimalFormat decimalFormat = new DecimalFormat("#0.0");
+            result = decimalFormat.format(dist) + " 公里";
         } else {
-            result = result + " 米";
+            DecimalFormat decimalFormat = new DecimalFormat("#0");
+            result = decimalFormat.format(dist) + " 米";
         }
         return result;
     }
