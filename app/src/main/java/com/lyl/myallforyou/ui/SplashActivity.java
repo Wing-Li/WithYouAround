@@ -21,6 +21,7 @@ import com.lyl.myallforyou.R;
 import com.lyl.myallforyou.constants.Constans;
 import com.lyl.myallforyou.data.UserInfo;
 import com.lyl.myallforyou.im.IMCallBack;
+import com.lyl.myallforyou.im.IMGetUserInfoCallBack;
 import com.lyl.myallforyou.im.IMutils;
 import com.lyl.myallforyou.ui.main.MainActivity;
 import com.lyl.myallforyou.ui.userinfo.UserBindCallBack;
@@ -167,15 +168,19 @@ public class SplashActivity extends BaseActivity {
         IMutils.loginJG(currUuid, IMutils.password, new IMCallBack() {
             @Override
             public void onSuccess(int code, String msg) {
-                cn.jpush.im.android.api.model.UserInfo myInfo = IMutils.getMyInfo();
-                if (myInfo != null) {
-                    File avatarFile = myInfo.getAvatarFile();
-                    //登陆成功,如果用户有头像就把头像存起来,没有就设置null
-                    if (avatarFile != null && avatarFile.exists()) {
-                        SPUtil.put(mContext, Constans.SP_MY_ICON, avatarFile.getAbsolutePath());
+                IMutils.getUserInfo(uuid, new IMGetUserInfoCallBack() {
+                    @Override
+                    public void onSuccess(cn.jpush.im.android.api.model.UserInfo myInfo) {
+                        if (myInfo != null) {
+                            File avatarFile = myInfo.getAvatarFile();
+                            //登陆成功,如果用户有头像就把头像存起来,没有就设置null
+                            if (avatarFile != null && avatarFile.exists()) {
+                                SPUtil.put(mContext, Constans.SP_MY_ICON, avatarFile.getAbsolutePath());
+                            }
+                        }
+                        goMain();
                     }
-                }
-                goMain();
+                });
             }
 
             @Override

@@ -83,22 +83,29 @@ public class MainFragmentAdapter extends RecyclerView.Adapter<MainFragmentAdapte
         int readCount = 0;
         if (position == 0) { // 第一条是自己，直接显示头像
             String iconPath = (String) SPUtil.get(mContext, Constans.SP_MY_ICON, "");
-            if (TextUtils.isEmpty(iconPath)){
+            if (TextUtils.isEmpty(iconPath)) {
                 holder.icon.setImageResource(R.mipmap.icon);
-            }else {
+            } else {
                 ImgUtils.loadCircle(mContext, iconPath, holder.icon);
             }
-        }else { // 之后每次请求头像 和 未读数
+        } else { // 之后每次请求头像 和 未读数
             final Conversation conv = IMutils.getSingleConversation(userInfo.getUuid());
-            cn.jpush.im.android.api.model.UserInfo info = (cn.jpush.im.android.api.model.UserInfo) conv.getTargetInfo();
-            File icon = info.getAvatarFile();
-            if (icon != null && icon.exists()) {
-                ImgUtils.loadCircle(mContext, Uri.fromFile(icon), holder.icon);
-            } else {
+            if (conv != null) {
+                cn.jpush.im.android.api.model.UserInfo info = (cn.jpush.im.android.api.model.UserInfo) conv
+                        .getTargetInfo();
+                File icon = info.getAvatarFile();
+                if (icon != null && icon.exists()) {
+                    ImgUtils.loadCircle(mContext, Uri.fromFile(icon), holder.icon);
+                } else {
+                    holder.icon.setImageResource(R.mipmap.icon);
+                }
+
+                readCount = conv.getUnReadMsgCnt();
+            }else {
+                // 没有会话，并且创建失败，使用默认头像
                 holder.icon.setImageResource(R.mipmap.icon);
             }
 
-            readCount = conv.getUnReadMsgCnt();
             if (readCount > 0) {
                 holder.unRead.setText(String.valueOf(readCount));
                 holder.unRead.setVisibility(View.VISIBLE);

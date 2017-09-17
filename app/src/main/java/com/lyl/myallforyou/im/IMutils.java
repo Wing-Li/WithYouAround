@@ -10,6 +10,7 @@ import java.io.File;
 import java.util.List;
 
 import cn.jpush.im.android.api.JMessageClient;
+import cn.jpush.im.android.api.callback.GetUserInfoCallback;
 import cn.jpush.im.android.api.content.TextContent;
 import cn.jpush.im.android.api.model.Conversation;
 import cn.jpush.im.android.api.model.Message;
@@ -21,6 +22,8 @@ import cn.jpush.im.api.BasicCallback;
  */
 
 public class IMutils {
+
+    public static final String JPUSH_APPKEY = "d751726562f368b04f09c4a5";
 
     // =================================== ↓注册和登陆↓===================================
 
@@ -67,7 +70,7 @@ public class IMutils {
      * 更新用户名称
      */
     public static void updateUserName(String name, final IMCallBack imCallBack) {
-        UserInfo info = JMessageClient.getMyInfo();
+        UserInfo info = getMyInfo();
         info.setNickname(name);
         JMessageClient.updateMyInfo(UserInfo.Field.nickname, info, new BasicCallback() {
             @Override
@@ -98,7 +101,32 @@ public class IMutils {
     }
 
     public static UserInfo getMyInfo() {
-        return JMessageClient.getMyInfo();
+        UserInfo myInfo = JMessageClient.getMyInfo();
+        if (myInfo == null) {
+            // 如果获取不到，就再重新获取，三次都获取不到，就返回null
+            for (int i = 0; i < 3; i++) {
+                myInfo = JMessageClient.getMyInfo();
+                if (myInfo != null) {
+                    return myInfo;
+                } else {
+                    try {
+                        Thread.sleep(300);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        }
+        return myInfo;
+    }
+
+    public static void getUserInfo(String username, final IMGetUserInfoCallBack userInfoCallBack) {
+        JMessageClient.getUserInfo(username, new GetUserInfoCallback() {
+            @Override
+            public void gotResult(int i, String s, UserInfo userInfo) {
+                userInfoCallBack.onSuccess(userInfo);
+            }
+        });
     }
 
     // =================================== ↑更改用户信息↑===================================
@@ -112,10 +140,9 @@ public class IMutils {
      * 获取单个单聊会话,没有则创建
      */
     public static Conversation getSingleConversation(String username) {
-        UserInfo info = JMessageClient.getMyInfo();
-        Conversation conv = JMessageClient.getSingleConversation(username, info.getAppKey());
+        Conversation conv = JMessageClient.getSingleConversation(username, JPUSH_APPKEY);
         if (conv == null) {
-            conv = createSingleConversation(username, info.getAppKey());
+            conv = createSingleConversation(username, JPUSH_APPKEY);
         }
 
         return conv;
@@ -125,16 +152,14 @@ public class IMutils {
      * 获取单个单聊会话,没有则创建
      */
     public static ChatInfo getSingleConversationChatInfo(String username) {
-        UserInfo info = JMessageClient.getMyInfo();
-        Conversation conv = JMessageClient.getSingleConversation(username, info.getAppKey());
+        Conversation conv = JMessageClient.getSingleConversation(username, JPUSH_APPKEY);
         if (conv == null) {
-            conv = createSingleConversation(username, info.getAppKey());
+            conv = createSingleConversation(username, JPUSH_APPKEY);
         }
 
         ChatInfo chatInfo = new ChatInfo();
         chatInfo.setId(conv.getId());
         chatInfo.setTitle(conv.getTitle());
-        chatInfo.setTargetAppKey(conv.getTargetAppKey());
         chatInfo.setIcon(conv.getAvatarFile());
         chatInfo.setUnReadCount(conv.getUnReadMsgCnt());
         return chatInfo;
@@ -144,16 +169,14 @@ public class IMutils {
      * 重置单个会话未读消息数
      */
     public static void resetUnreadCount(String username) {
-        UserInfo info = JMessageClient.getMyInfo();
-        Conversation conv = JMessageClient.getSingleConversation(username, info.getAppKey());
+        Conversation conv = JMessageClient.getSingleConversation(username, JPUSH_APPKEY);
         if (conv != null) {
             conv.resetUnreadCount();
         }
     }
 
     public static List<Message> getAllMessage(String username) {
-        UserInfo info = JMessageClient.getMyInfo();
-        Conversation conv = JMessageClient.getSingleConversation(username, info.getAppKey());
+        Conversation conv = JMessageClient.getSingleConversation(username, JPUSH_APPKEY);
         return conv.getAllMessage();
     }
 

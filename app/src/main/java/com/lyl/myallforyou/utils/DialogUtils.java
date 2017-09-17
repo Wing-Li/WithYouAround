@@ -13,6 +13,7 @@ import android.widget.Toast;
 import com.lyl.myallforyou.MyApp;
 import com.lyl.myallforyou.R;
 import com.lyl.myallforyou.constants.Constans;
+import com.lyl.myallforyou.im.IMutils;
 import com.lyl.myallforyou.ui.userinfo.UserBindCallBack;
 
 /**
@@ -110,6 +111,7 @@ public class DialogUtils {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         MyUtils.clearUserInfo(mContext);
+                        IMutils.logout();
                         dialogInterface.dismiss();
                     }
                 });
