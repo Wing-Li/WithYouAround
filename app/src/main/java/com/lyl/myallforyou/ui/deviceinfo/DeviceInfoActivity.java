@@ -101,8 +101,6 @@ public class DeviceInfoActivity extends BaseActivity {
             }
         });
 
-        getDeviceInfo();
-
         setupWindowAnimations();
         address.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -126,6 +124,12 @@ public class DeviceInfoActivity extends BaseActivity {
                 skipChatActivity(mTargetUuid, mTargetName);
             }
         });
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        getDeviceInfo();
     }
 
     private void skipChatActivity(String convId, String convTitle) {

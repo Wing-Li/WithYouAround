@@ -10,9 +10,9 @@
 
     <LinearLayout
         android:id="@+id/title_container"
+        style="@style/ChatActionBar"
         android:layout_width="match_parent"
         android:layout_height="48dp"
-        android:background="?attr/colorPrimary"
         android:gravity="center"
         android:translationZ="4dp"
         android:elevation="4dp">

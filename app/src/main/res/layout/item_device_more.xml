@@ -56,12 +56,12 @@
 
                     <TextView
                         android:id="@+id/item_device_srceen_status"
+                        style="@style/ColorAccent_Text"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:gravity="left"
                         android:text="亮"
-                        android:textColor="?attr/colorAccent"
                         android:textSize="14sp"/>
                 </LinearLayout>
 
@@ -81,11 +81,11 @@
 
                     <TextView
                         android:id="@+id/item_device_quantity"
+                        style="@style/ColorAccent_Text"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:text="49/100(正常用电)"
-                        android:textColor="?attr/colorAccent"
                         android:textSize="14sp"/>
                 </LinearLayout>
             </LinearLayout>
@@ -101,12 +101,12 @@
 
             <TextView
                 android:id="@+id/item_device_time"
+                style="@style/ColorAccent_Text"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="3"
                 android:gravity="right"
                 android:text="23:26"
-                android:textColor="?attr/colorAccent"
                 android:textSize="24sp"/>
         </LinearLayout>
 

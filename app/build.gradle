@@ -21,7 +21,7 @@ android {
 
     defaultConfig {
         applicationId "com.lyl.myallforyou"
-        minSdkVersion 19
+        minSdkVersion 16
         targetSdkVersion 22
         versionCode 16
         versionName "2.0.1"//2017-9-15 09:52:30
