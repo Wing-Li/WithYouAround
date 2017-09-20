@@ -104,7 +104,10 @@ public class ChatActivity extends BaseActivity implements ChatView.OnKeyboardCha
         this.mImm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
         mWindow = getWindow();
 
-        getParmeter();
+        if (!getParmeter()) {
+            finish();
+            return;
+        }
 
         mChatView = (ChatView) findViewById(R.id.chat_view);
         mChatView.initModule();
@@ -177,19 +180,23 @@ public class ChatActivity extends BaseActivity implements ChatView.OnKeyboardCha
         super.onDestroy();
     }
 
-    private void getParmeter() {
+    private boolean getParmeter() {
         mTargetId = getIntent().getStringExtra(Constans.TARGET_ID);
         mConvTitle = getIntent().getStringExtra(Constans.CONV_TITLE);
-        JMessageClient.enterSingleConversation(mTargetId);
         mConv = IMutils.getSingleConversation(mTargetId);
+        if (mConv == null) {
+            showT(getString(R.string.conv_fail));
+            return false;
+        }
+
+        JMessageClient.enterSingleConversation(mTargetId);
         mConv.resetUnreadCount();// 初始化未读数
 
         mMyUserInfo = IMutils.getMyInfo();
 
-        if (mMyUserInfo == null){
+        if (mMyUserInfo == null) {
             showT(getString(R.string.user_info_error));
-            finish();
-            return;
+            return false;
         }
 
         // 加载所有信息
@@ -199,6 +206,8 @@ public class ChatActivity extends BaseActivity implements ChatView.OnKeyboardCha
         for (Message msg : allMessage) {
             mData.add(megTomymsg(msg));
         }
+
+        return true;
     }
 
     /**
@@ -735,7 +744,7 @@ public class ChatActivity extends BaseActivity implements ChatView.OnKeyboardCha
             chatInputView.dismissMenuLayout();
             return;
         }
-        
+
         super.onBackPressed();
     }
 }
