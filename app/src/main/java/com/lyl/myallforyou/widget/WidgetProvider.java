@@ -130,10 +130,6 @@ public class WidgetProvider extends AppWidgetProvider {
         }
     }
 
-    private void setTextViewColor(int... id) {
-
-    }
-
     private PendingIntent getPendingIntent(Context context) {
         Intent i = new Intent(CLICK_ACTION);
         PendingIntent pi = PendingIntent.getBroadcast(context, 0, i, 0);
@@ -164,6 +160,8 @@ public class WidgetProvider extends AppWidgetProvider {
         EXAMPLE_SERVICE_INTENT.setPackage(context.getPackageName());
         context.startService(EXAMPLE_SERVICE_INTENT);
 
+        // 控制是否启动更新桌面部件的 Service
+        SPUtil.put(context, Constans.SP_WIDGET_IS_EXIST, true);
         super.onEnabled(context);
     }
 
@@ -178,6 +176,8 @@ public class WidgetProvider extends AppWidgetProvider {
         EXAMPLE_SERVICE_INTENT.setPackage(context.getPackageName());
         context.stopService(EXAMPLE_SERVICE_INTENT);
 
+        // 控制是否启动更新桌面部件的 Service
+        SPUtil.put(context, Constans.SP_WIDGET_IS_EXIST, false);
         super.onDisabled(context);
     }
 

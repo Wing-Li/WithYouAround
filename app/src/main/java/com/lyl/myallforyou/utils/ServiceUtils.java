@@ -31,10 +31,13 @@ public final class ServiceUtils {
         if (!serviceRunning) {
             ServiceUtils.startService(context.getApplicationContext(), DeviceInfoService.class);
         }
-        boolean appwidget = ServiceUtils.isServiceRunning(context.getApplicationContext(), WIDGET_SERVICE);
-        if (!appwidget) {
-            ServiceUtils.startService(context.getApplicationContext(), WidgetService.class);
-        }
+//        boolean isAppWidgetExist = (boolean) SPUtil.get(context, Constans.SP_WIDGET_IS_EXIST, false);
+//        if (isAppWidgetExist) {
+            boolean appwidget = ServiceUtils.isServiceRunning(context.getApplicationContext(), WIDGET_SERVICE);
+            if (!appwidget) {
+                ServiceUtils.startService(context.getApplicationContext(), WidgetService.class);
+            }
+//        }
     }
 
     /**

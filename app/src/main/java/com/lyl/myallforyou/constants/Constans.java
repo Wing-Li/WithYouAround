@@ -78,6 +78,7 @@ public class Constans {
     public static String SP_UUID_EASSAY = "sp_uuid_eassay";
     public static String SP_UPLOAD_SPACE_TIME = "sp_upload_space_time";
     public static String SP_WIDGET_COLOR = "sp_widget_color";
+    public static String SP_WIDGET_IS_EXIST = "sp_widget_is_exist";
 
     public static final String TARGET_ID = "targetId";
     public static final String TARGET_APP_KEY = "targetAppKey";
