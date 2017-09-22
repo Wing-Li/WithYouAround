@@ -23,8 +23,8 @@ android {
         applicationId "com.lyl.myallforyou"
         minSdkVersion 18
         targetSdkVersion 22
-        versionCode 17
-        versionName "2.1.0"//2017-9-17 20:51:14
+        versionCode 18
+        versionName "2.1.1"//22017-9-22 14:12:10
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
 
         ndk {
