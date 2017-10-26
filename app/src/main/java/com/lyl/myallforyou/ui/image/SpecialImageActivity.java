@@ -50,17 +50,12 @@ public class SpecialImageActivity extends BaseImageActivity {
     }
 
     private void initView() {
-        if (mType.equals(ConstantIntent.SPECIAL_IMAGE_GIF)) {
+        if (ConstantIntent.SPECIAL_IMAGE_GIF.equals(mType)) {
             longImage.setVisibility(View.GONE);
             gifImage.setVisibility(View.VISIBLE);
 
             ImgUtils.loadGif(mContext, mUrl, gifImage);
-        } else if (mType.equals(ConstantIntent.SPECIAL_IMAGE_NORMAL)) {
-            longImage.setVisibility(View.GONE);
-            gifImage.setVisibility(View.VISIBLE);
-
-            ImgUtils.load(mContext, mUrl, gifImage);
-        } else if (mType.equals(ConstantIntent.SPECIAL_IMAGE_LONG)) {
+        }else if (ConstantIntent.SPECIAL_IMAGE_LONG.equals(mType)) {
             DisplayMetrics displayMetrics = new DisplayMetrics();
             getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
 
@@ -74,6 +69,13 @@ public class SpecialImageActivity extends BaseImageActivity {
                     longImage.setImage(ImageSource.bitmap(bitmap));
                 }
             });
+        }else {
+            // 默认使用正常的图
+            // ConstantIntent.SPECIAL_IMAGE_NORMAL
+            longImage.setVisibility(View.GONE);
+            gifImage.setVisibility(View.VISIBLE);
+
+            ImgUtils.load(mContext, mUrl, gifImage);
         }
 
         imageBtn.setOnClickListener(new View.OnClickListener() {

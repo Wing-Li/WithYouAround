@@ -450,6 +450,13 @@ public class ChatActivity extends BaseActivity implements ChatView.OnKeyboardCha
             BitmapFactory.Options options = new BitmapFactory.Options();
             options.inJustDecodeBounds = true;
             BitmapFactory.decodeFile(string, options); // 此时返回的bitmap为null
+            if (options.outHeight == 0) {
+                options.outHeight = 300;
+            }
+            if (options.outWidth == 0) {
+                options.outWidth = 400;
+            }
+            // 除数不能为 0
             int height = options.outHeight * 400 / options.outWidth;
 
             Glide.with(imageView.getContext()).load(string)//

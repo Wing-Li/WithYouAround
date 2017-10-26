@@ -1,6 +1,5 @@
 package com.lyl.myallforyou.ui.essay;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.RecyclerView;
@@ -58,7 +57,8 @@ public class NhEassayActivity extends BaseActivity {
         setContentView(R.layout.activity_nh_eassay);
         ButterKnife.bind(this);
 
-        getParameter();
+        mContentType = getIntent().getStringExtra(CONTENT_TYPE);
+
         initData();
         getData();
         initView();
@@ -109,9 +109,9 @@ public class NhEassayActivity extends BaseActivity {
     }
 
     private void initView() {
-        if (mContentType.equals(CONTENT_TYPE_ESSAY) ){
+        if (CONTENT_TYPE_ESSAY.equals(mContentType) ){
             toolbar.setTitle(R.string.nheassay);
-        }else if (mContentType.equals(CONTENT_TYPE_IMAGE)){
+        }else if (CONTENT_TYPE_IMAGE.equals(mContentType)){
             toolbar.setTitle(R.string.nheassay_image);
         }
         setSupportActionBar(toolbar);
@@ -139,11 +139,6 @@ public class NhEassayActivity extends BaseActivity {
                 getData();
             }
         });
-    }
-
-    public void getParameter() {
-        Intent intent = getIntent();
-        mContentType = intent.getStringExtra(CONTENT_TYPE);
     }
 
     @Override

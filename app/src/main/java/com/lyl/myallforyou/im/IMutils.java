@@ -71,17 +71,19 @@ public class IMutils {
      */
     public static void updateUserName(String name, final IMCallBack imCallBack) {
         UserInfo info = getMyInfo();
-        info.setNickname(name);
-        JMessageClient.updateMyInfo(UserInfo.Field.nickname, info, new BasicCallback() {
-            @Override
-            public void gotResult(int i, String s) {
-                if (i == 0) {
-                    imCallBack.onSuccess(i, s);
-                } else {
-                    imCallBack.onFail(i, s);
+        if (info != null) {
+            info.setNickname(name);
+            JMessageClient.updateMyInfo(UserInfo.Field.nickname, info, new BasicCallback() {
+                @Override
+                public void gotResult(int i, String s) {
+                    if (i == 0) {
+                        imCallBack.onSuccess(i, s);
+                    } else {
+                        imCallBack.onFail(i, s);
+                    }
                 }
-            }
-        });
+            });
+        }
     }
 
     /**

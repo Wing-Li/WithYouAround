@@ -30,8 +30,15 @@ public class WidgetService extends Service {
     @Override
     public void onDestroy() {
         // 中断线程，即结束线程。
-        mTimerTask.cancel();
-        mTimer.cancel();
+        if (mTimerTask !=null){
+            mTimerTask.cancel();
+            mTimerTask = null;
+        }
+
+        if (mTimer != null){
+            mTimer.cancel();
+            mTimer = null;
+        }
         super.onDestroy();
     }
 

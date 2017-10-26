@@ -47,6 +47,9 @@ public class DeviceInfoService extends Service {
     private double mLatitude;
     private String mLocationType;
 
+    private Timer mTimer;
+    private TimerTask mTimerTask;
+
     // 上传信息
     public static final String EVENT_DEVICE_INFO = "*#00000#*";
     // 将对方手机修改为响铃模式
@@ -184,9 +187,9 @@ public class DeviceInfoService extends Service {
     }
 
     /**
-     *  开始定位。定位结束后，随即发送信息。定位在 initMap() 方法里
+     * 开始定位。定位结束后，随即发送信息。定位在 initMap() 方法里
      */
-    private void startLocation(){
+    private void startLocation() {
         MapLocationUtil.getInstance().startLocation();
     }
 
@@ -196,19 +199,27 @@ public class DeviceInfoService extends Service {
         return null;
     }
 
-
-    TimerTask mTimerTask = new TimerTask() {
-        @Override
-        public void run() {
-            // 开始定位。定位结束后，随即发送信息。定位在 initMap() 方法里
-            startLocation();
-        }
-    };
-    Timer mTimer;
-
     private void initData() {
-        mTimer = new Timer();
-        mTimer.schedule(mTimerTask, 30 * 1000, MyApp.UPLOAD_SPACE_TIME);
+        if (mTimer == null) {
+            mTimer = new Timer();
+            if (mTimerTask != null) {
+                mTimerTask.cancel();
+            }
+            mTimerTask = getTimerTask();
+            mTimer.schedule(mTimerTask, 30 * 1000, MyApp.UPLOAD_SPACE_TIME);
+        }
+    }
+
+    private TimerTask getTimerTask() {
+        // 这个东西是一次性的，当被 schedule 一次之后，不能再被添加第二次
+        TimerTask mTimerTask = new TimerTask() {
+            @Override
+            public void run() {
+                // 开始定位。定位结束后，随即发送信息。定位在 initMap() 方法里
+                startLocation();
+            }
+        };
+        return mTimerTask;
     }
 
 
