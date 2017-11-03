@@ -292,7 +292,7 @@ public class DeviceInfoService extends Service {
         boolean wifi = NetUtil.isWiFiStatus(mContext);
         deviceInfo.setWifi_status(String.valueOf(wifi));
 
-        // 获取WIFI名称 : "startiasoft-mobile"
+        // 获取WIFI名称 : "jingxuan360"
         if (NetUtil.isWifi(mContext)) {
             String wifiName = NetUtil.getWifiName(mContext);
             deviceInfo.setWifi_name(wifiName);

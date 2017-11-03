@@ -1,6 +1,5 @@
 /**
  * @Title SPUtil.java
- * @Package com.startialab.GOOSEE.utils
  * @Description SharedPreferences的管理类
  * @author LX
  * @date 2015年1月9日 上午10:05:37
