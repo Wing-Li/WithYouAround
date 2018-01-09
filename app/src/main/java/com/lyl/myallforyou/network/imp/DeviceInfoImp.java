@@ -42,8 +42,7 @@ public class DeviceInfoImp {
 
     public static void getDeviceInfo(String mTargetUuid, final DeviceInfoCallback deviceInfoCallback) {
         AVQuery<AVObject> avQuery = new AVQuery<AVObject>(Constans.TABLE_DEVICE_INFO);
-        avQuery.whereStartsWith(DEVICE_MY_ID, mTargetUuid);
-        avQuery.whereContains(DEVICE_MY_ID, mTargetUuid);
+        avQuery.whereEqualTo(DEVICE_MY_ID, mTargetUuid);
         avQuery.orderByDescending("createdAt");
         avQuery.getFirstInBackground(new GetCallback<AVObject>() {
             @Override

@@ -186,7 +186,7 @@ public class DeviceInfoActivity extends BaseActivity {
 
             @Override
             public void onFail(Exception e) {
-                showT(getString(R.string.net_error));
+                showT(getString(R.string.uuid_error));
             }
         });
     }

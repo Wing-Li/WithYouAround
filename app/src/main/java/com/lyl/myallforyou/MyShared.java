@@ -39,4 +39,9 @@ public class MyShared {
     public void setWidgetName(String w) {
         SPUtil.put(context, WidgetName, w);
     }
+
+    public void clearData(){
+        SPUtil.remove(context, WidgetUuid);
+        SPUtil.remove(context, WidgetName);
+    }
 }

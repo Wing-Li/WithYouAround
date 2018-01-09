@@ -16,6 +16,7 @@ import com.lyl.myallforyou.constants.ConstantIntent;
 import com.lyl.myallforyou.data.DeviceInfo;
 import com.lyl.myallforyou.network.imp.DeviceInfoImp;
 import com.lyl.myallforyou.ui.deviceinfo.DeviceInfoActivity;
+import com.lyl.myallforyou.utils.MyUtils;
 import com.lyl.myallforyou.utils.SPUtil;
 
 import java.util.HashSet;
@@ -125,6 +126,7 @@ public class WidgetProvider extends AppWidgetProvider {
 
                 @Override
                 public void onFail(Exception e) {
+                    MyUtils.showT(context, R.string.uuid_error);
                 }
             });
         }

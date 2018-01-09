@@ -14,6 +14,7 @@ import com.avos.avoscloud.AVQuery;
 import com.avos.avoscloud.GetCallback;
 import com.lyl.myallforyou.BuildConfig;
 import com.lyl.myallforyou.MyApp;
+import com.lyl.myallforyou.MyShared;
 import com.lyl.myallforyou.R;
 import com.lyl.myallforyou.constants.Constans;
 import com.lyl.myallforyou.data.UserInfo;
@@ -125,6 +126,9 @@ public class MyUtils {
         SPUtil.put(context, Constans.SP_MY_SGIN, "");
         SPUtil.put(context, Constans.SP_MY_MARKING, "");
         SPUtil.put(context, Constans.SP_MY_ICON, "");
+
+        MyShared myShared = new MyShared(context);
+        myShared.clearData();
 
         Intent intent = new Intent(context, MainActivity.class);
         intent.putExtra(MainActivity.TAG_EXIT, true);

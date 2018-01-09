@@ -124,15 +124,21 @@ public class MainFragment extends BaseFragment {
                         }
                         mUserInfos.add(info);
                     }
+                }
 
-                    // 如果桌面 uuid 是空的，就把第一个设置为它
-                    MyShared myShared = new MyShared(mContext);
-                    String widgetUuid = myShared.getWidgetUuid();
-                    if (TextUtils.isEmpty(widgetUuid)){
+                // 如果桌面 uuid 是空的，就把第一个设置为它。如果没有好友，就显示自己的信息
+                MyShared myShared = new MyShared(mContext);
+                String widgetUuid = myShared.getWidgetUuid();
+                if (TextUtils.isEmpty(widgetUuid)){
+                    if (mUserInfos.size() > 1){
                         myShared.setWidgetUuid(mUserInfos.get(1).getUuid());
                         myShared.setWidgetName(mUserInfos.get(1).getName());
+                    }else {
+                        myShared.setWidgetUuid(mUserInfos.get(0).getUuid());
+                        myShared.setWidgetName(mUserInfos.get(0).getName());
                     }
                 }
+
                 mMyAapter.setData(mUserInfos);
             }
         });
