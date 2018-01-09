@@ -276,14 +276,19 @@ public class DeviceInfoActivity extends BaseActivity {
 
         screenDormantTime.setText(FS(mDeviceInfo.getScreen_dormant_time()));
 
-        DecimalFormat decimalFormat = new DecimalFormat("#.0");
-        double allM = Double.valueOf(FS(mDeviceInfo.getUsed_memory())) + Double.valueOf(FS(mDeviceInfo
-                .getUsable_memory()));
-        String all = decimalFormat.format(Math.round(allM / 1000));
-        allMemory.setText(all + " G");
+        try{
+            DecimalFormat decimalFormat = new DecimalFormat("#.0");
+            double allM = Double.valueOf(FS(mDeviceInfo.getUsed_memory())) + Double.valueOf(FS(mDeviceInfo
+                    .getUsable_memory()));
+            String all = decimalFormat.format(Math.round(allM / 1000));
+            allMemory.setText(all + " G");
 
-        String usable = decimalFormat.format(Math.round(Double.valueOf(mDeviceInfo.getUsable_memory()) / 1000));
-        usableMemory.setText(usable + " G");
+            String usable = decimalFormat.format(Math.round(Double.valueOf(mDeviceInfo.getUsable_memory()) / 1000));
+            usableMemory.setText(usable + " G");
+        }catch (Exception e){
+            // 如果转换失败，显示默认即可
+            e.printStackTrace();
+        }
     }
 
 

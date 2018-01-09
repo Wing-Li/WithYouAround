@@ -58,8 +58,12 @@ public class WidgetService extends Service {
         mTimerTask = new TimerTask() {
             @Override
             public void run() {
-                Intent updateIntent = new Intent(ACTION_UPDATE_ALL);
-                sendBroadcast(updateIntent);
+                try{
+                    Intent updateIntent = new Intent(ACTION_UPDATE_ALL);
+                    sendBroadcast(updateIntent);
+                }catch (Exception e){
+                    e.printStackTrace();
+                }
             }
         };
         mTimer = new Timer();

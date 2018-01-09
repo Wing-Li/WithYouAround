@@ -13,19 +13,26 @@ import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.avos.avoscloud.AVException;
+import com.avos.avoscloud.AVOSCloud;
 import com.avos.avoscloud.AVObject;
 import com.avos.avoscloud.AVQuery;
 import com.avos.avoscloud.CountCallback;
 import com.avos.avoscloud.SaveCallback;
+import com.lyl.myallforyou.BuildConfig;
 import com.lyl.myallforyou.R;
 import com.lyl.myallforyou.constants.Constans;
 import com.lyl.myallforyou.data.UserInfo;
+import com.lyl.myallforyou.im.entity.NotificationClickEventReceiver;
 import com.lyl.myallforyou.ui.main.MainActivity;
 import com.lyl.myallforyou.ui.userinfo.UserBindCallBack;
 import com.lyl.myallforyou.utils.DeviceStatusUtils;
 import com.lyl.myallforyou.utils.DialogUtils;
+import com.lyl.myallforyou.utils.MyUtils;
 import com.lyl.myallforyou.utils.NetUtil;
 import com.lyl.myallforyou.utils.SPUtil;
+import com.tencent.bugly.Bugly;
+
+import cn.jpush.im.android.api.JMessageClient;
 
 
 public class SplashActivity extends BaseActivity {
@@ -50,8 +57,36 @@ public class SplashActivity extends BaseActivity {
             return;
         }
 
+        initLeancloud();
+        initBugly();
+        initJG();
+
         setAnimation();
         checkNet();
+    }
+
+
+    private void initBugly() {
+        if (MyUtils.isDev()) {
+            Bugly.init(getApplicationContext(), "", true);
+        } else {
+            Bugly.init(getApplicationContext(), BuildConfig.BuglyAppId, false);
+        }
+    }
+
+    private void initLeancloud() {
+        // 初始化参数依次为 this, AppId, AppKey
+        AVOSCloud.initialize(this, BuildConfig.AVOSCloudAppId, BuildConfig.AVOSCloudAppKey);
+        // 放在 SDK 初始化语句 AVOSCloud.initialize() 后面，只需要调用一次即可
+        AVOSCloud.setDebugLogEnabled(true);
+    }
+
+    private void initJG(){
+        JMessageClient.init(this);
+        //设置Notification的模式
+        JMessageClient.setNotificationFlag(JMessageClient.FLAG_NOTIFY_WITH_SOUND | JMessageClient.FLAG_NOTIFY_WITH_LED | JMessageClient.FLAG_NOTIFY_WITH_VIBRATE);
+        //注册Notification点击的接收器
+        new NotificationClickEventReceiver(getApplicationContext());
     }
 
     private void setAnimation() {

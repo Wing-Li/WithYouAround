@@ -4,18 +4,12 @@ import android.app.Application;
 import android.os.Environment;
 import android.text.TextUtils;
 
-import com.avos.avoscloud.AVOSCloud;
 import com.litesuits.orm.LiteOrm;
 import com.litesuits.orm.db.DataBaseConfig;
 import com.lyl.myallforyou.constants.Constans;
-import com.lyl.myallforyou.im.entity.NotificationClickEventReceiver;
-import com.lyl.myallforyou.utils.MyUtils;
 import com.lyl.myallforyou.utils.SPUtil;
-import com.tencent.bugly.Bugly;
 
 import java.io.File;
-
-import cn.jpush.im.android.api.JMessageClient;
 
 /**
  * Created by lyl on 2017/4/6.
@@ -40,23 +34,9 @@ public class MyApp extends Application {
     public void onCreate() {
         super.onCreate();
 
-        initLeancloud();
-
         initSQL();
 
-        initBugly();
-
-        initJG();
-
         initSpaceTime();
-    }
-
-    private void initJG(){
-        JMessageClient.init(this);
-        //设置Notification的模式
-        JMessageClient.setNotificationFlag(JMessageClient.FLAG_NOTIFY_WITH_SOUND | JMessageClient.FLAG_NOTIFY_WITH_LED | JMessageClient.FLAG_NOTIFY_WITH_VIBRATE);
-        //注册Notification点击的接收器
-        new NotificationClickEventReceiver(getApplicationContext());
     }
 
     private void initSpaceTime() {
@@ -73,21 +53,6 @@ public class MyApp extends Application {
             my.mkdirs();
         }
         return appPath = my.getAbsolutePath();
-    }
-
-    private void initBugly() {
-        if (MyUtils.isDev()) {
-            Bugly.init(getApplicationContext(), "", true);
-        } else {
-            Bugly.init(getApplicationContext(), BuildConfig.BuglyAppId, false);
-        }
-    }
-
-    private void initLeancloud() {
-        // 初始化参数依次为 this, AppId, AppKey
-        AVOSCloud.initialize(this, BuildConfig.AVOSCloudAppId, BuildConfig.AVOSCloudAppKey);
-        // 放在 SDK 初始化语句 AVOSCloud.initialize() 后面，只需要调用一次即可
-        AVOSCloud.setDebugLogEnabled(true);
     }
 
     private void initSQL() {

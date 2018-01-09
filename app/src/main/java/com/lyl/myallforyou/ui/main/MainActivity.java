@@ -3,7 +3,6 @@ package com.lyl.myallforyou.ui.main;
 import android.app.Activity;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
@@ -17,7 +16,6 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
-import android.util.DisplayMetrics;
 import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -37,13 +35,8 @@ import com.avos.avoscloud.GetCallback;
 import com.avos.avoscloud.SaveCallback;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
-import com.google.zxing.BarcodeFormat;
-import com.google.zxing.MultiFormatWriter;
-import com.google.zxing.WriterException;
-import com.google.zxing.common.BitMatrix;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
-import com.journeyapps.barcodescanner.BarcodeEncoder;
 import com.litesuits.orm.db.model.ConflictAlgorithm;
 import com.lyl.myallforyou.MyApp;
 import com.lyl.myallforyou.R;
@@ -267,8 +260,7 @@ public class MainActivity extends BaseActivity {
 
                 // 查看扫描到的二维码id 在不在 服务端数据库内
                 AVQuery<AVObject> query = new AVQuery<>(Constans.TABLE_USER_INFO);
-                query.whereContains(Constans.USER_MYID, scanResult);
-                query.whereStartsWith(Constans.USER_MYID, scanResult);
+                query.whereEqualTo(Constans.USER_MYID, scanResult);
                 query.countInBackground(new CountCallback() {
                     @Override
                     public void done(int i, AVException e) {
@@ -330,14 +322,14 @@ public class MainActivity extends BaseActivity {
     private void bindUser(final String familyUuid, final String nameNote) {
         // 查询对方的数据
         AVQuery<AVObject> familyQuery = new AVQuery<>(Constans.TABLE_USER_INFO);
-        familyQuery.whereContains(USER_MYID, familyUuid);
+        familyQuery.whereEqualTo(USER_MYID, familyUuid);
         familyQuery.getFirstInBackground(new GetCallback<AVObject>() {
             @Override
             public void done(final AVObject familyObject, AVException e) {
                 if (e == null && familyObject != null) {
                     // 查询自己的数据
                     AVQuery<AVObject> myQuery = new AVQuery<>(Constans.TABLE_USER_INFO);
-                    myQuery.whereContains(USER_MYID, uuid);
+                    myQuery.whereEqualTo(USER_MYID, uuid);
                     myQuery.getFirstInBackground(new GetCallback<AVObject>() {
                         @Override
                         public void done(AVObject myObject, AVException e) {
@@ -518,29 +510,6 @@ public class MainActivity extends BaseActivity {
                 return true;
             }
         });
-    }
-
-    private Bitmap encodeAsBitmap(String str) {
-        Bitmap bitmap = null;
-        BitMatrix result = null;
-
-        DisplayMetrics displayMetrics = new DisplayMetrics();
-        getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
-
-        int width = displayMetrics.widthPixels / 2;
-        MultiFormatWriter multiFormatWriter = new MultiFormatWriter();
-        try {
-            result = multiFormatWriter.encode(str, BarcodeFormat.QR_CODE, width, width);
-            // 使用 ZXing Android Embedded 要写的代码
-            BarcodeEncoder barcodeEncoder = new BarcodeEncoder();
-            bitmap = barcodeEncoder.createBitmap(result);
-        } catch (WriterException e) {
-            e.printStackTrace();
-        } catch (IllegalArgumentException iae) {
-            return null;
-        }
-
-        return bitmap;
     }
 
     private void openNhEassayImage() {
