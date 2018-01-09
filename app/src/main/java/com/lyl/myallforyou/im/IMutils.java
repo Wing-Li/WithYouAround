@@ -76,6 +76,8 @@ public class IMutils {
             JMessageClient.updateMyInfo(UserInfo.Field.nickname, info, new BasicCallback() {
                 @Override
                 public void gotResult(int i, String s) {
+                    if (imCallBack == null) return;
+
                     if (i == 0) {
                         imCallBack.onSuccess(i, s);
                     } else {

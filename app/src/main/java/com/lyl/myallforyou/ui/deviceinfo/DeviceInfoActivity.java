@@ -21,6 +21,7 @@ import com.lyl.myallforyou.R;
 import com.lyl.myallforyou.constants.Constans;
 import com.lyl.myallforyou.constants.ConstantIntent;
 import com.lyl.myallforyou.data.DeviceInfo;
+import com.lyl.myallforyou.im.IMutils;
 import com.lyl.myallforyou.im.messages.ChatActivity;
 import com.lyl.myallforyou.network.imp.DeviceInfoImp;
 import com.lyl.myallforyou.ui.BaseActivity;
@@ -34,6 +35,7 @@ import java.text.DecimalFormat;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import cn.jpush.im.android.api.model.UserInfo;
 
 public class DeviceInfoActivity extends BaseActivity {
 
@@ -133,10 +135,15 @@ public class DeviceInfoActivity extends BaseActivity {
     }
 
     private void skipChatActivity(String convId, String convTitle) {
-        Intent intent = new Intent(mContext, ChatActivity.class);
-        intent.putExtra(Constans.TARGET_ID, convId);
-        intent.putExtra(Constans.CONV_TITLE, convTitle);
-        mContext.startActivity(intent);
+        UserInfo myInfo = IMutils.getMyInfo();
+        if (myInfo != null){
+            Intent intent = new Intent(mContext, ChatActivity.class);
+            intent.putExtra(Constans.TARGET_ID, convId);
+            intent.putExtra(Constans.CONV_TITLE, convTitle);
+            mContext.startActivity(intent);
+        }else {
+            showT(getString(R.string.im_un_init));
+        }
     }
 
     private void setupWindowAnimations() {

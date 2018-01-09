@@ -51,6 +51,7 @@ import com.lyl.myallforyou.constants.Constans;
 import com.lyl.myallforyou.data.UserInfo;
 import com.lyl.myallforyou.data.event.MainEvent;
 import com.lyl.myallforyou.im.IMCallBack;
+import com.lyl.myallforyou.im.IMGetUserInfoCallBack;
 import com.lyl.myallforyou.im.IMutils;
 import com.lyl.myallforyou.ui.BaseActivity;
 import com.lyl.myallforyou.ui.about.AboutActivity;
@@ -104,32 +105,52 @@ public class MainActivity extends BaseActivity {
         String myName = (String) SPUtil.get(mContext, SP_MY_NAME, "");
         if (TextUtils.isEmpty(myName)) {
             setName();
-        } else {
-            // 如果名字不是空，检查一下聊天服务器的名字是不是空
-            cn.jpush.im.android.api.model.UserInfo myInfo = IMutils.getMyInfo();
-            if (myInfo != null) {
-                String nickname = myInfo.getNickname();
-                if (TextUtils.isEmpty(nickname)) {
-                    IMutils.updateUserName(myName, new IMCallBack() {
-                        @Override
-                        public void onSuccess(int code, String msg) {
-
-                        }
-
-                        @Override
-                        public void onFail(int code, String msg) {
-
-                        }
-                    });
-                }
-            }
-        }
-
-        if (!NetUtil.isNetworkAvailable(mContext)) {
-            Toast.makeText(getApplicationContext(), R.string.not_net, Toast.LENGTH_LONG).show();
         }
 
         initImagePicker();
+
+        initIm();
+    }
+
+    /**
+     * 初始化极光推送服务器
+     */
+    private void initIm() {
+        // 登陆极光服务器，登陆成功后跳转主页面
+        String currUuid = (String) SPUtil.get(mContext, Constans.SP_UUID, "");
+        IMutils.loginJG(currUuid, IMutils.password, new IMCallBack() {
+            @Override
+            public void onSuccess(int code, String msg) {
+                // 在刚初始化结束时，想要请求头像，只能通过这个方法。
+                // 刚初始化结局 IMutils.getMyInfo() 请求头像可能是空。
+                IMutils.getUserInfo(uuid, new IMGetUserInfoCallBack() {
+                    @Override
+                    public void onSuccess(cn.jpush.im.android.api.model.UserInfo myInfo) {
+                        if (myInfo != null) {
+                            File avatarFile = myInfo.getAvatarFile();
+                            //登陆成功,如果用户有头像就把头像存起来,没有就设置null
+                            if (avatarFile != null && avatarFile.exists()) {
+                                SPUtil.put(mContext, Constans.SP_MY_ICON, avatarFile.getAbsolutePath());
+                                ImgUtils.loadCircle(mContext, Uri.fromFile(avatarFile), mIcon);
+                            }
+
+                            // 检查名字与服务器名字是否一致，不一致则更改服务器名字
+                            String myName = (String) SPUtil.get(mContext, SP_MY_NAME, "");
+                            if (!TextUtils.isEmpty(myName)) {
+                               if (myName.equals(myInfo.getNickname())) {
+                                   IMutils.updateUserName(myName, null);
+                               }
+                            }
+                        }
+                    }
+                });
+            }
+
+            @Override
+            public void onFail(int code, String msg) {
+                showT(getString(R.string.login_jg_fail));
+            }
+        });
     }
 
     @Override
@@ -163,6 +184,7 @@ public class MainActivity extends BaseActivity {
             }
         }
     }
+
 
     private void initToolbar() {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -588,17 +610,7 @@ public class MainActivity extends BaseActivity {
                 });
 
                 // 将昵称上传到聊天服务器
-                IMutils.updateUserName(str, new IMCallBack() {
-                    @Override
-                    public void onSuccess(int code, String msg) {
-
-                    }
-
-                    @Override
-                    public void onFail(int code, String msg) {
-
-                    }
-                });
+                IMutils.updateUserName(str, null);
 
                 dialogInterface.dismiss();
             }

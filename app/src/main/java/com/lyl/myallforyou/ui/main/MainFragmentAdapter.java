@@ -184,10 +184,15 @@ public class MainFragmentAdapter extends RecyclerView.Adapter<MainFragmentAdapte
     }
 
     private void skipChatActivity(String convId, String convTitle) {
-        Intent intent = new Intent(mContext, ChatActivity.class);
-        intent.putExtra(Constans.TARGET_ID, convId);
-        intent.putExtra(Constans.CONV_TITLE, convTitle);
-        mContext.startActivity(intent);
+        cn.jpush.im.android.api.model.UserInfo myInfo = IMutils.getMyInfo();
+        if (myInfo != null){
+            Intent intent = new Intent(mContext, ChatActivity.class);
+            intent.putExtra(Constans.TARGET_ID, convId);
+            intent.putExtra(Constans.CONV_TITLE, convTitle);
+            mContext.startActivity(intent);
+        }else {
+            MyUtils.showT(mContext, R.string.im_un_init);
+        }
     }
 
     /**

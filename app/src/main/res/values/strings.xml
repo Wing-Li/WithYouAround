@@ -167,5 +167,6 @@
     <string name="select_theme">切换主题</string>
     <string name="user_info_error">用户信息出错，您可以重新启动再次尝试</string>
     <string name="conv_fail">会话获取失败，您可以重新启动再次尝试</string>
+    <string name="im_un_init">聊天服务器未初始化完毕，请稍后...</string>
 
 </resources>
