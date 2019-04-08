@@ -309,7 +309,7 @@
 
     </LinearLayout>
 
-    <android.support.design.widget.FloatingActionButton
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/device_fab"
         app:srcCompat="@android:drawable/ic_menu_send"
         android:layout_width="wrap_content"

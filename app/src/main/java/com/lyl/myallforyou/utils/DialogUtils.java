@@ -2,7 +2,6 @@ package com.lyl.myallforyou.utils;
 
 import android.content.Context;
 import android.content.DialogInterface;
-import android.support.v7.app.AlertDialog;
 import android.text.InputType;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
@@ -15,6 +14,8 @@ import com.lyl.myallforyou.R;
 import com.lyl.myallforyou.constants.Constans;
 import com.lyl.myallforyou.im.IMutils;
 import com.lyl.myallforyou.ui.userinfo.UserBindCallBack;
+
+import androidx.appcompat.app.AlertDialog;
 
 /**
  * Created by lyl on 2017/7/24.

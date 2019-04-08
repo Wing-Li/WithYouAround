@@ -3,11 +3,6 @@ package com.lyl.myallforyou.ui;
 import android.content.Context;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.v4.view.GravityCompat;
-import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.Toast;
@@ -17,6 +12,12 @@ import com.lyl.myallforyou.constants.Constans;
 import com.lyl.myallforyou.utils.AppUtils;
 import com.lyl.myallforyou.utils.SPUtil;
 import com.lyl.myallforyou.utils.ServiceUtils;
+
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
 
 /**
  * Created by lyl on 2017/4/5.

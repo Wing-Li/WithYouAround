@@ -2,9 +2,10 @@ package com.lyl.myallforyou.view;
 
 
 import android.content.Context;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.util.AttributeSet;
+
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 /**
  * 解决 RecyclerView 自己的 IndexOutOfBoundsException BUG

@@ -1,6 +1,5 @@
 package com.lyl.myallforyou;
 
-import android.app.Application;
 import android.os.Environment;
 import android.text.TextUtils;
 
@@ -11,11 +10,13 @@ import com.lyl.myallforyou.utils.SPUtil;
 
 import java.io.File;
 
+import androidx.multidex.MultiDexApplication;
+
 /**
  * Created by lyl on 2017/4/6.
  */
 
-public class MyApp extends Application {
+public class MyApp extends MultiDexApplication {
 
     /**
      * 位置获取的间隔时间

@@ -1,14 +1,16 @@
 package com.lyl.myallforyou.view;
 
 import android.app.Activity;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.v4.util.Pair;
+import android.os.Build;
 import android.view.View;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.core.util.Pair;
 
 /**
  * Wing_Li
@@ -49,7 +51,9 @@ public class TransitionHelper {
         if (view == null) {
             return;
         }
-        participants.add(new Pair<>(view, view.getTransitionName()));
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            participants.add(new Pair<>(view, view.getTransitionName()));
+        }
     }
 
 }

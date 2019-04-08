@@ -5,7 +5,6 @@ import android.content.ClipboardManager;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.os.Bundle;
-import android.support.v7.widget.Toolbar;
 import android.util.DisplayMetrics;
 import android.view.View;
 import android.widget.ImageView;
@@ -20,6 +19,7 @@ import com.journeyapps.barcodescanner.BarcodeEncoder;
 import com.lyl.myallforyou.R;
 import com.lyl.myallforyou.ui.BaseActivity;
 
+import androidx.appcompat.widget.Toolbar;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 

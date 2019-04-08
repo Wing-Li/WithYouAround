@@ -1,7 +1,6 @@
 package com.lyl.myallforyou.im.views;
 
 import android.content.Context;
-import android.support.v7.widget.RecyclerView;
 import android.util.AttributeSet;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -9,6 +8,7 @@ import android.widget.TextView;
 
 import com.lyl.myallforyou.R;
 
+import androidx.recyclerview.widget.RecyclerView;
 import cn.jiguang.imui.chatinput.ChatInputView;
 import cn.jiguang.imui.chatinput.listener.OnCameraCallbackListener;
 import cn.jiguang.imui.chatinput.listener.OnClickEditTextListener;

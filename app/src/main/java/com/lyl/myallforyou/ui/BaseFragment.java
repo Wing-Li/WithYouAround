@@ -2,13 +2,14 @@ package com.lyl.myallforyou.ui;
 
 import android.app.Activity;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.text.TextUtils;
 
 import com.lyl.myallforyou.constants.Constans;
 import com.lyl.myallforyou.utils.AppUtils;
 import com.lyl.myallforyou.utils.SPUtil;
+
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
 
 /**
  * Created by lyl on 2017/4/18.

@@ -3,7 +3,6 @@ package com.lyl.myallforyou.ui;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.AlertDialog;
 import android.text.TextUtils;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
@@ -32,6 +31,7 @@ import com.lyl.myallforyou.utils.NetUtil;
 import com.lyl.myallforyou.utils.SPUtil;
 import com.tencent.bugly.Bugly;
 
+import androidx.appcompat.app.AlertDialog;
 import cn.jpush.im.android.api.JMessageClient;
 
 

@@ -3,7 +3,6 @@ package com.lyl.myallforyou.widget;
 import android.app.Service;
 import android.content.Intent;
 import android.os.IBinder;
-import android.support.annotation.Nullable;
 
 import com.lyl.myallforyou.MyApp;
 
@@ -42,7 +41,6 @@ public class WidgetService extends Service {
         super.onDestroy();
     }
 
-    @Nullable
     @Override
     public IBinder onBind(Intent intent) {
         return null;

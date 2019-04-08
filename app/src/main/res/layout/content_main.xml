@@ -10,5 +10,4 @@
     tools:showIn="@layout/app_bar_main"
     tools:context="com.lyl.myallforyou.ui.main.MainActivity">
 
-
 </FrameLayout>
